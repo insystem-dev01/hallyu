@@ -1,0 +1,101 @@
+@charset "utf-8";
+
+@import url("/css/reset.css");
+@import url("/css/basic.css");
+@import url("/css/button.css");
+@import url("/css/font-awesome.css");
+@import url("/css/ionicons.css");
+
+.frm_input {height:23px;padding:3px 7px 3px 7px;border:1px solid #ccc;font-size:12px !important;line-height:1.444;background-color:#fff;}
+.frm_file {height:23px;background-color:#f5f5f5;}
+.frm_textbox {padding:5px 2px 1px 5px;border:1px solid #ccc;font-size:12px !important;line-height:1.444;color:#333;}
+.sir_input {height:23px;padding:3px 7px 3px 7px;font-size:12px !important;line-height:1.444;border-top:1px solid #a6a6a6;border-left:1px solid #a6a6a6;border-right:1px solid #d8d8d8;border-bottom:1px solid #d8d8d8;background-color:#dde4e8 !important;}
+
+/*필수입력*/
+.required, textarea.required {background:url('/img/wrest.gif') #fff top right no-repeat;}
+
+/*input_크롬 배경컬러*/
+input:-webkit-autofill {-webkit-box-shadow: 0 0 0 1000px white inset;}
+
+/*placeholder 속성*/
+::-webkit-input-placeholder {color:#bbb;font-size:inherit;letter-spacing:-1px; /*Webkit browsers*/}
+:-moz-placeholder {color:#bbb;opacity:1;font-size:inherit;letter-spacing:-1px; /*Mozilla Firefox 4 to 18*/}
+::-moz-placeholder {color:#bbb;opacity:1;font-size:inherit;letter-spacing:-1px; /*Mozilla Firefox 19+*/}
+:-ms-input-placeholder {color:#bbb;font-size:inherit;letter-spacing:-1px; /*Internet Explorer 10+*/}
+
+/*자료 없는 목록*/
+.empty_table {font-size:13px;color:#999;padding:40px 0 !important;text-align:center !important;}
+.empty_list {min-height:16px !important;font-size:13px;color:#999;padding:40px 0 !important;text-align:center !important;}
+
+/*기본테이블*/
+.tbl_wrap{margin:0;}
+.tbl_wrap table{width:100%;}
+
+.tbl_head01 {border-top:1px solid #666;}
+.tbl_head01 th {font-size:12px;padding:7px 0;border-bottom:1px solid #ddd;font-weight:600;text-align:center;}
+.tbl_head01 th input {vertical-align:middle;}
+.tbl_head01 td {font-size:12px;padding:7px;text-align:left;line-height:1.3;border-bottom:1px solid #ddd;word-break:break-all;}
+
+.tbl_head02 {border-top:1px solid #666;}
+.tbl_head02 th {font-size:12px; padding:9px 0; border-left:1px solid #ddd; border-bottom:1px solid #ddd; font-weight:600; text-align:center; vertical-align:middle;}
+.tbl_head02 td {padding:7px 5px; text-align:center; line-height:1.3; border-left:1px solid #ddd; border-bottom:1px solid #ddd; word-break:break-all;}
+
+/*폼 테이블*/
+.tbl_frm01 {border-top:1px solid #666;margin:0 0 10px;}
+.tbl_frm01 input[type=text], .tbl_frm01 input[type=email], .tbl_frm01 input[type=file], .tbl_frm01 input[type=url], .tbl_frm01 input[type=password] {width:100%;}
+.tbl_frm01 th {height:25px;font-size:12px;padding:7px 10px;border-width:0 1px 1px 0;border-style:solid;border-color:#ddd;background-color:#f8f8f8;font-weight:600;text-align:left;}
+.tbl_frm01 td {min-height:23px;padding:7px 10px;border-bottom:1px solid #ddd;background:transparent;}
+.tbl_frm01 textarea {padding:2px 2px 3px;border:1px solid #ccc;color:#333;vertical-align:middle;line-height:1.4em;}
+.tbl_frm01 textarea {width:100%;height:140px;}
+
+.tbl_frm02 {}
+.tbl_frm02 input[type=text], .tbl_frm02 input[type=email], .tbl_frm02 input[type=file], .tbl_frm02 input[type=url], .tbl_frm02 input[type=password] {width:100%;}
+.tbl_frm02 th {padding:7px 10px;border:1px solid #e8e8e8;background-color:#fafafa;font-weight:600;text-align:left;}
+.tbl_frm02 td {padding:7px 10px;text-align:left;border:1px solid #e8e8e8;background:transparent;}
+.tbl_frm02 textarea {padding:2px 2px 3px;border:1px solid #ccc;color:#333;vertical-align:middle;line-height:1.4;}
+.tbl_frm02 textarea {width:100%;height:140px;}
+
+/*설명글*/
+.frm_info {display:block;padding-top:5px;line-height:1.4em;}
+.td_label label {margin-right:5px !important}
+
+/*팝업레이어*/
+#hd_pop {z-index:9999;position:absolute;top:101px;margin:0 auto;width:100%;text-align:center;}
+#hd_pop h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
+.hd_pops {background:#fff;border:2px solid #000;display:inline-block;}
+.hd_pops_con {}
+.hd_pops_con img{min-width:100%;}
+.hd_pops_footer {padding:10px 0;background:#000;color:#fff;text-align:right}
+.hd_pops_footer button {font-size:12px;line-height:1em;margin-right:5px;padding:5px 10px;border:0;background:#393939;color:#fff}
+.sound_only {display:inline-block;position:absolute;top:0;left:0;margin:0 !important;padding:0 !important;width:1px !important;height:1px !important;font-size:0 !important;line-height:0 !important;overflow:hidden}
+
+/*공통*/
+.btn_confirm{margin-top:10px;overflow:hidden;text-align:center;}
+.btn_confirm a,.btn_confirm input,.btn_confirm button{margin:0 1.5px;}
+
+/*새창 기본 스타일*/
+.new_win {}
+.new_win .tbl_wrap {margin:0 15px;}
+.new_win #win_title {margin:0 0 20px;padding:20px;border-top:3px solid #555;border-bottom:1px solid #e9e9e9;background-color:#fff;font-size:14px;line-height:1.2em;}
+.new_win #win_title .sv {font-size:0.75em;line-height:1.2em;}
+.new_win .win_ul {margin:-21px 0 20px 0;padding:0 20px;border-top:1px solid #333;background-color:#333;list-style:none;zoom:1;}
+.new_win .win_ul:after {display:block;visibility:hidden;clear:both;content:"";}
+.new_win .win_ul li {float:left;margin-left:-1px;}
+.new_win .win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #555;border-left:1px solid #555;color:#fff;font-family:dotum;font-weight:600;text-decoration:none;}
+.new_win .win_ul a.on {background-color:#fff;color:#222;}
+.new_win .win_desc {margin:10px 15px 0 15px;}
+.new_win .win_btn {clear:both;padding:20px;text-align:center;} /*새창용*/
+.new_win .win_btn a,.new_win .win_btn input,.new_win .win_btn button {margin:0 1.5px;}
+.new_win .win_paging {padding-top:20px;text-align:center;}
+
+/*주문상세내역 중 현금영수증 발급*/
+#scash {}
+#scash h3 {margin:0 0 5px;text-align:left;}
+#scash_apply {padding:10px 0 20px;text-align:center;}
+#scash_apply #show_progress span {display:block;margin:7px 0 0;}
+#scash_copy {margin-bottom:20px;text-align:center;}
+
+#sod_fin #show_progress {text-align:center;}
+#sod_fin #show_progress span {display:block;margin:5px 0 0;}
+
+#sod_pay_not{margin:20px 0;text-align:center;font-size:18px;font-weight:600;color:red;}

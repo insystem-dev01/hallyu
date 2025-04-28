@@ -1,0 +1,68 @@
+//mixin
+@mixin clearfix{
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+@mixin fix-height($height){
+	height:$height;
+	line-height:$height;
+}
+
+// @mixin f-left-2{
+// 	float:left;
+// 	display: inline-block;
+// 	width:48%;
+// 	margin-right:4%;
+// 	&:nth-child(2n){
+// 		margin-right:0;
+// 	}
+// }
+// @mixin f-left-3{
+// 	float:left;
+// 	display: inline-block;
+// 	width:32%;
+// 	margin-right:2%;
+// 	&:nth-child(3n){
+// 		margin-right:0;
+// 	}
+// }
+// @mixin f-left-4{
+// 	float:left;
+// 	display: inline-block;
+// 	width:23.5%;
+// 	margin-right:2%;
+// 	&:nth-child(4n){
+// 		margin-right:0;
+// 	}
+// }
+// @mixin f-reset{
+// 	float:none;
+// 	display: block;
+// 	width:100%;
+// 	margin-right: 0;
+// }
+// @mixin width-center($width){
+// 	width:$width;
+// 	margin-right: (100 - $width)/2;
+// 	margin-left: (100 - $width)/2;
+// }
+// @mixin btn-r($b-color,$f-color){
+// 	background-color: $b-color;
+// 	color:$f-color;
+// 	border-radius: 50px;
+// }
+// @mixin btn($b-color,$f-color){
+// 	background-color: $b-color;
+// 	color:$f-color;
+// 	border-radius: 0px;
+// }
+// @mixin bg-img($img){
+// 	background-image:url(../img/#{$img});
+// 	background-position:center;
+// 	background-size:cover;
+// 	background-repeat:no-repeat;
+// }

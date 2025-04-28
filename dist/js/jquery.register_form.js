@@ -1,0 +1,70 @@
+"use strict";
+
+var reg_mb_id_check = function reg_mb_id_check() {
+  var result = "";
+  $.ajax({
+    type: "POST",
+    url: om_bbs_url + "/ajax.mb_id.php",
+    data: {
+      "reg_mb_id": encodeURIComponent($("#reg_mb_id").val())
+    },
+    cache: false,
+    async: false,
+    success: function success(data) {
+      result = data;
+    }
+  });
+  return result;
+};
+
+// 추천인 검사
+var reg_mb_recommend_check = function reg_mb_recommend_check() {
+  var result = "";
+  $.ajax({
+    type: "POST",
+    url: om_bbs_url + "/ajax.mb_recommend.php",
+    data: {
+      "reg_mb_recommend": encodeURIComponent($("#reg_mb_recommend").val())
+    },
+    cache: false,
+    async: false,
+    success: function success(data) {
+      result = data;
+    }
+  });
+  return result;
+};
+var reg_mb_email_check = function reg_mb_email_check() {
+  var result = "";
+  $.ajax({
+    type: "POST",
+    url: om_bbs_url + "/ajax.mb_email.php",
+    data: {
+      "reg_mb_email": $("#reg_mb_email").val(),
+      "reg_mb_id": encodeURIComponent($("#reg_mb_id").val())
+    },
+    cache: false,
+    async: false,
+    success: function success(data) {
+      result = data;
+    }
+  });
+  return result;
+};
+var reg_mb_hp_check = function reg_mb_hp_check() {
+  var result = "";
+  $.ajax({
+    type: "POST",
+    url: om_bbs_url + "/ajax.mb_hp.php",
+    data: {
+      "reg_mb_hp": $("#reg_mb_hp").val(),
+      "reg_mb_id": encodeURIComponent($("#reg_mb_id").val())
+    },
+    cache: false,
+    async: false,
+    success: function success(data) {
+      result = data;
+    }
+  });
+  return result;
+};

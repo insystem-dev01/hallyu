@@ -1,0 +1,61 @@
+<?=$headTitle?>
+<h2>엑셀일괄등록 결과</h2>
+<div class="tbl_frm02">
+	<table>
+        <colgroup>
+            <col class="w180">
+            <col>
+        </colgroup>
+        <tbody>
+            <tr>
+                <th scope="row">총 옵션수</th>
+                <td><?php echo number_format($total_count); ?>건</td>
+            </tr>
+            <tr>
+                <th scope="row">완료건수</th>
+                <td><?php echo number_format($succ_count); ?>건</td>
+            </tr>
+            <tr>
+                <th scope="row">업데이트건수</th>
+                <td><?php echo number_format($update_count); ?>건</td>
+            </tr>
+            <?=$update_countTag?>
+            <tr>
+                <th scope="row">실패건수</th>
+                <td><?php echo number_format($fail_count); ?>건</td>
+            </tr>
+            <?=$fail_countTag?>
+        </tbody>
+	</table>
+</div>
+<div class="btn_confirm">
+	<a href="<?php echo base_url(); ?>admin/goods?code=xls_option_reg" class="btn_large">확인</a>
+</div>
+
+<div class="information">
+	<h4>도움말</h4>
+	<div class="content">
+		<div class="desc02">
+			<p>ㆍ엑셀자료는 1회 업로드당 최대 1,000건까지 이므로 1,000건씩 나누어 업로드 하시기 바랍니다.</p>
+			<p>ㆍ엑셀파일을 저장하실 때는 <strong>Excel 97 - 2003 통합문서 (*.xls)</strong>로 저장하셔야 합니다.</p>
+			<p>ㆍ엑셀데이터는 3번째 라인부터 저장되므로 샘플파일 설명글과 타이틀은 지우시면 안됩니다.</p>
+		</div>
+	 </div>
+</div>
+<script>
+$(function() {
+	// 새로고침(F5) 막기
+	$(document).keydown(function (e) {
+		if(e.which === 116) {
+			if(typeof event == "object") {
+				event.keyCode = 0;
+			}
+			return false;
+		} else if(e.which === 82 && e.ctrlKey) {
+			return false;
+		}
+	});
+});
+</script>
+
+<?=$headTitleEnd?>

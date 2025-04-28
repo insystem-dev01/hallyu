@@ -1,0 +1,11 @@
+1. httpClient
+
+Released Date : 2015/05/26
+
+http://www.phpclasses.org/package/3-PHP-HTTP-client-to-access-Web-site-pages.html
+
+2. Oauth-API
+
+Released Date : 2015/07/27
+
+http://www.phpclasses.org/package/7700-PHP-Authorize-and-access-APIs-using-OAuth.html
