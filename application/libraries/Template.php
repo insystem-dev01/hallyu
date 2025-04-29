@@ -69,7 +69,7 @@ class Template {
                 $tnb_str .= '<li><a href="'.base_url().'process/logout">로그아웃</a></li>';
             } else {
                 $tnb_str .= '<li><a href="'.base_url().'bbs/login?url='.$urlencode.'">로그인</a></li>';
-                $tnb_str .= '<li><a href="'.base_url().'bbs/register?type=user">회원가입</a></li>';
+                $tnb_str .= '<li><a href="'.base_url().'bbs/register">회원가입</a></li>';
             }
             $tnb_str .= '<li><a href="'.base_url().'shop/mypage">마이페이지</a></li>';
             $tnb_str .= '<li><a href="'.base_url().'shop/orderinquiry">주문조회</a></li>';

@@ -3,12 +3,12 @@
 </h2>
 
 <form name="fregister" id="fregister" onsubmit="return fregister_submit(this);" method="POST" autocomplete="off">
+    <!-- 사용하지 않는데 디자인 때문에 남겨둠.. -->
     
     <!-- 회원유형 선택-->
     <section id="frgister_type">
         <div class="frgister_type_in">
             <div class="reigster_type">
-                <?php if($type == "user") { ?>
                 <div class="type_box">
                     <div class="type_in"> 
                         <!-- 일반회원-->
@@ -18,13 +18,12 @@
                                 <p>일반회원</p>
                                 <p>14세 이상 개인</p>
                             </div>
-                            <button type="button" name="memberType" value="일반 회원가입" class="b2c" onclick="fregister_submit(this)">가입하기</button>
+                            <button type="button" name="memberType" value="일반 회원가입" class="b2c" onclick="location.href='<?=base_url()?>bbs/register_form?type=user'">가입하기</button>
                         </div>
                     </div>
                 </div>
-                <?php } ?>
+             
                 
-                <?php if($type == "seller") { ?>
                 <div class="type_box">
                     <div class="type_in">
                         <!-- 입점사 -->
@@ -34,17 +33,17 @@
                                 <p>입점사</p>
                                 <p>사업자 및 기타 단체</p>
                             </div>
-                            <button type="button" name="memberType" value="기업 회원가입" class="b2b" onclick="fregister_submit(this)">가입하기</button>
+                            <button type="button" name="memberType" value="기업 회원가입" class="b2b" onclick="location.href='<?=base_url()?>bbs/register_form?type=seller'">가입하기</button>
                         </div>
                     </div>
                 </div>
-                <?php } ?>
+                
             </div>
         </div>
     </section>
 </form>
     
-<script>
+<!-- <script>
 function fregister_submit(e) {
     var type = $(e).val();
     
@@ -54,4 +53,4 @@ function fregister_submit(e) {
     f.action = url;
     f.submit();
 }
-</script>
+</script> -->

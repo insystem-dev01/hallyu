@@ -190,7 +190,7 @@
                 <tr>
                     <th scope="row"><label for="reg_company_hompage">홈페이지/판매처 URL</label></th>
                     <td>
-                        <input type="text" name="company_hompage" id="reg_company_hompage"<?php echo $required; ?> class="frm_input" value="<?php echo isset($seller['company_hompage']) ? $seller['company_hompage'] : ""?>" placeholder="https://veri.kr">
+                        <input type="text" name="company_hompage" id="reg_company_hompage"<?php echo $required; ?> class="frm_input" value="<?php echo isset($seller['company_hompage']) ? $seller['company_hompage'] : ""?>" placeholder="https://hallyu.kr">
                     </td>
                 </tr>
                 <tr>

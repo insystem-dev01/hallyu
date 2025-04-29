@@ -203,6 +203,7 @@ class Bbs extends CI_Controller{
         $this->register_formSkin();
         $this->template->mb_footer();
     }
+
     private function register_formSkin(){
         $config=$this->load->get_var('config');
         $member=$this->load->get_var('member');
@@ -256,7 +257,7 @@ class Bbs extends CI_Controller{
         $member['mb_certify']=isset($member['mb_certify'])?$member['mb_certify']:"";
 
         $memberName="";
-        $placeholder_name = $type == "user" ? "" : "Veri";
+        $placeholder_name = $type == "user" ? "" : "Hallyu";
 
         if($w != "u"){
 			$memberName="<input type=\"text\" name=\"mb_name\" value=\"".$this->funcomplex_lib->get_text($member['name'])."\" id=\"reg_mb_name\"{$required} {$readonly} class=\"frm_input\" placeholder=\"{$placeholder_name}\">";
@@ -456,6 +457,7 @@ class Bbs extends CI_Controller{
         );
         $this->load->view('mb/bbs/register_form',$data);
     }
+    
     public function register_result(){
         $mb="";
         if(isset($_SESSION['ss_mb_reg']))

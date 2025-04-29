@@ -45,7 +45,7 @@
 			</li>
 		</ul>
 		<p class="ft_crt">
-			ⓒ veri.kr ALL RIGHTS RESERVED
+			ⓒ hallyu.kr ALL RIGHTS RESERVED
 		</p>
 		<ul class="ft_logo">
 			<img src="<?=base_url()?>dist/img/mb/footer_logo.png" alt="logo">

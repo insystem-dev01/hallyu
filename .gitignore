@@ -64,7 +64,6 @@ package-lock.json
 data/session/*
 data/session/!*.keep
 data/plan
-data/banner
 data/brand
 data/goods
 data/order

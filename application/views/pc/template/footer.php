@@ -8,7 +8,7 @@
 				<li><a href="<?php echo base_url(); ?>bbs/policy">개인정보처리방침</a></li>
 				<li><a href="javascript:void(0);" onclick="company_check();">사업자정보확인</a></li>
 				<li class="last"><a href="<?php echo base_url(); ?>bbs/noticeList?boardid=13">공지사항</a></li>
-				<li><a href="<?php echo base_url(); ?>bbs/register?type=seller">입점사 가입</a></li>
+				<!-- <li><a href="<?php echo base_url(); ?>bbs/register?type=seller">입점사 가입</a></li> -->
 				<script type="text/javascript">
 					function company_check() {
 						window.open("http://www.ftc.go.kr/bizCommPop.do?wrkr_no=6058636234", "bizCommPop", "width=750, height=700;");
@@ -32,7 +32,7 @@
 					<p class="copy">
 						주식회사 그로는 통신판매중개자이며, 통신판매의 당사자가 아닙니다.
 						상품, 상품정보, 거래에 관한 의무와 책임은 입점 판매자에게 있습니다. <br>
-						ⓒ veri.kr ALL RIGHTS RESERVED
+						ⓒ hallyu.kr ALL RIGHTS RESERVED
 					</p>
 				</li>
 				<div class="logo"></div>

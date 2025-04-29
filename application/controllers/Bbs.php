@@ -124,6 +124,7 @@ class Bbs extends CI_Controller{
         return $memberType;
     }
 
+    
     #회원가입하기 1차화면
     public function register(){
         header("Cache-Control: no cache");
@@ -192,7 +193,7 @@ class Bbs extends CI_Controller{
         $butTxt="";
         if($w == "") {
             $title = '회원가입';
-            $butTxt = "가입하기";
+            $butTxt = "회원가입";
             // 추천인을 담는다.
             $member['pt_id'] = $pt_id;
         } else if($w == 'u') {
@@ -212,7 +213,7 @@ class Bbs extends CI_Controller{
         }
         $notWu="";
         $nowWname="";
-        $placeholder_name = $type == "user" ? "" : "Veri";
+        $placeholder_name = $type == "user" ? "" : "Hallyu";
 
         $member['name']=isset($member['name'])?$member['name']:"";
         $member['cellphone']=isset($member['cellphone'])?$member['cellphone']:"";
@@ -307,12 +308,12 @@ class Bbs extends CI_Controller{
                 <th scope=\"row\"><label for=\"reg_mb_addr\">주소</label></th>
                 <td class=\"addr_row\">
                     <div class=\"vertical\">
-                        <input type=\"text\" name=\"mb_zip\" value=\"{$member['zip']}\" id=\"reg_mb_zip\" ".($config['register_req_addr']?' required':'')." class=\"frm_address\" maxlength=\"5\" readonly=\"readonly\">
-                        <input type=\"text\" name=\"mb_addr1\" value=\"".$this->funcomplex_lib->get_text($member['addr1'])."\" id=\"reg_mb_addr1\"".($config['register_req_addr']?' required':'')." class=\"frm_address\" frm_address\" readonly=\"readonly\">
-                        <input type=\"text\" name=\"mb_addr2\" value=\"".$this->funcomplex_lib->get_text($member['addr2'])."\" id=\"reg_mb_addr2\" class=\"frm_address\">
-                        <input type=\"text\" name=\"mb_addr3\" value=\"".$this->funcomplex_lib->get_text($member['addr3'])."\" id=\"reg_mb_addr3\" class=\"frm_address\" readonly=\"readonly\">
+                        <input type=\"text\" name=\"mb_addr1\" value=\"".$this->funcomplex_lib->get_text($member['addr1'])."\" id=\"reg_mb_addr1\"".($config['register_req_addr']?' required':'')." class=\"frm_address\" frm_address\" readonly=\"readonly\" placeholder=\"주소검색을 해주세요.\">
+                        <input type=\"text\" name=\"mb_addr3\" value=\"".$this->funcomplex_lib->get_text($member['addr3'])."\" id=\"reg_mb_addr3\" class=\"frm_address\" readonly=\"readonly\" placeholder=\"기본 주소\" >
+                        <input type=\"text\" name=\"mb_addr2\" value=\"".$this->funcomplex_lib->get_text($member['addr2'])."\" id=\"reg_mb_addr2\" class=\"frm_address\" placeholder=\"상세 주소\">
+                        <input type=\"text\" name=\"mb_zip\" value=\"{$member['zip']}\" id=\"reg_mb_zip\" ".($config['register_req_addr']?' required':'')." class=\"frm_address\" maxlength=\"5\" readonly=\"readonly\" placeholder=\"우편 번호\" >
                     </div>
-                    <button type=\"button\" class=\"btn_small\" onclick=\"win_zip('fregisterform', 'mb_zip', 'mb_addr1', 'mb_addr2', 'mb_addr3', 'mb_addr_jibeon');\">우편번호</button><br>
+                    <button type=\"button\" class=\"btn_small\" onclick=\"win_zip('fregisterform', 'mb_zip', 'mb_addr1', 'mb_addr2', 'mb_addr3', 'mb_addr_jibeon');\">주소검색</button><br>
                     <input type=\"hidden\" name=\"mb_addr_jibeon\" value=\"".$this->funcomplex_lib->get_text($member['addr_jibeon'])."\">
                 </td>
             </tr>";

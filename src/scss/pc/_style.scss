@@ -75,19 +75,18 @@ table .spr,.total_price .spr {display:inline-block;}
 
     &.active {
         padding-top: 80px;
-        background-image: url(../img/pc/bid_active.png);
+        background-image: url(../img/pc/banner_02.png);
         background-repeat: no-repeat;
     }
 
     &.pending {
         padding-top: 80px;
-        background-image: url(../img/pc/bid_pending.png);
+        background-image: url(../img/pc/event_bg.png);
         background-repeat: no-repeat;
     }
 
     &.brand {
-        height: 1455px;
-        background-image: url(../img/pc/brand.png);
+        background-image: url(../img/pc/popular_bg.png);
         background-repeat: no-repeat;
         background-size: contain;
     }
