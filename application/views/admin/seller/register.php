@@ -52,6 +52,8 @@
                 <tr>
                     <th scope="row">세금계산서 발행 이메일</th>
                     <td><input type="text" name="company_tax_email" class="frm_input" size="30" placeholder="예) test@test.com"></td>
+                    <th scope="row">사업자등록증</th>
+                    <td><input type="file" name="company_regi_certi" class="frm_input" size="30"></td>
                 </tr>
                 <tr>
                     <th scope="row">사업장주소</th>
@@ -90,6 +92,10 @@
                 <tr>
                     <th scope="row">예금주명</th>
                     <td><input type="text" name="bank_holder" class="frm_input" size="30"></td>
+                </tr>
+                <tr>
+                    <th scope="row">통장사본</th>
+                    <td><input type="file" name="bank_copy" class="frm_input" size="30"></td>
                 </tr>
             </tbody>
         </table>

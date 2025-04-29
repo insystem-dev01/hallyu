@@ -1920,6 +1920,8 @@ class Admin extends CI_Controller{
                     <td class=\"tal\">{$row['mb_id']}</td>
                     <td>{$row['seller_code']}</td>
                     <td class=\"tal\">".$this->funcomplex_lib->get_text($row['company_name'])."</td>
+                    <td></td>
+                    <td></td>
                     <td>{$row['company_tel']}</td>
                     <td>{$row['reg_time']}</td>
                     <td>{$row['today_login']}</td>

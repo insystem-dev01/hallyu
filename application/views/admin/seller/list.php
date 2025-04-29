@@ -57,6 +57,8 @@
                 <col class="w130">
                 <col class="w80">
                 <col>
+                <col class="w130"> <!-- 사업자등록증 -->
+                <col class="w130">
                 <col class="w100">
                 <col class="w130">
                 <col class="w130">
@@ -70,6 +72,8 @@
                     <th scope="col"><?php echo $aMb_id; ?>아이디</a></th>
                     <th scope="col"><?php echo $aSeller_code; ?>업체코드</a></th>
                     <th scope="col"><?php echo $aCompany_name; ?>입점사명</a></th>
+                    <th scope="col">사업자등록증</th> <!-- 새로 추가 -->
+                    <th scope="col">통장사본</th> <!-- 새로 추가 -->
                     <th scope="col">전화번호</th>
                     <th scope="col"><?php echo $aReg_time; ?>등록일시</a></th>
                     <th scope="col"><?php echo $aReg_time; ?>최근접속일시</a></th>
