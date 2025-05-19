@@ -98,7 +98,7 @@ class PluginFun extends CI_Controller{
         $this->load->vars(array('tb'=>$tb));
         $this->template->header_sub();
         $data=array('kcbForm_action'=>$kcbForm_action,'idpCode'=>$idpCode,'idpUrl'=>$idpUrl,'cpCode'=>$cpCode,'curtime'=>$curtime,'returnUrl'=>$returnUrl,
-                    'pubkey'=>$pubkey,'sig'=>$sig)
+                    'pubkey'=>$pubkey,'sig'=>$sig);
         $this->load->view('plugin/okanme/ipin_config',$data);
         $this->template->footer_sub();
     }
@@ -288,7 +288,7 @@ class PluginFun extends CI_Controller{
         //$idcfMbrComCd			=   $_POST['idcf_mbr_com_cd'];      // 고객사코드
         $idcfMbrComCd           =   $memId;
         $hsCertSvcTxSeqno       =   $this->input->post('hs_cert_svc_tx_seqno'); // 거래번호
-        $rqstSiteNm             =   $this->input->post('rqst_site_nm'];         // 접속도메인
+        $rqstSiteNm             =   $this->input->post('rqst_site_nm');         // 접속도메인
         $hsCertRqstCausCd       =   $this->input->post('hs_cert_rqst_caus_cd'); // 인증요청사유코드 2byte  (00:회원가입, 01:성인인증, 02:회원정보수정, 03:비밀번호찾기, 04:상품구매, 99:기타)
 
         $resultCd               =   $this->input->post('result_cd');            // 결과코드
@@ -456,7 +456,7 @@ class PluginFun extends CI_Controller{
             <!-- cert_able_yn input 비활성화 설정 -->
             <input type=\"hidden\" name=\"cert_able_yn\" value=\"\"/>";
         }
-        $data=array('cert_url'=>$cert_url,'ordr_idxx'=>$ordr_idxx,'site_cd'=>$site_cd,'metaTag'=>$metaTag)
+        $data=array('cert_url'=>$cert_url,'ordr_idxx'=>$ordr_idxx,'site_cd'=>$site_cd,'metaTag'=>$metaTag);
         $this->load->view('plugin/kcpcert_form',$data);
     }
     public function kcpcert_result(){
@@ -741,7 +741,7 @@ class PluginFun extends CI_Controller{
             $value = htmlspecialchars(strip_tags($value), ENT_QUOTES);
             $inputTags.="<input type='hidden' name='$key' id='$key' value='$value'/>";
         }
-        $data=array('LGD_WINDOW_TYPE'=>$LGD_WINDOW_TYPE,'httpsScript'=>$httpsScript,'lgwinjs'=>$lgwinjs,'inputTags'=>$inputTags)
+        $data=array('LGD_WINDOW_TYPE'=>$LGD_WINDOW_TYPE,'httpsScript'=>$httpsScript,'lgwinjs'=>$lgwinjs,'inputTags'=>$inputTags);
         $this->load->view('plugin/lgxpay/authonlyreq',$data);
     }
     private function returnurl(){

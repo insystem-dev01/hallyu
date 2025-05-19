@@ -5,7 +5,7 @@
 
 <script src="<?php echo base_url(); ?>js/jquery.register_form.js"></script>
 <?=$certifyJs?>
-<form name="fregisterform" id="fregisterform" action="<?php echo $register_action_url; ?>" onsubmit="return fregisterform_submit(this);" method="post" autocomplete="off">
+<form name="fregisterform" id="fregisterform" action="<?php echo $register_action_url; ?>" onsubmit="return fregisterform_submit(this);" method="post" autocomplete="off" enctype="multipart/form-data">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="mb_recommend" id="reg_mb_recommend" value="<?php echo $member['pt_id']; ?>">
     <input type="hidden" name="cert_type" value="<?php echo $member['mb_certify']; ?>">
@@ -101,7 +101,7 @@
                 <tr>
                     <th scope="row"><label for="reg_company_owner">대표자명</label></th>
                     <td>
-                        <input type="text" name="company_owner" id="reg_company_owner"<?php echo $required; ?> class="frm_input" placeholder="홍길동" value="<?php echo isset($seller['company_owner']) ? $seller['company_owner'] : ""?>">
+                        <input type="text" name="company_owner" id="reg_company_owner"<?php echo $required; ?> class="frm_input" placeholder="ex) 홍길동" value="<?php echo isset($seller['company_owner']) ? $seller['company_owner'] : ""?>">
                     </td>
                 </tr>
                 <tr>
@@ -567,7 +567,9 @@ function fregisterform_submit(f) {
                 }
             }
         },error:function(a,b,c){
-            console.log(a,b,c);
+            console.log("에러1:",a);
+            console.log("에러2:",b);
+            console.log("에러3:",c);
             $('#ajax_loding').hide();
             $('body').removeClass('noscroll');
             alert('서버에서 오류 발생');

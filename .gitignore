@@ -76,3 +76,5 @@ data/category
 data/board
 data/member
 data/document
+
+.env

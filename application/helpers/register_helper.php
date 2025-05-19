@@ -13,7 +13,7 @@ function valid_mb_id($reg_mb_id){
         return "";
 }
 function valid_mb_password($reg_mb_password){
-    $passwordRule = '/^[a-zA-Z0-9!@#$%^&*]{6,20}$/';
+    $passwordRule = '/^[a-zA-Z0-9!@#$_%^&*]{6,20}$/';
     if(!preg_match($passwordRule, $reg_mb_password))
         return "비밀번호를 영문자, 숫자를 포함하여 6자이상 입력하세요.";
     else

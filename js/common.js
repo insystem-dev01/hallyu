@@ -1367,7 +1367,7 @@ function only_eng_num_typing(e) {
     that.val(value.replace(/[^a-z0-9]/gi, ''));
 }
 
-// 영어 + 숫자 + 특문 입력
+// 영어 + 숫자 + 특문 (_만 허용) 입력
 function only_eng_num_text_typing(e) {
     const that  = $(e);
     const value = that.val();
@@ -1408,3 +1408,4 @@ function bizNoFormatter(e) {
 
 	that.val(formatted);
 }
+

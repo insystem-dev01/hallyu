@@ -36,7 +36,16 @@ class Register_lib {
         $param = array($company_saupja_no);
         $row = $this->ci->query_model->returnOneArr($sql, $param);
 
-        return $row['cnt'] >= 1 ? false : true;
+        $is_existed_seller = $row['cnt'] > 0;
+        // 0보다 크면 true 반환
+
+        $sql2 = "SELECT count(*) AS cnt FROM shop_member WHERE company_saupja_no = ?";
+        $param2 = array($company_saupja_no);
+        $row = $this->ci->query_model->returnOneArr($sql2, $param2);
+
+        $is_existed_member = $row['cnt'] > 0;
+
+        return !($is_existed_member || $is_existed_seller);
     }
 
     function valid_company_number($company_number) {
