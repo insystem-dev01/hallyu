@@ -676,7 +676,7 @@ class Template {
             if($is_member){
                 $joinTag.="<a href=\"".base_url()."m/bbs/member_confirm?url=register_form\" class=\"btn_medium bx-white\">정보수정</a>";
             }else{
-                $joinTag.="<a href=\"".base_url()."m/bbs/register?type=user\" class=\"btn_medium bx-white\">회원가입</a>";
+                $joinTag.="<a href=\"".base_url()."m/bbs/register\" class=\"btn_medium bx-white\">회원가입</a>";
             }
             $r = $this->ci->gvcomplex_lib->sql_query_cgy('all', 'COUNT');
             #카테고리에 관련된 메뉴

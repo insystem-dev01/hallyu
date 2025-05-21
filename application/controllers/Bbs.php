@@ -72,7 +72,7 @@ class Bbs extends CI_Controller
         $config = $this->load->get_var('config');
         $shop_provision = nl2br($config['shop_provision']);
         $data = array('title' => $tb['title'], 'shop_provision' => $shop_provision);
-        $this->load->view('pc/bbs/proviosion', $data);
+        $this->load->view('pc/bbs/provision', $data);
     }
     #개인정보처리방침
     public function policy()
@@ -88,6 +88,42 @@ class Bbs extends CI_Controller
         $shop_policy = nl2br($config['shop_private']);
         $data = array('title' => $tb['title'], 'shop_policy' => $shop_policy);
         $this->load->view('pc/bbs/policy', $data);
+    }
+
+    #배송정책 약관동의
+    public function delivery_policy()
+    {
+        $this->template->header();
+        $tb['title'] = '배송정책 약관동의';
+        $config = $this->load->get_var('config');
+        $shop_delivery_policy = nl2br($config['shop_delivery_policy']);
+        $data = array('title' => $tb['title'], 'shop_delivery_policy' => $shop_delivery_policy);
+        $this->load->view('pc/bbs/delivery_policy', $data);
+        $this->template->footer();
+    }
+
+    #결제정책 약관동의
+    public function charge_policy()
+    {
+        $this->template->header();
+        $tb['title'] = '결제정책 약관동의';
+        $config = $this->load->get_var('config');
+        $shop_charge_policy = nl2br($config['shop_charge_policy']);
+        $data = array('title' => $tb['title'], 'shop_charge_policy' => $shop_charge_policy);
+        $this->load->view('pc/bbs/charge_policy', $data);
+        $this->template->footer();
+    }
+
+    #정산정책 약관동의
+    public function calculate_policy()
+    {
+        $this->template->header();
+        $tb['title'] = '정산정책 약관동의';
+        $config = $this->load->get_var('config');
+        $shop_calculate_policy = nl2br($config['shop_calculate_policy']);
+        $data = array('title' => $tb['title'], 'shop_calculate_policy' => $shop_calculate_policy);
+        $this->load->view('pc/bbs/calculate_policy', $data);
+        $this->template->footer();
     }
 
     private function register_process($process = 1)

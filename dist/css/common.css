@@ -14353,6 +14353,12 @@ table .spr,
   overflow: auto
 }
 
+.warn_msg {
+    color: #de372c;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
 #fregisterform table>tbody>tr>td>.dash {
   font-size: 17px;
   padding: 0 10px

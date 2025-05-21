@@ -404,7 +404,7 @@ function pwd_check(input) {
             .css("color", "green")
             .show();
     }
-    else if(value.length == 0){
+    else if (value.length == 0) {
         $('#pwdDigitConfirm').val('');
         $("#pwdInfo")
             .text("비밀번호를 입력해주세요.")
@@ -548,6 +548,7 @@ function show_duplicate_check_notice({ input, check_id, confirm_id, empty_messag
 
     }
 }
+
 
 //체크 박스있는 것들 체크
 function checkbox_group_check({ name, check_id, confirm_id, checked_mesage, unchecked_message }) {

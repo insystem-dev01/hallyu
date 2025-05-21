@@ -360,7 +360,12 @@
                 <tr>
                     <th scope="row"><label for="bank_account">계좌번호</label></th>
                     <td>
-                        <input type="text" name="bank_account" id="bank_account" <?php echo $required; ?> class="frm_input" value="<?php echo isset($seller['bank_account']) ? $seller['bank_account'] : "" ?>" placeholder="하이픈(-)을 포함하여 입력해주세요" onkeyup="only_phone_text_typing(this); basic_text_check('bank_account','계좌번호를 작성해주세요.');">
+
+                        <input type="text" name="bank_account_01" id="bank_account_01" <?php echo $required; ?> class="frm_input small_box2" value="<?php echo isset($seller['bank_account']) ? $info_tel[0] : "" ?>" maxlength="10" onkeyup="only_num_typing(this); bank_account_check();" placeholder="">
+                        <span class="dash">-</span>
+                        <input type="text" name="bank_account_02" id="bank_account_02" <?php echo $required; ?> class="frm_input small_box2" value="<?php echo isset($seller['bank_account']) ? $info_tel[1] : "" ?>" maxlength="10" onkeyup="only_num_typing(this); bank_account_check();" placeholder="">
+                        <span class="dash">-</span>
+                        <input type="text" name="bank_account_03" id="bank_account_03" <?php echo $required; ?> class="frm_input small_box2" value="<?php echo isset($seller['bank_account']) ? $info_tel[2] : "" ?>" maxlength="10" onkeyup="only_num_typing(this); bank_account_check();" placeholder="">
                         <div id="bank_account_check" class="check"></div>
                         <input type="hidden" id="bank_account_check_confirm">
                     </td>
@@ -401,7 +406,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="reg_info_tel">담당자휴대폰</label></th>
+                    <th scope="row"><label for="reg_info_tel">담당자 휴대폰</label></th>
                     <?php
                     $info_tel = "";
                     if (!empty($seller['info_tel'])) {
@@ -420,7 +425,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="info_email">담당자이메일</label></th>
+                    <th scope="row"><label for="info_email">담당자 이메일</label></th>
                     <?php
                     $info_email = array('', '');
                     if (!empty($seller['info_email'])) {
@@ -459,12 +464,12 @@
                     <th><label for="reg_mb_terms">이용약관동의</label></th>
                     <td>
                         <div class="vertical terms">
-                            <div class="terms_box title">
+                            <!-- <div class="terms_box title">
                                 <input type="checkbox" name="chk_all" value="1" id="chk_all">
                                 <label for="chk_all">
                                     <span>전체 동의합니다.</span>
                                 </label>
-                            </div>
+                            </div> -->
                             <?php if ($type == "user") { ?>
                                 <div class="terms_box">
                                     <input type="checkbox" name="agree1" value="1" id="agree1">
@@ -474,7 +479,9 @@
                                     <span class="terms" onclick="open_term(1);">약관 보기 ></span>
                                 </div>
                             <?php } ?>
-                            <div id="term1" class="text_box"><?php echo $config['shop_provision']; ?></div>
+                            <div id="term1" class="text_box">
+                                <?php echo nl2br($config['shop_provision']); ?>
+                            </div>
                             <div class="terms_box">
                                 <input type="checkbox" name="agree2" value="1" id="agree2">
                                 <label for="agree2">
@@ -484,7 +491,7 @@
                             </div>
                             <div id="term2" class="text_box">
                                 <?php if ($type == "user") {
-                                    echo $config['shop_private'];
+                                    echo nl2br($config['shop_private']);
                                 } else { ?>
                                     신규입점 문의를 위한 정보수집 및 이용동의 <br> <br>
                                     주식회사 그로(이하 "회사"라 함)는 개인정보보호법, 정보통신망 이용촉진 및 정보보호 등에 관한 법률 등 관련 법령상의
@@ -510,27 +517,126 @@
                                     </label>
                                     <span class="terms" onclick="open_term(3);">약관 보기 ></span>
                                 </div>
-                                <div id="term3" class="text_box"><?php echo $config['shop_marketing']; ?></div>
+                                <div id="term3" class="text_box"><?php echo nl2br($config['shop_marketing']); ?></div>
                             <?php } ?> -->
                         </div>
                     </td>
                 </tr>
+
+                <tr>
+                    <th colspan="2" class="title">정책사항 약관</th>
+                </tr>
+                <tr class="first_line">
+                    <th><label for="reg_mb_terms">정책사항 약관 동의</label></th>
+                    <td>
+                        <div class="vertical terms">
+                            <!-- 배송정책 약관동의 -->
+                            <div class="terms_box">
+                                <input type="checkbox" name="agree4" value="1" id="agree4" onclick="return checkTermBeforeAgree(4);">
+                                <label for="agree4">
+                                    <span>배송정책 약관동의 <span class="req">(필수)</span>
+                                    <span id="agree_check4" class="warn_msg"></span>
+                                    </span>
+                                </label>
+                                <span class="terms" onclick="open_term(4);">약관 보기 ></span>
+                            </div>
+                            <div id="term4" class="text_box"><?php echo nl2br($config['shop_delivery_policy']); ?></div>
+
+                            <!-- 결제정책 약관동의 -->
+                            <div class="terms_box">
+                                <input type="checkbox" name="agree5" value="1" id="agree5" onclick="return checkTermBeforeAgree(5);">
+                                <label for="agree5">
+                                    <span>결제정책 약관동의<span class="req">(필수)</span>
+                                    <span id="agree_check5" class="warn_msg"></span>
+                                </span>
+                                </label>
+                                <span class="terms" onclick="open_term(5);">약관 보기 ></span>
+                            </div>
+                            <div id="term5" class="text_box"><?php echo nl2br($config['shop_charge_policy']); ?></div>
+
+                            <!-- 정산정책 약관동의 -->
+                            <div class="terms_box">
+                                <input type="checkbox" name="agree6" value="1" id="agree6" onclick="return checkTermBeforeAgree(6);">
+                                <label for="agree6">
+                                    <span>정산정책 약관동의<span class="req">(필수)</span>
+                                    <span id="agree_check6" class="warn_msg"></span>
+                                </span>
+                                </label>
+                                <span class="terms" onclick="open_term(6);">약관 보기 ></span>
+                            </div>
+                            <div id="term6" class="text_box"><?php echo nl2br($config['shop_calculate_policy']); ?></div>
+                        </div>
+                    </td>
+                </tr>
+
             <?php } ?>
 
         </tbody>
     </table>
 
     <div class="btn_confirm">
-        <input type="submit" value="<?php echo $butTxt; ?>" id="btn_submit" accesskey="s">
         <button type="button" id="btn_cancel" onclick="history.back();" style="margin-left:10px;">
             뒤로가기
         </button>
+        <input type="submit" value="<?php echo $butTxt; ?>" id="btn_submit" accesskey="s">
+        
     </div>
 
 
 </form>
 
 <script>
+   document.addEventListener("DOMContentLoaded", function () {
+  const agreements = [
+    { contentId: "term4", checkboxId: "agree4", warnId: "agree_check4" },
+    { contentId: "term5", checkboxId: "agree5", warnId: "agree_check5" },
+    { contentId: "term6", checkboxId: "agree6", warnId: "agree_check6" },
+  ];
+
+  agreements.forEach(({ contentId, checkboxId, warnId }) => {
+    const contentBox = document.getElementById(contentId);
+    const checkbox = document.getElementById(checkboxId);
+    const warnMsg = document.getElementById(warnId);
+
+    // 스크롤 감지 후 자동으로 체크 허용
+    contentBox.addEventListener("scroll", function () {
+      const atBottom =
+        contentBox.scrollTop + contentBox.clientHeight >= contentBox.scrollHeight - 2;
+      if (atBottom) {
+        checkbox.dataset.scrolled = "true"; // custom flag로 체크 허용
+        warnMsg.textContent = ""; // 경고 제거
+      }
+    });
+  });
+});
+
+// 약관 토글 열기/닫기
+function open_term(num) {
+  const term = document.getElementById("term" + num);
+  term.classList.toggle("show");
+}
+
+// 체크박스 클릭 시 검사
+function checkTermBeforeAgree(num) {
+  const termBox = document.getElementById("term" + num);
+  const checkbox = document.getElementById("agree" + num);
+  const warnMsg = document.getElementById("agree_check" + num);
+
+  const hasScrolled = checkbox.dataset.scrolled === "true";
+
+  if (!hasScrolled) {
+    checkbox.checked = false;
+    warnMsg.textContent = "약관을 다 읽고 체크해주세요..";
+    termBox.classList.add("show");
+    // termBox.scrollIntoView({ behavior: "auto" });
+    return false;
+  }
+
+  warnMsg.textContent = "";
+  return true;
+}
+
+
     //연락처 체크
     function mb_hp_check() {
         tel_check_by_id({
@@ -569,6 +675,20 @@
         })
     }
 
+    //계좌번호 체크
+    function bank_account_check() {
+        tel_check_by_id({
+            ids: ["bank_account_01", "bank_account_02", "bank_account_03"],
+            lengths: [2, 2, 2],
+            is_only_phone: false,
+            check_id: "bank_account_check",
+            confirm_id: "bank_account_check_confirm",
+            checked_mesage: "✔",
+            unchecked_message: "계좌번호를 작성해주세요.",
+        })
+    }
+
+
     //아이디 체크
     function id_check(input) {
         show_duplicate_check_notice({
@@ -588,6 +708,8 @@
             empty_message: "사업자 번호를 입력해주세요."
         })
     }
+
+
 
     //세금계산서 이메일 체크
     function company_tax_email_check(input) {
@@ -628,14 +750,6 @@
 
     });
 
-    function open_term(num) {
-        let term = document.getElementById('term' + num);
-        if (term.className.includes("show")) {
-            document.getElementById('term' + num).classList.remove('show');
-        } else {
-            document.getElementById('term' + num).classList.add('show');
-        }
-    }
 
     function email_addr_change(e) {
         var that = $(e);
@@ -854,6 +968,10 @@
             const agree1 = document.getElementById('agree1');
             const agree2 = document.getElementById('agree2');
 
+            const agree4 = document.getElementById('agree4');
+            const agree5 = document.getElementById('agree5');
+            const agree6 = document.getElementById('agree6');
+
             if (agree1 && !agree1.checked && type === "user") {
                 alert("이용약관에 동의해주세요.");
                 agree1.focus();
@@ -863,6 +981,22 @@
             if (agree2 && !agree2.checked) {
                 alert("개인정보 수집 및 이용에 동의해주세요.");
                 agree2.focus();
+                return false;
+            }
+
+            if (agree4 && !agree4.checked) {
+                alert("배송정책 약관에 동의해주세요.");
+                agree4.focus();
+                return false;
+            }
+            if (agree5 && !agree5.checked) {
+                alert("결제정책 약관에 동의해주세요.");
+                agree5.focus();
+                return false;
+            }
+            if (agree6 && !agree6.checked) {
+                alert("정산정책 약관에 동의해주세요.");
+                agree6.focus();
                 return false;
             }
         }

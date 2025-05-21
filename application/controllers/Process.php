@@ -49,6 +49,9 @@ class Process extends CI_Controller
         $this->remove_spaces = TRUE;
         $this->encrypt_name = TRUE;
     }
+
+
+
     public function register_form_update()
     {
         try {
@@ -188,42 +191,6 @@ class Process extends CI_Controller
                 }
 
 
-                // // 사업자등록증
-                // $uploadPath="./data/certificate/";
-                // $configArr = array();
-                // $configArr['upload_path'] = $uploadPath;
-
-                // $configArr['allowed_types'] = $this->allowed_types;
-                // $configArr['max_size'] = $this->max_size;
-                // // $configArr['max_width'] = "400";
-                // // $configArr['max_height'] = "400";
-                // $configArr['remove_spaces'] = $this->remove_spaces;
-                // $configArr['encrypt_name'] = $this->encrypt_name;
-
-                // $this->load->library('upload', $configArr);
-                // $this->upload->initialize($configArr);
-
-                // $uploadFile = array('company_cert' => '');
-                // $error = "";
-
-                // // 파일이 없으면 예외 발생
-                // if (!isset($_FILES['company_cert']['name']) || $_FILES['company_cert']['name'] == "") {
-                //     throw new Exception("사업자 등록증 파일을 업로드 해주세요.");
-                // }
-
-                // // 파일 업로드 처리
-                // if (!$this->upload->do_upload('company_cert')) {
-                //     $error = $this->upload->display_errors();
-                // } else {
-                //     $uploadFile['company_cert'] = $this->upload->data();
-                //     $company_cert_name = $uploadFile['company_cert']['file_name'];
-                // }
-
-                // // 업로드 중 에러 발생 시 예외 처리
-                // if ($error != "") {
-                //     throw new Exception($error);
-                // }
-
                 $company_tax_email_forward = $this->input->post('company_tax_email');
                 $company_tax_email_addr = $this->input->post('company_tax_email_addr');
                 $company_tax_email_ect = $this->input->post('company_tax_email_ect');
@@ -250,7 +217,7 @@ class Process extends CI_Controller
                 $company_tel_02 = $this->input->post('company_tel_02');
                 $company_tel_03 = $this->input->post('company_tel_03');
                 if (empty($company_tel_01) || empty($company_tel_02) || empty($company_tel_03)) {
-                    throw new Exception('담당자 휴대폰 번호를 입력해주세요.');
+                    throw new Exception('대표번호를 입력해주세요.');
                 }
                 $company_tel = $company_tel_01 . "-" . $company_tel_02 . "-" . $company_tel_03;
 
@@ -297,50 +264,21 @@ class Process extends CI_Controller
                     throw new Exception('은행명을 입력해주세요.');
                 }
 
-                $bank_account = $this->input->post('bank_account');
-                if (empty($bank_account)) {
+                $bank_account_01 = $this->input->post('bank_account_01');
+                $bank_account_02 = $this->input->post('bank_account_02');
+                $bank_account_03 = $this->input->post('bank_account_03');
+
+                if (empty($bank_account_01)  || empty($bank_account_02 ) || empty($bank_account_03)) {
                     throw new Exception('계좌번호를 입력해주세요.');
                 }
+
+                $bank_account = $bank_account_01 . "-" . $bank_account_02 . "-" . $bank_account_03;
 
                 $bank_holder = $this->input->post('bank_holder');
                 if (empty($bank_holder)) {
                     throw new Exception('예금주명을 입력해주세요.');
                 }
 
-
-                // // 통장사본
-                // $uploadPath="./data/certificate/";
-                // $configArr = array();
-                // $configArr['upload_path'] = $uploadPath;
-
-                // $configArr['allowed_types'] = $this->allowed_types;
-                // $configArr['max_size'] = $this->max_size;
-                // $configArr['remove_spaces'] = $this->remove_spaces;
-                // $configArr['encrypt_name'] = $this->encrypt_name;
-
-                // $this->load->library('upload', $configArr);
-                // $this->upload->initialize($configArr);
-
-                // $uploadFile = array('bank_cert' => '');
-                // $error = "";
-
-                // // 파일이 없으면 예외 발생
-                // if (!isset($_FILES['bank_cert']['name']) || $_FILES['bank_cert']['name'] == "") {
-                //     throw new Exception("통장 사본 파일을 업로드 해주세요.");
-                // }
-
-                // // 파일 업로드 처리
-                // if (!$this->upload->do_upload('bank_cert')) {
-                //     $error = $this->upload->display_errors();
-                // } else {
-                //     $uploadFile['bank_cert'] = $this->upload->data();
-                //     $bank_cert_name = $uploadFile['bank_cert']['file_name'];
-                // }
-
-                // // 업로드 중 에러 발생 시 예외 처리
-                // if ($error != "") {
-                //     throw new Exception($error);
-                // }
 
                 $info_name = $this->input->post('info_name');
                 if (empty($info_name)) {
@@ -394,8 +332,8 @@ class Process extends CI_Controller
                     }
                 }
 
-                if ($msg = $this->gvcomplex_lib->reserve_mb_id($mb_id))
-                    throw new Exception($msg);
+                // if ($msg = $this->gvcomplex_lib->reserve_mb_id($mb_id))
+                //     throw new Exception($msg);
                 // 이름에 한글명 체크를 하지 않는다.
                 //if($msg = valid_mb_name($mb_name))	throw new Exception($msg);
 
@@ -1272,7 +1210,7 @@ class Process extends CI_Controller
                     alert("삭제할 상품이 없습니다.");
                 }
 
-                $sql = "DELETE FROM shop_cart WHERE gs_id=? AND ct_select='0' AND mb_id = ? {$index_no_qry}";
+                $sql = "DELETE FROM shop_cart WHERE gs_id=? AND ct_select='0' AND mb_id = ? ";
                 $this->query_model->returnNull($sql, $data);
             }
         } else if ($act == "optionDelete") { // 옵션 삭제
@@ -2501,6 +2439,7 @@ class Process extends CI_Controller
     #상담문의 글삭제 함수
     public function qna_del()
     {
+        $member = $this->load->get_var('member');
         $index_no = $this->input->get('index_no');
         $sql = "select * from shop_qa where index_no=?";
         $data = array($index_no);
@@ -2535,10 +2474,8 @@ class Process extends CI_Controller
         if (substr_count($this->input->post('memo'), "&#") > 50) {
             alert("내용에 올바르지 않은 코드가 다수 포함되어 있습니다.");
         }
-        $memo = "";
-        if (!get_magic_quotes_gpc()) {
-            $memo = addslashes($this->input->post('memo'));
-        }
+        $memo = addslashes($this->input->post('memo'));
+
 
 
         $catename = $this->input->post('catename');
@@ -2826,10 +2763,8 @@ class Process extends CI_Controller
         if (substr_count($_POST['memo'], "&#") > 50) {
             alert("내용에 올바르지 않은 코드가 다수 포함되어 있습니다.");
         }
-        $memo = "";
-        if (!get_magic_quotes_gpc()) {
-            $memo = addslashes($this->input->post('memo'));
-        }
+        $memo = addslashes($this->input->post('memo'));;
+
         $catename = $this->input->post('catename');
         $email = $this->input->post('email');
         $email_send_yes = $this->input->post('email_send_yes');
@@ -3797,6 +3732,7 @@ class Process extends CI_Controller
     }
     public function del()
     {
+        $member = $this->load->get_var('member');
         $write = $this->load->get_var('write');
         $is_member = $this->load->get_var('is_member');
         $urlencode = $this->load->get_var('urlencode');
@@ -4542,6 +4478,8 @@ class Process extends CI_Controller
     {
         try {
             //code...
+
+
             $is_member = $this->load->get_var('is_member');
             $member = $this->load->get_var('member');
             $config = $this->load->get_var('config');

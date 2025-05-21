@@ -1,5 +1,8 @@
 <h2 class="pg_n_tit">
-    <span><?php echo ($type == "user") ? "회원가입" : "입점사 가입"?></span>
+    <span>
+        회원가입
+        <!-- <?php echo ($type == "user") ? "회원가입" : "입점사 가입"?> -->
+    </span>
 </h2>
 
 <form name="fregister" id="fregister" onsubmit="return fregister_submit(this);" method="POST" autocomplete="off">
