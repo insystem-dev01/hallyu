@@ -1,6 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Template {
+/**
+ * @property Global_lib $global_lib
+ * @property Funcomplex_lib $funcomplex_lib
+ */
+class Template  {
     protected $ci;
     public function __construct(){
         $this->ci =& get_instance();

@@ -1023,7 +1023,10 @@ class Global_lib {
     }
 
     function get_menu() {
-        $sql = "SELECT * FROM shop_menu ORDER BY `rank` asc, index_no asc";
+        $sql = "SELECT * 
+FROM shop_menu 
+WHERE `rank` IS NOT NULL AND `rank` != ''
+ORDER BY `rank` ASC, index_no ASC";
         $result = $this->ci->Query_model->returnArr($sql);
 
         return $result;

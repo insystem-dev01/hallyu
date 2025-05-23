@@ -605,51 +605,53 @@
                                 </td>
                             </tr>
 
-                            <tr>
-                                <th colspan="2" class="title">정책사항 약관</th>
-                            </tr>
-                            <tr class="first_line">
-                                <th><label for="reg_mb_terms">정책사항 약관 동의</label></th>
-                                <td>
-                                    <div class="vertical terms">
-                                        <!-- 배송정책 약관동의 -->
-                                        <div class="terms_box">
-                                            <input type="checkbox" name="agree4" value="1" id="agree4" onclick="return checkTermBeforeAgree(4);">
-                                            <label for="agree4">
-                                                <span>배송정책 약관동의 <span class="req">(필수)</span></span>
-                                            </label>
-                                            <span class="terms" onclick="open_term(4);">약관 보기 ></span>
-                                        </div>
-                                        <span id="agree_check4" class="warn_msg"></span>
-                                        <div id="term4" class="text_box"><?php echo nl2br($config['shop_delivery_policy']); ?></div>
+                            <?php if ($type == "seller") { ?>
+                                <tr>
+                                    <th colspan="2" class="title">정책사항 약관</th>
+                                </tr>
+                                <tr class="first_line">
+                                    <th><label for="reg_mb_terms">정책사항 약관 동의</label></th>
+                                    <td>
+                                        <div class="vertical terms">
+                                            <!-- 배송정책 약관동의 -->
+                                            <div class="terms_box">
+                                                <input type="checkbox" name="agree4" value="1" id="agree4" onclick="return checkTermBeforeAgree(4);">
+                                                <label for="agree4">
+                                                    <span>배송정책 약관동의 <span class="req">(필수)</span></span>
+                                                </label>
+                                                <span class="terms" onclick="open_term(4);">약관 보기 ></span>
+                                            </div>
+                                            <span id="agree_check4" class="warn_msg"></span>
+                                            <div id="term4" class="text_box"><?php echo nl2br($config['shop_delivery_policy']); ?></div>
 
-                                        <!-- 결제정책 약관동의 -->
-                                        <div class="terms_box">
-                                            <input type="checkbox" name="agree5" value="1" id="agree5" onclick="return checkTermBeforeAgree(5);">
-                                            <label for="agree5">
-                                                <span>결제정책 약관동의<span class="req">(필수)</span>
-                                                </span>
-                                            </label>
-                                            <span class="terms" onclick="open_term(5);">약관 보기 ></span>
-                                        </div>
-                                        <span id="agree_check5" class="warn_msg"></span>
-                                        <div id="term5" class="text_box"><?php echo nl2br($config['shop_charge_policy']); ?></div>
+                                            <!-- 결제정책 약관동의 -->
+                                            <div class="terms_box">
+                                                <input type="checkbox" name="agree5" value="1" id="agree5" onclick="return checkTermBeforeAgree(5);">
+                                                <label for="agree5">
+                                                    <span>결제정책 약관동의<span class="req">(필수)</span>
+                                                    </span>
+                                                </label>
+                                                <span class="terms" onclick="open_term(5);">약관 보기 ></span>
+                                            </div>
+                                            <span id="agree_check5" class="warn_msg"></span>
+                                            <div id="term5" class="text_box"><?php echo nl2br($config['shop_charge_policy']); ?></div>
 
-                                        <!-- 정산정책 약관동의 -->
-                                        <div class="terms_box">
-                                            <input type="checkbox" name="agree6" value="1" id="agree6" onclick="return checkTermBeforeAgree(6);">
-                                            <label for="agree6">
-                                                <span>정산정책 약관동의<span class="req">(필수)</span>
-                                                    
-                                                </span>
-                                            </label>
-                                            <span class="terms" onclick="open_term(6);">약관 보기 ></span>
+                                            <!-- 정산정책 약관동의 -->
+                                            <div class="terms_box">
+                                                <input type="checkbox" name="agree6" value="1" id="agree6" onclick="return checkTermBeforeAgree(6);">
+                                                <label for="agree6">
+                                                    <span>정산정책 약관동의<span class="req">(필수)</span>
+
+                                                    </span>
+                                                </label>
+                                                <span class="terms" onclick="open_term(6);">약관 보기 ></span>
+                                            </div>
+                                            <span id="agree_check6" class="warn_msg"></span>
+                                            <div id="term6" class="text_box"><?php echo nl2br($config['shop_calculate_policy']); ?></div>
                                         </div>
-                                        <span id="agree_check6" class="warn_msg"></span>
-                                        <div id="term6" class="text_box"><?php echo nl2br($config['shop_calculate_policy']); ?></div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 <?php } ?>

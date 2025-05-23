@@ -523,51 +523,53 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <th colspan="2" class="title">정책사항 약관</th>
-                </tr>
-                <tr class="first_line">
-                    <th><label for="reg_mb_terms">정책사항 약관 동의</label></th>
-                    <td>
-                        <div class="vertical terms">
-                            <!-- 배송정책 약관동의 -->
-                            <div class="terms_box">
-                                <input type="checkbox" name="agree4" value="1" id="agree4" onclick="return checkTermBeforeAgree(4);">
-                                <label for="agree4">
-                                    <span>배송정책 약관동의 <span class="req">(필수)</span>
-                                    <span id="agree_check4" class="warn_msg"></span>
-                                    </span>
-                                </label>
-                                <span class="terms" onclick="open_term(4);">약관 보기 ></span>
-                            </div>
-                            <div id="term4" class="text_box"><?php echo nl2br($config['shop_delivery_policy']); ?></div>
+                <?php if ($type == "seller") { ?>
+                    <tr>
+                        <th colspan="2" class="title">정책사항 약관</th>
+                    </tr>
+                    <tr class="first_line">
+                        <th><label for="reg_mb_terms">정책사항 약관 동의</label></th>
+                        <td>
+                            <div class="vertical terms">
+                                <!-- 배송정책 약관동의 -->
+                                <div class="terms_box">
+                                    <input type="checkbox" name="agree4" value="1" id="agree4" onclick="return checkTermBeforeAgree(4);">
+                                    <label for="agree4">
+                                        <span>배송정책 약관동의 <span class="req">(필수)</span>
+                                            <span id="agree_check4" class="warn_msg"></span>
+                                        </span>
+                                    </label>
+                                    <span class="terms" onclick="open_term(4);">약관 보기 ></span>
+                                </div>
+                                <div id="term4" class="text_box"><?php echo nl2br($config['shop_delivery_policy']); ?></div>
 
-                            <!-- 결제정책 약관동의 -->
-                            <div class="terms_box">
-                                <input type="checkbox" name="agree5" value="1" id="agree5" onclick="return checkTermBeforeAgree(5);">
-                                <label for="agree5">
-                                    <span>결제정책 약관동의<span class="req">(필수)</span>
-                                    <span id="agree_check5" class="warn_msg"></span>
-                                </span>
-                                </label>
-                                <span class="terms" onclick="open_term(5);">약관 보기 ></span>
-                            </div>
-                            <div id="term5" class="text_box"><?php echo nl2br($config['shop_charge_policy']); ?></div>
+                                <!-- 결제정책 약관동의 -->
+                                <div class="terms_box">
+                                    <input type="checkbox" name="agree5" value="1" id="agree5" onclick="return checkTermBeforeAgree(5);">
+                                    <label for="agree5">
+                                        <span>결제정책 약관동의<span class="req">(필수)</span>
+                                            <span id="agree_check5" class="warn_msg"></span>
+                                        </span>
+                                    </label>
+                                    <span class="terms" onclick="open_term(5);">약관 보기 ></span>
+                                </div>
+                                <div id="term5" class="text_box"><?php echo nl2br($config['shop_charge_policy']); ?></div>
 
-                            <!-- 정산정책 약관동의 -->
-                            <div class="terms_box">
-                                <input type="checkbox" name="agree6" value="1" id="agree6" onclick="return checkTermBeforeAgree(6);">
-                                <label for="agree6">
-                                    <span>정산정책 약관동의<span class="req">(필수)</span>
-                                    <span id="agree_check6" class="warn_msg"></span>
-                                </span>
-                                </label>
-                                <span class="terms" onclick="open_term(6);">약관 보기 ></span>
+                                <!-- 정산정책 약관동의 -->
+                                <div class="terms_box">
+                                    <input type="checkbox" name="agree6" value="1" id="agree6" onclick="return checkTermBeforeAgree(6);">
+                                    <label for="agree6">
+                                        <span>정산정책 약관동의<span class="req">(필수)</span>
+                                            <span id="agree_check6" class="warn_msg"></span>
+                                        </span>
+                                    </label>
+                                    <span class="terms" onclick="open_term(6);">약관 보기 ></span>
+                                </div>
+                                <div id="term6" class="text_box"><?php echo nl2br($config['shop_calculate_policy']); ?></div>
                             </div>
-                            <div id="term6" class="text_box"><?php echo nl2br($config['shop_calculate_policy']); ?></div>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                <?php } ?>
 
             <?php } ?>
 
@@ -579,62 +581,77 @@
             뒤로가기
         </button>
         <input type="submit" value="<?php echo $butTxt; ?>" id="btn_submit" accesskey="s">
-        
+
     </div>
 
 
 </form>
 
 <script>
-   document.addEventListener("DOMContentLoaded", function () {
-  const agreements = [
-    { contentId: "term4", checkboxId: "agree4", warnId: "agree_check4" },
-    { contentId: "term5", checkboxId: "agree5", warnId: "agree_check5" },
-    { contentId: "term6", checkboxId: "agree6", warnId: "agree_check6" },
-  ];
+    document.addEventListener("DOMContentLoaded", function() {
+        const agreements = [{
+                contentId: "term4",
+                checkboxId: "agree4",
+                warnId: "agree_check4"
+            },
+            {
+                contentId: "term5",
+                checkboxId: "agree5",
+                warnId: "agree_check5"
+            },
+            {
+                contentId: "term6",
+                checkboxId: "agree6",
+                warnId: "agree_check6"
+            },
+        ];
 
-  agreements.forEach(({ contentId, checkboxId, warnId }) => {
-    const contentBox = document.getElementById(contentId);
-    const checkbox = document.getElementById(checkboxId);
-    const warnMsg = document.getElementById(warnId);
+        agreements.forEach(({
+            contentId,
+            checkboxId,
+            warnId
+        }) => {
+            const contentBox = document.getElementById(contentId);
+            const checkbox = document.getElementById(checkboxId);
+            const warnMsg = document.getElementById(warnId);
 
-    // 스크롤 감지 후 자동으로 체크 허용
-    contentBox.addEventListener("scroll", function () {
-      const atBottom =
-        contentBox.scrollTop + contentBox.clientHeight >= contentBox.scrollHeight - 2;
-      if (atBottom) {
-        checkbox.dataset.scrolled = "true"; // custom flag로 체크 허용
-        warnMsg.textContent = ""; // 경고 제거
-      }
+            // 스크롤 감지 후 자동으로 체크 허용
+            contentBox.addEventListener("scroll", function() {
+                const atBottom =
+                    contentBox.scrollTop + contentBox.clientHeight >= contentBox.scrollHeight - 2;
+                if (atBottom) {
+                    checkbox.dataset.scrolled = "true"; // custom flag로 체크 허용
+                    warnMsg.textContent = ""; // 경고 제거
+                }
+            });
+        });
     });
-  });
-});
 
-// 약관 토글 열기/닫기
-function open_term(num) {
-  const term = document.getElementById("term" + num);
-  term.classList.toggle("show");
-}
+    // 약관 토글 열기/닫기
+    function open_term(num) {
+        const term = document.getElementById("term" + num);
+        term.classList.toggle("show");
+    }
 
-// 체크박스 클릭 시 검사
-function checkTermBeforeAgree(num) {
-  const termBox = document.getElementById("term" + num);
-  const checkbox = document.getElementById("agree" + num);
-  const warnMsg = document.getElementById("agree_check" + num);
+    // 체크박스 클릭 시 검사
+    function checkTermBeforeAgree(num) {
+        const termBox = document.getElementById("term" + num);
+        const checkbox = document.getElementById("agree" + num);
+        const warnMsg = document.getElementById("agree_check" + num);
 
-  const hasScrolled = checkbox.dataset.scrolled === "true";
+        const hasScrolled = checkbox.dataset.scrolled === "true";
 
-  if (!hasScrolled) {
-    checkbox.checked = false;
-    warnMsg.textContent = "약관을 다 읽고 체크해주세요..";
-    termBox.classList.add("show");
-    // termBox.scrollIntoView({ behavior: "auto" });
-    return false;
-  }
+        if (!hasScrolled) {
+            checkbox.checked = false;
+            warnMsg.textContent = "약관을 다 읽고 체크해주세요..";
+            termBox.classList.add("show");
+            // termBox.scrollIntoView({ behavior: "auto" });
+            return false;
+        }
 
-  warnMsg.textContent = "";
-  return true;
-}
+        warnMsg.textContent = "";
+        return true;
+    }
 
 
     //연락처 체크
