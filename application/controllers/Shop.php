@@ -214,11 +214,25 @@ class Shop extends CI_Controller
         }
 
         $this->template->header();
-        $this->listSkin();
+        $this->listSkin("all");
         $this->template->footer();
     }
 
-    private function listSkin()
+    #열린 장터 상품만 나오게
+    public function normal()
+    {
+        $ca_id = $this->input->get('ca_id');
+        $pt_id = $this->input->get('pt_id');
+        if ((!isset($_SESSION['device']) || $_SESSION['device'] != "pc") && $this->agent->is_mobile()) {
+            goto_url(base_url() . 'm/normal?ca_id=' . $ca_id);
+        }
+
+        $this->template->header();
+        $this->listSkin("normal");
+        $this->template->footer();
+    }
+
+    private function listSkin($type)
     {
         $ca_id = $this->input->get('ca_id');
         $pt_id = $this->input->get('pt_id');
@@ -243,7 +257,15 @@ class Shop extends CI_Controller
 
         $sql_search = " and (ca_id like '$ca_id%' or ca_id2 like '$ca_id%' or ca_id3 like '$ca_id%') ";
         $sql_common = $this->gvcomplex_lib->sql_goods_list($sql_search);
-        $sql_common .= "and type='normal'"; // 일반 상품만 조회
+
+        if ($type == "normal") {
+            $sql_common .= "and type='{$type}'"; // 일반 상품만 조회
+        } else if ($type == "all") {
+            $sql_common .= " AND (
+                   `type` = 'normal'
+                 OR (`type` = 'timesale' AND `eb_date` > NOW())
+                ) ";
+        }
 
         // 상품 정렬
         if ($sort && $sortodr)
@@ -286,7 +308,14 @@ class Shop extends CI_Controller
         $cgy = $this->funcomplex_lib->get_category_head_image($ca_id);
 
         $heading = isset($cgy['headimg']) ? $cgy['headimg'] : ''; // 분류별 상단이미지
-        $treeCate = $this->gvcomplex_lib->tree_category($ca_id); // 하위분류
+
+
+        if ((!isset($_SESSION['device']) || $_SESSION['device'] != "pc") && $this->agent->is_mobile()) {
+            $is_mobile = true;
+        } else {
+            $is_mobile = false;
+        }
+        $treeCate = $this->gvcomplex_lib->tree_category($is_mobile, $ca_id, $type); // 하위분류
 
 
         $selOpt = array('', '', '');
@@ -433,7 +462,7 @@ class Shop extends CI_Controller
             $sql_search .= " and sb_date >= '$OM_TIME_YMDHIS'";
         } else if ($status == "active") {
             $sql_search .= " and sb_date <= '$OM_TIME_YMDHIS' and eb_date >= '$OM_TIME_YMDHIS'";
-        } else if($status == "end") {
+        } else if ($status == "end") {
             $sql_search .= " and isopen = 5";
         }
 
@@ -466,9 +495,9 @@ class Shop extends CI_Controller
         $sql = "select * $sql_common $sql_order limit $from_record, $rows ";
         $result = $this->query_model->returnArr($sql);
 
-        $qstr1 = 'page_rows=' . $page_rows . '&sort=' . $sort . '&sortodr=' . $sortodr;
-        $qstr2 = 'page_rows=' . $page_rows;
-        $qstr3 = 'sort=' . $sort . '&sortodr=' . $sortodr;
+        $qstr1 = 'status=active' .'&page_rows=' . $page_rows . '&sort=' . $sort . '&sortodr=' . $sortodr;
+        $qstr2 = 'status=active' .'&page_rows=' . $page_rows;
+        $qstr3 = 'status=active' .'&sort=' . $sort . '&sortodr=' . $sortodr;
 
         $sort_str = '';
         for ($i = 0; $i < count($gw_psort); $i++) {
@@ -489,7 +518,12 @@ class Shop extends CI_Controller
         // $selectOpt.=option_selected(($mod*10),  $page_rows, '10줄 정렬');
         // $selectOpt.=option_selected(($mod*15),  $page_rows, '15줄 정렬');
 
-        $treeCate = $this->gvcomplex_lib->tree_category_timesale($ca_id, $status); // 하위분류
+        if ((!isset($_SESSION['device']) || $_SESSION['device'] != "pc") && $this->agent->is_mobile()) {
+            $is_mobile = true;
+        } else {
+            $is_mobile = false;
+        }
+        $treeCate = $this->gvcomplex_lib->tree_category($is_mobile,$ca_id, "timesale", $status); // 하위분류
 
         $tiemList = $this->timelist($result);
         $empty = "";
@@ -1237,11 +1271,11 @@ class Shop extends CI_Controller
 
         $ss_tx = isset($ss_tx) ? $ss_tx : $this->input->get('ss_tx');
         $sort = $this->input->get('sort');
-        if(empty($sort)) {
+        if (empty($sort)) {
             $sort = "readcount";
         }
         $sortodr = $this->input->get('sortodr');
-        if(empty($sortodr)) {
+        if (empty($sortodr)) {
             $sortodr = "desc";
         }
         $page = $this->input->get('page');
@@ -1267,20 +1301,20 @@ class Shop extends CI_Controller
         $sql_search = " and ( $concat_fields like '%$ss_tx%' or find_in_set('$ss_tx', a.keywords) >= 1 ) ";
 
         // 판매종료된 상품 제외
-        if(!empty($excludeSoldOut)) {
+        if (!empty($excludeSoldOut)) {
             $sql_search .= "and isopen != '5'";
         }
-        
+
         // bid 상품만 보기
-        if(!empty($onlyBid)) {
+        if (!empty($onlyBid)) {
             $sql_search .= "and type = 'timesale'";
         }
 
         $sql_common = $this->gvcomplex_lib->sql_goods_search($sql_search);
-        
+
         // 상품 정렬
         if ($sort && $sortodr) {
-            if($sort == "readcount") {
+            if ($sort == "readcount") {
                 $sql_order = " order by
                 CASE 
                     WHEN a.isopen = '5' THEN 1
@@ -1992,42 +2026,42 @@ class Shop extends CI_Controller
             $timesale .=
                 "<div class=\"timesale\">
 					<div class=\"title\">
-						<span class=\"tit-text\">상품구매현황</span>";
+						<span class=\"tit-text\">남은 구매시간</span>";
             $timesale .= $this->funcomplex_lib->get_pc_timesaleTag($gs, $is_open, "normal", $this->funcomplex_lib->is_soldout($gs['index_no']));
-            $timesale .=
-                "</div>
-                    <div class=\"progress-container\">
-                        <div class=\"progress-bar\">
-                            <div class=\"progress-label {$percent_class}\"></div>
-                        </div>
-                        <div class=\"progress-min\">0</div>
-                        <div class=\"progress-max\">" . $stock_qty . "</div>
-                    </div>
-                    <script>
-                        // 진행률 퍼센트 설정
-                        const progressPercentage = " . $percent . ";
-                        document.querySelector('.progress-bar').style.width = progressPercentage + '%';
-                        document.querySelector('.progress-label').textContent = " . $order_qty . ";
-                    </script>
-                    <table>
-                        <colgroup>
-                            <col style=\"width: 20%\">
-                            <col style=\"width: 20%\">
-                            <col style=\"width: 30%\">
-                            <col style=\"width: 30%\">
-                        </colgroup>
-                            <thead>
-                            <tr>
-                                <td>구매순서</td>
-                                <td>아이디</td>
-                                <td>구매시간</td>
-                                <td>
-                                    <p>구매가격</p>
-                                    <p>(판매종료 후 공개)</p>
-                                </td>
-                            </tr>
-                        </thead>
-                    </table>";
+            // $timesale .=
+            //     "</div>
+            //         <div class=\"progress-container\">
+            //             <div class=\"progress-bar\">
+            //                 <div class=\"progress-label {$percent_class}\"></div>
+            //             </div>
+            //             <div class=\"progress-min\">0</div>
+            //             <div class=\"progress-max\">" . $stock_qty . "</div>
+            //         </div>
+            //         <script>
+            //             // 진행률 퍼센트 설정
+            //             const progressPercentage = " . $percent . ";
+            //             document.querySelector('.progress-bar').style.width = progressPercentage + '%';
+            //             document.querySelector('.progress-label').textContent = " . $order_qty . ";
+            //         </script>
+            //         <table>
+            //             <colgroup>
+            //                 <col style=\"width: 20%\">
+            //                 <col style=\"width: 20%\">
+            //                 <col style=\"width: 30%\">
+            //                 <col style=\"width: 30%\">
+            //             </colgroup>
+            //                 <thead>
+            //                 <tr>
+            //                     <td>구매순서</td>
+            //                     <td>아이디</td>
+            //                     <td>구매시간</td>
+            //                     <td>
+            //                         <p>구매가격</p>
+            //                         <p>(판매종료 후 공개)</p>
+            //                     </td>
+            //                 </tr>
+            //             </thead>
+            //         </table>";
 
             if ($is_member) {
                 $member = $this->load->get_var('member');
@@ -2060,31 +2094,31 @@ class Shop extends CI_Controller
                         // 딜 마감 후에는 실제 구매가 노출
                         $price = empty($row['gts_no']) ? "" : number_format($row['real_price']) . "원";
 
-                        $timesale .=
-                            "<tr>
-                                    <td>" . $row['num'] . "</td>
-                                    <td>" . $hiddenId . "</td>
-                                    <td>" . $row['od_time'] . "</td>
-                                    <td>" . $price . "</td>
-                                </tr>";
+                        //     $timesale .=
+                        //         "<tr>
+                        //                 <td>" . $row['num'] . "</td>
+                        //                 <td>" . $hiddenId . "</td>
+                        //                 <td>" . $row['od_time'] . "</td>
+                        //                 <td>" . $price . "</td>
+                        //             </tr>";
                     }
-                    $timesale .=
-                        "</tbody>
-                        </table>
-                    </div>";
+                    // $timesale .=
+                    //     "</tbody>
+                    //     </table>
+                    // </div>";
                 }
             }
 
-            $timesale .=
-                "<div class=\"table_box\">
-                        <table>
-                            <colgroup>
-                                <col style=\"width: 20%\">
-                                <col style=\"width: 20%\">
-                                <col style=\"width: 30%\">
-                                <col style=\"width: 30%\">
-                            </colgroup>
-                            <tbody>";
+            // $timesale .=
+            //     "<div class=\"table_box\">
+            //             <table>
+            //                 <colgroup>
+            //                     <col style=\"width: 20%\">
+            //                     <col style=\"width: 20%\">
+            //                     <col style=\"width: 30%\">
+            //                     <col style=\"width: 30%\">
+            //                 </colgroup>
+            //                 <tbody>";
 
             foreach ($timesale_list as $key => $row) {
                 $num = $key + 1;
@@ -2103,20 +2137,25 @@ class Shop extends CI_Controller
                 // 딜 마감 후에는 실제 구매가 노출
                 $price = empty($row['gts_no']) ? "" : number_format($row['real_price']) . "원";
 
-                $timesale .=
-                    "<tr>
-								<td>" . $num . "</td>
-								<td>" . $hiddenId . "</td>
-								<td>" . $row['od_time'] . "</td>
-								<td>" . $price . "</td>
-							</tr>";
+                // 상품구매현황 안나오게함
+                // $timesale .=
+                //     "<tr>
+                // 				<td>" . $num . "</td>
+                // 				<td>" . $hiddenId . "</td>
+                // 				<td>" . $row['od_time'] . "</td>
+                // 				<td>" . $price . "</td>
+                // 			</tr>";
             }
 
+            // $timesale .=
+            //     "</tbody>
+            //             </table>
+            //         </div>
+            //         <button class=\"more_btn\" onclick=\"order_more()\">구매현황 더보기</button>
+            // 	</div>";
             $timesale .=
-                "</tbody>
-                        </table>
+                "
                     </div>
-                    <button class=\"more_btn\" onclick=\"order_more()\">구매현황 더보기</button>
 				</div>";
         }
 

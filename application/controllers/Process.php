@@ -268,7 +268,7 @@ class Process extends CI_Controller
                 $bank_account_02 = $this->input->post('bank_account_02');
                 $bank_account_03 = $this->input->post('bank_account_03');
 
-                if (empty($bank_account_01)  || empty($bank_account_02 ) || empty($bank_account_03)) {
+                if (empty($bank_account_01)  || empty($bank_account_02) || empty($bank_account_03)) {
                     throw new Exception('계좌번호를 입력해주세요.');
                 }
 
@@ -2488,9 +2488,9 @@ class Process extends CI_Controller
         $email_send_yes = isset($email_send_yes) ? $email_send_yes : "";
         $$sms_send_yes = isset($sms_send_yes) ? $sms_send_yes : "";
 
-        $vale = array(
+        $value = array(
             'mb_id' => $member['id'],
-            'subjeect' => $subject,
+            'subject' => $subject,
             'memo' => $memo,
             'catename' => $catename,
             'email' => $email,
@@ -3206,6 +3206,53 @@ class Process extends CI_Controller
         }
     }
 
+    //좋아요 증가 감소
+    public function ajax_goodupdate()
+    {
+        $OM_TIME_YMDHIS = date("Y-m-d H:i:s", time());
+
+        $is_member = $this->load->get_var('is_member');
+        $member = $this->load->get_var('member');
+        $index_no = $this->input->post('index_no');
+        $index_no = trim($index_no);
+        $board_id = 37;
+
+        if (!$is_member) {
+            die('회원 전용 서비스입니다.');
+        }
+
+        if (!$index_no) {
+            die('잘못된 접근입니다.');
+        }
+
+        $sql = "select count(*) as cnt from shop_request_goods_good where mb_id = ? and board_{$board_id}_index_no = ?";
+        $param = array($member['id'], $index_no);
+        $row = $this->query_model->returnOneArr($sql, $param);
+
+        if ($row['cnt']) {
+            $sql = " delete from shop_request_goods_good where mb_id = ? and board_{$board_id}_index_no = ?";
+            $param = array($member['id'], $index_no);
+            $this->query_model->returnNull($sql, $param);
+            $count = $this->gvcomplex_lib->get_good_count($index_no, $board_id);
+
+            echo json_encode([
+                'status' => 'DELETE',
+                'count' => $count,
+            ]);
+        } else {
+            $sql = "insert shop_request_goods_good set mb_id = ?, board_{$board_id}_index_no = ?, wi_time = '" . $OM_TIME_YMDHIS . "', wi_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+            $param = array($member['id'], $index_no);
+            $this->query_model->returnNull($sql, $param);
+            $count = $this->gvcomplex_lib->get_good_count($index_no, $board_id);
+
+            echo json_encode([
+                'status' => 'INSERT',
+                'count' => $count,
+            ]);
+        }
+    }
+
+
     public function ajax_orderfinalsave()
     {
         $OM_TIME_YMDHIS = date("Y-m-d H:i:s", time());
@@ -3277,6 +3324,7 @@ class Process extends CI_Controller
             die('휴대폰번호를 입력해주세요.');
         }
     }
+
     #답글 달때 사용하는 함수
     public function reply_update()
     {

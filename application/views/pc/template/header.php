@@ -94,4 +94,5 @@
     </div>
     <div id="container">
     <?= $quickMenu ?>
+	<?= $cs_banner ?>
     <?= $no_index ?>

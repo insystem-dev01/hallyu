@@ -6,7 +6,7 @@
                 <td class="list1 fs14"><b><?php echo $bo_subject; ?></b></td>
             </tr>
             <tr>
-                <td class="list1 tal"><b><?php echo $bo_writer_s; ?></b> <?=$bo_writer_id?>, <b>작성일</b> : <?php echo $bo_wdate; ?>, <b>조회수</b> : <?php echo $bo_hit; ?></td>
+                <td class="list1 tal"><b><?php echo $bo_writer_s; ?></b> <?=$bo_writer_id?>, <b>작성일:</b> <?php echo $bo_wdate; ?> <b>조회수:</b> <?php echo $bo_hit; ?></td>
             </tr>
             <?=$bo_file1Tag?>
             <?=$bo_file2Tag?>

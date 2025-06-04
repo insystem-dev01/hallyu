@@ -780,7 +780,7 @@ class Bbs extends CI_Controller
         $boardid = $this->input->post('boardid');
         $page = $this->input->post('page');
         $sfl = $this->load->get_var('sfl');
-
+        $stx = $this->input->get('stx');
         $urlencode = $this->load->get_var('urlencode');
         $write = $this->load->get_var('write');
         $member = $this->load->get_var('member');
@@ -849,6 +849,7 @@ class Bbs extends CI_Controller
         $write = $this->load->get_var('write');
         $board = $this->load->get_var('board');
         $sfl = $this->input->get('sfl');
+        $stx = $this->input->get('stx');
         if (!$is_member) {
             $member['grade'] = 99;
         }
@@ -922,6 +923,7 @@ class Bbs extends CI_Controller
         $write = $this->load->get_var('write');
         $board = $this->load->get_var('board');
         $sfl = $this->input->get('sfl');
+        $stx = $this->input->get('stx');
         if (!$is_member) {
             $member['grade'] = 99;
         }
@@ -1295,7 +1297,7 @@ class Bbs extends CI_Controller
         $board = $this->load->get_var('board');
         $index_no = $this->input->get('index_no');
         $qstr = $this->load->get_var('qstr');
-
+        $stx = $this->input->get('stx');
         $page = $this->input->get('page');
         $sfl = $this->input->get('sfl');
 
@@ -1376,6 +1378,7 @@ class Bbs extends CI_Controller
         $sql2 = "update shop_board_{$boardid} set readcount=? where index_no=?";
         $param2 = array($bo_hit, $index_no);
         $this->query_model->returnNull($sql2, $param2);
+        $urlencode = $this->load->get_var('urlencode');
 
         $accept = array("gif", "jpg", "GIF", "JPG", "PNG", "png");
         $bo_subject = "<b>" . $bo_subject . "</b>";
@@ -1479,6 +1482,7 @@ class Bbs extends CI_Controller
         $write = $this->load->get_var('write');
         $bo_img_url = $data['bo_img_url'];
 
+        // 리스트이면
         if ($theme == "list") {
             $requestUrl = explode('?', $_SERVER['REQUEST_URI'])[0];
             $qstr = $this->load->get_var('qstr');
@@ -1554,9 +1558,13 @@ class Bbs extends CI_Controller
                 $adminTb[0] = "<col width=\"50\">";
                 $adminTb[1] = "<th scope=\"col\"><input type=\"checkbox\" name=\"chkall\" value=\"1\" onclick=\"check_all(this.form);\"></th>";
             }
+
             $sql = " select * from shop_board_{$boardid} where btype = '1' {$sql_search2} order by fid desc ";
             $rst = $this->query_model->returnArr($sql);
             $listTb = "";
+            
+
+            //공지 사항 
             foreach ($rst as $key => $row) {
                 $bo_subject    = cut_str($row['subject'], $board['list_cut']);
                 $bo_wdate    = date("Y-m-d", $row['wdate']);
@@ -1592,11 +1600,17 @@ class Bbs extends CI_Controller
                     </td>
                     <td class=\"tac\">{$row['writer_s']}</td>
                     <td class=\"tac\">{$bo_file_yes}</td>
-                    <td class=\"tac\">{$row['readcount']}</td>
-                    <td class=\"tac\">{$bo_wdate}</td>
+                    <td class=\"tac\">{$row['readcount']}</td>";
+
+                if ($boardid == "37") { // 상품요청게시판 일때 좋아요 보이게함
+                    $listTb .= "<td class=\"tac\">{$row['good_count']}</td>";
+                }
+                $listTb .=
+                    "<td class=\"tac\">{$bo_wdate}</td>
                 </tr>";
                 $run++;
             }
+            //일반 공지
             foreach ($result as $key => $row) {
                 $bo_wdate = date("Y-m-d", $row['wdate']);
                 if ($row['fileurl1'] || $row['fileurl2'])
@@ -1647,8 +1661,13 @@ class Bbs extends CI_Controller
                     </td>
                     <td class=\"tac\">{$row['writer_s']}</td>
                     <td class=\"tac\">{$bo_file_yes}</td>
-                    <td class=\"tac\">{$row['readcount']}</td>
-                    <td class=\"tac\">{$bo_wdate}</td>
+                    <td class=\"tac\">{$row['readcount']}</td>";
+
+                if ($boardid == "37") { // 상품요청게시판 일때 좋아요 보이게함
+                    $listTb .= "<td class=\"tac\">{$row['good_count']}</td>";
+                }
+                $listTb .=
+                    "<td class=\"tac\">{$bo_wdate}</td>
                 </tr>";
                 $run++;
             }
@@ -1672,6 +1691,27 @@ class Bbs extends CI_Controller
                 </div>"; #차후분기처리해야함
             }
             $data['writeTag'] = $writeTag;
+
+            //좋아요 처리하는 부분
+            $good = array('', '', '');
+            // $sql = 
+
+
+            // 상품요청게시판 일때 좋아요 보이게함
+            if ($boardid == "37") {
+                $good[0] = "<col width=\"50\">";
+                $good[1] = "<th scope=\"col\">좋아요</th>";
+            }
+            if ($this->gvcomplex_lib->is_admin()) {
+                $adminTb[2] .= "
+                <div class=\"lbt_box\">
+                    <input type=\"submit\" value=\"삭제\" class=\"btn_lsmall bx-white\">
+                </div>";
+            }
+            $data['good'] = $good;
+
+
+
             $gw_opt = "";
             for ($i = 0; $i < sizeof($gw_search_value); $i++) {
                 $gw_opt .= "<option value='{$gw_search_value[$i]}'" . get_selected($gw_search_value[$i], $sfl) . ">{$gw_search_text[$i]}</option>\n";
@@ -1681,7 +1721,9 @@ class Bbs extends CI_Controller
             $data['pagination'] = $pagination;
 
             $this->load->view('pc/bbs/basic/list', $data);
-        } else if ($theme == "read") {
+        }
+        // 읽는 것이면
+        else if ($theme == "read") {
             $accept = $data['accept'];
             $queryString = $data['queryString'];
             $qstr1 = $queryString['qstr1'];
@@ -1811,6 +1853,35 @@ class Bbs extends CI_Controller
             $data['read_list'] = $read_list;
             $data['bo_writer_s'] = $bo_writer_s;
             $data['qstr1'] = $qstr1;
+
+            $good_button = '';
+            $good = '';
+            if ($boardid == "37") {
+                if(!$is_member){
+                    alert("로그인 후 이용가능합니다");
+                    return false;
+                }
+                
+                $good_count = $this->gvcomplex_lib->get_good_count($index_no, $boardid);
+                $good = "<b>좋아요:</b> <span id='good_count_{$index_no}'>{$good_count}</span>";
+
+                
+
+                $good_check = $this->gvcomplex_lib->get_is_good_check($index_no, $boardid, $member['id']);
+
+                $good_button = "
+                <tr>
+                    <td>
+                        <div class=\"goods_button\" onclick=\"request_goods_good('{$index_no}');\">
+                            <span  id=\"$index_no\" class=\"$index_no $good_check\"></span>
+                            <span class=\"good_label\">좋아요 <em id='good_count2_{$index_no}'>$good_count</em></span>
+                        </div>
+                    </td>
+                </tr>
+                ";
+            }
+            $data['good_button'] = $good_button;
+            $data['good'] = $good;
             $this->load->view('pc/bbs/basic/read', $data);
         } else if ($theme == "del") {
             $sfl = $this->input->get('sfl');
@@ -2040,7 +2111,10 @@ class Bbs extends CI_Controller
                 $returnTag .= "
                 <tr class=\"list1\">
                     <td>작성자 : <b>{$row['writer_s']}</b> ({$bo_wdate})";
-                if ($row['writer_s'] == $member['name'] || $this->gvcomplex_lib->is_admin()) {
+
+                $member_name = isset($member['name']) ? $member['name'] : '';
+
+                if ($row['writer_s'] == $member_name || $this->gvcomplex_lib->is_admin()) {
                     $returnTag .= "<a href=\"" . base_url() . "bbs/tail_del?tailindex={$row['index_no']}&{$qstr2}\" class=\"btn_ssmall bx-white\">삭제</a>";
                 }
                 $returnTag .= "
@@ -4353,5 +4427,58 @@ class Bbs extends CI_Controller
         $data = array('size' => $size, 'img' => $img);
         $this->load->view('pc/bbs/imgviewer', $data);
         $this->template->footer_sub();
+    }
+
+    // 상품요청 게시판
+    public function goods_request_list()
+    {
+        $is_member = $this->load->get_var('is_member');
+        $member = $this->load->get_var('member');
+        $board = $this->load->get_var('board');
+        $sfl = $this->input->get('sfl');
+        $stx = $this->input->get('stx');
+        if ((!isset($_SESSION['device']) || $_SESSION['device'] != "pc") && $this->agent->is_mobile()) {
+            goto_url(base_url() . 'm/bbs/goods_request_list?boardid=37');
+        }
+
+        log_message('error', '현재 게시판 ID: ' . $board['index_no'] . ' / 이름: ' . $board['boardname'] . ' / list_priv: ' . $board['list_priv']);
+
+
+        if (!$is_member) {
+            $member['grade'] = 99;
+        }
+
+        if ($board['list_priv'] < 99) {
+            if ($member['grade'] > $board['list_priv']) {
+                alert('권한이 없습니다.');
+            }
+        }
+        if ($board['topfile']) {
+            if ($sfl == 'writer') {
+                if (!$stx) {
+                    $stx = $member['index_no'];
+                }
+            } else {
+                if (strpos($board['topfile'], 'mypage')) {
+                    $this->mypage_template->mypage_admin_head();
+                    $this->mypage_template->board_header();
+                } else {
+                    $this->template->header();
+                    $this->template->board_header();
+                }
+            }
+        }
+
+        $this->listSkin($board);
+
+        if ($board['downfile']) {
+            if (strpos($board['downfile'], 'mypage')) {
+                $this->mypage_template->admin_footer_end();
+                $this->mypage_template->mypage_admin_footer();
+            } else {
+                $this->template->board_footer();
+                $this->template->footer();
+            }
+        }
     }
 }

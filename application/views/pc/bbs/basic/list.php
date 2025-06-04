@@ -13,20 +13,27 @@
             <colgroup>
                 <col width="50">
                 <?=$adminTb[0]?>
+                <!-- 관리자일 때 선택 버튼  -->
                 <col>
                 <col width="90">
                 <col width="50">
                 <col width="50">
+                <!-- 좋아요 -->
+                <?= $good[0] ?>
                 <col width="90">
             </colgroup>
             <thead>
                 <tr>
                     <th scope="col">번호</th>
                     <?=$adminTb[1]?>
+                    <!-- 관리자일 때 선택 버튼 -->
+                     
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
                     <th scope="col">파일</th>
                     <th scope="col">조회</th>
+                    <!-- 좋아요 -->
+                     <?= $good[1] ?>
                     <th scope="col">등록일</th>
                 </tr>
             </thead>
@@ -37,6 +44,7 @@
     </div>
     <div class="page_wrap">
         <?=$adminTb[2]?>
+        
         <?=$writeTag?>
     </div>
 </form>

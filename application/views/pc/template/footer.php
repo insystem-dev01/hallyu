@@ -14,7 +14,7 @@
 				<!-- <li><a href="<?php echo base_url(); ?>bbs/register?type=seller">입점사 가입</a></li> -->
 				<script type="text/javascript">
 					function company_check() {
-						window.open("http://www.ftc.go.kr/bizCommPop.do?wrkr_no=6058636234", "bizCommPop", "width=750, height=700;");
+						window.open("http://www.ftc.go.kr/bizCommPop.do?wrkr_no=4368602045", "bizCommPop", "width=750, height=700;");
 					}
 				</script>
             </ul>

@@ -5,7 +5,8 @@
 		<p class="kor">고객센터</p>
 	</div>
 	<dl class="aside_cs">
-        <?=$asideCsList?>
+		<!-- 공지사항 , 상품요청게시판-->
+        <?=$asideCsList?> 
 		<dt><a href="<?php echo base_url(); ?>bbs/qna_list">1:1 상담문의</a></dt>
 		<dt><a href="<?php echo base_url(); ?>bbs/faq?faqcate=1">자주묻는질문</a></dt>
         <?=$fagList?>

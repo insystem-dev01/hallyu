@@ -7,7 +7,7 @@
             </tr>
             <tr>
                 <td class="list1 tal">
-                    <b><?php echo $bo_writer_s; ?></b> <?=$bo_writer_id; ?> <b>작성일</b> : <?php echo $bo_wdate; ?>, <b>조회수</b> : <?php echo $bo_hit; ?>
+                    <b>아이디:</b> <?=$bo_writer_id; ?> <b>작성일:</b> <?php echo $bo_wdate; ?> <b>조회수:</b> <?php echo $bo_hit; ?> <?= $good ?>
                 </td>
             </tr>
             <?=$bo_file1_tag?>
@@ -17,16 +17,22 @@
                     <?=$bo_file1_img?>
                     <?=$bo_file2_img?>
                     <?=$getViewThum?>
+                    
                 </td>
             </tr>
+                    <?= $good_button ?>
         </tbody>
+        
 	</table>
+    
 </div>
+
 <div class="page_wrap">
 	<div class="lbt_box">
 		<a href="<?=base_url()?>bbs/noticeList?<?=$qstr1?>" class="btn_lsmall bx-white">목록</a>
 	</div>
     <div class="rbt_box">
+        
 		<?=$modifyTag?>
 		<?=$replyTag?>
 		<?=$delTag?>

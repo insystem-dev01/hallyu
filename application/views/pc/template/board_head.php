@@ -1,3 +1,4 @@
+
 <?=$aside_cs?>
 <div id="con_lf">
 	<h2 class="pg_tit">
