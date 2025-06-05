@@ -602,11 +602,12 @@ class Mypage extends CI_Controller{
             $btn_frmline = "
             <input type=\"submit\" name=\"act_button\" value=\"선택삭제\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
             <input type=\"submit\" name=\"act_button\" value=\"선택상품복사\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
-            <a href=\"".base_url()."MypageProcess/seller_goods_list_excel?flag=normal&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(일반)</a>
-            <a href=\"".base_url()."MypageProcess/seller_goods_list_excel?flag=timesale&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(bid)</a>
+            <a href=\"".base_url()."MypageProcess/seller_goods_list_excel?flag=normal&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(열린장터)</a>
+            <a href=\"".base_url()."MypageProcess/seller_goods_list_excel?flag=timesale&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(함께장터)</a>
             <a href=\"".base_url()."MypageProcess/seller_goods_list_excel?flag=all&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(전체)</a>
-            <a href=\"".base_url()."mypage/page?code=seller_goods_form&type=normal\" class=\"fr btn_lsmall red marl5\"><i class=\"ionicons ion-android-add\"></i> 상품등록</a>
-            <a href=\"".base_url()."mypage/page?code=seller_goods_form&type=timesale\" class=\"fr btn_lsmall red\"><i class=\"ionicons ion-android-add\"></i> bid</a>";
+            <a href=\"" . base_url() . "data/download/한류입점사 상품등록 메뉴얼.pdf\" download class=\"btn_lsmall\"> 상품등록 설명서</a>
+            <a href=\"".base_url()."mypage/page?code=seller_goods_form&type=normal\" class=\"fr btn_lsmall red marl5\"><i class=\"ionicons ion-android-add\"></i> 열린장터 상품등록</a>
+            <a href=\"".base_url()."mypage/page?code=seller_goods_form&type=timesale\" class=\"fr btn_lsmall red\"><i class=\"ionicons ion-android-add\"></i> 함께장터 상품등록</a>";
 
             $sflArr=array('','','','','','');
             $sflArr[0]=option_selected('gname', $sfl, '상품명');
@@ -1752,8 +1753,9 @@ class Mypage extends CI_Controller{
             <input type=\"submit\" name=\"act_button\" value=\"선택삭제\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
             <input type=\"submit\" name=\"act_button\" value=\"선택상품복사\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
             <a href=\"".base_url()."MypageProcess/seller_goods_list_excel?$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장</a>
-            <a href=\"".base_url()."mypage/page?code=seller_goods_form\" class=\"fr btn_lsmall red\"><i class=\"ionicons ion-android-add\"></i> 상품등록</a>";
-
+            <a href=\"" . base_url() . "data/download/한류입점사 상품등록 메뉴얼.pdf\" download class=\"btn_lsmall\"> 상품등록 설명서</a>
+            <a href=\"".base_url()."mypage/page?code=seller_goods_form&type=normal\" class=\"fr btn_lsmall red marl5\"><i class=\"ionicons ion-android-add\"></i> 열린장터 상품등록</a>
+            <a href=\"".base_url()."mypage/page?code=seller_goods_form&type=timesale\" class=\"fr btn_lsmall red\"><i class=\"ionicons ion-android-add\"></i> 함께장터 상품등록</a>";
             $sflArr=array('','','','','','');
             $sflArr[0]=option_selected('gname', $sfl, '상품명');
             $sflArr[1]=option_selected('gcode', $sfl, '상품코드');
@@ -2666,7 +2668,8 @@ class Mypage extends CI_Controller{
             $btn_frmline = "
             <a href=\"#\" id=\"frmOrderPrint\" class=\"btn_lsmall white\"><i class=\"fa fa-print\"></i> 주문서출력</a>
             <a href=\"#\" id=\"frmOrderExcel\" class=\"btn_lsmall white\"><i class=\"fa fa-file-excel-o\"></i> 선택 엑셀저장</a>
-            <a href=\"".base_url()."MypageProcess/seller_odr_excel?$q1\" class=\"btn_lsmall white\"><i class=\"fa fa-file-excel-o\"></i> 검색결과 엑셀저장</a>";
+            <a href=\"".base_url()."MypageProcess/seller_odr_excel?$q1\" class=\"btn_lsmall white\"><i class=\"fa fa-file-excel-o\"></i> 검색결과 엑셀저장</a>
+            <a href=\"" . base_url() . "data/download/한류입점사 주문관리 메뉴얼.pdf\" download class=\"btn_lsmall\">주문관리 설명서</a>";
             $pagination=get_paging($config['write_pages'], $page, $total_page, $requestUrl.'?'.$q1.'&page=');
             $sflOpt=array('','','','','','','','','','');
             $sflOpt[0]=option_selected('od_id', $sfl, '주문번호');

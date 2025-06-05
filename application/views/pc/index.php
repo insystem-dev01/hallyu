@@ -845,6 +845,7 @@
 		// 최초 로드 시에도 필터링 한 번
 		openfilterItems();
 		togetherfilterItems();
+		hottestfilterItems();
 	});
 
 	function load_category_items(category_code) {

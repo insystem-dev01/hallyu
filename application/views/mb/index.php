@@ -4,11 +4,11 @@
 <div class="bg active">
 	<div class="cont_wrap">
 		<div class="cont_box">
-			<div class="title">Bid</div>
+			<div class="title">함께장터</div>
 			<div class="row">
 				<div class="text">
 					최저가보다 더 최저가로 <br>
-					구매하는 신개념 입찰 쇼핑 bid
+					구매하는 신개념 입찰 쇼핑 함께장터
 				</div>
 				<div class="button" onclick="location.href='<?=base_url()?>m/shop/timesale?status=active'">전체보기 ></div>
 			</div>
@@ -23,7 +23,7 @@
 <div class="bg pending">
 	<div class="cont_wrap">
 		<div class="cont_box pending">
-			<div class="title">Bid 오픈예정</div>
+			<div class="title">함께장터 오픈예정</div>
 			<div class="row">
 				<div class="button" onclick="location.href='<?=base_url()?>m/shop/timesale?status=pending'">전체보기 ></div>
 			</div>

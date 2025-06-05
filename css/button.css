@@ -76,7 +76,7 @@
 .btn_medium,
 .btn_large {
 	background: #333;
-	border: 1px solid #333;
+	border: 1px solid #eeeeee;
 	color: #fff !important;
 }
 
@@ -86,7 +86,7 @@
 .btn_medium:hover,
 .btn_large:hover {
 	background: #222;
-	border: 1px solid #222;
+	border: 1px solid #eeeeee;
 	color: #fff !important;
 }
 

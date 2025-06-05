@@ -3557,7 +3557,7 @@ class AdminProcess extends CI_Controller{
             ->setCellValue($char++ . '1', '공급가격')
             ->setCellValue($char++ . '1', '시중가격')
             ->setCellValue($char++ . '1', '판매가격')
-            ->setCellValue($char++ . '1', '실제판매가(bid)')
+            ->setCellValue($char++ . '1', '실제판매가(함께장터)')
             ->setCellValue($char++ . '1', '가격대체문구')
             ->setCellValue($char++ . '1', '재고적용타입')
             ->setCellValue($char++ . '1', '재고수량')
@@ -3596,7 +3596,7 @@ class AdminProcess extends CI_Controller{
                 ->setCellValueExplicit($char++ . $i, $row['ca_id'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['ca_id2'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['ca_id3'], PHPExcel_Cell_DataType::TYPE_STRING)
-                ->setCellValueExplicit($char++ . $i, $row['type'] == "normal" ? "일반" : "bid", PHPExcel_Cell_DataType::TYPE_STRING)
+                ->setCellValueExplicit($char++ . $i, $row['type'] == "normal" ? "열린장터" : "함께장터", PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['gname'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['explan'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['keywords'], PHPExcel_Cell_DataType::TYPE_STRING)
@@ -3752,7 +3752,7 @@ class AdminProcess extends CI_Controller{
                 $gs = $this->global_lib->get_goods($gs_id);
 
                 if ($gs['shop_state'] == 0 && $type == "timesale") {
-                    throw new Exception("bid 상품은 최종관리자 승인 이후 수정이 불가능합니다.");
+                    throw new Exception("함께장터 상품은 최종관리자 승인 이후 수정이 불가능합니다.");
                 }
             }
 
@@ -4584,7 +4584,7 @@ class AdminProcess extends CI_Controller{
             ->setCellValue($char++ . '1', '공급가격')
             ->setCellValue($char++ . '1', '시중가격')
             ->setCellValue($char++ . '1', '판매가격')
-            ->setCellValue($char++ . '1', '실제판매가(bid)')
+            ->setCellValue($char++ . '1', '실제판매가(함께장터)')
             ->setCellValue($char++ . '1', '가격대체문구')
             ->setCellValue($char++ . '1', '재고적용타입')
             ->setCellValue($char++ . '1', '재고수량')
@@ -4621,7 +4621,7 @@ class AdminProcess extends CI_Controller{
                 ->setCellValueExplicit($char++ . $i, $row['ca_id'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['ca_id2'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['ca_id3'], PHPExcel_Cell_DataType::TYPE_STRING)
-                ->setCellValueExplicit($char++ . $i, $row['type'] == "normal" ? "일반" : "bid", PHPExcel_Cell_DataType::TYPE_STRING)
+                ->setCellValueExplicit($char++ . $i, $row['type'] == "normal" ? "열린장터" : "함께장터", PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['gname'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['explan'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['keywords'], PHPExcel_Cell_DataType::TYPE_STRING)
@@ -4831,7 +4831,7 @@ class AdminProcess extends CI_Controller{
             ->setCellValue($char++ . '1', '공급가격')
             ->setCellValue($char++ . '1', '시중가격')
             ->setCellValue($char++ . '1', '판매가격')
-            ->setCellValue($char++ . '1', '실제판매가(bid)')
+            ->setCellValue($char++ . '1', '실제판매가(함께장터)')
             ->setCellValue($char++ . '1', '가격대체문구')
             ->setCellValue($char++ . '1', '재고적용타입')
             ->setCellValue($char++ . '1', '재고수량')
@@ -4869,7 +4869,7 @@ class AdminProcess extends CI_Controller{
                 ->setCellValueExplicit($char++ . $i, $row['ca_id'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['ca_id2'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['ca_id3'], PHPExcel_Cell_DataType::TYPE_STRING)
-                ->setCellValueExplicit($char++ . $i, $row['type'] == "normal" ? "일반" : "bid", PHPExcel_Cell_DataType::TYPE_STRING)
+                ->setCellValueExplicit($char++ . $i, $row['type'] == "normal" ? "열린장터" : "함께장터", PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['gname'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['explan'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['keywords'], PHPExcel_Cell_DataType::TYPE_STRING)
@@ -5006,7 +5006,7 @@ class AdminProcess extends CI_Controller{
                 $param = array($rank[$k], $gs_id[$k]);
                 $this->query_model->returnNull($sql, $param);
             }
-        } else if ($_POST['act_button'] == "선택상품복사(일반)") {
+        } else if ($_POST['act_button'] == "선택상품복사(열린장터)") {
             // _GOODS_COPY_ 상수를 선언해야 goods_copy.inc.php 가 정상 작동함
             for ($i = 0; $i < $count; $i++) {
                 // 실제 번호를 넘김
@@ -5094,7 +5094,7 @@ class AdminProcess extends CI_Controller{
                 // 상품평 카피
                 $this->query_model->returnNull($opt_sql, $param);
             }
-        } else if ($_POST['act_button'] == "선택상품복사(bid)") {
+        } else if ($_POST['act_button'] == "선택상품복사(함께장터)") {
             // _GOODS_COPY_ 상수를 선언해야 goods_copy.inc.php 가 정상 작동함
             for ($i = 0; $i < $count; $i++) {
                 // 실제 번호를 넘김
@@ -5249,8 +5249,8 @@ class AdminProcess extends CI_Controller{
         }
 
         $messages = [
-            "선택상품복사(일반)" => '복사가 완료되었습니다. 카테고리를 등록해주세요.',
-            "선택상품복사(bid)" => '복사가 완료되었습니다. 카테고리와 bid 정보를 등록해주세요.'
+            "선택상품복사(열린장터)" => '복사가 완료되었습니다. 카테고리를 등록해주세요.',
+            "선택상품복사(함께장터)" => '복사가 완료되었습니다. 카테고리와 함께장터 정보를 등록해주세요.'
         ];
 
         $redirectUrl = ($return_page == "timesale_state_list")
@@ -6409,7 +6409,7 @@ class AdminProcess extends CI_Controller{
             ->setCellValue($char++ . '1', '공급가격')
             ->setCellValue($char++ . '1', '시중가격')
             ->setCellValue($char++ . '1', '판매가격')
-            ->setCellValue($char++ . '1', '실제판매가(bid)')
+            ->setCellValue($char++ . '1', '실제판매가(함께장터)')
             ->setCellValue($char++ . '1', '가격대체문구')
             ->setCellValue($char++ . '1', '재고적용타입')
             ->setCellValue($char++ . '1', '재고수량')
@@ -6447,7 +6447,7 @@ class AdminProcess extends CI_Controller{
                 ->setCellValueExplicit($char++ . $i, $row['ca_id'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['ca_id2'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['ca_id3'], PHPExcel_Cell_DataType::TYPE_STRING)
-                ->setCellValueExplicit($char++ . $i, $row['type'] == "normal" ? "일반" : "bid", PHPExcel_Cell_DataType::TYPE_STRING)
+                ->setCellValueExplicit($char++ . $i, $row['type'] == "normal" ? "열린장터" : "함께장터", PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['gname'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['explan'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValueExplicit($char++ . $i, $row['keywords'], PHPExcel_Cell_DataType::TYPE_STRING)
@@ -7008,7 +7008,7 @@ class AdminProcess extends CI_Controller{
 
         // Redirect output to a client’s web browser (Excel2007)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="bid 현황-' . date("ymd", time()) . '.xlsx"');
+        header('Content-Disposition: attachment; filename="함께장터 현황-' . date("ymd", time()) . '.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');

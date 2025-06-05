@@ -229,7 +229,7 @@
                                     
                                     var type = $("input[name='type']").val();
                                     if(type == "timesale") {
-                                        alert('bid 상품은 옵션 추가금액을 설정할 수 없습니다.');
+                                        alert('함께장터 상품은 옵션 추가금액을 설정할 수 없습니다.');
                                         that.val(0);
                                     }
                                 }
@@ -300,7 +300,7 @@
                                                 if (type !== "timesale") {
                                                     $tr.find("input[name='opt_price[]']").val(opt_price);
                                                 } else if (!alertShown) {
-                                                    alert('bid 상품은 추가금액을 설정할 수 없습니다.');
+                                                    alert('함께장터 상품은 추가금액을 설정할 수 없습니다.');
                                                     alertShown = true;
                                                 }
                                             }
@@ -627,7 +627,7 @@
                                 최대 <input type="text" name="odr_max" value="<?php echo $gs['odr_max']; ?>" class="frm_input w80">
                                 <span class="fc_197 marl5">미입력시 1개 고정 (무제한일 경우 0개로 설정)</span>
                             <?php } else { ?>
-                                <span class="fc_197 marl5">bid 상품은 최소, 최대 구매수량이 1개로 자동 설정됩니다.</span>
+                                <span class="fc_197 marl5">함께장터 상품은 최소, 최대 구매수량이 1개로 자동 설정됩니다.</span>
                             <?php } ?>
                         </td>
                     </tr>

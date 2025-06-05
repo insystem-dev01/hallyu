@@ -106,7 +106,7 @@ class MypageProcess extends CI_Controller{
                 $gs = $this->global_lib->get_goods($gs_id);
 
                 if($gs['shop_state'] == 0 && $type == "timesale") {
-                    throw new Exception("bid 상품은 최종관리자 승인 이후 수정이 불가능합니다.");
+                    throw new Exception("함께장터 상품은 최종관리자 승인 이후 수정이 불가능합니다.");
                 }
             }
 
@@ -1517,7 +1517,7 @@ class MypageProcess extends CI_Controller{
             ->setCellValue($char++.'1', '공급가격')
             ->setCellValue($char++.'1', '시중가격')
             ->setCellValue($char++.'1', '판매가격')
-            ->setCellValue($char++.'1', '실제판매가(bid)')
+            ->setCellValue($char++.'1', '실제판매가(함께장터)')
             ->setCellValue($char++.'1', '가격대체문구')
             ->setCellValue($char++.'1', '재고적용타입')
             ->setCellValue($char++.'1', '재고수량')
@@ -1553,7 +1553,7 @@ class MypageProcess extends CI_Controller{
             ->setCellValueExplicit($char++.$i, $row['ca_id'], PHPExcel_Cell_DataType::TYPE_STRING)
             ->setCellValueExplicit($char++.$i, $row['ca_id2'], PHPExcel_Cell_DataType::TYPE_STRING)
             ->setCellValueExplicit($char++.$i, $row['ca_id3'], PHPExcel_Cell_DataType::TYPE_STRING)
-            ->setCellValueExplicit($char++.$i, $row['type'] == "normal" ? "일반" : "bid", PHPExcel_Cell_DataType::TYPE_STRING)
+            ->setCellValueExplicit($char++.$i, $row['type'] == "normal" ? "열린장터" : "함께장터", PHPExcel_Cell_DataType::TYPE_STRING)
             ->setCellValueExplicit($char++.$i, $row['gname'], PHPExcel_Cell_DataType::TYPE_STRING)
             ->setCellValueExplicit($char++.$i, $row['explan'], PHPExcel_Cell_DataType::TYPE_STRING)
             ->setCellValueExplicit($char++.$i, $row['keywords'], PHPExcel_Cell_DataType::TYPE_STRING)

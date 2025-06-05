@@ -1328,6 +1328,10 @@ class Bbs extends CI_Controller
         $qstr1 = "boardid=$boardid$qstr&page=$page";
         $qstr2 = "index_no=$index_no&boardid=$boardid$qstr&page=$page";
         $qstr3 = "boardid=$boardid$qstr";
+
+
+
+
         $queryString = array('qstr1' => $qstr1, 'qstr2' => $qstr2, 'qstr3' => $qstr3);
         $this->readSkin($board, $queryString);
 
@@ -1533,6 +1537,7 @@ class Bbs extends CI_Controller
             $qstr1 = "boardid=$boardid$qstr&page=$page";
             $qstr2 = "boardid=$boardid$qstr";
 
+
             $data['boardid'] = $boardid;
             $data['sfl'] = $sfl;
             $data['stx'] = $stx;
@@ -1562,7 +1567,7 @@ class Bbs extends CI_Controller
             $sql = " select * from shop_board_{$boardid} where btype = '1' {$sql_search2} order by fid desc ";
             $rst = $this->query_model->returnArr($sql);
             $listTb = "";
-            
+
 
             //공지 사항 
             foreach ($rst as $key => $row) {
@@ -1570,9 +1575,9 @@ class Bbs extends CI_Controller
                 $bo_wdate    = date("Y-m-d", $row['wdate']);
 
                 if ($row['fileurl1'] || $row['fileurl2'])
-                    $bo_file_yes = "<img src='" . $bo_img_url . "/img/file_on.gif'>";
+                    $bo_file_yes = "<img src='" . $bo_img_url . "/img/img_icon.png'>";
                 else
-                    $bo_file_yes = "<img src='" . $bo_img_url . "/img/file_off.gif'>";
+                    $bo_file_yes = "";
 
                 if ((time() - $row['wdate']) < (60 * 60 * 24))
                     $bo_newicon = "&nbsp;<img src='" . $bo_img_url . "/img/iconY.gif'>";
@@ -1586,24 +1591,32 @@ class Bbs extends CI_Controller
                 if ($this->gvcomplex_lib->is_admin()) {
                     $listTb .= "<td class=\"tac\"><input type=\"checkbox\" name=\"OrderNum[]\" value=\"{$row['index_no']}\"></td>";
                 }
+
+                // 제목 <td> 시작
                 $listTb .= "
                     <td class=\"tal\">
-                        <a href=\"{$bo_href}\"><b>{$bo_subject}</b></a>";
+                        <a href=\"{$bo_href}\"><b>{$bo_subject}</b></a>
+                        <div class=\"icon-wrapper\">
+                        ";
+
+                if ($bo_file_yes) {
+                    $listTb .= "&nbsp;{$bo_file_yes}";
+                }
                 if ($row['issecret'] == 'Y') {
                     $listTb .= "&nbsp;<img src='{$bo_img_url}/img/icon_secret.gif'>";
                 }
                 if ($row['tailcount']) {
-                    $listTb .= "&nbsp;<img src='{$bo_img_url}/img/dot_cnum.gif'>&nbsp;<span class=\"fc_197\">({$row['tailcount']})</span>";
+                    $listTb .= "&nbsp;<img src='{$bo_img_url}/img/dot_cnum.gif'>&nbsp;<span class=\"fc_197\">{$row['tailcount']}</span>";
                 }
                 $listTb .= $bo_newicon;
                 $listTb .= "
+                        </div>
                     </td>
                     <td class=\"tac\">{$row['writer_s']}</td>
-                    <td class=\"tac\">{$bo_file_yes}</td>
                     <td class=\"tac\">{$row['readcount']}</td>";
 
                 if ($boardid == "37") { // 상품요청게시판 일때 좋아요 보이게함
-                    $listTb .= "<td class=\"tac\">{$row['good_count']}</td>";
+                    $listTb .= "<td class=\"tac\"><em id=\"good_count\">{$row['good_count']}</em></td>";
                 }
                 $listTb .=
                     "<td class=\"tac\">{$bo_wdate}</td>
@@ -1614,9 +1627,9 @@ class Bbs extends CI_Controller
             foreach ($result as $key => $row) {
                 $bo_wdate = date("Y-m-d", $row['wdate']);
                 if ($row['fileurl1'] || $row['fileurl2'])
-                    $bo_file_yes = "<img src='" . $bo_img_url . "/img/file_on.gif'>";
+                    $bo_file_yes = "<img src='" . $bo_img_url . "/img/img_icon.png'>";
                 else
-                    $bo_file_yes = "<img src='" . $bo_img_url . "/img/file_off.gif'>";
+                    $bo_file_yes = "";
 
                 $spacer = strlen($row['thread'] != 'A');
                 if ($spacer > $reply_limit) {
@@ -1646,25 +1659,32 @@ class Bbs extends CI_Controller
                 if ($this->gvcomplex_lib->is_admin()) {
                     $listTb .= "<td class=\"tac\"><input type=\"checkbox\" name=\"OrderNum[]\" value=\"{$row['index_no']}\"></td>";
                 }
+                //제목 시작
                 $listTb .= "
                     <td class=\"tal\">
-                        <a href=\"{$bo_href}\">{$bo_subject}</a>";
+                        <a href=\"{$bo_href}\">{$bo_subject}</a>
+                        <div class=\"icon-wrapper\">
+                        ";
+
+                if ($bo_file_yes) {
+                    $listTb .= "&nbsp;{$bo_file_yes}";
+                }
                 if ($row['issecret'] == 'Y') {
                     $listTb .= "&nbsp;<img src=\"{$bo_img_url}/img/icon_secret.gif\">";
                 }
-                $listTb .= "&nbsp;";
                 if ($row['tailcount']) {
-                    $listTb .= "<img src='{$bo_img_url}/img/dot_cnum.gif'>&nbsp;<span class=\"fc_197\">({$row['tailcount']})</span>";
+                    // $listTb .= "&nbsp;<img src='{$bo_img_url}/img/dot_cnum.gif'>&nbsp;<span class=\"fc_197\">{$row['tailcount']}</span>";
+                    $listTb .= "&nbsp;<span class=\"fc_197\">{$row['tailcount']}</span>";
                 }
                 $listTb .= $bo_newicon;
                 $listTb .= "
+                        </div>
                     </td>
                     <td class=\"tac\">{$row['writer_s']}</td>
-                    <td class=\"tac\">{$bo_file_yes}</td>
                     <td class=\"tac\">{$row['readcount']}</td>";
 
                 if ($boardid == "37") { // 상품요청게시판 일때 좋아요 보이게함
-                    $listTb .= "<td class=\"tac\">{$row['good_count']}</td>";
+                    $listTb .= "<td class=\"tac\"><em id=\"good_count\">{$row['good_count']}</em></td>";
                 }
                 $listTb .=
                     "<td class=\"tac\">{$bo_wdate}</td>
@@ -1678,7 +1698,7 @@ class Bbs extends CI_Controller
             if ($this->gvcomplex_lib->is_admin()) {
                 $adminTb[2] .= "
                 <div class=\"lbt_box\">
-                    <input type=\"submit\" value=\"삭제\" class=\"btn_lsmall bx-white\">
+                    <input type=\"submit\" value=\"삭제\" class=\"btn_medium bx-white\">
                 </div>";
             }
             $data['adminTb'] = $adminTb;
@@ -1687,7 +1707,7 @@ class Bbs extends CI_Controller
             if ($member['grade'] <= $board['write_priv']) {
                 $writeTag = "
                 <div class=\"rbt_box\">
-                    <a href=\"" . base_url() . "bbs/write?boardid={$boardid}\" class=\"btn_lsmall\">글쓰기</a>
+                    <a href=\"" . base_url() . "bbs/write?boardid={$boardid}\" class=\"btn_medium write-btn\">글쓰기</a>
                 </div>"; #차후분기처리해야함
             }
             $data['writeTag'] = $writeTag;
@@ -1699,14 +1719,8 @@ class Bbs extends CI_Controller
 
             // 상품요청게시판 일때 좋아요 보이게함
             if ($boardid == "37") {
-                $good[0] = "<col width=\"50\">";
+                $good[0] = "<col width=\"70\">";
                 $good[1] = "<th scope=\"col\">좋아요</th>";
-            }
-            if ($this->gvcomplex_lib->is_admin()) {
-                $adminTb[2] .= "
-                <div class=\"lbt_box\">
-                    <input type=\"submit\" value=\"삭제\" class=\"btn_lsmall bx-white\">
-                </div>";
             }
             $data['good'] = $good;
 
@@ -1742,6 +1756,13 @@ class Bbs extends CI_Controller
             $stx = $this->input->get('stx');
             $sfl = $this->input->get('sfl');
 
+
+            $prev_index_no = $this->gvcomplex_lib->get_prev_or_next_post($index_no, $boardid, 'prev');
+            $next_index_no = $this->gvcomplex_lib->get_prev_or_next_post($index_no, $boardid, 'next');
+
+            $data['prev_index_no'] = $prev_index_no;
+            $data['next_index_no'] = $next_index_no;
+            
             $bo_file1_tag = "";
             if (isset($bo_file1) && $bo_file1 != "") {
                 $bo_file1_tag = "<tr><td>첨부파일1 : <a href=\"" . base_url() . "process/download?file={$bo_file1}&url=./data/board/{$boardid}/{$bo_file1}\"><b>{$bo_file1}</b></a></td></tr>";
@@ -1857,15 +1878,15 @@ class Bbs extends CI_Controller
             $good_button = '';
             $good = '';
             if ($boardid == "37") {
-                if(!$is_member){
+                if (!$is_member) {
                     alert("로그인 후 이용가능합니다");
                     return false;
                 }
-                
+
                 $good_count = $this->gvcomplex_lib->get_good_count($index_no, $boardid);
                 $good = "<b>좋아요:</b> <span id='good_count_{$index_no}'>{$good_count}</span>";
 
-                
+
 
                 $good_check = $this->gvcomplex_lib->get_is_good_check($index_no, $boardid, $member['id']);
 
@@ -2086,100 +2107,118 @@ class Bbs extends CI_Controller
     private function read_comment($index_no, $from_action_url, $boardid, $sfl, $stx, $page, $bo_writer_s, $qstr2, $qstr3)
     {
         $is_member = $this->load->get_var('is_member');
-        $member = $this->load->get_var('member');
-        $board = $this->load->get_var('board');
+        $member    = $this->load->get_var('member');
+        $board     = $this->load->get_var('board');
         $returnTag = "";
-        $returnTag .= "
-        <form name=\"fboardform\" id=\"fboardform\" method=\"post\" action=\"{$from_action_url}\" onsubmit=\"return fboardform_submit(this);\">
-            <input type=\"hidden\" name=\"mode\" value=\"w\">
-            <input type=\"hidden\" name=\"index_no\" value=\"{$index_no}\">
-            <input type=\"hidden\" name=\"boardid\" value=\"{$boardid}\">
-            <input type=\"hidden\" name=\"sfl\" value=\"{$sfl}\">
-            <input type=\"hidden\" name=\"stx\" value=\"{$stx}\">
-            <input type=\"hidden\" name=\"page\" value=\"{$page}\">";
-        $sql = "select * from shop_board_{$boardid}_tail where board_index=? order by wdate asc";
-        $param = array($index_no);
+
+        // --- (1) 댓글 목록을 가져와서 <div class="comment-list"> 형태로 렌더링 ---
+        $sql    = "SELECT * 
+               FROM shop_board_{$boardid}_tail 
+               WHERE board_index = ? 
+               ORDER BY wdate ASC";
+        $param  = array($index_no);
         $resObj = $this->query_model->returnQueryObj($sql, $param);
-        if ($resObj->num_rows()) {
-            $returnTag .= "
-            <div class=\"tbl_frm02 tbl_wrap marb10\">
-                <table>
-                    <tbody>";
+
+        // 댓글 개수 카운트 (예: "댓글 6"처럼 상단에 표시해줄 경우)
+        $comment_count = $resObj->num_rows();
+
+        if ($comment_count) {
+            // 댓글 개수 출력
+            $returnTag .= "<div class=\"comment-section\">\n";
+            $returnTag .= "  <div class=\"comment-header\">댓글 {$comment_count}</div>\n";
+            $returnTag .= "  <div class=\"comment-list\">\n";
+
             $res = $resObj->result_array();
-            foreach ($res as $key => $row) {
-                $bo_wdate = date("Y-m-d H:i:s", $row['wdate']);
-                $returnTag .= "
-                <tr class=\"list1\">
-                    <td>작성자 : <b>{$row['writer_s']}</b> ({$bo_wdate})";
+            foreach ($res as $row) {
+                $bo_wdate    = date("Y.m.d H:i:s", $row['wdate']);
+                $writer_name = htmlspecialchars($row['writer_s'], ENT_QUOTES, 'UTF-8');
+                $memo_html   = $this->funcomplex_lib->conv_content($row['memo'], 0);
 
+                $returnTag .= "    <div class=\"comment-item\">\n";
+                // 1) 작성자 + 날짜 영역
+                $returnTag .= "      <div class=\"comment-meta\">\n";
+                $returnTag .= "        <span class=\"comment-author\"><b>{$writer_name}</b></span>\n";
+                $returnTag .= "        <span class=\"comment-date\">{$bo_wdate}</span>\n";
+
+                // 2) 삭제 버튼: 작성자와 관리자만 보이도록
                 $member_name = isset($member['name']) ? $member['name'] : '';
-
                 if ($row['writer_s'] == $member_name || $this->gvcomplex_lib->is_admin()) {
-                    $returnTag .= "<a href=\"" . base_url() . "bbs/tail_del?tailindex={$row['index_no']}&{$qstr2}\" class=\"btn_ssmall bx-white\">삭제</a>";
+                    $del_url = base_url() . "bbs/tail_del?tailindex={$row['index_no']}&{$qstr2}";
+                    $returnTag .= "        <a href=\"{$del_url}\" class=\"comment-delete\">삭제</a>\n";
                 }
-                $returnTag .= "
-                    </td>
-                </tr>";
-                $returnTag .= "
-                <tr>
-                    <td>" . $this->funcomplex_lib->conv_content($row['memo'], 0) . "</td>
-                </tr>";
+                $returnTag .= "      </div>\n";
+
+                // 3) 댓글 본문
+                $returnTag .= "      <div class=\"comment-body\">{$memo_html}</div>\n";
+                $returnTag .= "    </div>\n";
             }
-            $returnTag .= "
-                    </tbody>
-                </table>
-            </div>";
+
+            $returnTag .= "  </div> <!-- .comment-list 끝 -->\n";
+            $returnTag .= "</div>   <!-- .comment-section 끝 -->\n";
         }
+
+        // --- (2) 로그인한 사용자 여부에 따라 입력 폼 영역 출력 ---
         if ($is_member) {
-            $returnTag .= "
-            <table class=\"wfull bd\">
-                <tr height=\"80\" class=\"list1\">
-                    <td width=\"9%\" class=\"tac bold\">{$member['name']}</td>
-                    <td width=\"81%\"><textarea name=\"memo\" class=\"frm_textbox h60\"></textarea></td>
-                    <td class=\"tar padr10 padl10\">";
+            // 로그인한 사용자: 이름은 $member['name'], 권한 체크
+            $input_writer = htmlspecialchars($member['name'], ENT_QUOTES, 'UTF-8');
+
+            $returnTag .= "<form name=\"fboardform\" id=\"fboardform\" method=\"post\" action=\"{$from_action_url}\" onsubmit=\"return fboardform_submit(this);\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"mode\"      value=\"w\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"index_no\"  value=\"{$index_no}\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"boardid\"   value=\"{$boardid}\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"sfl\"       value=\"{$sfl}\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"stx\"       value=\"{$stx}\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"page\"      value=\"{$page}\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"writer_s\"  value=\"{$input_writer}\">\n";
+
+            // 댓글 입력 영역 (textarea + 버튼)
+            // board['tail_priv']가 허용 등급인지 확인
             if ($member['grade'] > $board['tail_priv']) {
-                $returnTag .= "<input type=\"button\" onclick=\"alert('댓글을 작성할 권한이 없습니다.');\" value=\"댓글입력\" class=\"btn_medium grey h60\">";
+                // 권한 부족 시 버튼 비활성화
+                $returnTag .= "  <div class=\"comment-input-area disabled\">\n";
+                $returnTag .= "    <textarea name=\"memo\" class=\"comment-input-text\" placeholder=\"댓글을 입력해주세요.\"></textarea>\n";
+                $returnTag .= "    <button type=\"button\" class=\"btn btn-disabled\" onclick=\"alert('댓글을 작성할 권한이 없습니다.');\">댓글등록</button>\n";
+                $returnTag .= "  </div>\n";
             } else {
-                $returnTag .= "
-                        <input type=\"hidden\" name=\"writer_s\" value=\"{$member['name']}\">
-                        <input type=\"submit\" value=\"댓글입력\" class=\"btn_medium grey h60\">";
+                // 정상 입력 가능
+                $returnTag .= "  <div class=\"comment-input-area\">\n";
+                $returnTag .= "    <textarea name=\"memo\" class=\"comment-input-text\" placeholder=\"댓글 내용을 입력해주세요. 500자 이하로 작성해주세요.\"></textarea>\n";
+                $returnTag .= "    <button type=\"submit\" class=\"btn btn-primary\">댓글등록</button>\n";
+                $returnTag .= "  </div>\n";
             }
-            $returnTag .= "
-                    </td>
-                </tr>
-            </table>";
+
+            $returnTag .= "</form>\n";
         } else {
+            // 비로그인 사용자: tail_priv 옵션에 따라 결정
             if ($board['tail_priv'] == '99') {
-                $returnTag .= "
-                <div class=\"tbl_frm01 tbl_wrap\">
-                    <table>
-                    <tr>
-                        <td colspan=\"2\">
-                            작성자 : <input type=\"text\" name=\"writer_s\" class=\"frm_input marr15\" size=\"20\">
-                            비밀번호 : <input type=\"password\" name=\"passwd\" class=\"frm_input\" size=\"20\">
-                        </td>
-                    </tr>
-                    <tr class=\"list1\">
-                        <td width=\"90%\"style=\"padding:10px 0 10px 10px\"><textarea name=\"memo\" class=\"frm_textbox h60\"></textarea></td>
-                        <td class=\"tar padr10 padl10\"><input type=\"submit\" value=\"댓글입력\" class=\"btn_medium grey h60\"></td>
-                    </tr>
-                    </table>
-                </div>";
+                // 익명+비밀번호 입력 양식
+                $returnTag .= "<form name=\"fboardform\" id=\"fboardform\" method=\"post\" action=\"{$from_action_url}\" onsubmit=\"return fboardform_submit(this);\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"mode\"     value=\"w\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"index_no\" value=\"{$index_no}\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"boardid\"  value=\"{$boardid}\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"sfl\"      value=\"{$sfl}\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"stx\"      value=\"{$stx}\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"page\"     value=\"{$page}\">\n";
+
+                $returnTag .= "  <div class=\"comment-input-area anonymous\">\n";
+                $returnTag .= "    <input type=\"text\" name=\"writer_s\" class=\"comment-input-name\" placeholder=\"작성자\">\n";
+                $returnTag .= "    <input type=\"password\" name=\"passwd\" class=\"comment-input-pw\" placeholder=\"비밀번호\">\n";
+                $returnTag .= "    <textarea name=\"memo\" class=\"comment-input-text\" placeholder=\"댓글을 입력해주세요. 500자 이하로 작성해주세요.\"></textarea>\n";
+                $returnTag .= "    <button type=\"submit\" class=\"btn btn-primary\">댓글등록</button>\n";
+                $returnTag .= "  </div>\n";
+                $returnTag .= "</form>\n";
             } else {
-                $returnTag .= "
-                <table class=\"wfull bd\">
-                <tr height=\"80\" class=\"list1\">
-                    <td width=\"9%\" class=\"tac bold\">{$bo_writer_s}</td>
-                    <td width=\"81%\"><textarea name=\"memo\" class=\"frm_textbox h60\"></textarea></td>
-                    <td class=\"tar padr10 padl10\"><input type=\"button\" onclick=\"alert('로그인후 댓글을 작성 가능합니다.');\" value=\"댓글입력\" class=\"btn_medium grey h60\"></td>
-                </tr>
-                </table>";
+                // 비로그인 + 로그인 필요
+                $returnTag .= "<div class=\"comment-input-area disabled\">\n";
+                $returnTag .= "  <textarea class=\"comment-input-text\" placeholder=\"로그인 후 댓글을 작성할 수 있습니다.\" disabled></textarea>\n";
+                $returnTag .= "  <button type=\"button\" class=\"btn btn-disabled\" onclick=\"alert('로그인후 댓글을 작성 가능합니다.');\">댓글등록</button>\n";
+                $returnTag .= "</div>\n";
             }
         }
-        $returnTag .= "</form>";
 
         return $returnTag;
     }
+
     private function read_list($theme, $listData)
     {
         $default = $this->load->get_var('default');

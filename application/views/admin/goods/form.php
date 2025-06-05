@@ -269,7 +269,7 @@
                                             if (type !== "timesale") {
                                                 $tr.find("input[name='opt_price[]']").val(opt_price);
                                             } else if (!alertShown) {
-                                                alert('bid 상품은 옵션 추가금액을 설정할 수 없습니다.');
+                                                alert('함께장터 상품은 옵션 추가금액을 설정할 수 없습니다.');
                                                 alertShown = true;
                                             }
                                         }
@@ -303,7 +303,7 @@
                                     
                                     var type = $("input[name='type']").val();
                                     if(type == "timesale") {
-                                        alert('bid 상품은 옵션 추가금액을 설정할 수 없습니다.');
+                                        alert('함께장터 상품은 옵션 추가금액을 설정할 수 없습니다.');
                                         that.val(0);
                                     }
                                 }

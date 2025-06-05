@@ -1,4 +1,4 @@
-<div class="tbl_head01 tbl_wrap mart30">
+<!-- <div class="tbl_head01 tbl_wrap mart30">
 	<table>
         <colgroup>
             <col width="50">
@@ -39,4 +39,4 @@
         <input type="submit" value="검색" class="btn_lsmall grey">
     </div>
 </form>
-<?=$pagination?>
+<?=$pagination?> -->

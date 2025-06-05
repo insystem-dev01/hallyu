@@ -348,7 +348,7 @@ class Admin_template {
             }
             $subNavTag.=$this->printMenu2_1($pg_title2,'g60', $ADMIN_MENU5_25, base_url().'admin/goods?code=popular_list');
             $subNavTag.=$this->printMenu2_1($pg_title2,'g60', $ADMIN_MENU5_26, base_url().'admin/goods?code=popular_rank');
-            $subNavTag.=$this->printMenu1('g70', 'bid 관리');
+            $subNavTag.=$this->printMenu1('g70', '함께장터 관리');
             $subNavTag.=$this->printMenu2_1($pg_title2,'g70', $ADMIN_MENU5_28, base_url().'admin/goods?code=timesale');
 
         }else if($pg_title == $ADMIN_MENU6) {
@@ -380,7 +380,7 @@ class Admin_template {
             $subNavTag.=$this->printMenu2_1($pg_title2,'o20', $ADMIN_MENU6_11, base_url().'admin/order?code=8', $sodr8['cnt']);
             $subNavTag.=$this->printMenu1('o30', '기타관리');
             $subNavTag.=$this->printMenu2_1($pg_title2,'o30', $ADMIN_MENU6_12, base_url().'admin/order?code=memo', $memoCnt);
-            $subNavTag.=$this->printMenu1('o40', 'bid');
+            $subNavTag.=$this->printMenu1('o40', '함께장터');
             $subNavTag.=$this->printMenu2_1($pg_title2,'o40', $ADMIN_MENU6_13, base_url().'admin/order?code=timesale_state_list');
         }else if($pg_title == $ADMIN_MENU7) {
             $subNavTag.=$this->printMenu1('v10', '접속자통계');

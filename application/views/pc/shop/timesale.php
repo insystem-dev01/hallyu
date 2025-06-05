@@ -45,8 +45,8 @@ function pad(n, width) {
 <h2 class="pg_title">
 	<div class="inner">
 		<dl class="txt_bx">
-			<dt>bid</dt>
-			<dd>한정된 시간동안만 누릴 수 있는 bid 상품을 만나보세요</dd>
+			<dt>함께장터</dt>
+			<dd>한정된 시간동안만 누릴 수 있는 함께장터 상품을 만나보세요</dd>
 		</dl>
 	</div>
 </h2>

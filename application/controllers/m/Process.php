@@ -2255,12 +2255,12 @@ class Process extends CI_Controller
 
                     // 타입이 섞이면 중단
                     if (count($allowed_types) > 1) {
-                        alert("bid 상품은 일반 상품과 함께 구입이 불가능합니다.");
+                        alert("함께장터 상품은 일반 상품과 함께 구입이 불가능합니다.");
                     }
 
                     // bid 상품이 2개 이상인 경우
                     if ($bid_count > 1) {
-                        alert("bid 상품은 한 번에 하나만 구매 가능합니다.");
+                        alert("함께장터 상품은 한 번에 하나만 구매 가능합니다.");
                     }
 
                     $sql = "SELECT * FROM shop_cart WHERE gs_id = ? AND ct_select='0' AND mb_id = ? AND index_no = ?";
@@ -2378,7 +2378,7 @@ class Process extends CI_Controller
                     $data = array($set_mb_id, $gs['index_no']);
                     $result = $this->query_model->returnOneArr($sql, $data);
                     if (!empty($result)) {
-                        alert('이미 구매한 상품입니다. bid 상품은 1개만 구매 가능합니다.');
+                        alert('이미 구매한 상품입니다. 함께장터 상품은 1개만 구매 가능합니다.');
                     }
                 }
 

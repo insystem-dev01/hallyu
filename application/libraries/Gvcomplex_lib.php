@@ -71,10 +71,9 @@ class Gvcomplex_lib
                     $href = base_url() . 'm/shop/cateList?ca_id=' . $row['catecode'];
                 else if ($type == "normal")
                     $href = base_url() . 'm/shop/normal?ca_id=' . $row['catecode'];
-                else if($type == "timesale"){
-                    $href = base_url() . 'm/shop/timesale?ca_id=' . $row['catecode'] . '&status=' . $status;    
-                }
-                else{
+                else if ($type == "timesale") {
+                    $href = base_url() . 'm/shop/timesale?ca_id=' . $row['catecode'] . '&status=' . $status;
+                } else {
                     alert("tree_category 에러");
                 }
 
@@ -419,6 +418,26 @@ class Gvcomplex_lib
         $is_good = $this->ci->Query_model->returnOneArr($sql, $data);
 
         return ($is_good['good_count']) ? "good on" : "good";
+    }
+
+    //이전글 다음글의 인덱스 반환 
+    public function get_prev_or_next_post($current_index_no, $board_id, $button_type)
+    {
+
+        if ($button_type == "prev") {
+            $sql = "select * from shop_board_{$board_id} where index_no < ? order by index_no desc limit 1";
+        } else if ($button_type == "next") {
+            $sql = "select * from shop_board_{$board_id} where index_no > ? order by index_no asc limit 1";
+        } else {
+            alert("올바르지 않은 버튼 타입입니다.");
+            log_message("error", "get_prev_or_next_post에서 에러 발생");
+            return false;
+        }
+        $data = array($current_index_no);
+
+        $post_info = $this->ci->Query_model->returnOneArr($sql, $data);
+
+        return $post_info['index_no'];
     }
 
 

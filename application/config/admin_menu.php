@@ -52,7 +52,7 @@ $config['ADMIN_MENU5_21']='상품 후기관리';
 $config['ADMIN_MENU5_24']='입점사 보류상품';
 $config['ADMIN_MENU5_25']='상품 검색어관리';
 $config['ADMIN_MENU5_26']='상품 검색어순위';
-$config['ADMIN_MENU5_28']='bid';
+$config['ADMIN_MENU5_28']='함께장터';
 
 $config['ADMIN_MENU6']='주문관리'; //대분류
 $config['ADMIN_MENU6_01']='주문리스트(전체)';
@@ -67,7 +67,7 @@ $config['ADMIN_MENU6_09']='배송전 환불';
 $config['ADMIN_MENU6_10']='배송후 반품';
 $config['ADMIN_MENU6_11']='배송후 교환';
 $config['ADMIN_MENU6_12']='관리자메모';
-$config['ADMIN_MENU6_13']='bid 현황';
+$config['ADMIN_MENU6_13']='함꼐장터 현황';
 
 // 통계분석
 $config['ADMIN_MENU7']='통계분석'; //대분류

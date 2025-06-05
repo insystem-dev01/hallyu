@@ -29,7 +29,7 @@
 				<tr>
 				<td class="check_area">
 					<input type="checkbox" id="excludeSoldOut" onchange="submitForm()" <?=(isset($excludeSoldOut) && $excludeSoldOut == 1) ? "checked=checked" : ""?>> 판매종료된 상품 제외
-					<input type="checkbox" id="onlyBid" onchange="submitForm()" <?=(isset($onlyBid) && $onlyBid == 1) ? "checked=checked" : ""?>> bid 상품만 보기
+					<input type="checkbox" id="onlyBid" onchange="submitForm()" <?=(isset($onlyBid) && $onlyBid == 1) ? "checked=checked" : ""?>> 함께장터 상품만 보기
 				</td>
 				</tr>
 			</table>

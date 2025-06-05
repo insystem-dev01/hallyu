@@ -354,7 +354,7 @@ class Db_table_optimize  {
         $result = $iamport->cancel(array(
             'imp_uid' => $od['imp_uid'],
             'merchant_uid' => $od['merchant_uid'],
-            'reason' => "bid 구매 실패로 인한 환불",
+            'reason' => "함께장터 구매 실패로 인한 환불",
         ));
     }
 }

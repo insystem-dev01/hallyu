@@ -117,7 +117,7 @@ $config['gw_star'] = array(
 
 // 메뉴바
 $config['gw_menu'] = array(
-	array("bid",	"shop/timesale"),
+	array("함께장터",	"shop/timesale"),
 	array("베스트셀러",	"shop/listtype?type=2"),
 	array("신상품",		"shop/listtype?type=3"),
 	array("인기상품",	"shop/listtype?type=4"),

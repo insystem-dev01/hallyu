@@ -803,7 +803,7 @@ class Api extends CI_Controller {
             $sql_order .= " LIMIT {$page_res['from_record']}, {$page_res['rows']}";
 
             switch($category['menu_name']) {
-                case 'bid':
+                case '함께장터':
                     break;
                 case '기획전':
                     break;
@@ -819,7 +819,7 @@ class Api extends CI_Controller {
                     break;
             }
 
-            if($type == "bid") {
+            if($type == "함께장터") {
                 $sql_search = " and type='timesale' ";
             }
     
@@ -2091,7 +2091,7 @@ class Api extends CI_Controller {
                     $data = array($mb_id, $gs_id);
                     $is_alreay = $this->query_model->returnOneArr($sql,$data);
                     if(!empty($is_alreay)) {
-                        throw new Exception('이미 구매한 상품입니다. bid 상품은 1개만 구매 가능합니다.');
+                        throw new Exception('이미 구매한 상품입니다. 함께장터 상품은 1개만 구매 가능합니다.');
                     }
                 }
 
@@ -2286,7 +2286,7 @@ class Api extends CI_Controller {
         
                 // 타입이 섞이면 중단
                 if (count($allowed_types) > 1) {
-                    throw new Exception("bid 상품은 일반 상품과 함께 구입이 불가능합니다.");
+                    throw new Exception("함께장터 상품은 일반 상품과 함께 구입이 불가능합니다.");
                 }
 
                 // 합계금액 계산

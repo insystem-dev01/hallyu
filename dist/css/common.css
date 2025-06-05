@@ -369,7 +369,7 @@ tfoot {
   text-align: left !important
 }
 
-.tal b {
+.list1 b {
   margin-left: 10px;
   margin-right: 3px;
   display: inline-block;
@@ -381,6 +381,10 @@ tfoot {
 
 .tac {
   text-align: center !important
+}
+
+.tac #good_count {
+  color: #0278fe;
 }
 
 .vat {
@@ -464,8 +468,370 @@ ul.ofh li {
   height: auto !important
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   1) .board-toolbar 기본 레이아웃: flex로 좌/중/우 3분할
+   ───────────────────────────────────────────────────────────────────────────── */
+.board-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  /* 필요에 따라 줄 간격 조정 */
+  padding: 0 16px;
+  /* 좌/우 여백, 필요시 조절 */
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2) 왼쪽: 전체 개수 영역
+   ───────────────────────────────────────────────────────────────────────────── */
+.toolbar-left .pg_cnt {
+  font-size: 15px;
+  color: #333;
+}
+
+.toolbar-left .pg_cnt em {
+  font-weight: bold;
+  color: #0278fe;
+  /* 숫자 강조 색 */
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   3) 가운데: 검색 폼 (.search-form)
+   ───────────────────────────────────────────────────────────────────────────── */
+.toolbar-center .search-form {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-center .search-form .frm_select {
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+  background-color: #fff;
+}
+
+.toolbar-center .search-form .frm_input {
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.toolbar-center .search-form .btn_search {
+  height: 34px;
+  padding: 0 14px;
+  background-color: #0278fe;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.toolbar-center .search-form .btn_search:hover {
+  background-color: #025fc1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   4) 오른쪽: 삭제 버튼 + 글쓰기 버튼(.toolbar-right)
+   ───────────────────────────────────────────────────────────────────────────── */
+/* .toolbar-right 자체도 flex로 두어서 버튼들 간격 유지 */
+.toolbar-right {
+  display: flex;
+  align-items: center;
+}
+
+/* “삭제” 버튼과 “글쓰기” 버튼 사이에 살짝 간격을 둡니다. */
+.toolbar-right .btn_lsmall,
+/* 삭제 버튼이 .btn_lsmall 형태라면 */
+.toolbar-right .btn_medium {
+  /* 혹은 글쓰기 버튼이 .btn_medium 이라면 선택 */
+  margin-left: 8px;
+  /* 필요에 따라 조절 */
+}
+
+.toolbar-right .write-btn {
+  /* 예시: 글쓰기 버튼 높이/패딩 맞추기 */
+  height: 34px;
+  line-height: 34px;
+  padding: 0 14px;
+  background-color: #0278fe;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+/* 버튼(글쓰기/삭제)의 기본 스타일이 이미 있으면 추가할 필요 없고, */
+/* 색상/테두리만 살짝 바꾸고 싶다면 아래처럼 덮어 쓰셔도 됩니다. */
+/* 예시) */
+.toolbar-right .btn_lsmall {
+  background-color: #eeeeee;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 34px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+/* .toolbar-right .btn_lsmall:hover {
+  background-color: #0278fe;
+} */
+
+.toolbar-right .btn_medium {
+  background-color: #0278fe;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  height: 34px;
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.toolbar-right .btn_medium:hover {
+  background-color: #025fc1;
+}
+
+.toolbar-delete {
+  display: flex;
+  justify-content: flex-end;
+  /* 가로축 끝(오른쪽)에 붙이려면 flex-end */
+  margin-top: -16px;
+  margin-bottom: 8px;
+  /* 테이블과 간격, 필요에 따라 조정 */
+  padding-right: 16px;
+  /* 오른쪽 여백(페이지 좌우 패딩과 맞추려면) */
+}
+
+.toolbar-delete .btn_medium {
+  background-color: #eeeeee;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 34px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
 .wfull {
-  width: 100%
+  width: 100%;
+
+}
+
+.wfull .list1 {
+  background-color: #edf5ff !important;
+  border-radius: 30px !important;
+}
+
+table.wfull.bd {
+  border-collapse: separate;
+  /* ▼ collapse 대신 separate */
+  border-spacing: 0;
+  /* collapse를 사용했을 때 0이던 값을 유지 */
+}
+
+/* 1) tr.list1 자체에 경계와 둥근 모서리를 준 예시 */
+table.wfull.bd tbody tr.list1 {
+  border: 1px solid #ddd;
+  /* 선 굵기와 색 지정 */
+  border-radius: 8px;
+  /* 모서리 반경(원하는 값으로 조정) */
+  overflow: hidden;
+  /* 내부 셀이 튀어나오지 않도록 */
+  margin-bottom: 10px;
+  /* 예시로 행 아래 여백을 주려면 */
+}
+
+/* 2) tr.list1 내부의 td에 각각 테두리를 지우거나 조정할 수도 있습니다. */
+/*    (테두리가 겹쳐서 보이는 것을 방지하기 위해 아래처럼 설정) */
+table.wfull.bd tbody tr.list1 td {
+  border: none;
+  /* 셀마다 기본 border가 있다면 제거 */
+  padding: 0;
+  /* 필요 시 패딩 조정 */
+}
+
+/* 3) td 내부에 텍스트박스가 있는데, 그 자체에 둥근 모서리를 줄 수도 있습니다 */
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   1) 댓글 목록 전체 래퍼 (.comment-section)
+   ───────────────────────────────────────────────────────────────────────────── */
+.comment-section {
+  margin-top: 30px;
+  /* 목록과 본문 사이 간격 */
+}
+
+.comment-header {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 12px;
+  /* '댓글 6' 텍스트와 목록 간격 */
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2) 댓글 개별 아이템 (.comment-item)
+   ───────────────────────────────────────────────────────────────────────────── */
+.comment-list .comment-item {
+  padding: 16px 0;
+  border-top: 1px solid #e6e6e6;
+  /* 위 아이템과 구분선 */
+}
+
+/* 첫 번째 댓글 위쪽에도 경계선을 넣고 싶다면, .comment-item:first-child에 따로 설정 */
+/* .comment-list .comment-item:first-child { border-top: none; } */
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.comment-meta .comment-author {
+  margin-right: 8px;
+  font-weight: 600;
+}
+
+.comment-meta .comment-date {
+  color: #888;
+  font-size: 13px;
+  margin-right: auto;
+  /* 작성자+날짜 이후 오른쪽 끝까지 공간을 밀어줌 */
+}
+
+.comment-meta .comment-delete {
+  font-size: 12px;
+  color: #999;
+  text-decoration: none;
+  padding: 2px 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.comment-meta .comment-delete:hover {
+  background-color: #f8f8f8;
+}
+
+/* 댓글 본문 */
+.comment-body {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  /* 줄바꿈 보존 */
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   3) 댓글 입력 영역 (.comment-input-area)
+   ───────────────────────────────────────────────────────────────────────────── */
+.comment-input-area {
+  margin-top: 20px;
+  background-color: #f5faff;
+  /* 연한 파랑 계열 배경 */
+  padding: 16px;
+  border: 1px solid #d9eaff;
+  /* 연한 외곽선 */
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* textarea */
+.comment-input-area .comment-input-text {
+  flex: 1;
+  resize: none;
+  /* 크기 조절 막기 */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  min-height: 80px;
+  /* 높이는 화면에 맞춰 조정 */
+  box-sizing: border-box;
+}
+
+/* 버튼 영역 */
+.comment-input-area .btn {
+  margin-top: 12px;
+  align-self: flex-end;
+  padding: 0 16px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* 활성화된 등록 버튼 */
+.comment-input-area .btn-primary {
+  background-color: #0278fe;
+  color: #fff;
+}
+
+.comment-input-area .btn-primary:hover {
+  background-color: #025fc1;
+}
+
+/* 비활성(로그인 필요하거나 권한 없음) 버튼 */
+.comment-input-area.disabled .btn-disabled {
+  background-color: #ccc;
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* 익명 입력 모드에서 이름, 비밀번호 필드 */
+.comment-input-area.anonymous {
+  flex-direction: column;
+}
+
+.comment-input-area.anonymous .comment-input-name,
+.comment-input-area.anonymous .comment-input-pw {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* 익명 입력 시, 버튼은 맨 아래에 정렬 */
+.comment-input-area.anonymous .btn-primary {
+  align-self: flex-end;
+}
+
+.comment-input-text {
+  background-color: #ffffff;
+}
+
+
+
+
+.frm_textbox.h60 {
+  border-radius: 10px;
+  /* 텍스트 영역 자체 둥글게 */
+  border: 1px solid #ccc;
+  /* 선이 없으면 radius가 체감되지 않음 */
+  padding: 8px;
+  /* 필요 시 내측 여백 */
+  box-sizing: border-box;
+  /* padding 포함 너비 계산 */
 }
 
 .hfull {
@@ -572,7 +938,8 @@ ul.ofh li {
 }
 
 .list1 {
-  background-color: #f8f8f8 !important
+  background-color: #f8f8f8 !important;
+  border-radius: 10px;
 }
 
 .list2 {
@@ -656,7 +1023,8 @@ ul.ofh li {
 }
 
 .fc_197 {
-  color: #197fe0 !important
+  color: #197fe0 !important;
+  font-weight: bold;
 }
 
 .fc_00f {
@@ -1601,7 +1969,7 @@ ul.ofh li {
   cursor: pointer;
   background: transparent;
   text-align: center;
-  border-radius: 0;
+  border-radius: 5px;
   outline: 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box
@@ -8762,7 +9130,7 @@ input:-webkit-autofill {
 
 .tbl_head01 th,
 .tbl_head01 td {
-  font-size: 12px
+  font-size: 14px
 }
 
 .tbl_head01 td {
@@ -11007,7 +11375,7 @@ ul.slick-dots {
   /* 버튼 사이 간격 */
   margin: 30px auto;
   justify-content: center;
-  flex-wrap: nowrap;  
+  flex-wrap: nowrap;
 }
 
 .open_category_btn,
@@ -11409,6 +11777,7 @@ ul.slick-dots {
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
+  vertical-align: middle;
 }
 
 /* 찜한 상태 (JS에서 토글) */
@@ -11420,10 +11789,11 @@ ul.slick-dots {
 .goods_button .good_label {
   margin-left: 6px;
   /* 아이콘과 텍스트 사이 간격 */
-  font-size: 14px;
+  font-size: 15px;
   color: #333;
   /* 텍스트 색상 조정 */
   user-select: none;
+  vertical-align: middle;
   /* 텍스트 드래그 방지 (선택 사항) */
 }
 
@@ -12600,13 +12970,12 @@ ul.slick-dots {
 .page_wrap .rbt_box {
   position: absolute;
   top: 0;
-  right: 0
+  right: 0;
 }
 
 .bottom_sch {
   padding: 7px 10px;
-  background-color: #f8f8f8;
-  text-align: center
+  text-align: center;
 }
 
 .top_sch {
@@ -15846,6 +16215,33 @@ ul.slick-dots {
   color: green;
   font-size: 17px;
   margin-left: 20px;
+}
+
+/* icon-wrapper 전체는 inline-block으로 두면 세로 정렬 관리가 편합니다. */
+.icon-wrapper {
+  display: inline-block;
+  vertical-align: middle;
+  /* 제목 텍스트와 세로 가운데 정렬 */
+}
+
+/* icon-wrapper 내부의 모든 img 태그(아이콘)에 왼쪽 마진을 줘서 간격을 띄움 */
+.icon-wrapper img {
+  margin-left: 8px;
+  /* 필요에 따라 픽셀값을 수정하세요 */
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+}
+
+/* 댓글 개수 텍스트((숫자))에도 왼쪽 마진 추가 */
+.icon-wrapper span.fc_197 {
+  display: inline-block;
+  text-align: center;
+  margin-left: 4px;
+  width: 15px;
+  height: 15px;
+  background-color: #f1f1f1;
+  vertical-align: middle;
 }
 
 
