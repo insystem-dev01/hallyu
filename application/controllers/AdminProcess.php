@@ -2160,6 +2160,63 @@ class AdminProcess extends CI_Controller{
         $value['update_time']          = $OM_TIME_YMDHIS;
         $this->query_model->insertObj("shop_seller", $value);
 
+        $seller_file_value = [
+            'shop_seller_id' => null,
+            'company_file_original_name' => null,
+            'company_file_name' => null,
+            'company_file_path' => null,
+            'company_file_type' => null,
+            'company_file_size' => null,
+            'bank_file_original_name' => null,
+            'bank_file_name' => null,
+            'bank_file_path' => null,
+            'bank_file_type' => null,
+            'bank_file_size' => null,
+        ];
+
+        $seller_file_value['shop_seller_id'] = $value['mb_id'];
+
+        if (isset($_FILES['company_regi_certi']) && $_FILES['company_regi_certi']['error'] === UPLOAD_ERR_OK) {
+            $upload_path = "/hallyu/cert/seller/";
+            $company_number = $value['company_saupja_no'] ;
+
+            $company_result = $this->upload_file($upload_path, $company_number, 'company_regi_certi', 'company', $value['mb_id']);
+
+            if (!$company_result['status']) {
+                throw new Exception($company_result['message']); // 실패 메시지 처리
+            }
+
+            $seller_file_value['company_file_original_name'] =  $_FILES['company_regi_certi']['name'];
+            $seller_file_value['company_file_name'] = $company_result['file_name'];
+            $seller_file_value['company_file_path'] = $upload_path;
+            $seller_file_value['company_file_type'] = $company_result['mime_type'];
+            $seller_file_value['company_file_size'] = $company_result['file_size_kb'];
+        } else {
+            throw new Exception("사업자 파일 첨부 오류 발생");
+        }
+
+        if (isset($_FILES['bank_copy']) && $_FILES['bank_copy']['error'] === UPLOAD_ERR_OK) {
+            $upload_path = "/hallyu/data/cert/seller/";
+
+
+            $bank_result = $this->upload_file($upload_path, $value['bank_account'], 'bank_copy', 'bank', $value['mb_id']);
+
+            if (!$bank_result['status']) {
+                throw new Exception($bank_result['message']); // 실패 메시지 처리
+            }
+            $seller_file_value['bank_file_original_name'] = $_FILES['bank_copy']['name'];
+            $seller_file_value['bank_file_name'] = $bank_result['file_name'];
+            $seller_file_value['bank_file_path'] = $upload_path;
+            $seller_file_value['bank_file_type'] = $bank_result['mime_type'];
+            $seller_file_value['bank_file_size'] = $bank_result['file_size_kb'];
+        } else {
+            throw new Exception("은행 파일 첨부 오류 발생");
+        }
+
+
+        //파일 db에 업로드
+        $this->query_model->insertObj("shop_seller_file", $seller_file_value);
+
         goto_url(base_url() . 'admin/seller?code=register');
     }
     public function seller_mail_select_update()
@@ -9006,4 +9063,65 @@ class AdminProcess extends CI_Controller{
     }
 
     #환경설정 관리 함수 끝
+
+    private function upload_file($upload_path, $number, $input_file, $file_name_type, $user_id)
+    {
+        date_default_timezone_set('Asia/Seoul'); // 한국 시간으로 설정
+
+        if (!isset($_FILES[$input_file]) || $_FILES[$input_file]['error'] !== UPLOAD_ERR_OK) {
+            echo "파일 업로드 실패: {$input_file}";
+            return;
+        }
+
+        //해당 경로에 디렉토리가 없으면 디렉토리 생성
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0777, true);
+        }
+
+        $config['upload_path'] = $upload_path;
+        $config['allowed_types'] = 'jpg|jpeg|png|pdf';
+        $config['max_size'] = 8192; // 8mb
+
+        $original_name = $_FILES[$input_file]['name'];
+        $ext = pathinfo($original_name, PATHINFO_EXTENSION); // .jpg
+        //$base = pathinfo($original_name, PATHINFO_FILENAME);
+
+
+        $new_file_name =  $file_name_type . '_' . $user_id . '_' . $number . '.' . $ext;
+        $full_path = $config['upload_path'] . $new_file_name;
+
+        //    // 동일한 이름이 이미 존재하면 실패 처리
+        if (file_exists($full_path)) {
+            echo json_encode([
+                'status' => false,
+                'message' => '이미 같은 이름의 파일이 존재합니다.'
+            ]);
+            return;
+        }
+
+        $config['file_name'] = $new_file_name;
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+
+        if (!$this->upload->do_upload($input_file)) {
+            $error = $this->upload->display_errors('', '');
+            echo json_encode([
+                'status' => false,
+                'message' => '파일 업로드 실패: ' . $error
+            ]);
+            return;
+        }
+
+        $upload_data = $this->upload->data();
+
+        return [
+            'status' => true,
+            'message' => '파일 업로드 성공',
+            'file_name' => $upload_data['file_name'],
+            'file_path' => $upload_data['full_path'],
+            'original_name' => $upload_data['orig_name'],
+            'file_size_kb' => $upload_data['file_size'],
+            'mime_type' => $upload_data['file_type'],
+        ];
+    }
 }

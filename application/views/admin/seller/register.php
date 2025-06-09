@@ -1,6 +1,6 @@
 <script src="<?php echo base_url();?>js/jquery.register_form.js"></script>
 <?=$headTitle?>
-<form name="fregform" method="post" onsubmit="return fregform_submit(this);">
+<form name="fregform" method="post" onsubmit="return fregform_submit(this);" enctype="multipart/form-data">
     <input type="hidden" name="token" value="">
     <h2>사업자 정보</h2>
     <div class="tbl_frm01">
