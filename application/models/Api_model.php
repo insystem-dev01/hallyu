@@ -436,4 +436,12 @@ class Api_model extends CI_Model {
         return $this->db->query($sql, array($mb_id, $index_no))->row_array();
     }
 
+    // 사업자등록증 조회
+    public function getBizCert($id) {
+        $sql = "SELECT company_file_path, company_file_name 
+                FROM shop_member_file 
+                WHERE shop_member_id = ?";
+
+        return $this->db->query($sql, array($id))->row_array();
+    }
 }

@@ -1,3 +1,10 @@
+<!-- Bootstrap 4.6 CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Bootstrap 4.6 JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <?=$jqueryUiDatePick?>
 <?=$headTitle?>
     <h2>기본검색</h2>
@@ -78,7 +85,7 @@
                     <th scope="col">번호</th>
                     <th scope="col"><?php echo $name;?>회원명</a></th>
                     <th scope="col"><?php echo $id; ?>아이디</a></th>
-                    <th scope="col">포로필</th>
+                    <th scope="col">프로필</th>
                     <th scope="col"><?php echo $grade; ?>레벨</a></th>
                     <th scope="col"><?php echo $business_cert_image; ?>사업자등록증</a></th>
                     <th scope="col"><?php echo $bank_account_image; ?>통장사본</a></th>
@@ -102,6 +109,23 @@
     </div>
     <?=$pagination?>
 <?=$headTitleEnd?>
+<!-- 모달 HTML -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">이미지 보기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="닫기">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="modalImage" src="" class="img-fluid" alt="이미지" />
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 function chk_use_app(mb_id) {
     var base_url=document.getElementById('base_url').value;
@@ -134,4 +158,9 @@ $(function(){
 	// 날짜 검색 : TODAY MAX값으로 인식 (maxDate: "+0d")를 삭제하면 MAX값 해제
 	$("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
 });
+
+$(document).on('click', '.view-image-btn', function() {
+    var imageUrl = $(this).data('img');
+    $('#modalImage').attr('src', imageUrl);
+  });
 </script>

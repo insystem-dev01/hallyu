@@ -22,6 +22,7 @@ class Admin extends CI_Controller
         $this->load->config('shop_extend');
 
         $this->load->model('query_model');
+        $this->load->model('Api_model');
 
         $this->allowed_types = 'jpg|jpeg|bmp|png|gif';
         $this->max_size = '2048';
@@ -367,16 +368,23 @@ class Admin extends CI_Controller
         $mileage = $this->gvcomplex_lib->subject_sort_link('mileage', $q2);
 
         //사업자 등록증 오름차순 내림차순 링크추가
-        $business_cert_image_link = $this->gvcomplex_lib->subject_sort_link('business_cert_image', $q2);
-        $business_cert_image = 1;
+        // $business_cert_image_link = $this->gvcomplex_lib->subject_sort_link('business_cert_image', $q2);
+        // $business_cert_image = "";
+        // $cert = $this->Api_model->getBizCert($row['id']);
+        // $business_cert_image = $cert['company_file_name'];
 
         //통장 사본 오름차순 내림차순 링크추가
-        $bank_account_image_link = $this->gvcomplex_lib->subject_sort_link('bank_account_image', $q2);
-        $bank_account_image = 1;
+        // $bank_account_image_link = $this->gvcomplex_lib->subject_sort_link('bank_account_image', $q2);
+        $bank_account_image = "";
 
         $i = 0;
         $mebmerList = "";
         foreach ($result as $key => $row) {
+            $cert = $this->Api_model->getBizCert($row['id']);
+            $company_file_path = $cert['company_file_path'];
+            $company_file_name = $cert['company_file_name'];
+            $business_cert_image = $company_file_path.$company_file_name;
+
             if ($i == 0)
                 $mebmerList .= '<tbody class="list">';
             $bg = 'list' . ($i % 2);
@@ -393,7 +401,10 @@ class Admin extends CI_Controller
             $mebmerList .= "
                     </td>
                     <td>" . $this->global_lib->get_grade($row['grade']) . "</td>
-                    <td>" . $business_cert_image . "</td>
+                    <td> <button type=\"button\" class=\"btn btn-sm btn-primary view-image-btn\" data-toggle=\"modal\" data-target=\"#imageModal\" data-img=\"".$business_cert_image."\">
+                        보기
+                        </button>
+                    </td>
                     <td>" . $bank_account_image . "</td>
                     <td class=\"tal\">{$row['pt_id']}</td>
                     <td>{$row['cellphone']}</td>
@@ -431,8 +442,8 @@ class Admin extends CI_Controller
             'id' => $id,
             'grade' => $grade,
             'recom_id' => $recom_id,
-            'business_cert_image' => $business_cert_image_link,
-            'bank_account_image' => $bank_account_image_link,
+            'business_cert_image' => $business_cert_image,
+            'bank_account_image' => $bank_account_image,
             'reg_time' => $reg_time,
             'login_sum' => $login_sum,
             'intercept_date' => $intercept_date,
