@@ -2131,6 +2131,16 @@ class Admin extends CI_Controller
                 $sellerListTable .= "<tbody class=\"list\">";
 
             $bg = 'list' . ($i % 2);
+
+            $bank = $this->Api_model->getCompany($row['mb_id']);
+            $bank_file_path = $bank['bank_file_path'];
+            $bank_file_name = $bank['bank_file_name'];
+            $bank_account_image = $bank_file_path.$bank_file_name;
+
+            $company_file_path = $bank['company_file_path'];
+            $company_file_name = $bank['company_file_name'];
+            $business_cert_image = $company_file_path.$company_file_name;
+
             $sellerListTable .= "
                 <tr class=\"{$bg}\">
                     <td>
@@ -2144,8 +2154,14 @@ class Admin extends CI_Controller
                     <td class=\"tal\">{$row['mb_id']}</td>
                     <td>{$row['seller_code']}</td>
                     <td class=\"tal\">" . $this->funcomplex_lib->get_text($row['company_name']) . "</td>
-                    <td></td>
-                    <td></td>
+                     <td> <button type=\"button\" class=\"btn btn-sm btn-primary view-image-btn\" data-toggle=\"modal\" data-target=\"#imageModal\" data-img=\"".$business_cert_image."\">
+                        보기
+                        </button>
+                    </td>
+                    <td> <button type=\"button\" class=\"btn btn-sm btn-primary bankview-image-btn\" data-toggle=\"modal\" data-target=\"#bankimageModal\" data-img=\"".$bank_account_image."\">
+                        보기
+                        </button>
+                    </td>
                     <td>{$row['company_tel']}</td>
                     <td>{$row['reg_time']}</td>
                     <td>{$row['today_login']}</td>

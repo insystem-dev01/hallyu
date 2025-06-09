@@ -1,3 +1,9 @@
+<!-- Bootstrap 4.6 CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Bootstrap 4.6 JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <?=$headTitle?>
 <?=$jqueryUiDatePick?>
 <h2>기본검색</h2>
@@ -56,7 +62,7 @@
                 <col class="w130">
                 <col class="w130">
                 <col class="w80">
-                <col>
+                <col class="w120">
                 <col class="w130"> <!-- 사업자등록증 -->
                 <col class="w130">
                 <col class="w100">
@@ -88,6 +94,39 @@
     </div>
 </form>
 <?=$pagination?>
+ <!-- 사업자등록증 -->
+ <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">사업자등록증 이미지 보기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="닫기">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="modalImage" src="" class="img-fluid" alt="이미지" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 통장사본 -->
+<div class="modal fade" id="bankimageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">통장사본 이미지 보기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="닫기">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="bankmodalImage" src="" class="img-fluid" alt="이미지" />
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 function fsellerlist_submit(f){
     if(!is_checked("chk[]")) {
@@ -107,6 +146,16 @@ function fsellerlist_submit(f){
 $(function(){
 	// 날짜 검색 : TODAY MAX값으로 인식 (maxDate: "+0d")를 삭제하면 MAX값 해제
 	$("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
+});
+
+$(document).on('click', '.view-image-btn', function() {
+    var imageUrl = $(this).data('img');
+    $('#modalImage').attr('src', imageUrl);
+  });
+
+$(document).on('click', '.bankview-image-btn', function() {
+    var imageUrl = $(this).data('img');
+    $('#bankmodalImage').attr('src', imageUrl);
 });
 </script>
 
