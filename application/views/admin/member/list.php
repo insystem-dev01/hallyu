@@ -86,7 +86,8 @@
                     <th scope="col"><?php echo $name;?>회원명</a></th>
                     <th scope="col"><?php echo $id; ?>아이디</a></th>
                     <th scope="col">프로필</th>
-                    <th scope="col"><?php echo $grade; ?>레벨</a></th>
+                    <!-- <th scope="col"><?php echo $grade; ?>레벨</a></th> -->
+                    <th scope="col">레벨</a></th>
                     <th scope="col"><?php echo $business_cert_image; ?>사업자등록증</a></th>
                     <th scope="col"><?php echo $bank_account_image; ?>통장사본</a></th>
                     <th scope="col"><?php echo $recom_id; ?>추천인</a></th>
@@ -110,17 +111,35 @@
     <?=$pagination?>
 <?=$headTitleEnd?>
 <!-- 모달 HTML -->
+ <!-- 사업자등록증 -->
 <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="imageModalLabel">이미지 보기</h5>
+        <h5 class="modal-title" id="imageModalLabel">사업자등록증 이미지 보기</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="닫기">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body text-center">
         <img id="modalImage" src="" class="img-fluid" alt="이미지" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 통장사본 -->
+<div class="modal fade" id="bankimageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">통장사본 이미지 보기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="닫기">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="bankmodalImage" src="" class="img-fluid" alt="이미지" />
       </div>
     </div>
   </div>
@@ -163,4 +182,9 @@ $(document).on('click', '.view-image-btn', function() {
     var imageUrl = $(this).data('img');
     $('#modalImage').attr('src', imageUrl);
   });
+
+$(document).on('click', '.bankview-image-btn', function() {
+    var imageUrl = $(this).data('img');
+    $('#bankmodalImage').attr('src', imageUrl);
+});
 </script>

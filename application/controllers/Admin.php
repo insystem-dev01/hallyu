@@ -380,10 +380,23 @@ class Admin extends CI_Controller
         $i = 0;
         $mebmerList = "";
         foreach ($result as $key => $row) {
+            $gradeView = $row['grade'];
+
+            if($gradeView == '9') {
             $cert = $this->Api_model->getBizCert($row['id']);
             $company_file_path = $cert['company_file_path'];
             $company_file_name = $cert['company_file_name'];
             $business_cert_image = $company_file_path.$company_file_name;
+            } else if($gradeView == '2') {
+                $bank = $this->Api_model->getCompany($row['id']);
+                $bank_file_path = $bank['bank_file_path'];
+                $bank_file_name = $bank['bank_file_name'];
+                $bank_account_image = $bank_file_path.$bank_file_name;
+
+                $company_file_path = $bank['company_file_path'];
+                $company_file_name = $bank['company_file_name'];
+                $business_cert_image = $company_file_path.$company_file_name;
+            }
 
             if ($i == 0)
                 $mebmerList .= '<tbody class="list">';
@@ -398,6 +411,7 @@ class Admin extends CI_Controller
                 $mebmerList .= "<img src='" . base_url() . "data/member/{$row['mb_img']}' class=\"member_img\">";
             }
 
+            if($gradeView == '9') {
             $mebmerList .= "
                     </td>
                     <td>" . $this->global_lib->get_grade($row['grade']) . "</td>
@@ -405,13 +419,32 @@ class Admin extends CI_Controller
                         보기
                         </button>
                     </td>
-                    <td>" . $bank_account_image . "</td>
+                    <td></td>
                     <td class=\"tal\">{$row['pt_id']}</td>
                     <td>{$row['cellphone']}</td>
                     <td>{$row['reg_time']}</td>
                     <td>" . number_format($this->common_lib->shop_count($row['id'])) . "</td>
                     <td>" . number_format($row['login_sum']) . "</td>
                     <td>" . substr($row['intercept_date'], 2, 6) . "</td>";
+            } else if($gradeView == '2') {
+                $mebmerList .= "
+                    </td>
+                    <td>" . $this->global_lib->get_grade($row['grade']) . "</td>
+                    <td> <button type=\"button\" class=\"btn btn-sm btn-primary view-image-btn\" data-toggle=\"modal\" data-target=\"#imageModal\" data-img=\"".$business_cert_image."\">
+                        보기
+                        </button>
+                    </td>
+                    <td> <button type=\"button\" class=\"btn btn-sm btn-primary bankview-image-btn\" data-toggle=\"modal\" data-target=\"#bankimageModal\" data-img=\"".$bank_account_image."\">
+                        보기
+                        </button>
+                    </td>
+                    <td class=\"tal\">{$row['pt_id']}</td>
+                    <td>{$row['cellphone']}</td>
+                    <td>{$row['reg_time']}</td>
+                    <td>" . number_format($this->common_lib->shop_count($row['id'])) . "</td>
+                    <td>" . number_format($row['login_sum']) . "</td>
+                    <td>" . substr($row['intercept_date'], 2, 6) . "</td>";
+            }
             if ($is_intro) {
                 $mebmerList .= "<td><input type=\"checkbox\" name=\"use_app\" value=\"1\"" . ($row['use_app'] ? ' checked' : '') . "onclick=\"chk_use_app('{$row['id']}');\"></td>";
             }
