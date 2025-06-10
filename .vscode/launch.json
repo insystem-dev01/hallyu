@@ -1,0 +1,29 @@
+
+{
+
+  "version": "0.2.0",
+
+  "configurations": [
+
+    {
+
+      "name": "Listen for Xdebug",
+
+      "type": "php",
+
+      "request": "launch",           //  여전히 launch 사용
+
+      "port": 9000,
+
+      "log": true,                   //  로그 확인용
+
+      "pathMappings": {
+  "C:/Bitnami/wampstack-7.2.28-0/apache2/htdocs": "${workspaceFolder}"
+}
+
+
+    }
+
+  ]
+
+}
