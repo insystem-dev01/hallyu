@@ -51,7 +51,7 @@ class Admin_template {
     public function admin_topmenu($pg_title="",$notIndex=true,$pg_title2="",$snb_icon=""){
         $config=$this->ci->load->get_var('config');
         $super=$this->ci->load->get_var('super');
-        $OM_VERSION='주식회사 그로';
+        $OM_VERSION='주식회사 더한류';
         $ADMIN_MENU1="";
         if($pg_title == $this->ci->config->item('ADMIN_MENU1')){
             $ADMIN_MENU1="active";

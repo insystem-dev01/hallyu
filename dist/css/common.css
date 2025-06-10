@@ -13010,8 +13010,8 @@ ul.slick-dots {
 
 .bx-wrapper .bx-pager .bx-pager-item {
   display: inline-block;
-  *zoom: 1;
-  *display: inline
+  zoom: 1;
+  display: inline;
 }
 
 .bx-wrapper .bx-pager.bx-default-pager a {
