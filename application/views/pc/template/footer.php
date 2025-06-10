@@ -33,7 +33,7 @@
 					<span class="g_hl"></span> Email : <?php echo $config['info_email']; ?><br>
 					개인정보보호책임자 : <?php echo $config['info_name']; ?> (<?php echo $config['info_email']; ?>) <br>
 					<p class="copy">
-						주식회사 그로는 통신판매중개자이며, 통신판매의 당사자가 아닙니다.
+						주식회사 더한류는 통신판매중개자이며, 통신판매의 당사자가 아닙니다.
 						상품, 상품정보, 거래에 관한 의무와 책임은 입점 판매자에게 있습니다. <br>
 						ⓒ hallyu.kr ALL RIGHTS RESERVED
 					</p>

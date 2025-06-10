@@ -37,7 +37,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.js"></script>
 
-
+<!-- 기간임박 -->
 <div class="cont_wrap mart80">
 	<div class="row">
 		<div class="attention_tit marb30"><span class="timer"></span>마감임박 함께장터 상품</div>
@@ -222,6 +222,7 @@
 	<img src="./data/banner/banner_05.png" alt="함께장터 특가" class="banner-img">
 </div>
 
+<!-- 인기상품 -->
 <div class="cont_wrap mart80">
 	<div class="row">
 		<div class="attention_tit">지금 가장 인기있는 함께장터 상품이에요</div>
@@ -313,6 +314,7 @@
 	<div class="more_show_button" onclick="location.href='<?= base_url() ?>shop/timesale?status=active'">전체보기 ></div>
 </div>
 
+<!-- 열린장터 -->
 <div class="bg substance ">
 	<div class="cont_wrap">
 		<div class="cont_box">
@@ -426,18 +428,6 @@
 				</div>
 			</ul>
 		</div>
-
-		<?php if (empty($substance_items)) { ?>
-			<div class="goods_empty">등록된 상품이 없습니다.</div>
-		<?php } else { ?>
-			<div class="slide-button">
-				<div class="timesale-active-button-prev">
-					<span>
-						<< /span>
-				</div>
-				<div class="timesale-active-button-next"><span>></span></div>
-			</div>
-		<?php } ?>
 
 
 		<div class="more_show_button" onclick="location.href='<?= base_url() ?>shop/normal'">전체보기 ></div>

@@ -121,7 +121,6 @@ class Main extends CI_Controller
 
     private function get_category_list()
     {
-
         $category = $this->gvcomplex_lib->sql_query_cgy('all');
 
         return $category;

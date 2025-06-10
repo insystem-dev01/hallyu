@@ -38,12 +38,12 @@
 		</li>
 		<li>
 			<span>FAX : <?php echo $config['company_fax']; ?></span>
-			<span class="marl15">|　E-mail : <?php echo $super['email']; ?></span>
+			<span class="marl15">|　E-mail : <?php echo $config['info_email']; ?></span>
 		</li>
 	</ul>
 	<ul class="ft_address pad">
 		<li>
-			주식회사 그로는 통신판매중개자이며, 통신판매의 당사자가 아닙니다. <br>
+			주식회사 더한류는 통신판매중개자이며, 통신판매의 당사자가 아닙니다. <br>
 			상품, 상품정보, 거래에 관한 의무와 책임은 입점 판매자에게 있습니다.
 		</li>
 	</ul>
@@ -51,7 +51,7 @@
 		ⓒ hallyu.kr ALL RIGHTS RESERVED
 	</p>
 	<ul class="ft_logo">
-		<img src="<?= base_url() ?>dist/img/mb/footer_logo.png" alt="logo">
+		<img src="<?= base_url() ?>dist/img/mb/f_logo_m.png" alt="logo">
 	</ul>
 </footer>
 </div>
