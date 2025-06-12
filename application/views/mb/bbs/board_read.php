@@ -5,7 +5,7 @@
         <b>|</b>
         <span class="wr_day"><?php echo $bo_wdate; ?></span>
         좋아요
-
+        조회수
     </div>
     <div class="wr_txt">
         <?= $file1Tag ?>
