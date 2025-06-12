@@ -62,7 +62,7 @@ $(function () {
       // 상위 옵션의 값을 읽어 옵션id 만듬
       if (idx > 0) {
         $("select.it_option:lt(" + idx + ")").each(function () {
-          if (!opt_id) opt_id = $(this).val();else opt_id += ' ' + $(this).val();
+          if (!opt_id) opt_id = $(this).val(); else opt_id += ' ' + $(this).val();
         });
         opt_id += ' ' + val;
       } else if (idx == 0) {
@@ -299,7 +299,7 @@ function add_sel_option(type, id, option, price, stock, amt) {
   if (type) li_class = "sit_spl_list";
   var opt_prc;
   var pamt = parseInt(price) + parseInt(amt);
-  if (parseInt(pamt) >= 0) opt_prc = "+" + number_format(String(pamt)) + "원";else opt_prc = number_format(String(pamt)) + "원";
+  if (parseInt(pamt) >= 0) opt_prc = "+" + number_format(String(pamt)) + "원"; else opt_prc = number_format(String(pamt)) + "원";
   opt += "<li class=\"" + li_class + " vi_txt_li\">\n";
   opt += "<dl>\n";
   opt += "<input type=\"hidden\" name=\"io_type[" + item_code + "][]\" value=\"" + type + "\">\n";
@@ -389,4 +389,51 @@ function price_calculate() {
 // php chr() 대응
 function chr(code) {
   return String.fromCharCode(code);
+}
+
+// 메인화면 담기/바로구매 클릭
+function fbuyform_submit(target) {
+  event.preventDefault();
+  var type = $(target).data('type');
+
+  if (!confirm("해당 상품을 장바구니에 담으시겠습니까?")) return false;
+
+  var fbuyForm = $(target).parent('.ct_bx');
+
+  var check = fbuyForm.find('.check').is(':checked');
+  var form = document.createElement('form'); // 폼객체 생성
+  var objs;
+  fbuyForm.find('input').each(function (idx, item) {
+    objs = document.createElement('input'); // 값이 들어있는 녀석의 형식
+    var nvalue = $(item).val();
+    var name = $(item).attr('name');
+    $(objs).attr('name', name);
+    $(objs).attr('value', nvalue);// 값이 들어있는 녀석의 type
+    //errorCheck(name);
+    form.appendChild(objs);
+  });
+  objs = document.createElement('input');
+  $(objs).attr('name', 'sw_direct');
+  if (type == "cart") {
+    $(objs).attr('value', 0);
+  } else if (type == "direct") {
+    $(objs).attr('value', 1);
+  }
+  form.appendChild(objs);
+
+  objs = document.createElement('input');
+  $(objs).attr('name', 'backUrl');
+  $(objs).attr('value', location.origin + location.pathname);
+  form.appendChild(objs);
+
+  objs = document.createElement('input');
+  $(objs).attr('name', 'ss_tx');
+  $(objs).attr('value', $('.frm_input').val());
+  form.appendChild(objs);
+
+  form.setAttribute('method', 'post'); //get,post 가능
+  form.setAttribute('action', base_url + "process/cartupdate"); //보내는 url
+  document.body.appendChild(form);
+  $(form).hide();
+  form.submit();
 }

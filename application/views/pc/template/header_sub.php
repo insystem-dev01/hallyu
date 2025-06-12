@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>dist/css/common.css?ver=<?=time();?>">
 <?=$favicon?>
 <script src="<?php echo base_url(); ?>js/jquery-1.8.3.min.js"></script>
+<script src="<?php echo base_url(); ?>js/shop.js"></script>
 <script src="<?php echo base_url(); ?>js/jquery-ui-1.10.3.custom.js"></script>
 <script src="<?php echo base_url(); ?>js/common.js?ver=<?=time()?>"></script>
 <script src="<?php echo base_url(); ?>js/slick.js"></script>

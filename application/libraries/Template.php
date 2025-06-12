@@ -135,31 +135,52 @@ class Template
                 'title' => '자주묻는질문',
                 'desc' => '자주 묻는 질문을 확인해보세요.'
             ],
-            'read' =>[
+            'read' => [
                 'title' => '',
                 'desc' => '',
             ]
         ];
 
+        $read_board_map = [
+            37 => 'goods_request_list',
+            13 => 'noticeList',
+            // 필요시 더 추가…
+        ];
 
         $data2['cs_banner'] = ''; // 기본값
 
-        foreach ($cs_banner_info as $keyword => $info) {
-            if (strpos($uri_string, $keyword) !== false) {
-                $title = $info['title'];
-                $desc = $info['desc'];
+        // 1) board_read 처리 우선
+        if (strpos($uri_string, 'read') !== false) {
+            // CI Input 라이브러리로 GET 파라미터 boardid 가져오기
+            $boardid = (int) $this->ci->input->get('boardid');
+            if (isset($read_board_map[$boardid])) {
+                $key  = $read_board_map[$boardid];
+                $info = $cs_banner_info[$key];
                 $data2['cs_banner'] = "
-        <div class='cs_banner'>
-            <div class='cs_banner_inner'>
-                <h2>{$title}</h2>
-                <p>{$desc}</p>
-            </div>
-        </div>";
-                break;
+<div class='cs_banner'>
+  <div class='cs_banner_inner'>
+    <h2>{$info['title']}</h2>
+    <p>{$info['desc']}</p>
+  </div>
+</div>";
+            }
+            // 2) 그 외 URI는 기존 키워드 매칭
+        } else {
+            foreach ($cs_banner_info as $keyword => $info) {
+                if (strpos($uri_string, $keyword) !== false) {
+                    $data2['cs_banner'] = "
+<div class='cs_banner'>
+  <div class='cs_banner_inner'>
+    <h2>{$info['title']}</h2>
+    <p>{$info['desc']}</p>
+  </div>
+</div>";
+                    break;
+                }
             }
         }
 
-    
+
         // 장바구니 태그
         $data2['cart_data'] = '<a class="hd_cart" href="' . base_url() . 'shop/cart">
                                         <span class="ic_num">' . $this->ci->gvcomplex_lib->get_cart_count($member['id']) . '</span>
@@ -664,6 +685,75 @@ class Template
         //     </div>";
         // }
 
+        $uri_string = $this->ci->uri->uri_string();
+
+        $cs_banner_info = [
+            'goods_request_list' => [
+                'title' => '상품요청게시판',
+                'desc' => '고객님의 제안으로 더 나은 서비스를 만들어갑니다.'
+            ],
+            'noticeList' => [
+                'title' => '공지사항',
+                'desc' => '새로운 소식과 공지를 알려드립니다.'
+            ],
+            'qna_list' => [
+                'title' => '1:1 상담문의',
+                'desc' => '빠르고 정확한 상담을 도와드립니다.'
+            ],
+            'qna_read' => [
+                'title' => '1:1 상담문의',
+                'desc' => '빠르고 정확한 상담을 도와드립니다.'
+            ],
+            'faq' => [
+                'title' => '자주묻는질문',
+                'desc' => '자주 묻는 질문을 확인해보세요.'
+            ],
+            'read' => [
+                'title' => '',
+                'desc' => '',
+            ]
+        ];
+
+        $read_board_map = [
+            37 => 'goods_request_list',
+            13 => 'noticeList',
+            // 필요시 더 추가…
+        ];
+
+
+        $cs_banner = ''; // 기본값
+
+        // 1) board_read 처리 우선
+        if (strpos($uri_string, 'board_read') !== false) {
+            // CI Input 라이브러리로 GET 파라미터 boardid 가져오기
+            $boardid = (int) $this->ci->input->get('boardid');
+            if (isset($read_board_map[$boardid])) {
+                $key  = $read_board_map[$boardid];
+                $info = $cs_banner_info[$key];
+                $cs_banner = "
+<div class='cs_banner'>
+  <div class='cs_banner_inner'>
+    <h2>{$info['title']}</h2>
+    <p>{$info['desc']}</p>
+  </div>
+</div>";
+            }
+            // 2) 그 외 URI는 기존 키워드 매칭
+        } else {
+            foreach ($cs_banner_info as $keyword => $info) {
+                if (strpos($uri_string, $keyword) !== false) {
+                    $cs_banner = "
+<div class='cs_banner'>
+  <div class='cs_banner_inner'>
+    <h2>{$info['title']}</h2>
+    <p>{$info['desc']}</p>
+  </div>
+</div>";
+                    break;
+                }
+            }
+        }
+
         $data2 = array(
             'slideMenu' => $slideMenu,
             'category' => $category,
@@ -676,7 +766,8 @@ class Template
             'popularRankWd' => $popularRankWd,
             'no_index_class' => $no_index_class,
             'gw_menu_tag' => $gw_menu_tag,
-            'no_index_tag' => $no_index_tag
+            'no_index_tag' => $no_index_tag,
+            'cs_banner' => $cs_banner,
         );
 
         $this->ci->load->view('mb/template/header', $data2);

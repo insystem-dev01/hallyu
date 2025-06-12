@@ -98,13 +98,48 @@
 		</div>
 		<script>
 			document.addEventListener('DOMContentLoaded', () => {
+				// 현재 전체 경로
 				const currentFull = location.pathname + location.search;
+
+				// GET 파라미터 읽기
+				const params = new URLSearchParams(location.search);
+				const boardid = params.get('boardid');
+
+				// board_read 페이지에서만 override 할 매핑
+				// key: boardid, value: 해당 탭의 pathname+search (여기선 search 없이 pathname 만)
+				const overrideMap = {
+					'37': '/hallyu/m/bbs/goods_request_list',
+					'13': '/hallyu/m/bbs/noticeList'
+					// 필요한 boardid → 탭 URL 을 더 추가
+				};
+
+				// board_read 페이지 감지 (pathname 끝이 /board_read)
+				const isReadPage = /\/board_read$/i.test(location.pathname);
+
+				// overrideUrl 값 결정
+				let overrideUrl = null;
+				if (isReadPage && boardid && overrideMap[boardid]) {
+					overrideUrl = overrideMap[boardid];
+				}
+
+				// 탭 순회하면서 active 처리
 				document.querySelectorAll('.main_category .tab-item').forEach(tab => {
 					const url = new URL(tab.href);
-					const tabFull = url.pathname + url.search;
-					if (tabFull === currentFull) {
-						tab.classList.add('active');
+					const tabPath = url.pathname; // 예: '/hallyu/m/goods_request_list'
+
+					if (overrideUrl) {
+						// read 페이지일 땐 overrideUrl 과 일치하는 탭만 active
+						if (tabPath === overrideUrl) {
+							tab.classList.add('active');
+						}
+					} else {
+						// 그 외 페이지는 기존 currentFull 매칭
+						const tabFull = tabPath + url.search;
+						if (tabFull === currentFull) {
+							tab.classList.add('active');
+						}
 					}
 				});
 			});
 		</script>
+		<?= $cs_banner ?>

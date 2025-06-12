@@ -7,13 +7,13 @@
             </tr>
             <tr>
                 <td class="list1 tal">
-                    <b>아이디:</b> <?= $bo_writer_id; ?> <b>|</b> <b>작성일:</b> <?php echo $bo_wdate; ?> <b>|</b> <b>조회수:</b> <?php echo $bo_hit; ?> <b>|</b><?= $good ?>
+                    <b>이름: </b> <?= $bo_writer_s; ?> <b>|</b> <b>작성일:</b> <?php echo $bo_wdate; ?> <b>|</b> <b>조회수:</b> <?php echo $bo_hit; ?> <b>|</b><?= $good ?>
                 </td>
             </tr>
             <?= $bo_file1_tag ?>
             <?= $bo_file2_tag ?>
             <tr>
-                <td class="memo" style="height:200px;vertical-align:top;">
+                <td class="memo remove_line" style="height:200px;vertical-align:top;">
                     <?= $bo_file1_img ?>
                     <?= $bo_file2_img ?>
                     <?= $getViewThum ?>

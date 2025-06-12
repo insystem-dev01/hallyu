@@ -543,7 +543,25 @@ class Bbs extends CI_Controller
         $this->load->view('mb/bbs/password_lost', $data);
     }
     # 게시판 관련된 함수
-    public function board_list()
+    //  public function board_list()
+    // {
+    //     $board = $this->load->get_var('board');
+    //     $tb['title'] = $this->funcomplex_lib->get_text($board['boardname']);
+    //     $this->load->vars(array('tb' => $tb));
+    //     $this->template->mb_header();
+    //     $this->board_listSkin();
+    //     $this->template->mb_footer();
+    // }
+    public function noticeList()
+    {
+        $board = $this->load->get_var('board');
+        $tb['title'] = $this->funcomplex_lib->get_text($board['boardname']);
+        $this->load->vars(array('tb' => $tb));
+        $this->template->mb_header();
+        $this->board_listSkin();
+        $this->template->mb_footer();
+    }
+    public function goods_request_list()
     {
         $board = $this->load->get_var('board');
         $tb['title'] = $this->funcomplex_lib->get_text($board['boardname']);
@@ -797,24 +815,48 @@ class Bbs extends CI_Controller
         }
         $sql = " select * from shop_board_{$boardid} where btype = '1' {$add_search} order by fid desc ";
         $res = $this->query_model->returnArr($sql);
+
+
+        //공지사항
         foreach ($res as $key => $row) {
             $bo_href = base_url() . 'm/bbs/board_read?index_no=' . $row['index_no'] . '&boardid=' . $boardid . '&page=' . $page;
             $bo_subj = '<strong class="fc_eb7">[공지]</strong> ' . $this->funcomplex_lib->get_text($row['subject']);
-            $bo_date = $this->funcomplex_lib->get_text($row['writer_s']) . "<span class='padl10'>" . date("y/m/d", $row['wdate']);
+            $bo_writer = $this->funcomplex_lib->get_text($row['writer_s']);
+            $bo_date =  date("y/m/d", $row['wdate']);
 
             if ((time() - $row['wdate']) < (60 * 60 * 24)) {
                 $bo_subj .= " <img src='{$bo_imgurl}/img/iconY.gif' class='marl3'>";
             }
 
+            if ($row['fileurl1'] || $row['fileurl2'])
+                $bo_file_yes = "<img src='" . $bo_imgurl . "/img/img_icon.png'>";
+            else
+                $bo_file_yes = "";
+
             $li_str .= '<li class="list">';
             $li_str .= '	<a href="' . $bo_href . '">';
             $li_str .= '	<p class="subj">' . $bo_subj . '</p>';
-            $li_str .= '	<p class="date">' . $bo_date . '</p>';
+            $li_str .= '	<div class="info">';
+            $li_str .= "    <span class=\"writer\">{$bo_writer}</span>
+                            <span class=\"date\">{$bo_date}</span>";
+            if ($boardid == 37) {
+                $li_str .= "           
+                            <span class=\"likes\">좋아요 <span class=\"good_count\">{$row['good_count']}</span></span>";
+            }
+            $li_str .= "<span class=\"views\">조회 {$row['readcount']}</span>";
+            if ($bo_file_yes) {
+                $li_str .= "{$bo_file_yes}";
+            }
+            if ($row['tailcount']) {
+                $li_str .= "<span class=\"fc_197\">{$row['tailcount']}</span>";
+            }
+            $li_str .= '</div>';
             $li_str .= '	</a>';
             $li_str .= '</li>';
 
             $li_run++;
         }
+        //일반 공지
         foreach ($result as $key => $row) {
             $bo_href = base_url() . 'm/bbs/board_read?index_no=' . $row['index_no'] . '&boardid=' . $boardid . '&page=' . $page;
             $bo_subj = '';
@@ -832,7 +874,9 @@ class Bbs extends CI_Controller
             }
 
             $bo_subj = $bo_subj . $this->funcomplex_lib->get_text($row['subject']);
-            $bo_date = $this->funcomplex_lib->get_text($row['writer_s']) . "<span class='padl10'>" . date("y/m/d", $row['wdate']);
+            $bo_writer = $this->funcomplex_lib->get_text($row['writer_s']);
+            $bo_date =  date("y/m/d", $row['wdate']);
+
 
             if ($row['issecret'] == 'Y') {
                 $bo_subj .= " <img src='{$bo_imgurl}/img/icon_secret.gif'>";
@@ -841,10 +885,33 @@ class Bbs extends CI_Controller
             if ((time() - $row['wdate']) < (60 * 60 * 24)) {
                 $bo_subj .= " <img src='{$bo_imgurl}/img/iconY.gif'>";
             }
+
+            if ($row['fileurl1'] || $row['fileurl2'])
+                $bo_file_yes = "<img src='" . $bo_imgurl . "/img/img_icon.png'>";
+            else
+                $bo_file_yes = "";
+
+
             $li_str .= '<li class="list">';
             $li_str .= '	<a href="' . $bo_href . '">';
             $li_str .= '	<p class="subj">' . $bo_subj . '</p>';
-            $li_str .= '	<p class="date">' . $bo_date . '</p>';
+            $li_str .= '	<div class="info">';
+            $li_str .= "    <span class=\"writer\">{$bo_writer}</span>
+                            <span class=\"date\">{$bo_date}</span>";
+            if ($boardid == 37) {
+                $li_str .= "           
+                            <span class=\"likes\">좋아요 <span class=\"good_count\">{$row['good_count']}</span></span>";
+            }
+            $li_str .= "<span class=\"views\">조회 {$row['readcount']}</span>
+                        <div class=\"icon-wrapper\">";
+            if ($bo_file_yes) {
+                $li_str .= "{$bo_file_yes}";
+            }
+            if ($row['tailcount']) {
+                $li_str .= "<span class=\"fc_197\">{$row['tailcount']}</span>";
+            }
+            $li_str .= '</div>
+                            </div>';
             $li_str .= '	</a>';
             $li_str .= '</li>';
 
@@ -860,6 +927,7 @@ class Bbs extends CI_Controller
         if ($member['grade'] <= $board['write_priv']) {
             $canWrite = "
             <div class=\"btn_confirm\">
+                <span class=\"total_count_text\">전체 <span class=\"total_count_count\">{$li_run}</span></span>
                 <a href=\"" . base_url() . "m/bbs/board_write?boardid={$boardid}\" class=\"btn_medium\">글쓰기</a>
             </div>";
         }

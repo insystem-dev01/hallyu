@@ -619,7 +619,7 @@ function chr(code)
 }
 
 // 메인화면 담기/바로구매 클릭
-function fbuyform_submite(target) {
+function fbuyform_submit(target) {
     event.preventDefault();
     var type = $(target).data('type');
     var base_url = $('#base_url').val();

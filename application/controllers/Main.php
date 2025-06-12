@@ -179,7 +179,7 @@ class Main extends CI_Controller
             $supply_item = $this->funcomplex_lib->get_item_supply($index_no, $gs['spl_subject']);
             $onclick = ((!empty($option_item) || !empty($supply_item)) && !$is_soldout)
                 ? "location.href='" . $href . "'"
-                : "fbuyform_submite(this)";
+                : "fbuyform_submit(this)";
 
             $is_open = "open";
             $is_social_status = '';
@@ -290,7 +290,7 @@ class Main extends CI_Controller
             if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
                 $onclickTxt = "location.href='" . base_url() . "shop/view?index_no={$index_no}'";
             } else {
-                $onclickTxt = "fbuyform_submite(this)";
+                $onclickTxt = "fbuyform_submit(this)";
             }
 
             // 타임세일 상품 시간
@@ -471,7 +471,7 @@ class Main extends CI_Controller
             if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
                 $onclickTxt = "location.href='" . base_url() . "shop/view?index_no={$index_no}'";
             } else {
-                $onclickTxt = "fbuyform_submite(this)";
+                $onclickTxt = "fbuyform_submit(this)";
             }
 
             $str .= "<li>\n";
@@ -574,7 +574,7 @@ class Main extends CI_Controller
             if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
                 $onclickTxt = "location.href='" . base_url() . "shop/view?index_no={$index_no}'";
             } else {
-                $onclickTxt = "fbuyform_submite(this)";
+                $onclickTxt = "fbuyform_submit(this)";
             }
 
             if ($i % 4 == 0 && $i != 0) {  // 4개마다 닫는 div 추가
@@ -721,7 +721,7 @@ class Main extends CI_Controller
                 $onclickTxt = "location.href='" . base_url() . "shop/view?index_no={$index_no}'";
             } else {
                 // 옵션/추가상품이 없거나 품절된 경우 직접 구매 폼으로
-                $onclickTxt = "fbuyform_submite(this)";
+                $onclickTxt = "fbuyform_submit(this)";
             }
 
             // 4-8. 상품 이미지 설정 (simg1이 없으면 기본 noimage)
@@ -854,7 +854,7 @@ class Main extends CI_Controller
             if ((!empty($option_item) || !empty($supply_item)) && !$is_soldout) {
                 $onclick = "location.href='" . $href . "'";
             } else {
-                $onclick = "fbuyform_submite(this)";
+                $onclick = "fbuyform_submit(this)";
             }
 
             // 9) 실제 이미지 URL 결정 (simg1이 없으면 noimage)

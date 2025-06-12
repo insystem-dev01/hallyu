@@ -1111,6 +1111,8 @@ class Process extends CI_Controller
         $member = $this->load->get_var('member');
         $set_mb_id = $member['id'];
 
+        
+
         $referralCode = $this->input->post('referralCode') ?? ""; // 리뷰 공유 코드
         $key = "share";
         $referralCode_decode = openssl_decrypt(base64_decode($referralCode), "AES-256-CBC", $key, true, str_repeat(chr(0), 16));
@@ -1210,8 +1212,9 @@ class Process extends CI_Controller
                     alert("삭제할 상품이 없습니다.");
                 }
 
-                $sql = "DELETE FROM shop_cart WHERE gs_id=? AND ct_select='0' AND mb_id = ? ";
-                $this->query_model->returnNull($sql, $data);
+                $sql2 = "DELETE FROM shop_cart WHERE gs_id=? AND ct_select='0' AND mb_id = ?  AND index_no = ?";
+                $data2 = array($gs_id, $set_mb_id, $index_no);
+                $this->query_model->returnNull($sql2, $data2);
             }
         } else if ($act == "optionDelete") { // 옵션 삭제
             $gs_id = $this->input->post('gs_id');

@@ -108,7 +108,7 @@ class Shop extends CI_Controller
 
         foreach ($result as $key => $row) {
             if ($i == 0)
-                $str .= "<div class=\"pr_desc_list mart50\">
+                $str .= "<div class=\"pr_desc_list \">
                             <ul class=\"list\">";
 
             $it_href = base_url() . 'm/shop/view?index_no=' . $row['index_no'];
@@ -139,10 +139,22 @@ class Shop extends CI_Controller
                 $gs['stock_qty'] = 999999999;
             }
 
+
+
+
             // 품절 확인
             $scrtipt_msg  = "";
             if ($this->funcomplex_lib->is_soldout($index_no)) {
                 $scrtipt_msg = 'soldout';
+            }
+            // 옵션 있는 상품은 상세 페이지로 이동
+            $option_item = $this->funcomplex_lib->get_item_options($index_no, $gs['opt_subject']);
+            $supply_item = $this->funcomplex_lib->get_item_supply($index_no, $gs['spl_subject']);
+
+            if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
+                $onclickTxt = "location.href='" . base_url() . "m/shop/view?index_no={$index_no}'";
+            } else {
+                $onclickTxt = "fbuyform_submit(this)";
             }
             $status = ($scrtipt_msg == "soldout") ? "disabled" : "";
 
@@ -164,7 +176,21 @@ class Shop extends CI_Controller
             $str .=     "<p class=\"pname\">{$it_name}</p>\n";
             $str .=     "<dd class=\"price_box\">\n";
             $str .=         "<p class=\"price\">{$it_sprice}</p>";
-            $str .=         "<div class=\"price\">{$sale}{$it_price}</div>";
+            $str .=         "<div class=\"price\">{$sale}{$it_price}";
+            $str .=             "<p class=\"ic_bx\">
+                                    <span onclick=\"javascript:itemlistwish('{$row['index_no']}');\" id=\"{$row['index_no']}\" class=\"" . ($row['index_no'] . ' ' . $this->gvcomplex_lib->zzimCheck($row['index_no'])) . "\"></span>
+                                </p>";
+            $str .=             "<p class=\"ct_bx\">
+                                    <input type=\"hidden\" name=\"io_type[{$index_no}][]\" value=\"0\">
+                                    <input type=\"hidden\" name=\"it_price[{$index_no}][]\" value=\"{$gs['goods_price']}\">
+                                    <input type=\"hidden\" name=\"io_id[{$index_no}][]\" value=\"\">
+                                    <input type=\"hidden\" name=\"ca_id[{$index_no}][]\" value=\"{$gs['ca_id']}\">
+                                    <input type=\"hidden\" name=\"io_value[{$index_no}][]\" value=\"{$gs['gname']}\">
+                                    <input type=\"hidden\" name='ct_qty[{$index_no}][]' value='1' class='inp_opt' title='수량설정' size='2'>
+                                    <input type=\"hidden\" data-auth=\"{$scrtipt_msg}\" class='check' name='gs_id[]' value='{$index_no}'>
+                                    <span onclick=\"{$onclickTxt};\"></span>
+                                </p>
+            </div>";
             $str .=     "</dd>\n";
 
             $str .= "</li>\n";
@@ -197,7 +223,7 @@ class Shop extends CI_Controller
         $this->template->mb_footer();
     }
 
-      #카테고리 리스트를 클릭시 나오는 리스트
+    #카테고리 리스트를 클릭시 나오는 리스트
     public function normal()
     {
         $pt_id = $this->load->get_var('pt_id');
@@ -252,8 +278,8 @@ class Shop extends CI_Controller
         $row = $this->query_model->returnOneArr($sql);
         $total_count = $row['cnt'];
 
-        $mod = 4; // 가로 출력 수
-        $rows = ($mod * 6);
+        $mod = 2; // 가로 출력 수
+        $rows = ($mod * 4);
         $total_page = ceil($total_count / $rows); // 전체 페이지 계산
         if ($page == "") {
             $page = 1;
@@ -306,9 +332,10 @@ class Shop extends CI_Controller
         $str = "";
         $i = 0;
 
+
         foreach ($result as $key => $row) {
             if ($i == 0)
-                $str .= "<div class=\"pr_desc_list mart50\">
+                $str .= "<div class=\"pr_desc_list\">
                             <ul class=\"list\">";
 
             $it_href = base_url() . 'm/shop/view?index_no=' . $row['index_no'];
@@ -339,11 +366,20 @@ class Shop extends CI_Controller
                 $gs['stock_qty'] = 999999999;
             }
 
+
             // 품절 확인
             $scrtipt_msg  = "";
             if ($this->funcomplex_lib->is_soldout($index_no)) {
                 $scrtipt_msg = 'soldout';
             }
+
+
+            if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
+                $onclickTxt = "location.href='" . base_url() . "m/shop/view?index_no={$index_no}'";
+            } else {
+                $onclickTxt = "fbuyform_submit(this)";
+            }
+
             $status = ($scrtipt_msg == "soldout") ? "disabled" : "";
 
             $str .= "<li class=\"goodsList\">\n";
@@ -358,13 +394,27 @@ class Shop extends CI_Controller
             $str .=         "</dl>\n";
             $str .=     "</a>\n";
             $str .=     "</dd>";
-            $str .=     "<p class=\"ic_bx\">
-                            <span onclick=\"javascript:itemlistwish('{$row['index_no']}');\" id=\"{$row['index_no']}\" class=\"" . ($row['index_no'] . ' ' . $this->gvcomplex_lib->zzimCheck($row['index_no'])) . "\"></span>
-                        </p>";
+            // $str .=     "<p class=\"ic_bx\">
+            //                 <span onclick=\"javascript:itemlistwish('{$row['index_no']}');\" id=\"{$row['index_no']}\" class=\"" . ($row['index_no'] . ' ' . $this->gvcomplex_lib->zzimCheck($row['index_no'])) . "\"></span>
+            //             </p>";
             $str .=     "<p class=\"pname\">{$it_name}</p>\n";
             $str .=     "<dd class=\"price_box\">\n";
             $str .=         "<p class=\"price\">{$it_sprice}</p>";
-            $str .=         "<div class=\"price\">{$sale}{$it_price}</div>";
+            $str .=         "<div class=\"price\">{$sale}{$it_price}";
+            $str .=             "<p class=\"ic_bx\">
+                                    <span onclick=\"javascript:itemlistwish('{$row['index_no']}');\" id=\"{$row['index_no']}\" class=\"" . ($row['index_no'] . ' ' . $this->gvcomplex_lib->zzimCheck($row['index_no'])) . "\"></span>
+                                </p>";
+            $str .=             "<p class=\"ct_bx\">
+                                    <input type=\"hidden\" name=\"io_type[{$index_no}][]\" value=\"0\">
+                                    <input type=\"hidden\" name=\"it_price[{$index_no}][]\" value=\"{$gs['goods_price']}\">
+                                    <input type=\"hidden\" name=\"io_id[{$index_no}][]\" value=\"\">
+                                    <input type=\"hidden\" name=\"ca_id[{$index_no}][]\" value=\"{$gs['ca_id']}\">
+                                    <input type=\"hidden\" name=\"io_value[{$index_no}][]\" value=\"{$gs['gname']}\">
+                                    <input type=\"hidden\" name='ct_qty[{$index_no}][]' value='1' class='inp_opt' title='수량설정' size='2'>
+                                    <input type=\"hidden\" data-auth=\"{$scrtipt_msg}\" class='check' name='gs_id[]' value='{$index_no}'>
+                                    <span onclick=\"{$onclickTxt};\"></span>
+                                </p>
+            </div>";
             $str .=     "</dd>\n";
 
             $str .= "</li>\n";
@@ -397,17 +447,20 @@ class Shop extends CI_Controller
         $page = $this->input->get('page');
         $page_rows = $this->input->get('page_rows');
         $status = $this->input->get('status'); // 오픈 상태 (pending or active)
-        $ca_id = $this->input->get('ca_id');
+        $ca_id = $this->input->get('ca_id') ?? '';
 
         $gw_msort = $this->config->item('gw_msort');
 
         $OM_TIME_YMDHIS = date("Y-m-d H:i:s", time());
         $OM_TIME_YMD = substr($OM_TIME_YMDHIS, 0, 10);
-        $sql_search = " and type='timesale' ";
+        $sql_search = " and (ca_id like '$ca_id%' or ca_id2 like '$ca_id%' or ca_id3 like '$ca_id%') ";
+        $sql_search .= " and type='timesale' ";
         if ($status == "pending") {
             $sql_search .= " and sb_date >= '$OM_TIME_YMDHIS'";
         } else if ($status == "active") {
             $sql_search .= " and sb_date <= '$OM_TIME_YMDHIS' and eb_date >= '$OM_TIME_YMDHIS'";
+        } else if ($status == "end") {
+            $sql_search .= " and isopen = 5";
         }
         $sql_common = $this->gvcomplex_lib->sql_goods_list($sql_search);
 
@@ -487,7 +540,7 @@ class Shop extends CI_Controller
             $is_social_ing = false;
 
             if ($i == 0) {
-                $str .= "<div class=\"pr_desc_horizontal mart50\">
+                $str .= "<div class=\"pr_desc_horizontal mart30\">
                             <ul>";
             }
 
@@ -515,10 +568,22 @@ class Shop extends CI_Controller
             }
 
             // 품절 확인
-            $scrtipt_msg  = "";
+            $scrtipt_msg = "";
             if ($this->funcomplex_lib->is_soldout($index_no)) {
                 $scrtipt_msg = 'soldout';
             }
+
+            // 옵션 있는 상품은 상세 페이지로 이동
+            $option_item = $this->funcomplex_lib->get_item_options($index_no, $gs['opt_subject']);
+            $supply_item = $this->funcomplex_lib->get_item_supply($index_no, $gs['spl_subject']);
+
+            if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
+                $onclickTxt = "location.href='" . base_url() . "m/shop/view?index_no={$index_no}'";
+            } else {
+                $onclickTxt = "fbuyform_submit(this)";
+            }
+
+
 
             // bid 상품 시간
             $is_open = "open";
@@ -573,7 +638,21 @@ class Shop extends CI_Controller
             $str .=         "<p class=\"pname\"><a href=\"{$it_href}\">{$it_name}</a></p>\n";
             $str .=         "<dd class=\"price_box\">\n";
             $str .=             "<p class=\"price\">{$it_sprice}</p>";
-            $str .=             "<div class=\"price\">{$sale}{$it_price}</div>";
+            $str .=             "<div class=\"price\">{$sale}{$it_price}";
+            $str .=             "<p class=\"ic_bx\">
+                                    <span onclick=\"javascript:itemlistwish('{$row['index_no']}');\" id=\"{$row['index_no']}\" class=\"" . ($row['index_no'] . ' ' . $this->gvcomplex_lib->zzimCheck($row['index_no'])) . "\"></span>
+                                </p>";
+            $str .=             "<p class=\"ct_bx\">
+                                    <input type=\"hidden\" name=\"io_type[{$index_no}][]\" value=\"0\">
+                                    <input type=\"hidden\" name=\"it_price[{$index_no}][]\" value=\"{$gs['goods_price']}\">
+                                    <input type=\"hidden\" name=\"io_id[{$index_no}][]\" value=\"\">
+                                    <input type=\"hidden\" name=\"ca_id[{$index_no}][]\" value=\"{$gs['ca_id']}\">
+                                    <input type=\"hidden\" name=\"io_value[{$index_no}][]\" value=\"{$gs['gname']}\">
+                                    <input type=\"hidden\" name='ct_qty[{$index_no}][]' value='1' class='inp_opt' title='수량설정' size='2'>
+                                    <input type=\"hidden\" data-auth=\"{$scrtipt_msg}\" class='check' name='gs_id[]' value='{$index_no}'>
+                                    <span onclick=\"{$onclickTxt};\"></span>
+                                </p>
+            </div>";
             $str .=         "</dd>\n";
             $str .=         "<div class=\"timebox\">
                                 <div class=\"calendar\"></div>
@@ -739,7 +818,7 @@ class Shop extends CI_Controller
 
         foreach ($result as $key => $row) {
             if ($i == 0)
-                $str .= "<div class=\"pr_desc_list mart50\">
+                $str .= "<div class=\"pr_desc_list\">
                             <ul class=\"list\">";
 
             $it_href = base_url() . 'm/shop/view?index_no=' . $row['index_no'];
@@ -775,6 +854,17 @@ class Shop extends CI_Controller
             if ($this->funcomplex_lib->is_soldout($index_no)) {
                 $scrtipt_msg = 'soldout';
             }
+
+
+            // 옵션 있는 상품은 상세 페이지로 이동
+            $option_item = $this->funcomplex_lib->get_item_options($index_no, $gs['opt_subject']);
+            $supply_item = $this->funcomplex_lib->get_item_supply($index_no, $gs['spl_subject']);
+
+            if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
+                $onclickTxt = "location.href='" . base_url() . "m/shop/view?index_no={$index_no}'";
+            } else {
+                $onclickTxt = "fbuyform_submit(this)";
+            }
             $status = ($scrtipt_msg == "soldout") ? "disabled" : "";
 
             $str .= "<li class=\"recommend\">\n";
@@ -795,7 +885,21 @@ class Shop extends CI_Controller
             $str .=     "<p class=\"pname\">{$it_name}</p>\n";
             $str .=     "<dd class=\"price_box\">\n";
             $str .=         "<p class=\"price\">{$it_sprice}</p>";
-            $str .=         "<div class=\"price\">{$sale}{$it_price}</div>";
+            $str .=         "<div class=\"price\">{$sale}{$it_price}";
+            $str .=             "<p class=\"ic_bx\">
+                                    <span onclick=\"javascript:itemlistwish('{$row['index_no']}');\" id=\"{$row['index_no']}\" class=\"" . ($row['index_no'] . ' ' . $this->gvcomplex_lib->zzimCheck($row['index_no'])) . "\"></span>
+                                </p>";
+            $str .=             "<p class=\"ct_bx\">
+                                    <input type=\"hidden\" name=\"io_type[{$index_no}][]\" value=\"0\">
+                                    <input type=\"hidden\" name=\"it_price[{$index_no}][]\" value=\"{$gs['goods_price']}\">
+                                    <input type=\"hidden\" name=\"io_id[{$index_no}][]\" value=\"\">
+                                    <input type=\"hidden\" name=\"ca_id[{$index_no}][]\" value=\"{$gs['ca_id']}\">
+                                    <input type=\"hidden\" name=\"io_value[{$index_no}][]\" value=\"{$gs['gname']}\">
+                                    <input type=\"hidden\" name='ct_qty[{$index_no}][]' value='1' class='inp_opt' title='수량설정' size='2'>
+                                    <input type=\"hidden\" data-auth=\"{$scrtipt_msg}\" class='check' name='gs_id[]' value='{$index_no}'>
+                                    <span onclick=\"{$onclickTxt};\"></span>
+                                </p>
+            </div>";
             $str .=     "</dd>\n";
 
             $str .= "</li>\n";
@@ -1071,7 +1175,7 @@ class Shop extends CI_Controller
 
         foreach ($result as $key => $row) {
             if ($i == 0)
-                $tableTag .= "<div class=\"pr_desc_list mart50\">
+                $tableTag .= "<div class=\"pr_desc_list\">
                             <ul class=\"list\">";
 
             $it_href = base_url() . 'm/shop/view?index_no=' . $row['index_no'];
@@ -1107,6 +1211,16 @@ class Shop extends CI_Controller
             if ($this->funcomplex_lib->is_soldout($index_no)) {
                 $scrtipt_msg = 'soldout';
             }
+            // 옵션 있는 상품은 상세 페이지로 이동
+            $option_item = $this->funcomplex_lib->get_item_options($index_no, $gs['opt_subject']);
+            $supply_item = $this->funcomplex_lib->get_item_supply($index_no, $gs['spl_subject']);
+
+            if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
+                $onclickTxt = "location.href='" . base_url() . "m/shop/view?index_no={$index_no}'";
+            } else {
+                $onclickTxt = "fbuyform_submit(this)";
+            }
+
             $status = ($scrtipt_msg == "soldout") ? "disabled" : "";
 
             $tableTag .= "<li class=\"goodsList\">\n";
@@ -1124,7 +1238,21 @@ class Shop extends CI_Controller
             $tableTag .=     "<p class=\"pname\">{$it_name}</p>\n";
             $tableTag .=     "<dd class=\"price_box\">\n";
             $tableTag .=         "<p class=\"price\">{$it_sprice}</p>";
-            $tableTag .=         "<div class=\"price\">{$sale}{$it_price}</div>";
+            $tableTag .=         "<div class=\"price\">{$sale}{$it_price}";
+            $str .=             "<p class=\"ic_bx\">
+                                    <span onclick=\"javascript:itemlistwish('{$row['index_no']}');\" id=\"{$row['index_no']}\" class=\"" . ($row['index_no'] . ' ' . $this->gvcomplex_lib->zzimCheck($row['index_no'])) . "\"></span>
+                                </p>";
+            $str .=             "<p class=\"ct_bx\">
+                                    <input type=\"hidden\" name=\"io_type[{$index_no}][]\" value=\"0\">
+                                    <input type=\"hidden\" name=\"it_price[{$index_no}][]\" value=\"{$gs['goods_price']}\">
+                                    <input type=\"hidden\" name=\"io_id[{$index_no}][]\" value=\"\">
+                                    <input type=\"hidden\" name=\"ca_id[{$index_no}][]\" value=\"{$gs['ca_id']}\">
+                                    <input type=\"hidden\" name=\"io_value[{$index_no}][]\" value=\"{$gs['gname']}\">
+                                    <input type=\"hidden\" name='ct_qty[{$index_no}][]' value='1' class='inp_opt' title='수량설정' size='2'>
+                                    <input type=\"hidden\" data-auth=\"{$scrtipt_msg}\" class='check' name='gs_id[]' value='{$index_no}'>
+                                    <span onclick=\"{$onclickTxt};\"></span>
+                                </p>
+                                </div>";
             $tableTag .=     "</dd>\n";
 
             $tableTag .= "</li>\n";
@@ -1292,7 +1420,7 @@ class Shop extends CI_Controller
             $is_social_ing = false;
 
             if ($i == 0)
-                $str .= "<div class=\"pr_desc_list mart50\">
+                $str .= "<div class=\"pr_desc_list\">
                             <ul class=\"list\">";
 
             $it_href = base_url() . 'm/shop/view?index_no=' . $row['index_no'];
@@ -1331,6 +1459,15 @@ class Shop extends CI_Controller
             $status = ($scrtipt_msg == "soldout") ? "disabled" : "";
 
 
+            // 옵션 있는 상품은 상세 페이지로 이동
+            $option_item = $this->funcomplex_lib->get_item_options($index_no, $gs['opt_subject']);
+            $supply_item = $this->funcomplex_lib->get_item_supply($index_no, $gs['spl_subject']);
+
+            if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
+                $onclickTxt = "location.href='" . base_url() . "m/shop/view?index_no={$index_no}'";
+            } else {
+                $onclickTxt = "fbuyform_submit(this)";
+            }
             // bid 상품 시간
             $is_open = "open";
             if ($gs['type'] == "timesale" && (substr($gs['sb_date'], 0, 1) != '0' && substr($gs['eb_date'], 0, 1) != '0')) {
@@ -1378,7 +1515,21 @@ class Shop extends CI_Controller
             $str .=     "<p class=\"pname\">{$it_name}</p>\n";
             $str .=     "<dd class=\"price_box\">\n";
             $str .=         "<p class=\"price\">{$it_sprice}</p>";
-            $str .=         "<div class=\"price\">{$sale}{$it_price}</div>";
+            $str .=         "<div class=\"price\">{$sale}{$it_price}";
+            $str .=             "<p class=\"ic_bx\">
+                                    <span onclick=\"javascript:itemlistwish('{$row['index_no']}');\" id=\"{$row['index_no']}\" class=\"" . ($row['index_no'] . ' ' . $this->gvcomplex_lib->zzimCheck($row['index_no'])) . "\"></span>
+                                </p>";
+            $str .=             "<p class=\"ct_bx\">
+                                    <input type=\"hidden\" name=\"io_type[{$index_no}][]\" value=\"0\">
+                                    <input type=\"hidden\" name=\"it_price[{$index_no}][]\" value=\"{$gs['goods_price']}\">
+                                    <input type=\"hidden\" name=\"io_id[{$index_no}][]\" value=\"\">
+                                    <input type=\"hidden\" name=\"ca_id[{$index_no}][]\" value=\"{$gs['ca_id']}\">
+                                    <input type=\"hidden\" name=\"io_value[{$index_no}][]\" value=\"{$gs['gname']}\">
+                                    <input type=\"hidden\" name='ct_qty[{$index_no}][]' value='1' class='inp_opt' title='수량설정' size='2'>
+                                    <input type=\"hidden\" data-auth=\"{$scrtipt_msg}\" class='check' name='gs_id[]' value='{$index_no}'>
+                                    <span onclick=\"{$onclickTxt};\"></span>
+                                </p>
+                                </div>";
             $str .=     "</dd>\n";
 
             $str .= "</li>\n";
@@ -2051,40 +2202,40 @@ class Shop extends CI_Controller
                     <div class=\"title\">
                         <span class=\"tit-text\">상품구매현황</span>";
             $timesale .= $this->funcomplex_lib->get_mb_timesaleTag($gs, $is_open, "normal", $this->funcomplex_lib->is_soldout($gs['index_no']));
-            $timesale .=
-                "</div>
-                    <div class=\"progress-container\">
-                        <div class=\"progress-bar\">
-                            <div class=\"progress-label {$percent_class}\"></div>
-                        </div>
-                        <div class=\"progress-min\">0</div>
-                        <div class=\"progress-max\">" . $stock_qty . "</div>
-                    </div>
-                    <script>
-                        // 진행률 퍼센트 설정
-                        const progressPercentage = " . $percent . ";
-                        document.querySelector('.progress-bar').style.width = progressPercentage + '%';
-                        document.querySelector('.progress-label').textContent = " . $order_qty . ";
-                    </script>
-                    <table>
-                        <colgroup>
-                            <col style=\"width: 20%\">
-                            <col style=\"width: 20%\">
-                            <col style=\"width: 30%\">
-                            <col style=\"width: 30%\">
-                        </colgroup>
-                            <thead>
-                            <tr>
-                                <td>구매순서</td>
-                                <td>아이디</td>
-                                <td>구매시간</td>
-                                <td>
-                                    <p>구매가격</p>
-                                    <p>(판매종료 후 공개)</p>
-                                </td>
-                            </tr>
-                        </thead>
-                    </table>";
+            // $timesale .=
+            //     "</div>
+            //         <div class=\"progress-container\">
+            //             <div class=\"progress-bar\">
+            //                 <div class=\"progress-label {$percent_class}\"></div>
+            //             </div>
+            //             <div class=\"progress-min\">0</div>
+            //             <div class=\"progress-max\">" . $stock_qty . "</div>
+            //         </div>
+            //         <script>
+            //             // 진행률 퍼센트 설정
+            //             const progressPercentage = " . $percent . ";
+            //             document.querySelector('.progress-bar').style.width = progressPercentage + '%';
+            //             document.querySelector('.progress-label').textContent = " . $order_qty . ";
+            //         </script>
+            //         <table>
+            //             <colgroup>
+            //                 <col style=\"width: 20%\">
+            //                 <col style=\"width: 20%\">
+            //                 <col style=\"width: 30%\">
+            //                 <col style=\"width: 30%\">
+            //             </colgroup>
+            //                 <thead>
+            //                 <tr>
+            //                     <td>구매순서</td>
+            //                     <td>아이디</td>
+            //                     <td>구매시간</td>
+            //                     <td>
+            //                         <p>구매가격</p>
+            //                         <p>(판매종료 후 공개)</p>
+            //                     </td>
+            //                 </tr>
+            //             </thead>
+            //         </table>";
 
             if ($is_member) {
                 $member = $this->load->get_var('member');
@@ -2117,30 +2268,30 @@ class Shop extends CI_Controller
                         // 딜 마감 후에는 실제 구매가 노출
                         $price = empty($row['gts_no']) ? "" : number_format($row['real_price']) . "원";
 
-                        $timesale .=
-                            "<tr>
-                                            <td>" . $row['num'] . "</td>
-                                            <td>" . $hiddenId . "</td>
-                                            <td>" . $row['od_time'] . "</td>
-                                            <td>" . $price . "</td>
-                                        </tr>";
+                        // $timesale .=
+                        //     "<tr>
+                        //                     <td>" . $row['num'] . "</td>
+                        //                     <td>" . $hiddenId . "</td>
+                        //                     <td>" . $row['od_time'] . "</td>
+                        //                     <td>" . $price . "</td>
+                        //                 </tr>";
                     }
-                    $timesale .=
-                        "</tbody>
-                                </table>
-                            </div>";
+                    // $timesale .=
+                    //     "</tbody>
+                    //             </table>
+                    //         </div>";
                 }
             }
-            $timesale .=
-                "<div class=\"table_box\">
-                        <table>
-                            <colgroup>
-                                <col style=\"width: 15%\">
-                                <col style=\"width: 20%\">
-                                <col style=\"width: 40%\">
-                                <col style=\"width: 30%\">
-                            </colgroup>
-                            <tbody>";
+            // $timesale .=
+            //     "<div class=\"table_box\">
+            //             <table>
+            //                 <colgroup>
+            //                     <col style=\"width: 15%\">
+            //                     <col style=\"width: 20%\">
+            //                     <col style=\"width: 40%\">
+            //                     <col style=\"width: 30%\">
+            //                 </colgroup>
+            //                 <tbody>";
 
             foreach ($timesale_list as $key => $row) {
                 $num = $key + 1;
@@ -2159,21 +2310,25 @@ class Shop extends CI_Controller
                 // 딜 마감 후에는 실제 구매가 노출
                 $price = empty($row['gts_no']) ? "" : number_format($row['real_price']) . "원";
 
-                $timesale .=
-                    "<tr>
-                                <td>" . $num . "</td>
-                                <td>" . $hiddenId . "</td>
-                                <td>" . $row['od_time'] . "</td>
-                                <td>" . $price . "</td>
-                            </tr>";
+                // $timesale .=
+                //     "<tr>
+                //                 <td>" . $num . "</td>
+                //                 <td>" . $hiddenId . "</td>
+                //                 <td>" . $row['od_time'] . "</td>
+                //                 <td>" . $price . "</td>
+                //             </tr>";
             }
 
+            // $timesale .=
+            //     "</tbody>
+            //             </table>
+            //         </div>
+            //         <button class=\"more_btn\" onclick=\"order_more()\">구매현황 더보기</button>
+            //     </div>";
             $timesale .=
-                "</tbody>
-                        </table>
+                "
                     </div>
-                    <button class=\"more_btn\" onclick=\"order_more()\">구매현황 더보기</button>
-                </div>";
+				</div>";
         }
 
         // 상품 찜하기 체크
@@ -5550,6 +5705,7 @@ class Shop extends CI_Controller
                                 <td class=\"cell\">할인가</td>
                             </tr>";
             //5|1|8|0|10%|37496
+            
             // 상품주키|쿠폰주키|쿠폰번호|동시사용 여부|할인금액(율)|할인가
             $chk = 0;
             for ($j = 0; $j < count($is_possible); $j++) {

@@ -390,3 +390,56 @@ function price_calculate() {
 function chr(code) {
   return String.fromCharCode(code);
 }
+
+// 메인화면 담기/바로구매 클릭
+function fbuyform_submit(target) {
+    event.preventDefault();
+    var type = $(target).data('type');
+    var base_url = $('#base_url').val();
+
+    if(!confirm("해당 상품을 장바구니에 담으시겠습니까?")) return false;
+
+	var fbuyForm = $(target).parent('.ct_bx');
+
+    if (fbuyForm.find('.check').data('auth') == "soldout") {
+        alert('현재상품은 품절 상품입니다.');
+		return false;
+    }
+
+	var check = fbuyForm.find('.check').is(':checked');
+    var form = document.createElement('form'); // 폼객체 생성
+    var objs;
+    fbuyForm.find('input').each(function(idx,item){
+        objs = document.createElement('input'); // 값이 들어있는 녀석의 형식
+        var nvalue=$(item).val();
+        var name=$(item).attr('name');
+        $(objs).attr('name',name);
+        $(objs).attr('value',nvalue);// 값이 들어있는 녀석의 type
+        //errorCheck(name);
+        form.appendChild(objs);
+    });
+    objs = document.createElement('input');
+    $(objs).attr('name','sw_direct');
+    if(type == "cart") {
+        $(objs).attr('value',0);
+    } else if(type == "direct") {
+        $(objs).attr('value',1);
+    }
+    form.appendChild(objs);
+
+    objs = document.createElement('input');
+    $(objs).attr('name','backUrl');
+    $(objs).attr('value',location.origin+location.pathname);
+    form.appendChild(objs);
+
+    objs = document.createElement('input');
+    $(objs).attr('name','ss_tx');
+    $(objs).attr('value',$('.frm_input').val());
+    form.appendChild(objs);
+
+    form.setAttribute('method', 'post'); //get,post 가능
+    form.setAttribute('action', base_url+"m/process/cartupdate"); //보내는 url
+    document.body.appendChild(form);
+    $(form).hide();
+    form.submit();
+}

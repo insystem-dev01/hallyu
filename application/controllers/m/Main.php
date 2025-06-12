@@ -191,7 +191,7 @@ class Main extends CI_Controller
             $supply_item = $this->funcomplex_lib->get_item_supply($index_no, $gs['spl_subject']);
             $onclick = ((!empty($option_item) || !empty($supply_item)) && !$is_soldout)
                 ? "location.href='" . $href . "'"
-                : "fbuyform_submite(this)";
+                : "fbuyform_submit(this)";
 
             $is_open = "open";
             $is_social_status = '';
@@ -297,9 +297,9 @@ class Main extends CI_Controller
             $supply_item = $this->funcomplex_lib->get_item_supply($index_no, $gs['spl_subject']);
 
             if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
-                $onclickTxt = "location.href='" . base_url() . "shop/view?index_no={$index_no}'";
+                $onclickTxt = "location.href='" . base_url() . "m/shop/view?index_no={$index_no}'";
             } else {
-                $onclickTxt = "fbuyform_submite(this)";
+                $onclickTxt = "fbuyform_submit(this)";
             }
 
             // 타임세일 상품 시간
@@ -465,9 +465,9 @@ class Main extends CI_Controller
             $supply_item = $this->funcomplex_lib->get_item_supply($index_no, $gs['spl_subject']);
 
             if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
-                $onclickTxt = "location.href='" . base_url() . "shop/view?index_no={$index_no}'";
+                $onclickTxt = "location.href='" . base_url() . "m/shop/view?index_no={$index_no}'";
             } else {
-                $onclickTxt = "fbuyform_submite(this)";
+                $onclickTxt = "fbuyform_submit(this)";
             }
 
             $str .= "<li>\n";
@@ -568,9 +568,9 @@ class Main extends CI_Controller
             $supply_item = $this->funcomplex_lib->get_item_supply($index_no, $gs['spl_subject']);
 
             if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
-                $onclickTxt = "location.href='" . base_url() . "shop/view?index_no={$index_no}'";
+                $onclickTxt = "location.href='" . base_url() . "m/shop/view?index_no={$index_no}'";
             } else {
-                $onclickTxt = "fbuyform_submite(this)";
+                $onclickTxt = "fbuyform_submit(this)";
             }
 
             $str .= "<li class=\"brand\">\n";
@@ -671,9 +671,9 @@ class Main extends CI_Controller
             $supply_item = $this->funcomplex_lib->get_item_supply($index_no, $gs['spl_subject']);
 
             if ((!empty($option_item) || !empty($supply_item)) && $scrtipt_msg != 'soldout') {
-                $onclickTxt = "location.href='" . base_url() . "shop/view?index_no={$index_no}'";
+                $onclickTxt = "location.href='" . base_url() . "m/shop/view?index_no={$index_no}'";
             } else {
-                $onclickTxt = "fbuyform_submite(this)";
+                $onclickTxt = "fbuyform_submit(this)";
             }
 
             $str .= "<li class=\"brand\">\n";
@@ -790,7 +790,7 @@ class Main extends CI_Controller
             if ((!empty($option_item) || !empty($supply_item)) && !$is_soldout) {
                 $onclick = "location.href='" . $href . "'";
             } else {
-                $onclick = "fbuyform_submite(this)";
+                $onclick = "fbuyform_submit(this)";
             }
 
             // 9) 실제 이미지 URL 결정 (simg1이 없으면 noimage)

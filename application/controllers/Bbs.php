@@ -1448,7 +1448,8 @@ class Bbs extends CI_Controller
             'b_content_head' => $b_content_head,
             'b_content_tail' => $b_content_tail,
             'bo_subject' => $bo_subject,
-            'bo_writer_id' => $bo_writer_id,
+            // 'bo_writer_id' => $bo_writer_id,
+            'bo_writer_s'=>$bo_writer_s,
             'bo_file1' => $bo_file1,
             'bo_file2' => $bo_file2,
             'board' => $board,
@@ -1606,7 +1607,7 @@ class Bbs extends CI_Controller
                     $listTb .= "&nbsp;<img src='{$bo_img_url}/img/icon_secret.gif'>";
                 }
                 if ($row['tailcount']) {
-                    $listTb .= "&nbsp;<img src='{$bo_img_url}/img/dot_cnum.gif'>&nbsp;<span class=\"fc_197\">{$row['tailcount']}</span>";
+                    $listTb .= "&nbsp;<span class=\"fc_197\">{$row['tailcount']}</span>";
                 }
                 $listTb .= $bo_newicon;
                 $listTb .= "

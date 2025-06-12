@@ -22,8 +22,10 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>mb/css/default.css?ver=<?=time()?>">
 <link rel="stylesheet" href="<?php echo base_url(); ?>dist/css/mobile.css?ver=<?=time();?>">
 <?=$favicon?>
+
 <script src="<?php echo base_url(); ?>js/jquery-1.8.3.min.js"></script>
 <script src="<?php echo base_url(); ?>js/jquery-ui-1.10.3.custom.js"></script>
+<script src="<?php echo base_url(); ?>mb/js/shop.js"></script>
 <script src="<?php echo base_url(); ?>js/slick.js"></script>
 <script src="<?php echo base_url(); ?>mb/js/common.js?ver=<?=time()?>"></script>
 <script src="<?php echo base_url(); ?>mb/js/iscroll.js?v=<?=time()?>"></script>

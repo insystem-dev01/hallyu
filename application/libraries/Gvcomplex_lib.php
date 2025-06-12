@@ -108,7 +108,7 @@ class Gvcomplex_lib
                 } else if ($type == "normal") {
                     $href = base_url() . 'shop/normal?ca_id=' . $row['catecode'];
                 } else if ($type == "timesale") {
-                    $href = base_url() . '/shop/timesale?ca_id=' . $row['catecode'] . '&status=' . $status;
+                    $href = base_url() . 'shop/timesale?ca_id=' . $row['catecode'] . '&status=' . $status;
                 } else {
                     alert("tree_category 에러");
                 }
