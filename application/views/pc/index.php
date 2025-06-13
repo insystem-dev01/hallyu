@@ -12,7 +12,7 @@
 <div class="main-banner">
 	<div class="banner-swiper swiper-container">
 		<div class="swiper-wrapper">
-			<?php for ($i = 0; $i < 8; $i++) { ?>
+			<?php for ($i = 0; $i < 3; $i++) { ?>
 				<div class="swiper-slide">
 					<img src="<?= base_url() ?>img/banner/banner_<?= $i ?>.png" alt="배너<?= $i ?>">
 				</div>
