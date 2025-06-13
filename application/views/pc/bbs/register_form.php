@@ -1076,6 +1076,7 @@
                     return;
                 }
 
+                
                 alert(result['msg'].trim());
 
                 if (result['res']) {
