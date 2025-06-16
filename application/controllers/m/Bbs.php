@@ -220,7 +220,7 @@ class Bbs extends CI_Controller
         $placeholder_name = $type == "user" ? "" : "Hallyu";
 
         if ($w != "u") {
-            $memberName = "<input type=\"text\" name=\"mb_name\" value=\"" . $this->funcomplex_lib->get_text($member['name']) . "\" id=\"mb_name\"{$required} {$readonly} class=\"frm_input\" placeholder=\"{$placeholder_name}\" onkeyup=\"basic_text_check('mb_name','상호명을 작성해주세요.')\">
+            $memberName = "<input type=\"text\" name=\"mb_name\" value=\"" . $this->funcomplex_lib->get_text($member['name']) . "\" id=\"mb_name\"{$required} readonly class=\"frm_input\" placeholder=\"사업자 번호 중복확인을 먼저 해주세요.\" onkeyup=\"basic_text_check('mb_name','상호명을 작성해주세요.')\">
                         <input type=\"hidden\" id=\"mb_name_check_confirm\">";
         } else {
             $memberName = "<span id=\"reg_mb_name\">" . $this->funcomplex_lib->get_text($member['name']) . "</span>";

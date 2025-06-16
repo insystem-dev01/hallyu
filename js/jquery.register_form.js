@@ -235,7 +235,8 @@ var reg_company_number_check = function reg_company_number_check() {
                         .text(response.message)
                         .css('color', 'green');
                     $('#company_no_check_confirm').val("ok");
-
+                    $("#mb_name").val(response.data.company_name);
+                    basic_text_check('mb_name','상호명을 작성해주세요.')
                     $('#active_company_cert').removeAttr('disabled');
                 }
                 else {

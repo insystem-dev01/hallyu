@@ -903,16 +903,30 @@ class Process extends CI_Controller
                 return;
             }
 
-            $is_company_status = $this->external_api->find_business_man_number(str_replace("-", "", $company_no));
-
-            if (!$is_company_status) {
-                echo json_encode(["status" => false, "message" => "사업자 등록 상태가 올바르지 않습니다."]);
+            // $is_company_status = $this->external_api->find_business_man_number(str_replace("-", "", $company_no));
+            //   if (!$is_company_status) {
+            //     echo json_encode(["status" => false, "message" => "사업자 등록 상태가 올바르지 않습니다."]);
+            //     return;
+            // }
+            $company_name = $this->external_api->bizno_find_company_name(str_replace("-", "", $company_no));
+            if (!$company_name) {
+                echo json_encode(["status" => false, "message" => "사업자를 조회할 수 없습니다."]);
                 return;
             }
+            $data = [
+                "company_name" => $company_name
+            ];
+          
 
             set_session('ss_check_company_number', $company_no);
 
-            echo json_encode(["status" => true, "message" => "사용 가능한 사업자등록번호입니다."]);
+            echo json_encode(
+                [
+                    "status" => true,
+                    "message" => "사용 가능한 사업자등록번호입니다.",
+                    "data" => $data,
+                ]
+            );
         } catch (Exception $e) {
             // 예외 발생 시
             log_message('error', '사업자등록번호 확인 중 예외 발생: ' . $e->getMessage());
@@ -1111,7 +1125,7 @@ class Process extends CI_Controller
         $member = $this->load->get_var('member');
         $set_mb_id = $member['id'];
 
-        
+
 
         $referralCode = $this->input->post('referralCode') ?? ""; // 리뷰 공유 코드
         $key = "share";
