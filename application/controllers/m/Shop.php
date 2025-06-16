@@ -1762,10 +1762,14 @@ class Shop extends CI_Controller
             if (!$is_pr_msg && !$is_buy_only && $gs['normal_price']) {
                 $it_amount = $this->gvcomplex_lib->get_sale_price($gs['index_no']);
                 $is_uncase = $this->funcomplex_lib->is_uncase($gs['index_no']);
-                if ($gs['normal_price'] > $it_amount) {
-                    $sett = ($gs['normal_price'] - $it_amount) / $gs['normal_price'] * 100;
-                    $sale = '<li class="sale">' . number_format($sett, 0) . '<span class="percent">%</span></li>';
-                }
+                // if ($gs['normal_price'] > $it_amount) {
+                //     $sett = ($gs['normal_price'] - $it_amount) / $gs['normal_price'] * 100;
+                //     $sale = '<li class="sale">' . number_format($sett, 0) . '<span class="percent">%</span></li>';
+                // }
+
+                $sett = ($gs['normal_price'] - $it_amount) / $gs['normal_price'] * 100;
+                $sale = '<li class="sale">' . number_format($sett, 0) . '<span class="percent">%</span></li>';
+
 
                 $no_is_onlyTag .= "
 					<ul class=\"sale_box\">
@@ -5270,9 +5274,9 @@ class Shop extends CI_Controller
                 $multi_settle .= "<option value='계좌이체'>계좌이체</option>\n";
             }
         } else {
-            if ($default['de_bank_use']) {
-                $multi_settle .= "<option value='무통장'>무통장입금</option>\n";
-            }
+            // if ($default['de_bank_use']) {
+            //     $multi_settle .= "<option value='무통장'>무통장입금</option>\n";
+            // }
             if ($default['de_card_use']) {
                 $multi_settle .= "<option value='신용카드'>신용카드</option>\n";
             }
@@ -5705,7 +5709,7 @@ class Shop extends CI_Controller
                                 <td class=\"cell\">할인가</td>
                             </tr>";
             //5|1|8|0|10%|37496
-            
+
             // 상품주키|쿠폰주키|쿠폰번호|동시사용 여부|할인금액(율)|할인가
             $chk = 0;
             for ($j = 0; $j < count($is_possible); $j++) {
@@ -5760,7 +5764,7 @@ class Shop extends CI_Controller
 
         // 최소, 최대 주문수량체크
         $it_buy_min_qty = 1;
-        $it_buy_max_qty = 0;
+        // $it_buy_max_qty = 0;
         if (isset($gs['odr_min']) && $gs['odr_min'] >= 1) {
             $it_buy_min_qty    = (int)$gs['odr_min'];
         }

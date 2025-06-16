@@ -414,9 +414,12 @@ class MypageProcess extends CI_Controller
             $value['info_gubun']        = $this->input->post('info_gubun'); //상품정보제공 구분
             $value['info_value']        = $it_info_value; //상품정보제공 값
             $value['price_msg']            = $this->input->post('price_msg') ?? ""; //가격 대체문구
-            $value['stock_mod']            = ($type == "timesale") ? 1 : $this->input->post('stock_mod'); //수량형식
-            $value['odr_min']            = ($type == "timesale") ? 1 : conv_number($this->input->post('odr_min')); //최소 주문한도
-            $value['odr_max']            = ($type == "timesale") ? 1 : conv_number($this->input->post('odr_max')); //최대 주문한도
+            // $value['stock_mod']            = ($type == "timesale") ? 1 : $this->input->post('stock_mod'); //수량형식
+            // $value['odr_min']            = ($type == "timesale") ? 1 : conv_number($this->input->post('odr_min')); //최소 주문한도
+            // $value['odr_max']            = ($type == "timesale") ? 1 : conv_number($this->input->post('odr_max')); //최대 주문한도
+            $value['stock_mod']            =  $this->input->post('stock_mod'); //수량형식
+            $value['odr_min']            =  conv_number($this->input->post('odr_min')); //최소 주문한도
+            $value['odr_max']            =  conv_number($this->input->post('odr_max')); //최대 주문한도
             $value['buy_level']            = $this->input->post('buy_level'); //구매가능 레벨
             $value['buy_only']            = isset($buy_only) ? $buy_only : 0; //가격공개 여부
             $value['simg_type']            = $this->input->post('simg_type'); //이미지 등록방식

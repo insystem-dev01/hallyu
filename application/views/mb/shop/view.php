@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>mb/js/shop.js?v=<?=time()?>"></script>
+<!-- <script src="<?php echo base_url(); ?>mb/js/shop.js?v=<?=time()?>"></script> -->
 
 <form name="fbuyform" method="post">
     <input type="hidden" name="gs_id[]" value="<?php echo $gs_id; ?>">

@@ -3,9 +3,14 @@
     <div class="wr_info">
         <?php echo $write['writer_s']; ?> 
         <b>|</b>
-        <span class="wr_day"><?php echo $bo_wdate; ?></span>
+        <?php echo $bo_wdate; ?>
+        <b>|</b>
         좋아요
+        <span class="count_margin good_count">숫자</span>
+        <b>|</b>
         조회수
+        <span class="count_margin">숫자</span>
+        
     </div>
     <div class="wr_txt">
         <?= $file1Tag ?>

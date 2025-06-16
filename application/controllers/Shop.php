@@ -2034,6 +2034,7 @@ class Shop extends CI_Controller
             $odr_periodTag = "<dl><dt>판매기간</dt><dd>" . $gs['sb_date'] . " ~ " . $gs['eb_date'] . "</dd></dl>";
         }
         $optionTag = "";
+
         if (!$is_only && !$is_pr_msg && !$is_buy_only && !$is_soldout) {
             if ($option_item || $supply_item) {
                 $optionTag .= "<div class=\"vi_txt_li\">";
@@ -3007,7 +3008,7 @@ class Shop extends CI_Controller
 
         // 최소, 최대 주문수량체크
         $it_buy_min_qty = 1;
-        $it_buy_max_qty = 0;
+        // $it_buy_max_qty = 0;
         if (isset($gs['odr_min']) && $gs['odr_min'] >= 1) {
             $it_buy_min_qty    = (int)$gs['odr_min'];
         }
@@ -5460,9 +5461,9 @@ class Shop extends CI_Controller
         //         $payMethod.='<input type="radio" name="paymethod" id="paymethod_iche" value="계좌이체" onclick="calculate_paymethod(this.value);"> <label for="paymethod_iche">계좌이체</label>';
         //     }
         // } else {
-        if ($default['de_bank_use']) {
-            $payMethod .= '<input type="radio" name="paymethod" id="paymethod_bank" value="무통장" onclick="calculate_paymethod(this.value);"> <label for="paymethod_bank">무통장입금</label>';
-        }
+        // if ($default['de_bank_use']) {
+        //     $payMethod .= '<input type="radio" name="paymethod" id="paymethod_bank" value="무통장" onclick="calculate_paymethod(this.value);"> <label for="paymethod_bank">무통장입금</label>';
+        // }
         if ($default['de_card_use']) {
             $payMethod .= '<input type="radio" name="paymethod" id="paymethod_card" value="신용카드" onclick="calculate_paymethod(this.value);"> <label for="paymethod_card">신용카드</label>';
         }

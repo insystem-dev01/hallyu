@@ -204,7 +204,6 @@ var reg_company_number_check = function reg_company_number_check() {
             "company_no_02": company_no_02,
             "company_no_03": company_no_03
         });
-        var result = "";
 
         $.ajax({
             type: "POST",
@@ -256,7 +255,6 @@ var reg_company_number_check = function reg_company_number_check() {
         });
 
 
-        return result;
     }
     else {
         $('#company_no_check')

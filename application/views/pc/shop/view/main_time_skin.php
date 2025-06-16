@@ -1,75 +1,57 @@
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function () {
-    var targetDate<?=$gs_id?> = new Date(<?=$t['year']?>, <?=$t['mon'] - 1?>, <?=$t['mday']?>, <?=$t['hours']?>, <?=$t['minutes']?>, <?=$t['seconds']?>);
-    var targetInMS<?=$gs_id?> = targetDate<?=$gs_id?>.getTime();
+<?php
+$timerClass = 'timer-' . $gs_id;
+?>
 
-    var oneSec = 1000;
-    var oneMin = 60 * oneSec;
-    var oneHr = 60 * oneMin;
-    var oneDay = 24 * oneHr;
-
-    function countDown<?=$gs_id?>() {
-        var nowInMS = new Date().getTime();
-        var diff = targetInMS<?=$gs_id?> - nowInMS;
-
-        if (diff < 0) {
-            setImages<?=$gs_id?>(0, 0, 0, 0);
-            return;
-        }
-
-        var daysLeft = Math.floor(diff / oneDay); diff %= oneDay;
-        var hrsLeft = Math.floor(diff / oneHr); diff %= oneHr;
-        var minsLeft = Math.floor(diff / oneMin); diff %= oneMin;
-        var secsLeft = Math.floor(diff / oneSec);
-
-        setImages<?=$gs_id?>(daysLeft, hrsLeft, minsLeft, secsLeft);
-    }
-
-    function setImages<?=$gs_id?>(days, hrs, mins, secs) {
-        if (days > 999) days = 999;
-
-        days = formatNum<?=$gs_id?>(days, 2);
-        hrs = formatNum<?=$gs_id?>(hrs, 2);
-        mins = formatNum<?=$gs_id?>(mins, 2);
-        secs = formatNum<?=$gs_id?>(secs, 2);
-
-        var d = document.querySelector('.days<?=$gs_id?>');
-        var h = document.querySelector('.hours<?=$gs_id?>');
-        var m = document.querySelector('.minutes<?=$gs_id?>');
-        var s = document.querySelector('.seconds<?=$gs_id?>');
-
-        if (d && h && m && s) {
-            d.textContent = days;
-            h.textContent = hrs;
-            m.textContent = mins;
-            s.textContent = secs;
-        }
-    }
-
-    function formatNum<?=$gs_id?>(num, len) {
-        var numStr = "" + num;
-        while (numStr.length < len) {
-            numStr = "0" + numStr;
-        }
-        return numStr;
-    }
-
-    countDown<?=$gs_id?>();
-    setInterval(countDown<?=$gs_id?>, 1000);
-});
-</script>
-
-<div class="time main <?=$is_open?>">
-    <?php if($is_open == "wait"): ?>
+<div class="time main <?= $is_open ?> <?= $timerClass ?>"
+    data-endtime="<?= htmlspecialchars($end_datetime, ENT_QUOTES, 'UTF-8') ?>">
+    <?php if ($is_open == "wait"): ?>
         <span class="isOpen">오픈예정</span>
     <?php endif; ?>
 
-    <span class="days<?=$gs_id?>">00</span><span class="day">일</span>
-    <span class="hours<?=$gs_id?>">00</span><span class="day">:</span>
-    <span class="minutes<?=$gs_id?>">00</span><span class="day">:</span>
-    <span class="seconds<?=$gs_id?>">00</span>
+    <span class="days">00</span><span class="day">일</span>
+    <span class="hours">00</span><span class="day">:</span>
+    <span class="minutes">00</span><span class="day">:</span>
+    <span class="seconds">00</span>
 
-    <?php if($is_open == "open"): ?>
+    <?php if ($is_open == "open"): ?>
         <span class="day">남음</span>
     <?php endif; ?>
 </div>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        const ONE_SEC = 1000,
+            ONE_MIN = 60 * ONE_SEC,
+            ONE_HR = 60 * ONE_MIN,
+            ONE_DAY = 24 * ONE_HR;
+
+        document.querySelectorAll(".time.<?= $timerClass ?>").forEach(el => {
+            const raw = el.dataset.endtime;
+            const iso = raw.replace(" ", "T");
+            const endMS = new Date(iso).getTime();
+
+            function update() {
+                let diff = endMS - Date.now();
+                if (diff <= 0) {
+                    el.innerHTML = '<span class="unit">마감</span>';
+                    return clearInterval(timer);
+                }
+                const days = Math.floor(diff / ONE_DAY);
+                diff %= ONE_DAY;
+                const hrs = Math.floor(diff / ONE_HR);
+                diff %= ONE_HR;
+                const mins = Math.floor(diff / ONE_MIN);
+                diff %= ONE_MIN;
+                const secs = Math.floor(diff / ONE_SEC);
+
+                el.querySelector(".days").textContent = String(days).padStart(2, "0");
+                el.querySelector(".hours").textContent = String(hrs).padStart(2, "0");
+                el.querySelector(".minutes").textContent = String(mins).padStart(2, "0");
+                el.querySelector(".seconds").textContent = String(secs).padStart(2, "0");
+            }
+
+            update();
+            const timer = setInterval(update, 1000);
+        });
+    });
+</script>

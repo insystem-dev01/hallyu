@@ -656,11 +656,11 @@
                                 <b class="marl10">재고 통보수량</b> <input type="text" name="noti_qty" value="<?php echo number_format($gs['noti_qty']); ?>" class="frm_input w80" onkeyup="addComma(this);"> 개
                                 <p class="fc_197 mart7">상품의 재고가 통보수량보다 작을 때 상품 재고관리에 '재고부족'으로 표시됩니다.<br>옵션이 있는 상품은 개별 옵션의 통보수량이 적용됩니다. 설정이 무제한이면 재고관리에 표시되지 않습니다.</p>
                             <?php } ?>
-                            <?php if($type == "timesale") { ?>
+                            <!-- <?php if($type == "timesale") { ?>
                                 <p class="fc_197 mart7">
                                     최소 수량을 4개 이상, 짝수로만 입력해야 계산식이 적용됩니다.
                                 </p>
-                            <?php } ?>
+                            <?php } ?> -->
                         </td>
                     </tr>
                     <tr>
@@ -695,13 +695,13 @@
                     <tr>
                         <th scope="row">주문한도</th>
                         <td>
-                            <?php if($type == "normal") { ?>
+                            <!-- <?php if($type == "normal") { ?> -->
                                 최소 <input type="text" name="odr_min" value="<?php echo $gs['odr_min']; ?>" class="frm_input w80"> ~
                                 최대 <input type="text" name="odr_max" value="<?php echo $gs['odr_max']; ?>" class="frm_input w80">
                                 <span class="fc_197 marl5">미입력시 1개 고정 (무제한일 경우 0개로 설정)</span>
-                            <?php } else { ?>
+                            <!-- <?php } else { ?>
                                 <span class="fc_197 marl5">함께장터 상품은 최소, 최대 구매수량이 1개로 자동 설정됩니다.</span>
-                            <?php } ?>
+                            <?php } ?> -->
                         </td>
                     </tr>
                     <tr>

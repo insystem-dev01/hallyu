@@ -13884,9 +13884,9 @@ b {
   list-style: none
 }
 
-#option_set_added.timesale {
+/* #option_set_added.timesale {
   display: none
-}
+} */
 
 .caution {
   width: 91.11vw;
@@ -15642,7 +15642,7 @@ html.no-overflowscrolling .fg {
 }
 
 .m_bo_bg {
-  margin: 0 12px
+  margin: 0 3vw
 }
 
 .m_bo_bg .list a {
@@ -15651,28 +15651,29 @@ html.no-overflowscrolling .fg {
 
 .m_bo_bg .list {
   border-bottom: 1px solid #ddd;
-  padding: 10px
+  padding: 3vw
 }
 
 .m_bo_bg .list .cate {
   color: #f33e31;
-  margin-right: 5px
+  margin-right: 1vw
 }
 
 .m_bo_bg .list .subj {
-  font-size: 14px
+  font-size: 4vw
 }
 
 .m_bo_bg .list .info {
+  margin-top: 1vw;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  font-size: 0.85rem;
+  gap: 2.5vw;
+  font-size: 3.5vw;
   /* 12px */
   color: #aaa;
 }
 
-.m_bo_bg .list .info .good_count {
+.good_count {
   color: #0278fe;
 }
 
@@ -15682,31 +15683,32 @@ html.no-overflowscrolling .fg {
 }
 
 .m_bo_bg .title {
-  font-size: 14px;
+  font-size: 5vw;
   font-weight: 600;
   border-bottom: 1px solid #ddd;
-  padding: 10px 7px
+  padding: 2.5vw 1.5vw
 }
 
 .m_bo_bg .wr_info {
   border-bottom: 1px solid #ddd;
-  padding: 10px 7px
+  padding: 2.5vw 1.5vw;
+  font-size: 3.5vw;
+  color: #999;
+  
 }
 
 .m_bo_bg .wr_info .wr_day {
-  font-size: 0.928em;
-  color: #999;
-  margin-left: 10px
+  
 }
 
 .m_bo_bg .wr_info b {
-    margin-left: 1vw;
-    margin-right: 0.2vw;
+    margin-left: 1.5vw;
+    margin-right: 1.5vw;
     display: inline-block;
 }
 
 .m_bo_bg .list a p {
-  font-size: 12px
+  font-size: 4vw
 }
 
 .m_bo_bg .btn_confirm {

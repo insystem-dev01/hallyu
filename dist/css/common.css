@@ -12695,9 +12695,9 @@ ul.slick-dots {
   list-style: none
 }
 
-#option_set_added.timesale {
+/* #option_set_added.timesale {
   display: none
-}
+} */
 
 #option_set_added li td {
   font-size: 13px

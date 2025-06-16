@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class AdminProcess extends CI_Controller{
+class AdminProcess extends CI_Controller
+{
     private $max_size;
     private $max_width;
     private $max_height;
@@ -9,7 +10,8 @@ class AdminProcess extends CI_Controller{
     private $encrypt_name;
     private $allowed_types;
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('query_model');
         $this->load->helper('common_helper');
@@ -2178,7 +2180,7 @@ class AdminProcess extends CI_Controller{
 
         if (isset($_FILES['company_regi_certi']) && $_FILES['company_regi_certi']['error'] === UPLOAD_ERR_OK) {
             $upload_path = "/hallyu/cert/seller/";
-            $company_number = $value['company_saupja_no'] ;
+            $company_number = $value['company_saupja_no'];
 
             $company_result = $this->upload_file($upload_path, $company_number, 'company_regi_certi', 'company', $value['mb_id']);
 
@@ -3777,7 +3779,8 @@ class AdminProcess extends CI_Controller{
     }
 
     // 상품 등록
-    public function goods_form_update() {
+    public function goods_form_update()
+    {
         try {
             $OM_TIME_YMDHIS = date("Y-m-d H:i:s", time());
             $q1 = $this->input->post('q1');
@@ -3914,10 +3917,10 @@ class AdminProcess extends CI_Controller{
                 }
             }
             $it_info_value = addslashes(serialize($value_array));
-            
+
             unset($value);
             if ($_POST['simg_type']) { // URL 입력
-                if($w == "") {
+                if ($w == "") {
                     if (empty($_POST['simg1']) || empty($_POST['simg2'])) {
                         throw new Exception("상품 이미지1, 이미지2를 등록해주세요.");
                     }
@@ -3930,24 +3933,24 @@ class AdminProcess extends CI_Controller{
                 $value['simg5'] = $_POST['simg5'];
                 $value['simg6'] = $_POST['simg6'];
             } else {
-                if($w == "") {
+                if ($w == "") {
                     if (empty($_FILES['simg1']['name']) || empty($_FILES['simg2']['name'])) {
                         throw new Exception("상품 이미지1, 이미지2를 등록해주세요.");
                     }
                 }
-            
+
                 for ($i = 1; $i <= 6; $i++) {
                     if ($img = $_FILES['simg' . $i]['name']) {
                         if (!preg_match("/\.(gif|jpg|png)$/i", $img)) {
                             throw new Exception("이미지 {$i}는 gif, jpg, png 파일이 아닙니다.");
                         }
                     }
-            
+
                     if (isset($_POST['simg' . $i . '_del'])) {
                         unlink($uploadPath . '/' . $_POST['simg' . $i . '_del']);
                         $value['simg' . $i] = '';
                     }
-            
+
                     if (!empty($_FILES['simg' . $i]['name'])) {
                         if (!$this->upload->do_upload('simg' . $i)) {
                             $error = $this->upload->display_errors();
@@ -3959,7 +3962,7 @@ class AdminProcess extends CI_Controller{
                         }
                     }
                 }
-            }            
+            }
 
             $ppay_type = $this->input->post('ppay_type');
             $ca_id = $this->input->post('ca_id');
@@ -4076,7 +4079,7 @@ class AdminProcess extends CI_Controller{
                 throw new Exception("판매기간을 설정해주세요.");
             }
 
-            if(empty($memo)) {
+            if (empty($memo)) {
                 throw new Exception("상품 상세 설명을 입력해주세요.");
             }
 
@@ -4098,7 +4101,7 @@ class AdminProcess extends CI_Controller{
             $value['normal_price']      = $normal_price; //시중가격
             $value['calculate_price']   = $calculate_price; //실제 판매가(타임세일)
             $value['stock_qty']         = $stock_qty; //재고수량
-            $value['original_stock_qty']= $stock_qty; //재고수량
+            $value['original_stock_qty'] = $stock_qty; //재고수량
             $value['goods_total_price'] = $goods_total_price;
             $value['gpoint']            = 0;
             $value['maker']             = isset($maker) ? $maker : ""; //제조사
@@ -4128,9 +4131,12 @@ class AdminProcess extends CI_Controller{
             $value['info_gubun']        = isset($info_gubun) ? $info_gubun : ""; //상품정보제공 구분
             $value['info_value']        = $it_info_value; //상품정보제공 값
             $value['price_msg']         = $this->input->post('price_msg') ?? ""; //가격 대체문구
-            $value['stock_mod']         = ($type == "timesale") ? 1 : $this->input->post('stock_mod'); //수량형식
-            $value['odr_min']           = ($type == "timesale") ? 1 : conv_number($this->input->post('odr_min')); //최소 주문한도
-            $value['odr_max']           = ($type == "timesale") ? 1 : conv_number($this->input->post('odr_max')); //최대 주문한도
+            // $value['stock_mod']         = ($type == "timesale") ? 1 : $this->input->post('stock_mod'); //수량형식
+            // $value['odr_min']           = ($type == "timesale") ? 1 : conv_number($this->input->post('odr_min')); //최소 주문한도
+            // $value['odr_max']           = ($type == "timesale") ? 1 : conv_number($this->input->post('odr_max')); //최대 주문한도
+            $value['stock_mod']         =  $this->input->post('stock_mod'); //수량형식
+            $value['odr_min']           =  conv_number($this->input->post('odr_min')); //최소 주문한도
+            $value['odr_max']           =  conv_number($this->input->post('odr_max')); //최대 주문한도
             $value['buy_level']         = isset($buy_level) ? $buy_level : "10"; //구매가능 레벨
             $buy_only                   = $this->input->post('buy_only');
             $value['buy_only']          = ($buy_only != null) ? $buy_only : 0; //가격공개 여부
@@ -4190,7 +4196,7 @@ class AdminProcess extends CI_Controller{
                         throw new Exception("옵션 {$spl_id[$i]}의 가격 할인폭이 상품 가격보다 큽니다.");
                     }
                 }
-                
+
                 $sql = " insert into shop_goods_option
                                     ( `io_id`, `io_type`, `gs_id`, `io_price`, `io_stock_qty`, `io_noti_qty`, `io_use` )
                                 VALUES ";
@@ -4218,7 +4224,8 @@ class AdminProcess extends CI_Controller{
         echo json_encode($return);
     }
 
-    private function validate_min_discount($normal_price, $goods_price, $stock_qty) {
+    private function validate_min_discount($normal_price, $goods_price, $stock_qty)
+    {
         $discount_ratio = ($normal_price - $goods_price) / $normal_price;
 
         if ($normal_price <= 10000) {
@@ -4241,29 +4248,30 @@ class AdminProcess extends CI_Controller{
         if ($discount_ratio < $min_discount) {
             throw new Exception(
                 "온라인가({$normal_price})와 딜가({$goods_price})의 차이가 너무 적습니다. " .
-                "재고 {$stock_qty}개 기준으로 최소 " . ($min_discount * 100) . "% 이상의 할인율이 필요하며, " .
-                "딜가는 최소 {$max_goods_price}원 이하로 설정되어야 합니다."
+                    "재고 {$stock_qty}개 기준으로 최소 " . ($min_discount * 100) . "% 이상의 할인율이 필요하며, " .
+                    "딜가는 최소 {$max_goods_price}원 이하로 설정되어야 합니다."
             );
         }
     }
-    
-    public function insert_timesale_goods($gs_id, $normal_price, $goods_price, $stock_qty) {
+
+    public function insert_timesale_goods($gs_id, $normal_price, $goods_price, $stock_qty)
+    {
         $this->validate_min_discount($normal_price, $goods_price, $stock_qty);
-    
+
         $online_price = $normal_price;
         $deal_price = $goods_price;
         $Q = $stock_qty;
         $round_unit = 10;
         $steps = 3;
-    
+
         $min_price = $this->get_valid_min_price($deal_price, $online_price, $Q, $round_unit);
         $result = $this->bid_distribution($online_price, $deal_price, $Q, $min_price, $round_unit, $steps);
-    
+
         if (empty($result['prices_arr'])) {
             alert('데이터 저장 중 오류가 발생하였습니다.');
         }
-    
-        $real_prices = array_map(function($row) use ($gs_id, $normal_price, $goods_price) {
+
+        $real_prices = array_map(function ($row) use ($gs_id, $normal_price, $goods_price) {
             return [
                 'gs_id' => $gs_id,
                 'normal_price' => $normal_price,
@@ -4275,12 +4283,13 @@ class AdminProcess extends CI_Controller{
                 'regdate' => date("Y-m-d H:i:s")
             ];
         }, $result['prices_arr']);
-    
+
         $this->db->insert_batch('shop_goods_timesale', $real_prices);
         return true;
     }
-    
-    private function get_valid_min_price($deal_price, $normal_price, $stock_qty, $round_unit = 10) {
+
+    private function get_valid_min_price($deal_price, $normal_price, $stock_qty, $round_unit = 10)
+    {
         if ($deal_price <= 10000) {
             $base_discount = 0.07;
             $qty_factor = 0.0012;
@@ -4294,38 +4303,40 @@ class AdminProcess extends CI_Controller{
             $base_discount = 0.15;
             $qty_factor = 0.0008;
         }
-    
+
         $discount_rate = min($base_discount + ($stock_qty * $qty_factor), 0.25);
         $min_price = floor($deal_price * (1 - $discount_rate));
-    
+
         $price_range = $normal_price - $min_price;
         $available_steps = floor($price_range / $round_unit);
-    
+
         if ($available_steps < $stock_qty) {
             $required_range = $stock_qty * $round_unit;
-    
+
             throw new Exception(
                 "중복 없는 가격 분포가 불가능합니다.\n" .
-                "수량 {$stock_qty}개를 {$round_unit}원 단위로 분포하려면 최소 {$required_range}원의 가격폭이 필요합니다.\n" .
-                "현재 가격폭은 {$price_range}원입니다. min_price를 더 낮추거나 수량을 줄이세요.\n" .
-                "(현재 min_price 계산 기준 할인율: " . round($discount_rate * 100, 1) . "%)"
+                    "수량 {$stock_qty}개를 {$round_unit}원 단위로 분포하려면 최소 {$required_range}원의 가격폭이 필요합니다.\n" .
+                    "현재 가격폭은 {$price_range}원입니다. min_price를 더 낮추거나 수량을 줄이세요.\n" .
+                    "(현재 min_price 계산 기준 할인율: " . round($discount_rate * 100, 1) . "%)"
             );
         }
-    
+
         return $min_price;
     }
 
-    private function has_duplicates($array) {
+    private function has_duplicates($array)
+    {
         return count($array) !== count(array_unique($array));
     }
 
-    private function bid_distribution($online_price, $deal_price, $Q, $min_price, $round_unit, $steps) {
-        $find_min_max_k = function($online_price, $deal_price, $Q, $min_price, $round_unit, $steps, $epsilon = 1) {
+    private function bid_distribution($online_price, $deal_price, $Q, $min_price, $round_unit, $steps)
+    {
+        $find_min_max_k = function ($online_price, $deal_price, $Q, $min_price, $round_unit, $steps, $epsilon = 1) {
             $k_min = 1;
             $k_max = 10.0;
             $valid_k_min = null;
             $valid_k_max = null;
-    
+
             for ($k = $k_min; $k <= $k_max; $k += 0.1) {
                 $result = $this->bid_distribution_with_k($online_price, $deal_price, $Q, $min_price, $round_unit, $steps, $k);
                 if (abs($result["diff"]) < $epsilon && !$this->has_duplicates($result["prices"])) {
@@ -4333,7 +4344,7 @@ class AdminProcess extends CI_Controller{
                     break;
                 }
             }
-    
+
             for ($k = $k_max; $k >= $k_min; $k -= 0.1) {
                 $result = $this->bid_distribution_with_k($online_price, $deal_price, $Q, $min_price, $round_unit, $steps, $k);
                 if (abs($result["diff"]) < $epsilon && !$this->has_duplicates($result["prices"])) {
@@ -4341,62 +4352,63 @@ class AdminProcess extends CI_Controller{
                     break;
                 }
             }
-    
+
             return [$valid_k_min, $valid_k_max];
         };
-    
-        $find_optimal_k = function($k_min, $k_max, $online_price, $deal_price, $Q, $min_price, $round_unit, $steps, $epsilon = 1) {
+
+        $find_optimal_k = function ($k_min, $k_max, $online_price, $deal_price, $Q, $min_price, $round_unit, $steps, $epsilon = 1) {
             $best_k = $k_min;
             $best_diff = PHP_INT_MAX;
-    
+
             while ($k_min <= $k_max) {
                 $k_mid = ($k_min + $k_max) / 2;
                 $result = $this->bid_distribution_with_k($online_price, $deal_price, $Q, $min_price, $round_unit, $steps, $k_mid);
                 $diff = abs($result["diff"]);
-    
+
                 if ($diff < $epsilon && !$this->has_duplicates($result["prices"])) {
                     return $k_mid;
                 }
-    
+
                 if ($result["diff"] > 0) {
                     $k_min = $k_mid + 0.01;
                 } else {
                     $k_max = $k_mid - 0.01;
                 }
-    
+
                 if ($diff < $best_diff && !$this->has_duplicates($result["prices"])) {
                     $best_diff = $diff;
                     $best_k = $k_mid;
                 }
             }
-    
+
             return $best_k;
         };
-    
+
         list($k_min, $k_max) = $find_min_max_k($online_price, $deal_price, $Q, $min_price, $round_unit, $steps);
         if ($k_min === null || $k_max === null) {
             throw new Exception("적절한 k 값을 찾을 수 없습니다. 온라인 최저가와 실제 판매가의 차이가 너무 적습니다.");
         }
-    
+
         $optimal_k = $find_optimal_k($k_min, $k_max, $online_price, $deal_price, $Q, $min_price, $round_unit, $steps);
         return $this->bid_distribution_with_k($online_price, $deal_price, $Q, $min_price, $round_unit, $steps, $optimal_k);
     }
-    
-    private function bid_distribution_with_k($online_price, $deal_price, $Q, $min_price, $round_unit, $steps, $k) {
+
+    private function bid_distribution_with_k($online_price, $deal_price, $Q, $min_price, $round_unit, $steps, $k)
+    {
         $T = $deal_price * $Q;
         $prices = [];
-    
+
         if ($Q <= 1) {
             return ["prices" => [$T], "final_sum" => $T, "diff" => 0];
         }
-    
+
         for ($i = 1; $i <= $Q; $i++) {
             $u = 0.1 + (0.9 - 0.1) * ($i - 1) / ($Q - 1);
             $s = 1.0 / (1.0 + exp(-$k * ($u - 0.5)));
             $p = $min_price + $s * ($online_price - $min_price);
             $prices[] = min($online_price, $p);
         }
-    
+
         for ($step = 0; $step <= $steps; $step++) {
             $sum_now = array_sum($prices);
             $scale = $sum_now > 0 ? $T / $sum_now : 1;
@@ -4404,11 +4416,11 @@ class AdminProcess extends CI_Controller{
                 $price = min($online_price, $price * $scale);
             }
         }
-    
+
         foreach ($prices as &$price) {
             $price = min($online_price, round($price / $round_unit) * $round_unit);
         }
-    
+
         $final_sum = array_sum($prices);
         $diff = $T - $final_sum;
         if (abs($diff) > 0) {
@@ -4416,21 +4428,21 @@ class AdminProcess extends CI_Controller{
             $prices[$last_index] += $diff;
             $prices[$last_index] = min($online_price, round($prices[$last_index] / $round_unit) * $round_unit);
         }
-    
-        $prices_arr = array_map(function($price) use ($online_price) {
+
+        $prices_arr = array_map(function ($price) use ($online_price) {
             return [
                 'price' => $price,
                 'percent' => round($price / $online_price, 2)
             ];
         }, $prices);
-    
+
         return [
             'prices_arr' => $prices_arr,
             'prices' => $prices,
             'final_sum' => array_sum($prices),
             'diff' => $T - array_sum($prices)
         ];
-    }    
+    }
 
     public function goods_form_auto()
     {
@@ -8546,12 +8558,13 @@ class AdminProcess extends CI_Controller{
 
         goto_url(base_url() . 'admin/config?code=naverpay');
     }
-    public function baesong_update() {
+    public function baesong_update()
+    {
         $delivery_company = '';
         $spl_name = isset($_POST['spl_name']) ? $_POST['spl_name'] : array();
         $spl_url = isset($_POST['spl_url']) ? $_POST['spl_url'] : array();
         $delivery_count = count($spl_name);
-    
+
         if ($delivery_count) {
             $arr_spl = array();
             for ($i = 0; $i < $delivery_count; $i++) {
@@ -8560,7 +8573,7 @@ class AdminProcess extends CI_Controller{
             }
             $delivery_company = implode(',', $arr_spl);
         }
-    
+
         $value = array();
         $value['delivery_company']   = $delivery_company;
         $value['delivery_method']    = $this->input->post('delivery_method');
@@ -8569,12 +8582,12 @@ class AdminProcess extends CI_Controller{
         $value['delivery_minimum']   = conv_number($this->input->post('delivery_minimum'));
         $value['baesong_cont1']      = $this->input->post('baesong_cont1');
         $value['baesong_cont2']      = $this->input->post('baesong_cont2');
-    
+
         $this->query_model->updateObj("shop_config", $value);
-    
+
         goto_url(base_url() . 'admin/config?code=baesong');
     }
-    
+
     public function islandlistupdate()
     {
         $q1 = $this->input->post('q1');
