@@ -3700,4 +3700,125 @@ class Process extends CI_Controller
         }
         echo $str;
     }
+
+    #답글 처리 함수
+    public function tail_crud()
+    {
+        $is_member = $this->load->get_var('is_member');
+        $member = $this->load->get_var('member');
+        $qstr = $this->load->get_var('qstr');
+
+        $_POST = array_map('trim', $_POST);
+        $memo = $this->input->post('memo');
+        $page = $this->input->post('page');
+        $boardid = $this->input->post('boardid');
+        $index_no = $this->input->post('index_no');
+        $writer_s = $this->input->post('writer_s');
+        $passwd = $this->input->post('passwd');
+        $passwd = (isset($passwd) && $passwd != null) ? $passwd : "";
+        $mode = $this->input->post('mode');
+
+
+        if (substr_count($memo, "&#") > 50) {
+            alert("내용에 올바르지 않은 코드가 다수 포함되어 있습니다.");
+            exit;
+        }
+
+        if (!$_POST['writer_s']) {
+            alert("작성자명은 필수 입니다.");
+        }
+
+        if ($is_member)
+            $writer = $member['index_no'];
+        else
+            $writer = 0;
+
+        if ($mode == 'w') {
+            $sql = "insert into shop_board_{$boardid}_tail set board_index = ?, writer= ?, writer_s= ?, memo= ?, wdate= ?, wip= ?, passwd= ?";
+            $param = array($index_no, $writer, $writer_s, $memo, time(), $_SERVER['REMOTE_ADDR'], $passwd);
+            $this->query_model->returnNull($sql, $param);
+
+            $sql2 = "select count(board_index) as tail_count from shop_board_{$boardid}_tail where board_index = ?";
+            $data = [
+                $index_no,
+            ];
+            $result = $this->query_model->returnOneArr($sql2, $data);
+            $tail_count = $result['tail_count'];
+            log_message('debug', "tail_count: " . $tail_count);
+
+            $sql = "update shop_board_{$boardid} set tailcount={$tail_count} where index_no=?";
+            $param = array($index_no);
+            $this->query_model->returnNull($sql, $param);
+        } else if ($mode == 'd') {
+            $tail_index_no = $this->input->post('tail_index_no');
+            
+            // 1) 해당 댓글 삭제
+            $where = [
+                'index_no' => $tail_index_no,
+            ];
+            $this->query_model->delete("shop_board_{$boardid}_tail", $where);
+            // 댓글 갯수 업데이트
+            $sql2 = "select count(board_index) as tail_count from shop_board_{$boardid}_tail where board_index = ?";
+            $data = [
+                $index_no,
+            ];
+            $result = $this->query_model->returnOneArr($sql2);
+            $tail_count = $result['tail_count'];
+
+            $sql = "update shop_board_{$boardid} set tailcount={$tail_count} where index_no=?";
+            $param = array($index_no);
+            $this->query_model->returnNull($sql, $param);
+            
+        }
+
+        goto_url(base_url() . "m/bbs/board_read?index_no=$index_no&boardid=$boardid$qstr&page=$page");
+    }
+
+
+
+    //좋아요 증가 감소
+    public function ajax_goodupdate()
+    {
+        $OM_TIME_YMDHIS = date("Y-m-d H:i:s", time());
+
+        $is_member = $this->load->get_var('is_member');
+        $member = $this->load->get_var('member');
+        $index_no = $this->input->post('index_no');
+        $index_no = trim($index_no);
+        $board_id = 37;
+
+        if (!$is_member) {
+            die('회원 전용 서비스입니다.');
+        }
+
+        if (!$index_no) {
+            die('잘못된 접근입니다.');
+        }
+
+        $sql = "select count(*) as cnt from shop_request_goods_good where mb_id = ? and board_{$board_id}_index_no = ?";
+        $param = array($member['id'], $index_no);
+        $row = $this->query_model->returnOneArr($sql, $param);
+
+        if ($row['cnt']) {
+            $sql = " delete from shop_request_goods_good where mb_id = ? and board_{$board_id}_index_no = ?";
+            $param = array($member['id'], $index_no);
+            $this->query_model->returnNull($sql, $param);
+            $count = $this->gvcomplex_lib->get_good_count($index_no, $board_id);
+
+            echo json_encode([
+                'status' => 'DELETE',
+                'count' => $count,
+            ]);
+        } else {
+            $sql = "insert shop_request_goods_good set mb_id = ?, board_{$board_id}_index_no = ?, wi_time = '" . $OM_TIME_YMDHIS . "', wi_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+            $param = array($member['id'], $index_no);
+            $this->query_model->returnNull($sql, $param);
+            $count = $this->gvcomplex_lib->get_good_count($index_no, $board_id);
+
+            echo json_encode([
+                'status' => 'INSERT',
+                'count' => $count,
+            ]);
+        }
+    }
 }

@@ -1440,7 +1440,7 @@ class Bbs extends CI_Controller
         $b_content_tail = isset($board['content_tail']) ? $board['content_tail'] : "";
         $board['width'] = ($board['width'] <= 100) ? $board['width'] . "%" : $board['width'];
         $bo_img_url = base_url() . 'bbs/' . $board['skin']; #basic,gallery,webzine
-        $from_action_url = base_url() . "process/tail_write";
+        $from_action_url = base_url() . "process/tail_crud";
 
         $data = array(
             'from_action_url' => $from_action_url,
@@ -1449,7 +1449,7 @@ class Bbs extends CI_Controller
             'b_content_tail' => $b_content_tail,
             'bo_subject' => $bo_subject,
             // 'bo_writer_id' => $bo_writer_id,
-            'bo_writer_s'=>$bo_writer_s,
+            'bo_writer_s' => $bo_writer_s,
             'bo_file1' => $bo_file1,
             'bo_file2' => $bo_file2,
             'board' => $board,
@@ -1614,13 +1614,14 @@ class Bbs extends CI_Controller
                         </div>
                     </td>
                     <td class=\"tac\">{$row['writer_s']}</td>
-                    <td class=\"tac\">{$row['readcount']}</td>";
+                    <td class=\"tac\">{$bo_wdate}</td>";
 
                 if ($boardid == "37") { // 상품요청게시판 일때 좋아요 보이게함
                     $listTb .= "<td class=\"tac\"><em id=\"good_count\">{$row['good_count']}</em></td>";
                 }
                 $listTb .=
-                    "<td class=\"tac\">{$bo_wdate}</td>
+                    "
+                    <td class=\"tac\">{$row['readcount']}</td>
                 </tr>";
                 $run++;
             }
@@ -1682,13 +1683,13 @@ class Bbs extends CI_Controller
                         </div>
                     </td>
                     <td class=\"tac\">{$row['writer_s']}</td>
-                    <td class=\"tac\">{$row['readcount']}</td>";
+                    <td class=\"tac\">{$bo_wdate}</td>";
 
                 if ($boardid == "37") { // 상품요청게시판 일때 좋아요 보이게함
                     $listTb .= "<td class=\"tac\"><em id=\"good_count\">{$row['good_count']}</em></td>";
                 }
                 $listTb .=
-                    "<td class=\"tac\">{$bo_wdate}</td>
+                    "<td class=\"tac\">{$row['readcount']}</td>
                 </tr>";
                 $run++;
             }
@@ -1763,7 +1764,7 @@ class Bbs extends CI_Controller
 
             $data['prev_index_no'] = $prev_index_no;
             $data['next_index_no'] = $next_index_no;
-            
+
             $bo_file1_tag = "";
             if (isset($bo_file1) && $bo_file1 != "") {
                 $bo_file1_tag = "<tr><td>첨부파일1 : <a href=\"" . base_url() . "process/download?file={$bo_file1}&url=./data/board/{$boardid}/{$bo_file1}\"><b>{$bo_file1}</b></a></td></tr>";
@@ -1824,6 +1825,7 @@ class Bbs extends CI_Controller
             $data['bo_file2_img'] = $bo_file2_img;
             $getViewThum = $this->thumbnail_lib->get_view_thumbnail($this->funcomplex_lib->conv_content($bo_memo, 1), $thumbnail_width);
             $data['getViewThum'] = $getViewThum;
+            
             $modifyTag = "";
             if (($member['index_no'] == $bo_writer) || $this->gvcomplex_lib->is_admin()) {
                 $modifyTag = "<a href=\"" . base_url() . "bbs/modify?{$qstr2}\" class=\"btn_lsmall bx-white\">수정</a>";
@@ -1885,7 +1887,7 @@ class Bbs extends CI_Controller
                 }
 
                 $good_count = $this->gvcomplex_lib->get_good_count($index_no, $boardid);
-                $good = "<b>좋아요:</b> <span id='good_count_{$index_no}'>{$good_count}</span>";
+                $good = "<b>좋아요:</b> <span class=\"good_count\" id='good_count_{$index_no}'>{$good_count}</span>";
 
 
 
@@ -2144,8 +2146,26 @@ class Bbs extends CI_Controller
                 // 2) 삭제 버튼: 작성자와 관리자만 보이도록
                 $member_name = isset($member['name']) ? $member['name'] : '';
                 if ($row['writer_s'] == $member_name || $this->gvcomplex_lib->is_admin()) {
-                    $del_url = base_url() . "bbs/tail_del?tailindex={$row['index_no']}&{$qstr2}";
-                    $returnTag .= "        <a href=\"{$del_url}\" class=\"comment-delete\">삭제</a>\n";
+                    $input_writer = htmlspecialchars($member['name'], ENT_QUOTES, 'UTF-8');
+
+                    $returnTag .= "<form name=\"fboardform\" id=\"fboardform\" method=\"post\" action=\"{$from_action_url}\" onsubmit=\"return fboardform_submit(this);\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"mode\"      value=\"d\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"index_no\"  value=\"{$index_no}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"boardid\"   value=\"{$boardid}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"sfl\"       value=\"{$sfl}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"stx\"       value=\"{$stx}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"page\"      value=\"{$page}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"writer_s\"  value=\"{$input_writer}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"tail_index_no\"  value=\"{$row['index_no']}\">\n";
+                    // 댓글 입력 영역 (textarea + 버튼)
+                    // board['tail_priv']가 허용 등급인지 확인
+                    if ($member['grade'] > $board['tail_priv']) {
+                        $returnTag .= "    <button type=\"button\" class=\"btn btn-disabled comment-delete\" onclick=\"alert('삭제을 작성할 권한이 없습니다.');\">댓글등록</button>\n";
+                    } else {
+                        $returnTag .= "    <button type=\"submit\" class=\"btn btn-primary comment-delete\">삭제</button>\n";
+                    }
+
+                    $returnTag .= "</form>\n";
                 }
                 $returnTag .= "      </div>\n";
 

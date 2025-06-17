@@ -916,7 +916,7 @@ class Process extends CI_Controller
             $data = [
                 "company_name" => $company_name
             ];
-          
+
 
             set_session('ss_check_company_number', $company_no);
 
@@ -2691,8 +2691,8 @@ class Process extends CI_Controller
 
         alert("정상적으로 삭제 되었습니다", base_url() . "shop/view?index_no=$gs_id");
     }
-    #답글 달기 함수
-    public function tail_write()
+    #답글 처리 함수
+    public function tail_crud()
     {
         $is_member = $this->load->get_var('is_member');
         $member = $this->load->get_var('member');
@@ -2728,7 +2728,34 @@ class Process extends CI_Controller
             $param = array($index_no, $writer, $writer_s, $memo, time(), $_SERVER['REMOTE_ADDR'], $passwd);
             $this->query_model->returnNull($sql, $param);
 
-            $sql = "update shop_board_{$boardid} set tailcount=tailcount + 1 where index_no=?";
+            $sql2 = "select count(board_index) as tail_count from shop_board_{$boardid}_tail where board_index = ?";
+            $data = [
+                $index_no,
+            ];
+            $result = $this->query_model->returnOneArr($sql2, $data);
+            $tail_count = $result['tail_count'];
+            log_message('debug', "tail_count: " . $tail_count);
+
+            $sql = "update shop_board_{$boardid} set tailcount={$tail_count} where index_no=?";
+            $param = array($index_no);
+            $this->query_model->returnNull($sql, $param);
+        } else if ($mode == 'd') {
+            $tail_index_no = $this->input->post('tail_index_no');
+
+            // 1) 해당 댓글 삭제
+            $where = [
+                'index_no' => $tail_index_no,
+            ];
+            $this->query_model->delete("shop_board_{$boardid}_tail", $where);
+            // 댓글 갯수 업데이트
+            $sql2 = "select count(board_index) as tail_count from shop_board_{$boardid}_tail where board_index = ?";
+            $data = [
+                $index_no,
+            ];
+            $result = $this->query_model->returnOneArr($sql2);
+            $tail_count = $result['tail_count'];
+
+            $sql = "update shop_board_{$boardid} set tailcount={$tail_count} where index_no=?";
             $param = array($index_no);
             $this->query_model->returnNull($sql, $param);
         }

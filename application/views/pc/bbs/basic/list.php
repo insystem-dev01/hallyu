@@ -57,12 +57,14 @@
                 <col width="90">
                 <!-- 파일 유무 -->
                 <!-- <col width="50"> -->
-                <!-- 조회수 -->
-                <col width="70">
+                 <!-- 작성일 -->
+                <col width="120">
                 <!-- 좋아요 -->
                 <?= $good[0] ?>
-                <!-- 작성일 -->
-                <col width="120">
+                <!-- 조회수 -->
+                <col width="70">
+                
+                
             </colgroup>
             <thead>
                 <tr>
@@ -73,10 +75,12 @@
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
                     <!-- <th scope="col">파일</th> -->
-                    <th scope="col">조회수</th>
-                    <!-- 좋아요 -->
+                     <th scope="col">작성일</th>
+                     <!-- 좋아요 -->
                     <?= $good[1] ?>
-                    <th scope="col">작성일</th>
+                    <th scope="col">조회수</th>
+                    
+                    
                 </tr>
             </thead>
             <tbody>

@@ -7,7 +7,11 @@
             </tr>
             <tr>
                 <td class="list1 tal">
-                    <b>이름: </b> <?= $bo_writer_s; ?> <b>|</b> <b>작성일:</b> <?php echo $bo_wdate; ?> <b>|</b> <b>조회수:</b> <?php echo $bo_hit; ?> <b>|</b><?= $good ?>
+                    <b>이름: </b> <?= $bo_writer_s; ?> <b>|</b> 
+                    <b>작성일:</b> <?php echo $bo_wdate; ?> <b>|</b>
+                    <?= $good ?> <b>|</b>
+                     <b>조회수:</b> <?php echo $bo_hit; ?> 
+                     
                 </td>
             </tr>
             <?= $bo_file1_tag ?>

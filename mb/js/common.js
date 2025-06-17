@@ -532,3 +532,26 @@ function bizNoFormatter(e) {
 
 	that.val(formatted);
 }
+
+// 상품요청 게시판 좋아요 ajax 반영 요청
+function request_goods_good(index_no) {
+	var base_url = document.getElementById('base_url').value;
+
+	$.post(
+		base_url + "process/ajax_goodupdate",
+		{ index_no: index_no },
+		function (data) {
+			let result = JSON.parse(data);
+			if (result.status == 'INSERT') {
+				$("." + index_no).attr('class', index_no + ' good on');
+			} else if (result.status == 'DELETE') {
+				$("." + index_no).attr('class', index_no + ' good');
+			} else {
+				alert(result);
+			}
+
+			$('#good_count_' + index_no).text(result.count);
+			$('#good_count2_' + index_no).text(result.count);
+		}
+	)
+}

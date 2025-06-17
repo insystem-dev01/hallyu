@@ -843,14 +843,16 @@ class Bbs extends CI_Controller
                 $li_str .= "           
                             <span class=\"likes\">좋아요 <span class=\"good_count\">{$row['good_count']}</span></span>";
             }
-            $li_str .= "<span class=\"views\">조회 {$row['readcount']}</span>";
+            $li_str .= "<span class=\"views\">조회 {$row['readcount']}</span>
+            <div class=\"icon-wrapper\">";
             if ($bo_file_yes) {
                 $li_str .= "{$bo_file_yes}";
             }
             if ($row['tailcount']) {
                 $li_str .= "<span class=\"fc_197\">{$row['tailcount']}</span>";
             }
-            $li_str .= '</div>';
+            $li_str .= '</div>
+                            </div>';
             $li_str .= '	</a>';
             $li_str .= '</li>';
 
@@ -968,11 +970,30 @@ class Bbs extends CI_Controller
         $write = $this->load->get_var('write');
         $urlencode = $this->load->get_var('urlencode');
         $mb_no = $this->load->get_var('mb_no');
-
-
         $index_no = $this->input->get('index_no');
         $boardid = $this->input->get('boardid');
         $page = $this->input->get('page');
+
+        $stx = $this->input->get('stx');
+        $sfl = $this->input->get('sfl');
+        $qstr = $this->load->get_var('qstr');
+        $from_action_url = base_url() . "m/process/tail_crud";
+        $bo_writer_s = $write['writer_s'];
+
+        $qstr1 = "boardid=$boardid$qstr&page=$page";
+        $qstr2 = "index_no=$index_no&boardid=$boardid$qstr&page=$page";
+        $qstr3 = "boardid=$boardid$qstr";
+
+
+
+
+
+        $prev_index_no = $this->gvcomplex_lib->get_prev_or_next_post($index_no, $boardid, 'prev');
+        $next_index_no = $this->gvcomplex_lib->get_prev_or_next_post($index_no, $boardid, 'next');
+
+
+
+
 
         if (!$is_member) {
             $member['grade'] = 99;
@@ -1007,7 +1028,8 @@ class Bbs extends CI_Controller
                 }
             }
         }
-        $sql = "update shop_board_{$boardid} set readcount=(readcount+1) where index_no=?";
+        $read_count = $write['readcount'] + 1;
+        $sql = "update shop_board_{$boardid} set readcount={$read_count} where index_no=?";
         $param = array($index_no);
         $this->query_model->returnNull($sql, $param);
 
@@ -1039,6 +1061,37 @@ class Bbs extends CI_Controller
             <a href=\"" . base_url() . "m/bbs/board_write?{$qstr2}&w=u\" class=\"btn_medium bx-white\">수정</a>
             <a href=\"" . base_url() . "m/bbs/board_delete?{$qstr2}\" class=\"btn_medium bx-white\">삭제</a>";
         }
+
+        $good_count = '';
+        $good_check = '';
+        if ($boardid == "37") {
+            if (!$is_member) {
+                alert("로그인 후 이용가능합니다");
+                return false;
+            }
+            $good_count = $this->gvcomplex_lib->get_good_count($index_no, $boardid);
+            $good_check = $this->gvcomplex_lib->get_is_good_check($index_no, $boardid, $member['id']);
+        }
+
+        $comment = "";
+        if ($board['usetail'] == 'Y') {
+            $comment = $this->read_comment($index_no, $from_action_url, $boardid, $sfl, $stx, $page, $bo_writer_s, $qstr2, $qstr3);
+        }
+
+        $fboardformJs = "";
+        if (!$is_member) {
+            $fboardformJs = "
+                if(!f.writer_s.value) {
+                    alert('작성자명을 입력하세요.');
+                    f.writer_s.focus();
+                    return false;
+                }
+                if(!f.passwd.value) {
+                    alert('비밀번호를 입력하세요.');
+                    f.passwd.focus();
+                    return false;
+                }";
+        }
         $data = array(
             'bo_subject' => $bo_subject,
             'write' => $write,
@@ -1048,10 +1101,155 @@ class Bbs extends CI_Controller
             'memo' => $memo,
             'replyTag' => $replyTag,
             'adminTag' => $adminTag,
-            'qstr1' => $qstr1
+            'qstr1' => $qstr1,
+            'good_count' => $good_count,
+            'read_count' => $read_count,
+            'boardid' => $boardid,
+            'index_no' => $index_no,
+            'good_check' => $good_check,
+            'comment' => $comment,
+            'fboardformJs' => $fboardformJs,
+            'prev_index_no' => $prev_index_no,
+            'next_index_no'=> $next_index_no,
+
         );
         $this->load->view('mb/bbs/board_read', $data);
     }
+
+    #코맨트 공통영역
+    private function read_comment($index_no, $from_action_url, $boardid, $sfl, $stx, $page, $bo_writer_s, $qstr2, $qstr3)
+    {
+        $is_member = $this->load->get_var('is_member');
+        $member    = $this->load->get_var('member');
+        $board     = $this->load->get_var('board');
+        $returnTag = "";
+
+        // --- (1) 댓글 목록을 가져와서 <div class="comment-list"> 형태로 렌더링 ---
+        $sql    = "SELECT * 
+               FROM shop_board_{$boardid}_tail 
+               WHERE board_index = ? 
+               ORDER BY wdate ASC";
+        $param  = array($index_no);
+        $resObj = $this->query_model->returnQueryObj($sql, $param);
+
+        // 댓글 개수 카운트 (예: "댓글 6"처럼 상단에 표시해줄 경우)
+        $comment_count = $resObj->num_rows();
+
+        if ($comment_count) {
+            // 댓글 개수 출력
+            $returnTag .= "<div class=\"comment-section\">\n";
+            $returnTag .= "  <div class=\"comment-header\">댓글 {$comment_count}</div>\n";
+            $returnTag .= "  <div class=\"comment-list\">\n";
+
+            $res = $resObj->result_array();
+            foreach ($res as $row) {
+                $bo_wdate    = date("Y.m.d H:i:s", $row['wdate']);
+                $writer_name = htmlspecialchars($row['writer_s'], ENT_QUOTES, 'UTF-8');
+                $memo_html   = $this->funcomplex_lib->conv_content($row['memo'], 0);
+
+                $returnTag .= "    <div class=\"comment-item\">\n";
+                // 1) 작성자 + 날짜 영역
+                $returnTag .= "      <div class=\"comment-meta\">\n";
+                $returnTag .= "        <span class=\"comment-author\"><b>{$writer_name}</b></span>\n";
+                $returnTag .= "        <span class=\"comment-date\">{$bo_wdate}</span>\n";
+
+                // 2) 삭제 버튼: 작성자와 관리자만 보이도록
+                $member_name = isset($member['name']) ? $member['name'] : '';
+                if ($row['writer_s'] == $member_name || $this->gvcomplex_lib->is_admin()) {
+                    $input_writer = htmlspecialchars($member['name'], ENT_QUOTES, 'UTF-8');
+
+                    $returnTag .= "<form name=\"fboardform\" id=\"fboardform\" method=\"post\" action=\"{$from_action_url}\" onsubmit=\"return fboardform_submit(this);\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"mode\"      value=\"d\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"index_no\"  value=\"{$index_no}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"boardid\"   value=\"{$boardid}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"sfl\"       value=\"{$sfl}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"stx\"       value=\"{$stx}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"page\"      value=\"{$page}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"writer_s\"  value=\"{$input_writer}\">\n";
+                    $returnTag .= "  <input type=\"hidden\" name=\"tail_index_no\"  value=\"{$row['index_no']}\">\n";
+                    // 댓글 입력 영역 (textarea + 버튼)
+                    // board['tail_priv']가 허용 등급인지 확인
+                    if ($member['grade'] > $board['tail_priv']) {
+                        $returnTag .= "    <button type=\"button\" class=\"btn btn-disabled comment-delete\" onclick=\"alert('삭제을 작성할 권한이 없습니다.');\">댓글등록</button>\n";
+                    } else {
+                        $returnTag .= "    <button type=\"submit\" class=\"btn btn-primary comment-delete\">삭제</button>\n";
+                    }
+
+                    $returnTag .= "</form>\n";
+                }
+                $returnTag .= "      </div>\n";
+
+                // 3) 댓글 본문
+                $returnTag .= "      <div class=\"comment-body\">{$memo_html}</div>\n";
+                $returnTag .= "    </div>\n";
+            }
+
+            $returnTag .= "  </div> <!-- .comment-list 끝 -->\n";
+            $returnTag .= "</div>   <!-- .comment-section 끝 -->\n";
+        }
+
+        // --- (2) 로그인한 사용자 여부에 따라 입력 폼 영역 출력 ---
+        if ($is_member) {
+            // 로그인한 사용자: 이름은 $member['name'], 권한 체크
+            $input_writer = htmlspecialchars($member['name'], ENT_QUOTES, 'UTF-8');
+
+            $returnTag .= "<form name=\"fboardform\" id=\"fboardform\" method=\"post\" action=\"{$from_action_url}\" onsubmit=\"return fboardform_submit(this);\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"mode\"      value=\"w\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"index_no\"  value=\"{$index_no}\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"boardid\"   value=\"{$boardid}\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"sfl\"       value=\"{$sfl}\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"stx\"       value=\"{$stx}\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"page\"      value=\"{$page}\">\n";
+            $returnTag .= "  <input type=\"hidden\" name=\"writer_s\"  value=\"{$input_writer}\">\n";
+
+            // 댓글 입력 영역 (textarea + 버튼)
+            // board['tail_priv']가 허용 등급인지 확인
+            if ($member['grade'] > $board['tail_priv']) {
+                // 권한 부족 시 버튼 비활성화
+                $returnTag .= "  <div class=\"comment-input-area disabled\">\n";
+                $returnTag .= "    <textarea name=\"memo\" class=\"comment-input-text\" placeholder=\"댓글을 입력해주세요.\"></textarea>\n";
+                $returnTag .= "    <button type=\"button\" class=\"btn btn-disabled\" onclick=\"alert('댓글을 작성할 권한이 없습니다.');\">댓글등록</button>\n";
+                $returnTag .= "  </div>\n";
+            } else {
+                // 정상 입력 가능
+                $returnTag .= "  <div class=\"comment-input-area\">\n";
+                $returnTag .= "    <textarea name=\"memo\" class=\"comment-input-text\" placeholder=\"댓글 내용을 입력해주세요. 500자 이하로 작성해주세요.\"></textarea>\n";
+                $returnTag .= "    <button type=\"submit\" class=\"btn btn-primary\">댓글등록</button>\n";
+                $returnTag .= "  </div>\n";
+            }
+
+            $returnTag .= "</form>\n";
+        } else {
+            // 비로그인 사용자: tail_priv 옵션에 따라 결정
+            if ($board['tail_priv'] == '99') {
+                // 익명+비밀번호 입력 양식
+                $returnTag .= "<form name=\"fboardform\" id=\"fboardform\" method=\"post\" action=\"{$from_action_url}\" onsubmit=\"return fboardform_submit(this);\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"mode\"     value=\"w\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"index_no\" value=\"{$index_no}\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"boardid\"  value=\"{$boardid}\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"sfl\"      value=\"{$sfl}\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"stx\"      value=\"{$stx}\">\n";
+                $returnTag .= "  <input type=\"hidden\" name=\"page\"     value=\"{$page}\">\n";
+
+                $returnTag .= "  <div class=\"comment-input-area anonymous\">\n";
+                $returnTag .= "    <input type=\"text\" name=\"writer_s\" class=\"comment-input-name\" placeholder=\"작성자\">\n";
+                $returnTag .= "    <input type=\"password\" name=\"passwd\" class=\"comment-input-pw\" placeholder=\"비밀번호\">\n";
+                $returnTag .= "    <textarea name=\"memo\" class=\"comment-input-text\" placeholder=\"댓글을 입력해주세요. 500자 이하로 작성해주세요.\"></textarea>\n";
+                $returnTag .= "    <button type=\"submit\" class=\"btn btn-primary\">댓글등록</button>\n";
+                $returnTag .= "  </div>\n";
+                $returnTag .= "</form>\n";
+            } else {
+                // 비로그인 + 로그인 필요
+                $returnTag .= "<div class=\"comment-input-area disabled\">\n";
+                $returnTag .= "  <textarea class=\"comment-input-text\" placeholder=\"로그인 후 댓글을 작성할 수 있습니다.\" disabled></textarea>\n";
+                $returnTag .= "  <button type=\"button\" class=\"btn btn-disabled\" onclick=\"alert('로그인후 댓글을 작성 가능합니다.');\">댓글등록</button>\n";
+                $returnTag .= "</div>\n";
+            }
+        }
+
+        return $returnTag;
+    }
+
     public function board_delete()
     {
         $this->template->mb_header();

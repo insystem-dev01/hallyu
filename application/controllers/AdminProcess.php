@@ -4054,7 +4054,7 @@ class AdminProcess extends CI_Controller
             }
 
             //할인율 검증
-            $this->validate_min_discount($goods_price, $calculate_price, $stock_qty);
+            // $this->validate_min_discount($goods_price, $calculate_price, $stock_qty);
 
             if ($type == "timesale" && $stock_qty < 2) {
                 throw new Exception("수량은 2개 이상이어야 합니다.");
@@ -4256,7 +4256,7 @@ class AdminProcess extends CI_Controller
 
     public function insert_timesale_goods($gs_id, $normal_price, $goods_price, $stock_qty)
     {
-        $this->validate_min_discount($normal_price, $goods_price, $stock_qty);
+        // $this->validate_min_discount($normal_price, $goods_price, $stock_qty);
 
         $online_price = $normal_price;
         $deal_price = $goods_price;
