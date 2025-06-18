@@ -5,7 +5,7 @@
 <div class="main-banner">
 	<div class="banner-swiper swiper-container">
 		<div class="swiper-wrapper">
-			<?php for ($i = 0; $i < 5; $i++) { ?>
+			<?php for ($i = 0; $i < 3; $i++) { ?>
 				<div class="swiper-slide">
 					<img src="<?= base_url() ?>img/banner/banner_<?= $i ?>_m.png" alt="배너<?= $i ?>">
 				</div>
@@ -40,7 +40,7 @@
 
 	<div class="pr_desc">
 		<ul class="timesale_slide_active">
-			<div style="width: 100%; display: block;">
+			<div style="width: 100%; display: inline-block;">
 				<div class="timesale-swiper swiper" id="limited-market">
 					<div class="swiper-wrapper">
 						<?php if (! empty($limited_timesale_active_items)): ?>
@@ -57,7 +57,7 @@
 											<div class="calendar"></div>
 											<span class="date"><?= $item['open_date'] ?></span>
 											<span class="time"><?= $item['open_time'] ?></span>
-											<span class="dash">~</span>
+											<span class="dash">~</span><br>
 											<span class="date"><?= $item['end_date'] ?></span>
 											<span class="time"><?= $item['end_time'] ?></span>
 										</div>
@@ -94,9 +94,9 @@
 							<div class="goods_empty">등록된 상품이 없습니다.</div>
 						<?php endif; ?>
 					</div>
-					<!-- Swiper 양옆 네비게이션 버튼 -->
-					<div class="swiper-button-prev"></div>
-					<div class="swiper-button-next"></div>
+					<!-- Swiper 양옆 네비게이션 버튼
+					<div class="swiper-button-prev limited-prev"></div>
+					<div class="swiper-button-next limited-next"></div> -->
 				</div>
 			</div>
 		</ul>
@@ -181,41 +181,34 @@
 								</div>
 							<?php endforeach; ?>
 						</div>
-						<!-- Swiper 양옆 네비게이션 버튼 -->
+						<!-- Swiper 양옆 네비게이션 버튼
 						<div class="swiper-button-prev"></div>
-						<div class="swiper-button-next"></div>
+						<div class="swiper-button-next"></div> -->
 					</div>
 				</div>
 			</ul>
 		</div>
 
-		<?php if (empty($normal_timesale_active_items)) { ?>
-			<div class="goods_empty">등록된 상품이 없습니다.</div>
-		<?php } else { ?>
-			<div class="slide-button">
-				<div class="timesale-active-button-prev"></div>
-				<div class="timesale-active-button-next"></div>
-			</div>
-		<?php } ?>
+
 	</div>
 	<div class="more_show_button" onclick="location.href='<?= base_url() ?>shop/timesale?status=active'">전체보기 ></div>
 </div>
 
 <!-- //서브 배너 수정해야함 -->
-<div class="main-banner">
-	<div class="banner-swiper swiper-container">
+<div class="sub-banner">
+	<div class="banner-swiper2 swiper-container">
 		<div class="swiper-wrapper">
-			<?php for ($i = 0; $i < 5; $i++) { ?>
+			<?php for ($i = 0; $i < 2; $i++) { ?>
 				<div class="swiper-slide">
-					<img src="<?= base_url() ?>img/banner/banner_<?= $i ?>_m.png" alt="배너<?= $i ?>">
+					<img src="<?= base_url() ?>img/banner/banner_<?= $i ?>_m_sub.png" alt="배너<?= $i ?>">
 				</div>
 			<?php } ?>
 		</div>
 
 
 		<!-- 커스텀 네비게이션 -->
-		<div class="swiper-button-prev"></div>
-		<div class="swiper-button-next"></div>
+		<!-- <div class="swiper-button-prev"></div>
+		<div class="swiper-button-next"></div> -->
 
 
 		<!-- 페이지네이션 및 컨트롤 -->
@@ -297,25 +290,15 @@
 							</div>
 						<?php endforeach; ?>
 					</div>
-					<!-- Swiper 양옆 네비게이션 버튼 -->
+					<!-- Swiper 양옆 네비게이션 버튼
 					<div class="swiper-button-prev"></div>
-					<div class="swiper-button-next"></div>
+					<div class="swiper-button-next"></div> -->
 				</div>
 			</div>
 		</ul>
 	</div>
 
 
-	<?php if (empty($hottest_timesale_active_items)) { ?>
-		<div class="goods_empty">등록된 상품이 없습니다.</div>
-	<?php } else { ?>
-		<div class="slide-button">
-			<div class="timesale-active-button-prev"><span>
-					<< /span>
-			</div>
-			<div class="timesale-active-button-next"><span>></span></div>
-		</div>
-	<?php } ?>
 	<div class="more_show_button" onclick="location.href='<?= base_url() ?>m/shop/timesale?status=active'">전체보기 ></div>
 </div>
 
@@ -426,25 +409,15 @@
 								<div class="goods_empty">등록된 상품이 없습니다.</div>
 							<?php endif; ?>
 						</div>
-						<!-- Swiper 양옆 네비게이션 버튼 -->
+						<!-- Swiper 양옆 네비게이션 버튼
 						<div class="swiper-button-prev"></div>
-						<div class="swiper-button-next"></div>
+						<div class="swiper-button-next"></div> -->
 					</div>
 				</div>
 			</ul>
 		</div>
 
-		<?php if (empty($substance_items)) { ?>
-			<div class="goods_empty">등록된 상품이 없습니다.</div>
-		<?php } else { ?>
-			<div class="slide-button">
-				<div class="timesale-active-button-prev">
-					<span>
-						<< /span>
-				</div>
-				<div class="timesale-active-button-next"><span>></span></div>
-			</div>
-		<?php } ?>
+
 
 
 		<div class="more_show_button" onclick="location.href='<?= base_url() ?>m/shop/normal'">전체보기 ></div>
@@ -534,53 +507,61 @@
 		});
 	});
 
+	function vwToPx(vw) {
+		return Math.round(window.innerWidth * vw / 100);
+	}
+
 	document.addEventListener("DOMContentLoaded", function() {
 
-
-
-		const limited_market = new Swiper("#limited-market", {
+		const commonOpts = {
 			loop: false,
 			slidesPerView: 2,
-			spaceBetween: 10,
-			navigation: {
-				nextEl: ".swiper-button-next",
-				prevEl: ".swiper-button-prev",
-			},
+			slidesPerGroup: 1,
+			spaceBetween: vwToPx(4),
+			// slidesOffsetBefore: vwToPx(2), // wrapper 앞쪽 여유 (좌)
+			// slidesOffsetAfter: vwToPx(2), // wrapper 뒤쪽 여유 (우)
+			centeredSlides: false, // 항상 왼쪽 정렬
+			threshold: vwToPx(4), // 20px 이상 드래그해야 넘어감
+			longSwipesRatio: 0.5, // 50% 이상 드래그 시 슬라이드
+			// shortSwipes: false, // 짧게 드래그해도 무조건 스냅 방지
+			
+		};
 
+
+		// 1) limited-market
+		new Swiper("#limited-market", {
+			...commonOpts,
+			navigation: {
+				nextEl: ".limited-next",
+				prevEl: ".limited-prev",
+			}
 		});
 
-		const together_market = new Swiper("#together-market", {
-			loop: false,
-			slidesPerView: 2,
-			spaceBetween: 5,
+		// 2) together-market
+		new Swiper("#together-market", {
+			...commonOpts,
 			navigation: {
-				nextEl: ".swiper-button-next",
-				prevEl: ".swiper-button-prev",
-			},
+				nextEl: ".together-next",
+				prevEl: ".together-prev",
+			}
 		});
 
-		const hottest_market = new Swiper("#hottest-market", {
-			loop: false,
-			slidesPerView: 2,
-			spaceBetween: 5,
+		// 3) hottest-market
+		new Swiper("#hottest-market", {
+			...commonOpts,
 			navigation: {
-				nextEl: ".swiper-button-next",
-				prevEl: ".swiper-button-prev",
-			},
+				nextEl: ".hottest-next",
+				prevEl: ".hottest-prev",
+			}
 		});
 
-		let open_market = new Swiper(".open_market", {
-			loop: false,
-			slidesPerView: 2,
-			spaceBetween: 5,
-			// grid: {
-			// 	rows: 2,
-			// 	fill: "row",
-			// },
+		// 4) open-market
+		new Swiper(".open_market", {
+			...commonOpts,
 			navigation: {
-				nextEl: ".swiper-button-next",
-				prevEl: ".swiper-button-prev",
-			},
+				nextEl: ".open-next",
+				prevEl: ".open-prev",
+			}
 		});
 
 		const swiper = new Swiper(".banner-swiper", {
@@ -609,28 +590,61 @@
 			// },
 			on: {
 				init: function() {
-					updateCounter(this);
-
+					updateCounter(this, "swiperCounter");
 				},
 				slideChange: function() {
-					updateCounter(this);
-
+					updateCounter(this, "swiperCounter");
 				},
 			},
 		});
 
+		const swiper2 = new Swiper(".banner-swiper2", {
+			loop: true,
+			slidesPerView: "auto",
+			centeredSlides: true,
+			effect: "coverflow",
+			autoplay: {
+				delay: 5000,
+				disableOnInteraction: false,
+			},
+			coverflowEffect: {
+				rotate: 0,
+				stretch: 0,
+				depth: 150,
+				modifier: 1,
+				slideShadows: false,
+			},
+			navigation: {
+				nextEl: ".swiper-button-next",
+				prevEl: ".swiper-button-prev",
+			},
+			// pagination: {
+			// 	el: ".swiper-pagination",
+			// 	clickable: true,
+			// },
+			on: {
+				init: function() {
+					updateCounter(this, "swiperCounter2");
+				},
+				slideChange: function() {
+					updateCounter(this, "swiperCounter2");
+				},
+			},
+		});
 
-		function updateCounter(swiperInstance) {
+		window.addEventListener("resize", () => {
+			limited_market.update();
+			together_market.update();
+			// ...필요한 swiper.update() 추가
+		});
+
+
+		function updateCounter(swiperInstance, swiper_counter) {
 			const totalSlides = swiperInstance.slides.length - (swiperInstance.loopedSlides * 2); // loop일 경우 실제 슬라이드 수 보정
 			const currentIndex = (swiperInstance.realIndex || 0) + 1;
-			document.getElementById("swiperCounter").textContent = `${currentIndex} / ${totalSlides}`;
+			document.getElementById(swiper_counter).textContent = `${currentIndex} / ${totalSlides}`;
 		}
 
-		function updateCounter2(swiperInstance) {
-			const totalSlides = swiperInstance.slides.length - (swiperInstance.loopedSlides * 2); // loop일 경우 실제 슬라이드 수 보정
-			const currentIndex = (swiperInstance.realIndex || 0) + 1;
-			document.getElementById("swiperCounter2").textContent = `${currentIndex} / ${totalSlides}`;
-		}
 	});
 
 	// const timesaleSwiper = new Swiper('.timesale-swiper', {

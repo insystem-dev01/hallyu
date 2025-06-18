@@ -67,24 +67,6 @@ class Main extends CI_Controller
 
         $bottom_request_goods_list = $this->get_bottom_request_goods_list();
 
-        // // 메인배너
-        // $mainBan = "";
-        // if($slider1 = $this->funcomplex_lib->mobile_slider(0, $pt_id)) {
-
-        //     $mainBan.="<div id=\"main_bn\">{$slider1}</div>";
-        //     $mainBan.="
-        //     <script>
-        //         $('#main_bn').on('init reInit afterChange', function(event, slick, currentSlide, nextSlide) {
-        //             var index = (currentSlide ? currentSlide : slick.currentSlide) + 1;
-        //             $('.slick-dots').html('<li>' + index + ' / ' + (slick.slideCount)+'</li>')
-        //         });
-        //         $('#main_bn').slick({
-        //             dots: true,
-        //             fade: true,
-        //         });
-        //     </script>";
-        // }
-
         // 카테고리
         // $category = $this->global_lib->get_menu();
 

@@ -10039,7 +10039,7 @@ table .spr,
 }
 
 .cont_wrap {
-  width: 1280px;
+  width: 1260px;
   position: relative;
   left: calc((100% - 1280px) / 2)
 }
@@ -10929,6 +10929,11 @@ ul.slick-dots {
 .slick-dots li.slick-active button {
   background-color: rgba(0, 0, 0, 0.9)
 }
+
+/* .timesale_slide_active .swiper-slide {
+  flex: 0 0 300px !important;
+  width: 300px !important;
+} */
 
 .timesale_slide_active .slick-dots,
 .timesale_slide_pending .slick-dots,
@@ -11864,8 +11869,7 @@ ul.slick-dots {
   background-size: contain
 }
 
-.pr_desc .ic_bx
-.bestca .ic_bx {
+.pr_desc .ic_bx .bestca .ic_bx {
   width: 86px;
   margin: 0 0 0 -43px;
   opacity: 0;
