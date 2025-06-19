@@ -614,7 +614,7 @@ class Shop extends CI_Controller
             }
 
             $str .= "<li>\n";
-            $str .=     "<div>";
+            $str .=     "<div class=\"timesale_image\">";
             $str .=         "<a href=\"{$it_href}\">\n";
             $str .=             "<dl>\n";
             if (!empty($row['simg1'])) {
@@ -630,7 +630,7 @@ class Shop extends CI_Controller
             // $str .=     "<p class=\"ic_bx\">
             //                 <span onclick=\"javascript:itemlistwish('{$row['index_no']}');\" id=\"{$row['index_no']}\" class=\"".($row['index_no'].' '.$this->gvcomplex_lib->zzimCheck($row['index_no']))."\"></span>
             //             </p>";
-            $str .=     "<div>";
+            $str .=     "<div class=\"timesale_content\">";
             $openDate = substr($row['sb_date'], 2, 2) . '/' . substr($row['sb_date'], 5, 2) . '/' . substr($row['sb_date'], 8, 2);
             $openTime = (new DateTime($row['eb_date']))->format('H:i');
             $endDate = substr($row['eb_date'], 2, 2) . '/' . substr($row['eb_date'], 5, 2) . '/' . substr($row['eb_date'], 8, 2);

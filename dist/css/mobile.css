@@ -9357,7 +9357,7 @@ input[type=checkbox].css-checkbox:checked+label.css-label {
 }
 
 label.css-label {
-  background-image: url(/mb/img/csscheckbox.png);
+  /* background-image: url(/mb/img/csscheckbox.png); */
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -10187,7 +10187,7 @@ html.m_open body {
 
 .cont_box {
   padding: 5.97vw 4.44vw 0 4.44vw;
-  margin-bottom: 15.7vw
+  margin-bottom: 17vw
 }
 
 .cont_box.brand,
@@ -11950,23 +11950,25 @@ b {
   justify-content: flex-end
 }
 
+.pr_desc_horizontal ul li .timebox,
 .pr_desc ul li .timebox {
   display: flex;
   flex-wrap: wrap;
   /* wrap 허용 */
   align-items: center;
-  font-size: 3vw;
+  font-size: 3.5vw;
   padding: 0.5vw 0;
   min-height: 3.5vw;
   overflow: visible;
 }
 
-
+.pr_desc_horizontal ul li .timebox>*,
 .pr_desc ul li .timebox>* {
   flex-shrink: 0;
   /* 텍스트나 아이콘이 줄어들지 않도록 */
 }
 
+.pr_desc_horizontal ul li .timebox>.calendar,
 .pr_desc ul li .timebox>.calendar {
   width: 4vw;
   height: 3.5vw;
@@ -11976,22 +11978,27 @@ b {
   background-size: contain
 }
 
+.pr_desc_horizontal ul li .timebox>.date,
 .pr_desc ul li .timebox>.date {
   margin-right: 0.69vw;
   font-family: 'Pretendard-Bd';
   color: #333333
 }
 
+.pr_desc_horizontal ul li .timebox>.dash,
+.pr_desc_horizontal ul li .timebox>.time,
 .pr_desc ul li .timebox>.dash,
 .pr_desc ul li .timebox>.time {
   font-family: 'Pretendard-Bd';
   color: #333333
 }
 
+.pr_desc_horizontal ul li .timebox>.dash,
 .pr_desc ul li .timebox>.dash {
   padding: 0 0.69vw
 }
 
+.pr_desc_horizontal ul li .timebox br,
 .pr_desc ul li .timebox br {
   flex-basis: 100%;
   /* 줄바꿈 전환 */
@@ -12544,7 +12551,7 @@ b {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  gap: 4.03vw;
+  gap: 2vw;
   border-bottom: 0.14vw solid #eeeeee
 }
 
@@ -12563,8 +12570,8 @@ b {
 
 .pr_desc_horizontal ul li dt {
   position: relative;
-  width: 21.11vw;
-  height: 21.11vw !important;
+  width: 22vw;
+  height: 22vw !important;
   border-top-left-radius: 0.69vw;
   border-top-right-radius: 0.69vw
 }
@@ -12644,7 +12651,7 @@ b {
   color: white;
   background-color: #959595
 }
-
+/* 
 .pr_desc_horizontal ul li .timebox {
   margin-top: 1.97vw;
   display: -webkit-box;
@@ -12680,7 +12687,7 @@ b {
 
 .pr_desc_horizontal ul li .timebox>.dash {
   padding: 0 0.69vw
-}
+} */
 
 .pr_desc_horizontal ul li .pname {
   height: 9.03vw;
@@ -12724,6 +12731,14 @@ b {
 
 .pr_desc_horizontal ul li .price .sale>.percent {
   color: #72d5ff
+}
+
+.pr_desc_horizontal .timesale_image{
+  width: 22vw;
+}
+
+.pr_desc_horizontal .timesale_content{
+  width: 72vw;
 }
 
 .pr_desc.wli2 li {
@@ -15995,6 +16010,9 @@ html.no-overflowscrolling .fg {
   padding: 0 .8vw;
   /* 좌우 여백도 약간 주면 보기 좋습니다 */
   border-radius: 1vw;
+}
+.bottom_sch .frm_input{
+  max-width: 50vw;
 }
 
 /* 검색 버튼만 따로 키우기 */
