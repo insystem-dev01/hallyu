@@ -1003,7 +1003,11 @@ class Bbs extends CI_Controller
         $qstr3 = "boardid=$boardid$qstr";
 
 
-
+        if (!$is_member) {
+            alert("로그인 후 이용가능합니다");
+            goto_url(base_url());
+            // return false;
+        }
 
 
         $prev_index_no = $this->gvcomplex_lib->get_prev_or_next_post($index_no, $boardid, 'prev');
@@ -1090,10 +1094,7 @@ class Bbs extends CI_Controller
         $good_count = '';
         $good_check = '';
         if ($boardid == "37") {
-            if (!$is_member) {
-                alert("로그인 후 이용가능합니다");
-                return false;
-            }
+
             $good_count = $this->gvcomplex_lib->get_good_count($index_no, $boardid);
             $good_check = $this->gvcomplex_lib->get_is_good_check($index_no, $boardid, $member['id']);
         }

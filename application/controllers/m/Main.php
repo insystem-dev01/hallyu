@@ -989,12 +989,12 @@ class Main extends CI_Controller
 
         foreach ($rst as $key => $row) {
 
-            $tag = $row['btype'] == "1" ? "[공지]" : "[일반]";
+            $tag = $row['btype'] == "1" ? "[공지] " : "[일반] ";
 
             $notice_list[] = [
                 'title' => $tag . $row['subject'],
                 'date' => date("Y.m.d", $row['wdate']),
-                'url' => base_url() . "bbs/read?index_no={$row['index_no']}&boardid={$board_id}"
+                'url' => base_url() . "m/bbs/board_read?index_no={$row['index_no']}&boardid={$board_id}"
             ];
         }
 
@@ -1018,7 +1018,7 @@ class Main extends CI_Controller
             $notice_list[] = [
                 'title' =>  $row['subject'],
                 'date' => date("Y.m.d", $row['wdate']),
-                'url' => base_url() . "bbs/read?index_no={$row['index_no']}&boardid={$board_id}"
+                'url' => base_url() . "m/bbs/board_read?index_no={$row['index_no']}&boardid={$board_id}"
             ];
         }
 
