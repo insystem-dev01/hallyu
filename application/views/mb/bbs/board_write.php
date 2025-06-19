@@ -8,7 +8,7 @@
         <div class="m_bo_wrap">
             <table class="tbl03">
                 <colgroup>
-                    <col style="width:70px">
+                    <col style="width:12vw">
                     <col style="width:auto">
                 </colgroup>
                 <tbody>
@@ -28,14 +28,17 @@
                     </tr>
                     <tr style="border-bottom:none">
                         <th>내용</th>
-                        <td><textarea name="memo" rows="10" class="wfull"><?php echo $write['memo']; ?></textarea></td>
+                        <td>
+                            <?php echo $editTag; ?>
+                        </td>
                     </tr>
+                    <?=$usefileTag?>
                 </tbody>
 		    </table>
 	    </div>
         <div class="btn_confirm">
-            <input type="submit" value="확인" class="btn_medium">
             <?=$btnConfirmTag?>
+            <input type="submit" value="확인" class="btn_medium">
         </div>
     </div>
 </form>

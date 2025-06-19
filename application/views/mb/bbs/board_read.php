@@ -27,35 +27,7 @@
                 <span class="good_label">좋아요 <em id='good_count2_<?= $index_no ?>'><?= $good_count ?></em></span>
             </div>
         <?php endif; ?>
-    </div>
-    <?= $comment ?>
-</div>
-<div class="page_wrap">
-    <div class="lbt_box">
-        <?php if ($prev_index_no): ?>
-            <a href="<?= base_url() ?>bbs/read?index_no=<?= $prev_index_no ?>&boardid=<?= $boardid ?>" class="btn_lsmall bx-white">
-                &lt; 이전글</a>
-
-        <?php else: ?>
-            <a href="#" class="btn_lsmall bx-white" onclick="alert('이전 글이 없습니다.');">
-                &lt; 이전글
-            </a>
-        <?php endif; ?>
-
-        <a href="<?= base_url() ?>bbs/noticeList?<?= $qstr1 ?>" class="btn_lsmall bx-white">목록</a>
-
-        <?php if ($next_index_no): ?>
-            <a href="<?= base_url() ?>bbs/read?index_no=<?= $next_index_no ?>&boardid=<?= $boardid ?>" class="btn_lsmall bx-white">
-                다음글 &gt;</a>
-
-        <?php else: ?>
-            <a href="#" class="btn_lsmall bx-white"
-                onclick="alert('다음 글이 없습니다.');">
-                다음글 &gt;
-            </a>
-        <?php endif; ?>
-
-
+        
     </div>
     <div class="rbt_box">
 
@@ -64,6 +36,43 @@
         <?= $delTag ?>
         <?= $writeTag ?>
     </div>
+    <div class="comment_area">
+        <?= $comment ?>
+    </div>
+</div>
+<div class="page_wrap">
+    <div class="lbt_box">
+        <?php if ($prev_index_no): ?>
+            <a href="<?= base_url() ?>m/bbs/board_read?index_no=<?= $prev_index_no ?>&boardid=<?= $boardid ?>" class="btn_lsmall">
+                &lt; 이전글</a>
+
+        <?php else: ?>
+            <a href="#" class="btn_lsmall" onclick="alert('이전 글이 없습니다.');">
+                &lt; 이전글
+            </a>
+        <?php endif; ?>
+        <!-- 상품요청게시판 -->
+        <?php if ($boardid == "37"): ?>
+            <a href="<?= base_url() ?>m/bbs/goods_request_list?<?= $qstr1 ?>" class="btn_lsmall">목록</a>
+            <!-- 공지사항 -->
+        <?php elseif ($boardid == "13"): ?>
+            <a href="<?= base_url() ?>m/bbs/noticeList?<?= $qstr1 ?>" class="btn_lsmall ">목록</a>
+        <?php endif; ?>
+
+        <?php if ($next_index_no): ?>
+            <a href="<?= base_url() ?>m/bbs/board_read?index_no=<?= $next_index_no ?>&boardid=<?= $boardid ?>" class="btn_lsmall ">
+                다음글 &gt;</a>
+
+        <?php else: ?>
+            <a href="#" class="btn_lsmall "
+                onclick="alert('다음 글이 없습니다.');">
+                다음글 &gt;
+            </a>
+        <?php endif; ?>
+
+
+    </div>
+
 </div>
 
 <script>

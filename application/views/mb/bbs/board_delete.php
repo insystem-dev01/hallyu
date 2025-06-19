@@ -7,17 +7,17 @@
     <div class="m_bo_pop">
         <h2>게시물삭제</h2>
         <p>한번 삭제된 데이타는 복구되지 않습니다.<br>삭제 하시려면 삭제하기 버튼을 누르세요.</p>
-        <?=$deleteTag ?>
+        <?= $deleteTag ?>
     </div>
 </form>
 
 <script>
-function frm_submit(f){
-	<?=$pwdJs?>
-	if(answer==true){
-        return true;  
-    }else{
-        return false; 
+    function frm_submit(f) {
+        <?= $pwdJs ?>
+        if (answer == true) {
+            return true;
+        } else {
+            return false;
+        }
     }
-}
 </script>

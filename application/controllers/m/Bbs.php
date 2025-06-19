@@ -857,6 +857,21 @@ class Bbs extends CI_Controller
             $li_str .= '</li>';
 
             $li_run++;
+            $tableTag = "";
+            if ($li_run > 0)
+                $tableTag = "<ul>\n{$li_str}</ul>\n";
+            else
+                $tableTag = "<p class=\"empty_list\">게시글이 없습니다.</p>\n";
+
+            $canWrite = "";
+            $canWrite = "<div class=\"btn_confirm\">
+                <span class=\"total_count_text\">전체 <span class=\"total_count_count\">{$li_run}</span></span>";
+            if ($member['grade'] <= $board['write_priv']) {
+                $canWrite .= "
+                <a href=\"" . base_url() . "m/bbs/board_write?boardid={$boardid}\" class=\"btn_medium\">글쓰기</a>
+            ";
+            }
+            $canWrite .= "</div>";
         }
         //일반 공지
         foreach ($result as $key => $row) {
@@ -926,13 +941,14 @@ class Bbs extends CI_Controller
             $tableTag = "<p class=\"empty_list\">게시글이 없습니다.</p>\n";
 
         $canWrite = "";
+        $canWrite = "<div class=\"btn_confirm\">
+                <span class=\"total_count_text\">전체 <span class=\"total_count_count\">{$li_run}</span></span>";
         if ($member['grade'] <= $board['write_priv']) {
-            $canWrite = "
-            <div class=\"btn_confirm\">
-                <span class=\"total_count_text\">전체 <span class=\"total_count_count\">{$li_run}</span></span>
+            $canWrite .= "
                 <a href=\"" . base_url() . "m/bbs/board_write?boardid={$boardid}\" class=\"btn_medium\">글쓰기</a>
-            </div>";
+            ";
         }
+        $canWrite .= "</div>";
         $pagination = get_paging($config['mobile_pages'], $page, $total_page, $requestUrl . '?boardid=' . $boardid . '&page=');
         $gw_search_value = $this->config->item('gw_search_value');
         $gw_search_text = $this->config->item('gw_search_text');
@@ -978,7 +994,9 @@ class Bbs extends CI_Controller
         $sfl = $this->input->get('sfl');
         $qstr = $this->load->get_var('qstr');
         $from_action_url = base_url() . "m/process/tail_crud";
+        $bo_writer = $write['writer'];
         $bo_writer_s = $write['writer_s'];
+        log_message("debug", "member: {$member['index_no']}, bo_writer: {$bo_writer}");
 
         $qstr1 = "boardid=$boardid$qstr&page=$page";
         $qstr2 = "index_no=$index_no&boardid=$boardid$qstr&page=$page";
@@ -1051,15 +1069,22 @@ class Bbs extends CI_Controller
             $file2Tag = "<img src=\"{$file2}\" class=\"img_fix\">";
         }
         $memo = $this->funcomplex_lib->get_image_resize(strip_tags($write['memo'], '<img><p>'));
-        $replyTag = "";
-        if ($member['grade'] <= $board['reply_priv'] && $board['usereply'] == 'Y') {
-            $replyTag .= "<a href=\"" . base_url() . "m/bbs/board_write?{$qstr2}&w=r\" class=\"btn_medium bx-white\">답변</a>";
+        $modifyTag = "";
+        if (($member['index_no'] == $bo_writer) || $this->gvcomplex_lib->is_admin()) {
+            $modifyTag = "<a href=\"" . base_url() . "m/bbs/board_write?{$qstr2}&w=u\" class=\"btn_lsmall\">수정</a>";
         }
-        $adminTag = "";
-        if (($mb_no == $write['writer']) || $this->gvcomplex_lib->is_admin()) {
-            $adminTag = "
-            <a href=\"" . base_url() . "m/bbs/board_write?{$qstr2}&w=u\" class=\"btn_medium bx-white\">수정</a>
-            <a href=\"" . base_url() . "m/bbs/board_delete?{$qstr2}\" class=\"btn_medium bx-white\">삭제</a>";
+        $replyTag = "";
+        if ($member['index_no'] && $member['grade'] <= $board['reply_priv'] && $board['usereply'] == 'Y') {
+            $replyTag = "<a href=\"" . base_url() . "m/bbs/reply?{$qstr2}\" class=\"btn_lsmall\">답글</a>";
+        }
+
+        $delTag = "";
+        if (($member['index_no'] == $bo_writer) || $this->gvcomplex_lib->is_admin()) {
+            $delTag = "<a href=\"" . base_url() . "m/bbs/board_delete?{$qstr2}\" class=\"btn_lsmall\">삭제</a>";
+        }
+        $writeTag = "";
+        if ($member['grade'] <= $board['write_priv']) {
+            $writeTag = "<a href=\"" . base_url() . "m/bbs/board_write?boardid={$boardid}\" class=\"btn_lsmall btn_color\">글쓰기</a>";
         }
 
         $good_count = '';
@@ -1092,6 +1117,8 @@ class Bbs extends CI_Controller
                     return false;
                 }";
         }
+
+
         $data = array(
             'bo_subject' => $bo_subject,
             'write' => $write,
@@ -1099,8 +1126,10 @@ class Bbs extends CI_Controller
             'file1Tag' => $file1Tag,
             'file2Tag' => $file2Tag,
             'memo' => $memo,
+            'modifyTag' => $modifyTag,
             'replyTag' => $replyTag,
-            'adminTag' => $adminTag,
+            'delTag' => $delTag,
+            'writeTag' => $writeTag,
             'qstr1' => $qstr1,
             'good_count' => $good_count,
             'read_count' => $read_count,
@@ -1110,7 +1139,7 @@ class Bbs extends CI_Controller
             'comment' => $comment,
             'fboardformJs' => $fboardformJs,
             'prev_index_no' => $prev_index_no,
-            'next_index_no'=> $next_index_no,
+            'next_index_no' => $next_index_no,
 
         );
         $this->load->view('mb/bbs/board_read', $data);
@@ -1263,6 +1292,8 @@ class Bbs extends CI_Controller
         $page = $this->input->get('page');
 
         $is_member = $this->load->get_var('is_member');
+
+
         $deleteTag = "";
         if ($is_member) {
             $deleteTag = "
@@ -1325,11 +1356,12 @@ class Bbs extends CI_Controller
         $is_member = $this->load->get_var('is_member');
         $member = $this->load->get_var('member');
         $write = $this->load->get_var('write');
-
+        $mb_no = $member['index_no'];
         $w = $this->input->get('w');
         $boardid = $this->input->get('boardid');
         $page = $this->input->get('page');
         $index_no = $this->input->get('index_no');
+        $form_action_url = base_url() . 'm/process/board_write_update';
 
         if (!$is_member) {
             $member['grade'] = 99;
@@ -1368,7 +1400,7 @@ class Bbs extends CI_Controller
         $qstr1 = "boardid=$boardid&page=$page";
         $token = md5(uniqid(rand(), true));
         set_session("ss_token", $token);
-        $form_action_url = base_url() . 'm/process/board_write_update';
+
         $is_memberTag = "";
         if ($is_member) {
             $is_memberTag .= $write['writer_s'];
@@ -1440,11 +1472,12 @@ class Bbs extends CI_Controller
                 <td>{$option}</td>
             </tr>";
         }
+
         $btnConfirmTag = "";
         if ($w == 'u' || $w == 'r') {
-            $btnConfirmTag = "<a href=\"" . base_url() . "m/bbs/board_list?{$qstr1}\" class=\"btn_medium bx-white\">목록</a>";
+            $btnConfirmTag = "<a href=\"" . base_url() . "m/bbs/board_list?{$qstr1}\" class=\"btn_medium\">목록</a>";
         } else {
-            $btnConfirmTag = "<a href=\"javascript:history.go(-1);\" class=\"btn_medium bx-white\">취소</a>";
+            $btnConfirmTag = "<a href=\"javascript:history.go(-1);\" class=\"btn_medium\">취소</a>";
         }
         $not_memberJs = "";
         if (!$is_member) {
@@ -1477,6 +1510,20 @@ class Bbs extends CI_Controller
         $write['subject'] = isset($write['subject']) ? $write['subject'] : "";
         $write['memo'] = isset($write['memo']) ? $write['memo'] : "";
 
+        $editTag = $this->global_lib->editor_html('memo', $this->funcomplex_lib->get_text($board['insert_content'], 0));
+
+        $usefileTag = "";
+        if ($board['usefile'] == 'Y') {
+            $usefileTag = "
+            <tr>
+                <th scope=\"row\">파일1</th>
+                <td><input type=\"file\" name=\"file1\"></td>
+            </tr>
+            <tr>
+                <th scope=\"row\">파일2</th>
+                <td><input type=\"file\" name=\"file2\"></td>
+            </tr>";
+        }
         $data = array(
             'token' => $token,
             'form_action_url' => $form_action_url,
@@ -1493,7 +1540,9 @@ class Bbs extends CI_Controller
             'btnConfirmTag' => $btnConfirmTag,
             'not_memberJs' => $not_memberJs,
             'pwdJs' => $pwdJs,
-            'cateJs' => $cateJs
+            'cateJs' => $cateJs,
+            'editTag' => $editTag,
+            'usefileTag' => $usefileTag,
         );
         $this->load->view('mb/bbs/board_write', $data);
     }

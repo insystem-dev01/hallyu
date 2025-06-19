@@ -1327,6 +1327,16 @@ class Process extends CI_Controller
         $issecret = $this->input->post('issecret');
         $index_no = $this->input->post('index_no');
 
+        log_message('debug', "sssssssss index_no: {$index_no}");
+        if (!empty($index_no) && $boardid == 37)
+            $redirect_url = base_url() . "m/bbs/board_read?index_no={$index_no}&boardid={$boardid}&page={$page}";
+        else if (!empty($index_no) && $boardid == 13)
+            $redirect_url = base_url() . "m/bbs/board_read?index_no={$index_no}&boardid={$boardid}&page={$page}";
+        else if (empty($index_no) && $boardid == 37)
+            $redirect_url = base_url() . "m/bbs/goods_request_list?boardid={$boardid}&page={$page}";
+        else if (empty($index_no) && $boardid == 13)
+            $redirect_url = base_url() . "m/bbs/noticeList?boardid={$boardid}&page={$page}";
+
         if (isset($token) && get_session("ss_token") == $token) {
             // 맞으면 세션을 지워 다시 입력폼을 통해서 들어오도록 한다.
             set_session("ss_token", "");
@@ -1373,7 +1383,9 @@ class Process extends CI_Controller
                             $sql_common ";
             $this->query_model->returnNull($sql);
 
-            goto_url(base_url() . "m/bbs/board_list?boardid=$boardid");
+
+
+            goto_url($redirect_url);
         } else if ($w == "u") {
             $sql = "select * from shop_board_{$boardid} where index_no=?";
             $param = array($index_no);
@@ -1408,7 +1420,7 @@ class Process extends CI_Controller
                     "product" => $product
                 );
                 $this->query_model->updateObj("shop_board_{$boardid}", $updateObj, "index_no	= '$index_no'");
-                goto_url(base_url() . "m/bbs/board_write?w=u&index_no=$index_no&boardid=$boardid&page=$page");
+                goto_url($redirect_url);
             }
         } else if ($w == "r") {
             $sql = "select fid,thread,passwd from shop_board_{$boardid} where index_no=?";
@@ -3024,7 +3036,9 @@ class Process extends CI_Controller
         $boardid = $this->input->post('boardid');
         $index_no = $this->input->post('index_no');
         $page = $this->input->post('page');
-
+        $is_member = $this->load->get_var('is_member');
+        $member = $this->load->get_var('member');
+        $mb_no = $member['index_no'];
         $write = $this->load->get_var('write');
         if ($w == 'd') {
 
@@ -3068,7 +3082,11 @@ class Process extends CI_Controller
             $sql = " delete from shop_board_{$boardid}_tail where board_index=? ";
             $this->query_model->returnNull($sql, $param);
 
-            goto_url(base_url() . "m/bbs/board_list?boardid=$boardid&page=$page");
+            if ($boardid == 37)
+                $redirect_url = base_url() . "m/bbs/goods_request_list?boardid={$boardid}&page={$page}";
+            else if ($boardid == 13)
+                $redirect_url = base_url() . "m/bbs/noticeList?boardid={$boardid}&page={$page}";
+            goto_url($redirect_url);
         }
     }
     #상담문의 작성하기
@@ -3751,7 +3769,7 @@ class Process extends CI_Controller
             $this->query_model->returnNull($sql, $param);
         } else if ($mode == 'd') {
             $tail_index_no = $this->input->post('tail_index_no');
-            
+
             // 1) 해당 댓글 삭제
             $where = [
                 'index_no' => $tail_index_no,
@@ -3768,7 +3786,6 @@ class Process extends CI_Controller
             $sql = "update shop_board_{$boardid} set tailcount={$tail_count} where index_no=?";
             $param = array($index_no);
             $this->query_model->returnNull($sql, $param);
-            
         }
 
         goto_url(base_url() . "m/bbs/board_read?index_no=$index_no&boardid=$boardid$qstr&page=$page");
