@@ -2198,7 +2198,7 @@ class AdminProcess extends CI_Controller
         }
 
         if (isset($_FILES['bank_copy']) && $_FILES['bank_copy']['error'] === UPLOAD_ERR_OK) {
-            $upload_path = "/hallyu/data/cert/seller/";
+            $upload_path = "./data/cert/seller/";
 
 
             $bank_result = $this->upload_file($upload_path, $value['bank_account'], 'bank_copy', 'bank', $value['mb_id']);

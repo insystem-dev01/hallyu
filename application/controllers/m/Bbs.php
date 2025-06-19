@@ -653,14 +653,14 @@ class Bbs extends CI_Controller
         if ($board['use_category']) {
             $useCateTag .= "
             <select name=\"faq_type\" class=\"faq_sch\" onchange=\"location=this.value;\">
-                <option value=\"" . base_url() . "m/bbs/board_list?boardid={$boardid}\">전체보기</option>";
+                <option value=\"" . base_url() . "m/bbs/noticeList?boardid={$boardid}\">전체보기</option>";
             for ($i = 0; $i < count($usecate); $i++) {
                 $selected = "";
                 if ($usecate[$i] == $ca_name) {
                     $selected = ' selected';
                 }
                 $useCateTag .= "
-                <option value=\"" . base_url() . "m/bbs/board_list?boardid={$boardid}&ca_name={$usecate[$i]}\" {$selected}>{$usecate[$i]}</option>";
+                <option value=\"" . base_url() . "m/bbs/noticeList?boardid={$boardid}&ca_name={$usecate[$i]}\" {$selected}>{$usecate[$i]}</option>";
             }
             $useCateTag .= "
             </select>";
@@ -996,7 +996,11 @@ class Bbs extends CI_Controller
         $from_action_url = base_url() . "m/process/tail_crud";
         $bo_writer = $write['writer'];
         $bo_writer_s = $write['writer_s'];
-        log_message("debug", "member: {$member['index_no']}, bo_writer: {$bo_writer}");
+        $bo_file1 = $write['fileurl1'];
+        $bo_file2 = $write['fileurl2'];
+        $bo_memo = nl2br($write['memo']);
+        $accept = array("gif", "jpg", "GIF", "JPG", "PNG", "png");
+        // log_message("debug", "member: {$member['index_no']}, bo_writer: {$bo_writer}");
 
         $qstr1 = "boardid=$boardid$qstr&page=$page";
         $qstr2 = "index_no=$index_no&boardid=$boardid$qstr&page=$page";
@@ -1004,9 +1008,9 @@ class Bbs extends CI_Controller
 
 
         if (!$is_member) {
-            alert("로그인 후 이용가능합니다");
-            goto_url(base_url());
-            // return false;
+            goto_url(base_url() . "m/bbs/login?url=$urlencode");
+            // alert("로그인 후 이용가능합니다");
+            return false;
         }
 
 
@@ -1059,20 +1063,69 @@ class Bbs extends CI_Controller
         $qstr1 = "boardid=$boardid&page=$page";
         $qstr2 = "index_no=$index_no&boardid=$boardid&page=$page";
 
-        $file1Tag = "";
-        $file1 = "./data/board/{$boardid}/{$write['fileurl1']}";
-        if (is_file($file1) && preg_match("/\.(gif|jpg|png)$/i", $write['fileurl1'])) {
-            $file1 = base_url() . "data/board/{$boardid}/{$write['fileurl1']}";
-            $file1Tag = "<img src=\"{$file1}\" class=\"img_fix\">";
+        $bo_file1_tag = "";
+        if (isset($bo_file1) && $bo_file1 != "") {
+            $bo_file1_tag = "<tr><td>첨부파일1 : <a href=\"" . base_url() . "process/download?file={$bo_file1}&url=./data/board/{$boardid}/{$bo_file1}\"><b>{$bo_file1}</b></a></td></tr>";
+        }
+        $bo_file2_tag = "";
+        if (isset($bo_file2) && $bo_file2 != "") {
+            $bo_file2_tag = "<tr><td>첨부파일2 : <a href=\"" . base_url() . "process/download?file={$bo_file2}&url=./data/board/{$boardid}/{$bo_file2}\"><b>{$bo_file2}</b></a></td></tr>";
         }
 
-        $file2Tag = "";
-        $file2 = "./data/board/{$boardid}/{$write['fileurl2']}";
-        if (is_file($file2) && preg_match("/\.(gif|jpg|png)$/i", $write['fileurl2'])) {
-            $file2 = base_url() . "data/board/{$boardid}/{$write['fileurl2']}";
-            $file2Tag = "<img src=\"{$file2}\" class=\"img_fix\">";
+        // 픽셀 (게시판에서 출력되는 이미지의 폭 크기)
+        if ($board['width'] > 100) {
+            $thumbnail_width = $board['width'];
+        } else {
+            $thumbnail_width = 730;
         }
-        $memo = $this->funcomplex_lib->get_image_resize(strip_tags($write['memo'], '<img><p>'));
+        $width = 0;
+        $height = 0;
+        $bo_file1_img = "";
+        if ($bo_file1 && preg_match("/\.(gif|jpg|jpeg|png)$/i", $bo_file1)) {
+            $file1anal = explode(".", $bo_file1);
+            if (in_array($file1anal[1], $accept)) {
+                if (is_file("./data/board/" . $boardid . "/" . $bo_file1)) {
+                    $imgsize1 = getimagesize("./data/board/" . $boardid . "/" . $bo_file1);
+                    if ($imgsize1[0] > $thumbnail_width) {
+                        $width = $thumbnail_width;
+                        $height = ($imgsize1[1] / $imgsize1[0]) * $thumbnail_width;
+                    } else {
+                        $width = $imgsize1[0];
+                        $height = $imgsize1[1];
+                    }
+                }
+                if($width > 320){
+                    $width = 320;
+                    $height = "auto";
+                }
+            }
+            $bo_file1_img = "<a href=\"javascript:imgview('./data/board/{$boardid}/{$bo_file1}');\"><img src=\"" . base_url() . "data/board/{$boardid}/{$bo_file1}\" width=\"{$width}\" height=\"{$height}\"></a><br><br>";
+        }
+
+
+        $bo_file2_img = "";
+
+        if ($bo_file2 && preg_match("/\.(gif|jpg|jpeg|png)$/i", $bo_file2)) {
+            $file2anal = explode(".", $bo_file2);
+            if (in_array($file2anal[1], $accept)) {
+                if (is_file("./data/board/" . $boardid . "/" . $bo_file2)) {
+                    $imgsize1 = getimagesize("./data/board/" . $boardid . "/" . $bo_file2);
+                    if ($imgsize1[0] > $thumbnail_width) {
+                        $width = $thumbnail_width;
+                        $height = ($imgsize1[1] / $imgsize1[0]) * $thumbnail_width;
+                    } else {
+                        $width = $imgsize1[0];
+                        $height = $imgsize1[1];
+                    }
+                }
+            }
+            $bo_file2_img = "<a href=\"javascript:imgview('./data/board/{$boardid}/{$bo_file2}');\"><img src=\"" . base_url() . "data/board/{$boardid}/{$bo_file2}\" width=\"{$width}\" height=\"{$height}\"></a>";
+        }
+
+        $getViewThum = $this->thumbnail_lib->get_view_thumbnail($this->funcomplex_lib->conv_content($bo_memo, 1), $thumbnail_width);
+
+
+        // $memo = $this->funcomplex_lib->get_image_resize(strip_tags($write['memo'], '<img><p>'));
         $modifyTag = "";
         if (($member['index_no'] == $bo_writer) || $this->gvcomplex_lib->is_admin()) {
             $modifyTag = "<a href=\"" . base_url() . "m/bbs/board_write?{$qstr2}&w=u\" class=\"btn_lsmall\">수정</a>";
@@ -1124,9 +1177,11 @@ class Bbs extends CI_Controller
             'bo_subject' => $bo_subject,
             'write' => $write,
             'bo_wdate' => $bo_wdate,
-            'file1Tag' => $file1Tag,
-            'file2Tag' => $file2Tag,
-            'memo' => $memo,
+            'bo_file1_img' => $bo_file1_img,
+            'bo_file2_img' => $bo_file2_img,
+            'bo_file1_tag' => $bo_file1_tag,
+            'bo_file2_tag' => $bo_file2_tag,
+            'getViewThum' => $getViewThum,
             'modifyTag' => $modifyTag,
             'replyTag' => $replyTag,
             'delTag' => $delTag,
@@ -1415,7 +1470,7 @@ class Bbs extends CI_Controller
             $pwdTag = "
             <tr>
                 <th>비밀번호</th>
-                <td><input type=\"password\" name=\"passwd\" style=\"width:150px;\"></td>
+                <td><input type=\"password\" name=\"passwd\" style=\"width:50vw;\"></td>
             </tr>";
         }
         $useCateTag = "";
@@ -1469,7 +1524,7 @@ class Bbs extends CI_Controller
         if ($option) {
             $optionTag = "
             <tr>
-                <th>옵 션</th>
+                <th>옵션</th>
                 <td>{$option}</td>
             </tr>";
         }
@@ -1512,7 +1567,8 @@ class Bbs extends CI_Controller
         $write['memo'] = isset($write['memo']) ? $write['memo'] : "";
 
         $editTag = $this->global_lib->editor_html('memo', $this->funcomplex_lib->get_text($board['insert_content'], 0));
-
+        log_message("debug", "mobile editTag : {$editTag}");
+        log_message("debug", "board['insert_content'] : {$board['insert_content']}");
         $usefileTag = "";
         if ($board['usefile'] == 'Y') {
             $usefileTag = "
@@ -1525,6 +1581,8 @@ class Bbs extends CI_Controller
                 <td><input type=\"file\" name=\"file2\"></td>
             </tr>";
         }
+        $memoEditJs = $this->global_lib->get_editor_js('memo');
+        $memoChkJs = $this->global_lib->chk_editor_js('memo');
         $data = array(
             'token' => $token,
             'form_action_url' => $form_action_url,
@@ -1544,6 +1602,8 @@ class Bbs extends CI_Controller
             'cateJs' => $cateJs,
             'editTag' => $editTag,
             'usefileTag' => $usefileTag,
+            'memoEditJs' => $memoEditJs,
+            'memoChkJs' => $memoChkJs,
         );
         $this->load->view('mb/bbs/board_write', $data);
     }

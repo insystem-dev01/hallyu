@@ -3653,8 +3653,8 @@ class Process extends CI_Controller
                         , wip		= '{$_SERVER['REMOTE_ADDR']}'
                         , thread	= 'A'
                         {$sql_commend} ";
-            $oaram = array($fid);
-            $this->query_model->returnNull($sql, $oaram);
+            $param = array($fid);
+            $this->query_model->returnNull($sql, $param);
 
             if ($member['email']) {
                 $wr_subject = $this->funcomplex_lib->get_text(stripslashes($subject));

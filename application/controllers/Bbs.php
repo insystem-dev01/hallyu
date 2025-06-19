@@ -1050,7 +1050,9 @@ class Bbs extends CI_Controller
                 <td>{$option}</td>
             </tr>";
         }
+
         $editTag = $this->global_lib->editor_html('memo', $this->funcomplex_lib->get_text($write['memo'], 0));
+
         $usefileTag = "";
         if ($board['usefile'] == 'Y') {
             $usefileTag = "
@@ -1229,7 +1231,8 @@ class Bbs extends CI_Controller
             </tr>";
         }
         $editTag = $this->global_lib->editor_html('memo', $this->funcomplex_lib->get_text($board['insert_content'], 0));
-
+        log_message("debug", "pc editTag : {$editTag}");
+        log_message("debug", "board['insert_content'] : {$board['insert_content']}");
         $usefileTag = "";
         if ($board['usefile'] == 'Y') {
             $usefileTag = "
@@ -1352,12 +1355,20 @@ class Bbs extends CI_Controller
         $board = $this->load->get_var('board');
         $write = $this->load->get_var('write');
         $qstr = $this->load->get_var('qstr');
-
+        $urlencode = $this->load->get_var('urlencode');
         $index_no = $this->input->get('index_no');
         $boardid = $this->input->get('boardid');
         $sfl = $this->input->get('sfl');
         $stx = $this->input->get('stx');
         $page = $this->input->get('page');
+
+
+        if (!$is_member) {
+            goto_url(base_url() . "bbs/login?url=$urlencode");
+            // alert("로그인 후 이용가능합니다");
+            return false;
+        }
+
 
         if (!$is_member) {
             $member['grade'] = 99;
@@ -1825,7 +1836,7 @@ class Bbs extends CI_Controller
             $data['bo_file2_img'] = $bo_file2_img;
             $getViewThum = $this->thumbnail_lib->get_view_thumbnail($this->funcomplex_lib->conv_content($bo_memo, 1), $thumbnail_width);
             $data['getViewThum'] = $getViewThum;
-            
+
             $modifyTag = "";
             if (($member['index_no'] == $bo_writer) || $this->gvcomplex_lib->is_admin()) {
                 $modifyTag = "<a href=\"" . base_url() . "bbs/modify?{$qstr2}\" class=\"btn_lsmall bx-white\">수정</a>";

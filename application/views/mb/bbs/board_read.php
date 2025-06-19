@@ -13,13 +13,17 @@
         <b>|</b>
         조회수
         <span class="count_margin"><?= $read_count ?></span>
-
-
     </div>
     <div class="wr_txt">
-        <?= $file1Tag ?>
-        <?= $file2Tag ?>
-        <p><?= $memo ?></p>
+        <div class="file_area">
+            <?= $bo_file1_tag ?>
+            <?= $bo_file2_tag ?>
+        </div>
+        <div class="memo_area memo" style="vertical-align:top;">
+            <?= $bo_file1_img ?>
+            <?= $bo_file2_img ?>
+            <?= $getViewThum ?>
+        </div>
         <!-- 상품 요청 게시판일 때만 보이게 -->
         <?php if ($boardid == "37"): ?>
             <div class="goods_button" onclick="request_goods_good('<?= $index_no ?>');">
@@ -27,7 +31,7 @@
                 <span class="good_label">좋아요 <em id='good_count2_<?= $index_no ?>'><?= $good_count ?></em></span>
             </div>
         <?php endif; ?>
-        
+
     </div>
     <div class="rbt_box">
 

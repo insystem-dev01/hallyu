@@ -99,7 +99,7 @@
 	</div>
 
 
-	<?php if (empty($limited_timesale_active_items)) { ?>
+	<!-- <?php if (empty($limited_timesale_active_items)) { ?>
 		<div class="goods_empty">등록된 상품이 없습니다.</div>
 	<?php } else { ?>
 		<div class="slide-button">
@@ -110,7 +110,7 @@
 				<span>></span>
 			</div>
 		</div>
-	<?php } ?>
+	<?php } ?> -->
 	<div class="more_show_button" onclick="location.href='<?= base_url() ?>shop/timesale?status=active'">전체보기 ></div>
 
 </div>
@@ -198,14 +198,14 @@
 			</ul>
 		</div>
 
-		<?php if (empty($normal_timesale_active_items)) { ?>
+		<!-- <?php if (empty($normal_timesale_active_items)) { ?>
 			<div class="goods_empty">등록된 상품이 없습니다.</div>
 		<?php } else { ?>
 			<div class="slide-button">
 				<div class="timesale-active-button-prev"></div>
 				<div class="timesale-active-button-next"></div>
 			</div>
-		<?php } ?>
+		<?php } ?> -->
 	</div>
 	<div class="more_show_button" onclick="location.href='<?= base_url() ?>shop/timesale?status=active'">전체보기 ></div>
 </div>
@@ -294,7 +294,7 @@
 	</div>
 
 
-	<?php if (empty($hottest_timesale_active_items)) { ?>
+	<!-- <?php if (empty($hottest_timesale_active_items)) { ?>
 		<div class="goods_empty">등록된 상품이 없습니다.</div>
 	<?php } else { ?>
 		<div class="slide-button">
@@ -303,7 +303,7 @@
 			</div>
 			<div class="timesale-active-button-next"><span>></span></div>
 		</div>
-	<?php } ?>
+	<?php } ?> -->
 	<div class="more_show_button" onclick="location.href='<?= base_url() ?>shop/timesale?status=active'">전체보기 ></div>
 </div>
 

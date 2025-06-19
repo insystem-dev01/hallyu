@@ -1302,32 +1302,45 @@ class Process extends CI_Controller
     #board_write_update
     public function board_write_update()
     {
-        $token = $this->input->post('token');
-        $memo = $this->input->post('memo');
-        $subject = $this->input->post('subject');
-        $writer_s = $this->input->post('writer_s');
-        $havehtml = $this->input->post('havehtml');
+        include_once("./lib/mailer.lib.php");
+        $member = $this->load->get_var('member');
+        $is_member = $this->load->get_var('is_member');
+        $pt_id = $this->load->get_var('pt_id');
+        $board = $this->load->get_var('board');
+        $super = $this->load->get_var('super');
+        $page     = $this->input->post('page');
+        $index_no = $this->input->post('index_no');
+
+        $boardid = $this->input->post('boardid');
+        $token = trim($this->input->post("token"));
+        $memo = addslashes($this->input->post("memo"));
+        log_message("debug", "memo: {$memo}");
+        $subject = addslashes($this->input->post('subject'));
+        $writer_s = trim($this->input->post("writer_s"));
+
+        $havehtml = trim($this->input->post("havehtml"));
+        $btype = trim($this->input->post("btype"));
+        $issecret = trim($this->input->post("issecret"));
+        $w = $this->input->post('w');
         $btype = $this->input->post('btype');
-        $issecret = $this->input->post('issecret');
+        $btype = ($btype == "") ? 0 : $btype;
         $ca_name = $this->input->post('ca_name');
+        $issecret = $this->input->post('issecret');
+        $havehtml = $this->input->post('havehtml');
+        $writer_s = $this->input->post('writer_s');
         $passwd = $this->input->post('passwd');
         $average = $this->input->post('average');
         $product = $this->input->post('product');
-        $w = $this->input->post('w');
-        $boardid = $this->input->post('boardid');
-        $mb_no = $this->load->get_var('mb_no');
-        $page = $this->input->post('page');
+        $qstr = $this->load->get_var('qstr');
 
-        $pt_id = $this->load->get_var('pt_id');
-        $member = $this->load->get_var('member');
-        $is_member = $this->load->get_var('is_member');
+        $del_file1 = $this->input->post('del_file1');
+        $del_file2 = $this->input->post('del_file2');
 
-        $havehtml = $this->input->post('havehtml');
-        $btype = $this->input->post('btype');
-        $issecret = $this->input->post('issecret');
-        $index_no = $this->input->post('index_no');
+        $uploadPath = "./data/board/" . $boardid;
 
-        log_message('debug', "sssssssss index_no: {$index_no}");
+        $del_file1 = $this->input->post('del_file1');
+        $del_file2 = $this->input->post('del_file2');
+
         if (!empty($index_no) && $boardid == 37)
             $redirect_url = base_url() . "m/bbs/board_read?index_no={$index_no}&boardid={$boardid}&page={$page}";
         else if (!empty($index_no) && $boardid == 13)
@@ -1352,41 +1365,122 @@ class Process extends CI_Controller
 
         if (!$writer_s)
             alert("작성자명이 없습니다.");
+        $upload_max_filesize = ini_get('upload_max_filesize');
+        if (empty($_POST))
+            alert("파일 또는 글내용의 크기가 서버에서 설정한 값을 넘어 오류가 발생하였습니다.\\n\\npost_max_size=" . ini_get('post_max_size') . " , upload_max_filesize=$upload_max_filesize\\n\\n게시판관리자 또는 서버관리자에게 문의 바랍니다.");
+
         $writer = 0;
 
-        if ($havehtml != 'Y')    $havehtml = "N";
-        if ($btype != '1') $btype = '2';
-        if ($issecret != 'Y') $issecret = "N";
-        if ($member['id']) $writer = $member['index_no'];
-        if ($is_member)
-            $writer = $mb_no;
+        if (isset($havehtml) && $havehtml != 'Y')    $havehtml = "N";
+        if (isset($btype) && $btype != '1') $btype = '2';
+        if (isset($issecret) && $issecret != 'Y') $issecret = "N";
+        if ($is_member) $writer = $member['index_no'];
+
+        $fid = $this->global_lib->get_next_num("shop_board_" . $boardid);
+
+        $uploadPath = "./data/board/" . $boardid;
+        $configArr = array();
+        $configArr['upload_path'] = $uploadPath;
+
+        $configArr['allowed_types'] = $this->allowed_types;
+        $configArr['max_size'] = $this->max_size;
+        $configArr['max_width'] = $this->max_width;
+        $configArr['max_height'] = $this->max_height;
+        $configArr['remove_spaces'] = $this->remove_spaces;
+        $configArr['encrypt_name'] = $this->encrypt_name;
+
+        $this->load->library('upload', $configArr);
+        $this->upload->initialize($configArr);
+
         if ($w == "") {
-            $fid = $this->global_lib->get_next_num("shop_board_{$boardid}");
-            $sql_common = " btype		= '$btype',
-                            ca_name		= '$ca_name',
-                            issecret	= '$issecret',
-                            havehtml	= '$havehtml',
-                            writer      = '$writer',
-                            writer_s	= '$writer_s',
-                            subject		= '$subject',
-                            memo		= '$memo',
-                            passwd      = '$passwd',
-                            average		= '$average',
-                            product		= '$product',
-                            pt_id		= '$pt_id' ";
+
+
+            $sql_common = ", btype	= '{$btype}'
+                            , ca_name	= '{$ca_name}'
+                            , issecret	= '{$issecret}'
+                            , havehtml	= '{$havehtml}'
+                            , writer	= '{$writer}'
+                            , writer_s	= '{$writer_s}'
+                            , subject	= '{$subject}'
+                            , memo		= '{$memo}'
+                            , passwd	= '{$passwd}'
+                            , average	= '{$average}'
+                            , product	= '{$product}'
+                            , pt_id	= '{$pt_id}' ";
+
+            if ($del_file1) {
+                unlink($uploadPath . '/' . $del_file1);
+                delete_board_thumbnail($boardid, $del_file1);
+                $sql_common .= " , fileurl1 = '' ";
+            }
+            if ($del_file2) {
+                unlink($uploadPath . '/' . $del_file2);
+                delete_board_thumbnail($boardid, $del_file2);
+                $sql_common .= " , fileurl2 = '' ";
+            }
+
+            #파일이 있으면 파일을 업로드함
+            $uploadFile = array('file1' => '', 'file2' => '');
+            $error = "";
+            if (isset($_FILES['file1']['name']) && $_FILES['file1']['name'] != "") {
+                if (!$this->upload->do_upload('file1')) {
+                    $error = $this->upload->display_errors();
+                } else {
+                    $uploadFile['file1'] = $this->upload->data();
+                    $new_file1 = $uploadFile['file1']['file_name'];
+                    $sql_common .= " , fileurl1 = '$new_file1' ";
+                }
+            }
+            if (isset($_FILES['file2']['name']) && $_FILES['file2']['name'] != "") {
+                if (!$this->upload->do_upload('file2')) {
+                    $error = $this->upload->display_errors();
+                } else {
+                    $uploadFile['file2'] = $this->upload->data();
+                    $new_file2 = $uploadFile['file2']['file_name'];
+                    $sql_common .= " , fileurl2 = '$new_file2' ";
+                }
+            }
+
+            if ($error != "") {
+                echo "<script>alert('" . strip_tags($error) . "')</script>";
+            }
 
             $sql = " insert into shop_board_{$boardid}
-                        set fid = '$fid',
-                            wdate = '" . time() . "',
-                            wip = '{$_SERVER['REMOTE_ADDR']}',
-                            thread = 'A',
-                            $sql_common ";
-            $this->query_model->returnNull($sql);
+                        set fid		= ?
+                        , wdate	= '" . time() . "'
+                        , wip		= '{$_SERVER['REMOTE_ADDR']}'
+                        , thread	= 'A'
+                        {$sql_common} ";
 
+            $param = array($fid);
+            $this->query_model->returnNull($sql, $param);
 
+            if ($member['email']) {
+                $wr_subject = $this->funcomplex_lib->get_text(stripslashes($subject));
+                $wr_content = $this->funcomplex_lib->conv_content(conv_unescape_nl(stripslashes($memo)), 1);
+                $wr_name = $this->funcomplex_lib->get_text($member['name']);
+
+                $subject = '[' . $board['boardname'] . '] 게시판에 새글이 등록되었습니다.';
+
+                $content = $this->write_update_mail($wr_subject, $wr_name, $wr_content);
+
+                mailer($member['name'], $member['email'], $super['email'], $subject, $content, 1);
+            }
 
             goto_url($redirect_url);
-        } else if ($w == "u") {
+        }
+        //업데이트라면
+        else if ($w == "u") {
+            $_POST = array_map('trim', $_POST);
+            $qstr = $this->load->get_var('qstr');
+
+            $passwd = $this->input->post('passwd');
+
+            if ($havehtml != 'Y')    $havehtml = "N";
+            if ($btype != '1') $btype = '2';
+            if ($issecret != 'Y') $issecret = "N";
+            if ($is_member) $writer = $member['index_no'];
+
             $sql = "select * from shop_board_{$boardid} where index_no=?";
             $param = array($index_no);
             $row = $this->query_model->returnOneArr($sql, $param);
@@ -1462,6 +1556,44 @@ class Process extends CI_Controller
                             average		= '$average',
                             product		= '$product',
                             pt_id		= '$pt_id' ";
+
+            if ($del_file1) {
+                unlink($uploadPath . '/' . $del_file1);
+                delete_board_thumbnail($boardid, $del_file1);
+                $sql_common .= " , fileurl1 = '' ";
+            }
+            if ($del_file2) {
+                unlink($uploadPath . '/' . $del_file2);
+                delete_board_thumbnail($boardid, $del_file2);
+                $sql_common .= " , fileurl2 = '' ";
+            }
+
+            #파일이 있으면 파일을 업로드함
+            $uploadFile = array('file1' => '', 'file2' => '');
+            $error = "";
+            if (isset($_FILES['file1']['name']) && $_FILES['file1']['name'] != "") {
+                if (!$this->upload->do_upload('file1')) {
+                    $error = $this->upload->display_errors();
+                } else {
+                    $uploadFile['file1'] = $this->upload->data();
+                    $new_file1 = $uploadFile['file1']['file_name'];
+                    $sql_common .= " , fileurl1 = '$new_file1' ";
+                }
+            }
+            if (isset($_FILES['file2']['name']) && $_FILES['file2']['name'] != "") {
+                if (!$this->upload->do_upload('file2')) {
+                    $error = $this->upload->display_errors();
+                } else {
+                    $uploadFile['file2'] = $this->upload->data();
+                    $new_file2 = $uploadFile['file2']['file_name'];
+                    $sql_common .= " , fileurl2 = '$new_file2' ";
+                }
+            }
+
+            if ($error != "") {
+                echo "<script>alert('" . strip_tags($error) . "')</script>";
+            }
+
             $sql = " insert into shop_board_{$boardid}
                         set fid = '$fid',
                             wdate = '" . time() . "',
@@ -1469,7 +1601,7 @@ class Process extends CI_Controller
                             thread = '$new_thread',
                             $sql_common ";
             $this->query_model->returnNull($sql);
-            goto_url(base_url() . "m/bbs/board_list?boardid=$boardid");
+            goto_url(base_url() . "m/bbs/noticeList?boardid=$boardid");
         } else {
             alert("정상적인 접근이 아닙니다.");
         }

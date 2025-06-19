@@ -21,7 +21,6 @@
                     <?= $bo_file1_img ?>
                     <?= $bo_file2_img ?>
                     <?= $getViewThum ?>
-
                 </td>
             </tr>
             <?= $good_button ?>

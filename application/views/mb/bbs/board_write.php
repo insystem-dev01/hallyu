@@ -1,4 +1,4 @@
-<form name="fwrite" id="fwrite" method="post" action="<?php echo $form_action_url; ?>" onsubmit="return fwrite_submit(this);" autocomplete="off">
+<form name="fwrite" id="fwrite" method="post" action="<?php echo $form_action_url; ?>" onsubmit="return fwrite_submit(this);" autocomplete="off" enctype="multipart/form-data">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="boardid" value="<?php echo $boardid; ?>">
     <input type="hidden" name="index_no" value="<?php echo $index_no; ?>">
@@ -52,6 +52,8 @@ function fwrite_submit(f) {
 		f.subject.focus();
 		return false;
 	}
+    <?=$memoEditJs?>
+    <?=$memoChkJs?>
 
     return true;
 }
