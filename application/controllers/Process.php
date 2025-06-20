@@ -455,9 +455,9 @@ class Process extends CI_Controller
 
             // 회원 사진
             $uploadPath = "./data/member/";
-             if (! is_dir($uploadPath)) {
-            mkdir($uploadPath, 0755, true);
-        }
+            if (! is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
             $configArr = array();
             $configArr['upload_path'] = $uploadPath;
 
@@ -3589,9 +3589,9 @@ class Process extends CI_Controller
         if ($mode == "w") {
 
             $uploadPath = "./data/board/" . $boardid;
-             if (! is_dir($uploadPath)) {
-            mkdir($uploadPath, 0755, true);
-        }
+            if (! is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
             $configArr = array();
             $configArr['upload_path'] = $uploadPath;
 
@@ -3725,7 +3725,7 @@ class Process extends CI_Controller
         }
 
         $uploadPath = "./data/board/" . $boardid;
-         if (! is_dir($uploadPath)) {
+        if (! is_dir($uploadPath)) {
             mkdir($uploadPath, 0755, true);
         }
         $configArr = array();
@@ -3974,7 +3974,7 @@ class Process extends CI_Controller
 
         // 리뷰 사진
         $uploadPath = "./data/review/";
-         if (! is_dir($uploadPath)) {
+        if (! is_dir($uploadPath)) {
             mkdir($uploadPath, 0755, true);
         }
         $configArr = array();
@@ -4813,37 +4813,32 @@ class Process extends CI_Controller
     #파일 다운로드
     public function download()
     {
-        $file = $this->input->get('file'); // 화일이 실제로 있는 위치를.. 
-        $filename = $this->input->get('url');
+        // 1) GET 파라미터
+        //   file : 사용자에게 보여줄 파일명(예: 원본이름.png)
+        //   url  : 서버상 실제 상대경로(예: "./data/board/37/abcdef.png")
+        $downloadName = $this->input->get('file', true);
+        $relativePath = $this->input->get('url', true);
 
-        if (strstr($_SERVER['HTTP_USER_AGENT'], "MSIE 5.5")) {
-            header("Content-Type: doesn/matterrn");
-            header("Content-Disposition: filename=" . $file . "");
-            header("Content-Transfer-Encoding: binaryrn");
-            header("Pragma: no-cache");
-            header("Expires: 0");
-        } else if (strstr($_SERVER['HTTP_USER_AGENT'], "MSIE 6.0")) {
-            Header("Content-type: application/x-msdownload");
-            Header("Content-Length: " . (string)(filesize("$filename")));
-            Header("Content-Disposition: attachment; filename=$file");
-            Header("Content-Transfer-Encoding: binary");
-            Header("Pragma: no-cache");
-            Header("Expires: 0");
-        } else {
-            Header("Content-type: file/unknown");
-            Header("Content-Length: " . (string)(filesize("$filename")));
-            Header("Content-Disposition: attachment; filename=" . $file . "");
-            Header("Content-Description: PHP3 Generated Data");
-            header("Pragma: no-cache");
-            header("Expires: 0");
+        // 2) 실제 파일시스템 절대경로로 변환
+        //    FCPATH는 index.php가 있는 웹 루트 경로입니다.
+        $filePath = FCPATH . ltrim($relativePath, './');
+
+        log_message('debug', "downloadName={$downloadName}, filePath={$filePath}");
+
+        // 3) 파일 존재 체크
+        if (! is_file($filePath)) {
+            log_message('error', "Download failed, file not found: {$filePath}");
+            show_404();
+            return;
         }
 
-        if (is_file("$filename")) {
-            $fp = fopen("$filename", "rb");
+        // 4) CI 다운로드 헬퍼 로드
+        $this->load->helper('download');
 
-            if (!fpassthru($fp))
-                fclose($fp);
-        }
+        // 5) force_download 사용
+        //    첫 인자: 사용자에게 보여줄 이름
+        //    둘째 인자: 파일 경로를 읽은 바이너리 데이터
+        force_download($downloadName, file_get_contents($filePath));
     }
     #leave_form_update 회원탈퇴 처리
     public function leave_form_update()
