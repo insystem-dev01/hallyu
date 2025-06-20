@@ -1094,7 +1094,7 @@ class Bbs extends CI_Controller
                         $height = $imgsize1[1];
                     }
                 }
-                if($width > 320){
+                if ($width > 320) {
                     $width = 320;
                     $height = "auto";
                 }
@@ -1116,6 +1116,10 @@ class Bbs extends CI_Controller
                     } else {
                         $width = $imgsize1[0];
                         $height = $imgsize1[1];
+                    }
+                    if ($width > 320) {
+                        $width = 320;
+                        $height = "auto";
                     }
                 }
             }
