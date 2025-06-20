@@ -446,7 +446,7 @@
 		</div>
 		<ul class="footer-list">
 			<?php if (!empty($bottom_notice_list)): ?>
-				<?php foreach ($bottom_notice_list as $item): ?>
+				<?php foreach (array_slice($bottom_notice_list, 0, 4) as $item): ?>
 					<li>
 						<a href="<?= $item['url']; ?>" class="footer-post-title">
 							<?= htmlspecialchars($item['title']); ?>
@@ -468,7 +468,7 @@
 		</div>
 		<ul class="footer-list">
 			<?php if (!empty($bottom_request_goods_list)): ?>
-				<?php foreach ($bottom_request_goods_list as $item): ?>
+				<?php foreach (array_slice($bottom_request_goods_list, 0, 4) as $item): ?>
 					<li>
 						<a href="<?= $item['url']; ?>" class="footer-post-title">
 							<?= htmlspecialchars($item['title']); ?>

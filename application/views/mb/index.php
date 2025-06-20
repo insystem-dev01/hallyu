@@ -443,7 +443,7 @@
 		</div>
 		<ul class="footer-list">
 			<?php if (!empty($bottom_notice_list)): ?>
-				<?php foreach ($bottom_notice_list as $item): ?>
+				<?php foreach (array_slice($bottom_notice_list, 0, 4) as $item): ?>
 					<li>
 						<a href="<?= $item['url']; ?>" class="footer-post-title">
 							<?= htmlspecialchars($item['title']); ?>
@@ -465,7 +465,7 @@
 		</div>
 		<ul class="footer-list">
 			<?php if (!empty($bottom_request_goods_list)): ?>
-				<?php foreach ($bottom_request_goods_list as $item): ?>
+				<?php foreach (array_slice($bottom_request_goods_list, 0, 4) as $item): ?>
 					<li>
 						<a href="<?= $item['url']; ?>" class="footer-post-title">
 							<?= htmlspecialchars($item['title']); ?>
@@ -524,7 +524,7 @@
 			threshold: vwToPx(4), // 20px 이상 드래그해야 넘어감
 			longSwipesRatio: 0.5, // 50% 이상 드래그 시 슬라이드
 			// shortSwipes: false, // 짧게 드래그해도 무조건 스냅 방지
-			
+
 		};
 
 
