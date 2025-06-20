@@ -310,7 +310,7 @@
 			<div class="row">
 				<div class="text">
 					지금 가장 HOT한 <br>
-					인기 상품들을 만나보세요
+					열린장터 상품들을 만나보세요
 				</div>
 			</div>
 		</div>
@@ -417,9 +417,6 @@
 			</ul>
 		</div>
 
-
-
-
 		<div class="more_show_button" onclick="location.href='<?= base_url() ?>m/shop/normal'">전체보기 ></div>
 	</div>
 </div>
@@ -481,6 +478,8 @@
 </div>
 
 <script>
+	let limited_market, together_market, hottest_market, open_market;
+
 	// 1) '함께장터' 그룹 (.together_category_btn)
 	document.querySelectorAll('.together_category_btn').forEach(btn => {
 		btn.addEventListener('click', function() {
@@ -525,11 +524,12 @@
 			longSwipesRatio: 0.5, // 50% 이상 드래그 시 슬라이드
 			// shortSwipes: false, // 짧게 드래그해도 무조건 스냅 방지
 
+
 		};
 
 
 		// 1) limited-market
-		new Swiper("#limited-market", {
+		limited_market = new Swiper("#limited-market", {
 			...commonOpts,
 			navigation: {
 				nextEl: ".limited-next",
@@ -538,7 +538,7 @@
 		});
 
 		// 2) together-market
-		new Swiper("#together-market", {
+		together_market = new Swiper("#together-market", {
 			...commonOpts,
 			navigation: {
 				nextEl: ".together-next",
@@ -547,7 +547,7 @@
 		});
 
 		// 3) hottest-market
-		new Swiper("#hottest-market", {
+		hottest_market = new Swiper("#hottest-market", {
 			...commonOpts,
 			navigation: {
 				nextEl: ".hottest-next",
@@ -556,7 +556,8 @@
 		});
 
 		// 4) open-market
-		new Swiper(".open_market", {
+		open_market = new Swiper(".open_market", {
+			watchOverflow: false,
 			...commonOpts,
 			navigation: {
 				nextEl: ".open-next",
@@ -632,52 +633,6 @@
 			},
 		});
 
-		window.addEventListener("resize", () => {
-			limited_market.update();
-			together_market.update();
-			// ...필요한 swiper.update() 추가
-		});
-
-
-		function updateCounter(swiperInstance, swiper_counter) {
-			const totalSlides = swiperInstance.slides.length - (swiperInstance.loopedSlides * 2); // loop일 경우 실제 슬라이드 수 보정
-			const currentIndex = (swiperInstance.realIndex || 0) + 1;
-			document.getElementById(swiper_counter).textContent = `${currentIndex} / ${totalSlides}`;
-		}
-
-	});
-
-	// const timesaleSwiper = new Swiper('.timesale-swiper', {
-	// 	loop: false, // 반복 안 할 경우 false
-	// 	slidesPerView: 4,
-	// 	slidesPerGroup: 1,
-	// 	spaceBetween: 20,
-	// 	navigation: {
-	// 		nextEl: '.swiper-button-next',
-	// 		prevEl: '.swiper-button-prev'
-	// 	}
-	// });
-
-	$(function() {
-		// 클릭 시 active 토글 후 필터링
-		$('.open_category_btn').on('click', function() {
-			$('.open_category_btn').removeClass('active');
-			$(this).addClass('active');
-			openfilterItems();
-		});
-
-		$('.hottest_category_btn').on('click', function() {
-			$('.hottest_category_btn').removeClass('active');
-			$(this).addClass('active');
-			hottestfilterItems();
-		});
-
-		$('.together_category_btn').on('click', function() {
-			$('.together_category_btn').removeClass('active');
-			$(this).addClass('active');
-			togetherfilterItems();
-		});
-
 		function openfilterItems() {
 			const activeBtn = document.querySelector('.open_category_btn.active');
 			if (!activeBtn) return;
@@ -699,6 +654,8 @@
 					itemEl.style.display = 'none';
 				}
 			});
+			open_market.slideTo(0, 0);
+			open_market.update();
 		}
 
 		function hottestfilterItems() {
@@ -722,6 +679,8 @@
 					itemEl.style.display = 'none';
 				}
 			});
+			hottest_market.slideTo(0, 0);
+			hottest_market.update();
 		}
 
 		function togetherfilterItems() {
@@ -745,6 +704,8 @@
 					itemEl.style.display = 'none';
 				}
 			});
+			together_market.slideTo(0, 0);
+			together_market.update();
 		}
 
 
@@ -752,8 +713,46 @@
 		openfilterItems();
 		togetherfilterItems();
 		hottestfilterItems();
+
+		document.querySelectorAll('.open_category_btn').forEach(btn => {
+			btn.addEventListener('click', openfilterItems);
+		});
+		document.querySelectorAll('.hottest_category_btn').forEach(btn => {
+			btn.addEventListener('click', hottestfilterItems);
+		});
+		document.querySelectorAll('.together_category_btn').forEach(btn => {
+			btn.addEventListener('click', togetherfilterItems);
+		});
+
+
+		window.addEventListener("resize", () => {
+			limited_market.update();
+			together_market.update();
+			hottest_market.update();
+			open_market.update();
+			// ...필요한 swiper.update() 추가
+		});
+
+
+		function updateCounter(swiperInstance, swiper_counter) {
+			const totalSlides = swiperInstance.slides.length - (swiperInstance.loopedSlides * 2); // loop일 경우 실제 슬라이드 수 보정
+			const currentIndex = (swiperInstance.realIndex || 0) + 1;
+			document.getElementById(swiper_counter).textContent = `${currentIndex} / ${totalSlides}`;
+		}
+
+
 	});
 
+	// const timesaleSwiper = new Swiper('.timesale-swiper', {
+	// 	loop: false, // 반복 안 할 경우 false
+	// 	slidesPerView: 4,
+	// 	slidesPerGroup: 1,
+	// 	spaceBetween: 20,
+	// 	navigation: {
+	// 		nextEl: '.swiper-button-next',
+	// 		prevEl: '.swiper-button-prev'
+	// 	}
+	// });
 	function load_category_items(category_code) {
 
 		var base_url = document.getElementById('base_url').value;
@@ -766,7 +765,7 @@
 			async: true,
 			success: function(res) {
 				$(".open_market .swiper-wrapper").html(res);
-				openMarketSwiper.update(); // 슬라이드 다시 계산
+				open_market.update(); // 슬라이드 다시 계산
 			},
 			error: function() {
 				alert("불러오기 실패");

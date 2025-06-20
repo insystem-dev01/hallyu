@@ -91,26 +91,12 @@
 						<?php endforeach; ?>
 					</div>
 					<!-- Swiper 양옆 네비게이션 버튼 -->
-					<div class="swiper-button-prev"></div>
-					<div class="swiper-button-next"></div>
+					<div class="swiper-button-prev limited-prev"></div>
+					<div class="swiper-button-next limited-next"></div>
 				</div>
 			</div>
 		</ul>
 	</div>
-
-
-	<!-- <?php if (empty($limited_timesale_active_items)) { ?>
-		<div class="goods_empty">등록된 상품이 없습니다.</div>
-	<?php } else { ?>
-		<div class="slide-button">
-			<div class="timesale-active-button-prev">
-				<span>></span>
-			</div>
-			<div class="timesale-active-button-next">
-				<span>></span>
-			</div>
-		</div>
-	<?php } ?> -->
 	<div class="more_show_button" onclick="location.href='<?= base_url() ?>shop/timesale?status=active'">전체보기 ></div>
 
 </div>
@@ -191,21 +177,14 @@
 							<?php endforeach; ?>
 						</div>
 						<!-- Swiper 양옆 네비게이션 버튼 -->
-						<div class="swiper-button-prev"></div>
-						<div class="swiper-button-next"></div>
+						<div class="swiper-button-prev together-prev"></div>
+						<div class="swiper-button-next together-next"></div>
 					</div>
 				</div>
 			</ul>
 		</div>
 
-		<!-- <?php if (empty($normal_timesale_active_items)) { ?>
-			<div class="goods_empty">등록된 상품이 없습니다.</div>
-		<?php } else { ?>
-			<div class="slide-button">
-				<div class="timesale-active-button-prev"></div>
-				<div class="timesale-active-button-next"></div>
-			</div>
-		<?php } ?> -->
+
 	</div>
 	<div class="more_show_button" onclick="location.href='<?= base_url() ?>shop/timesale?status=active'">전체보기 ></div>
 </div>
@@ -286,24 +265,12 @@
 						<?php endforeach; ?>
 					</div>
 					<!-- Swiper 양옆 네비게이션 버튼 -->
-					<div class="swiper-button-prev"></div>
-					<div class="swiper-button-next"></div>
+					<div class="swiper-button-prev hottest-prev"></div>
+					<div class="swiper-button-next hottest-next"></div>
 				</div>
 			</div>
 		</ul>
 	</div>
-
-
-	<!-- <?php if (empty($hottest_timesale_active_items)) { ?>
-		<div class="goods_empty">등록된 상품이 없습니다.</div>
-	<?php } else { ?>
-		<div class="slide-button">
-			<div class="timesale-active-button-prev"><span>
-					<< /span>
-			</div>
-			<div class="timesale-active-button-next"><span>></span></div>
-		</div>
-	<?php } ?> -->
 	<div class="more_show_button" onclick="location.href='<?= base_url() ?>shop/timesale?status=active'">전체보기 ></div>
 </div>
 
@@ -315,7 +282,7 @@
 			<div class="row">
 				<div class="text">
 					지금 가장 HOT한 <br>
-					인기 상품들을 만나보세요
+					열린장터 상품들을 만나보세요
 				</div>
 			</div>
 		</div>
@@ -415,8 +382,8 @@
 							<?php endif; ?>
 						</div>
 						<!-- Swiper 양옆 네비게이션 버튼 -->
-						<div class="swiper-button-prev"></div>
-						<div class="swiper-button-next"></div>
+						<div class="swiper-button-prev open-prev"></div>
+						<div class="swiper-button-next open-next"></div>
 					</div>
 				</div>
 			</ul>
@@ -486,6 +453,8 @@
 
 
 <script>
+	let limited_market, together_market, hottest_market, open_market;
+
 	// 1) '함께장터' 그룹 (.together_category_btn)
 	document.querySelectorAll('.together_category_btn').forEach(btn => {
 		btn.addEventListener('click', function() {
@@ -514,39 +483,37 @@
 
 	document.addEventListener("DOMContentLoaded", function() {
 
-
-
-		const limited_market = new Swiper("#limited-market", {
+		limited_market = new Swiper("#limited-market", {
 			loop: false,
 			slidesPerView: 4,
 			spaceBetween: 20,
 			navigation: {
-				nextEl: ".swiper-button-next",
-				prevEl: ".swiper-button-prev",
+				nextEl: ".limited-next",
+				prevEl: ".limited-prev",
 			},
 		});
 
-		const together_market = new Swiper("#together-market", {
+		together_market = new Swiper("#together-market", {
 			loop: false,
 			slidesPerView: 4,
 			spaceBetween: 20,
 			navigation: {
-				nextEl: ".swiper-button-next",
-				prevEl: ".swiper-button-prev",
+				nextEl: ".together-next",
+				prevEl: ".together-prev",
 			},
 		});
 
-		const hottest_market = new Swiper("#hottest-market", {
+		hottest_market = new Swiper("#hottest-market", {
 			loop: false,
 			slidesPerView: 4,
 			spaceBetween: 20,
 			navigation: {
-				nextEl: ".swiper-button-next",
-				prevEl: ".swiper-button-prev",
+				nextEl: ".hottest-next",
+				prevEl: ".hottest-prev",
 			},
 		});
 
-		let open_market = new Swiper(".open_market", {
+		open_market = new Swiper(".open_market", {
 			loop: false,
 			slidesPerView: 4,
 			spaceBetween: 20,
@@ -555,8 +522,8 @@
 			// 	fill: "row",
 			// },
 			navigation: {
-				nextEl: ".swiper-button-next",
-				prevEl: ".swiper-button-prev",
+				nextEl: ".open-next",
+				prevEl: ".open-prev",
 			},
 		});
 
@@ -611,38 +578,6 @@
 			const currentIndex = (swiperInstance.realIndex || 0) + 1;
 			document.getElementById("swiperCounter").textContent = `${currentIndex} / ${totalSlides}`;
 		}
-	});
-
-	// const timesaleSwiper = new Swiper('.timesale-swiper', {
-	// 	loop: false, // 반복 안 할 경우 false
-	// 	slidesPerView: 4,
-	// 	slidesPerGroup: 1,
-	// 	spaceBetween: 20,
-	// 	navigation: {
-	// 		nextEl: '.swiper-button-next',
-	// 		prevEl: '.swiper-button-prev'
-	// 	}
-	// });
-
-	$(function() {
-		// 클릭 시 active 토글 후 필터링
-		$('.open_category_btn').on('click', function() {
-			$('.open_category_btn').removeClass('active');
-			$(this).addClass('active');
-			openfilterItems();
-		});
-
-		$('.hottest_category_btn').on('click', function() {
-			$('.hottest_category_btn').removeClass('active');
-			$(this).addClass('active');
-			hottestfilterItems();
-		});
-
-		$('.together_category_btn').on('click', function() {
-			$('.together_category_btn').removeClass('active');
-			$(this).addClass('active');
-			togetherfilterItems();
-		});
 
 		function openfilterItems() {
 			const activeBtn = document.querySelector('.open_category_btn.active');
@@ -665,6 +600,8 @@
 					itemEl.style.display = 'none';
 				}
 			});
+			open_market.slideTo(0, 0);
+			open_market.update();
 		}
 
 		function hottestfilterItems() {
@@ -688,6 +625,8 @@
 					itemEl.style.display = 'none';
 				}
 			});
+			hottest_market.slideTo(0, 0);
+			hottest_market.update();
 		}
 
 		function togetherfilterItems() {
@@ -711,6 +650,8 @@
 					itemEl.style.display = 'none';
 				}
 			});
+			together_market.slideTo(0, 0);
+			together_market.update();
 		}
 
 
@@ -718,7 +659,19 @@
 		openfilterItems();
 		togetherfilterItems();
 		hottestfilterItems();
+
+		document.querySelectorAll('.open_category_btn').forEach(btn => {
+			btn.addEventListener('click', openfilterItems);
+		});
+		document.querySelectorAll('.hottest_category_btn').forEach(btn => {
+			btn.addEventListener('click', hottestfilterItems);
+		});
+		document.querySelectorAll('.together_category_btn').forEach(btn => {
+			btn.addEventListener('click', togetherfilterItems);
+		});
 	});
+
+
 
 	function load_category_items(category_code) {
 
@@ -732,7 +685,7 @@
 			async: true,
 			success: function(res) {
 				$(".open_market .swiper-wrapper").html(res);
-				openMarketSwiper.update(); // 슬라이드 다시 계산
+				open_market.update(); // 슬라이드 다시 계산
 			},
 			error: function() {
 				alert("불러오기 실패");

@@ -9687,6 +9687,7 @@ html.m_open body {
   align-items: center;
   /* 세로 가운데 정렬 */
   /* gap: 2vh;  이 속성은 삭제하거나, 필요에 따라 가로/세로 여백만 남겨두세요 */
+  margin: 2vw 0;
 }
 
 /* 타이틀 쪽(.attention_tit) 글자 크기, 좌우 여백 조정 */
@@ -10187,7 +10188,7 @@ html.m_open body {
 
 .cont_box {
   padding: 5.97vw 4.44vw 0 4.44vw;
-  margin-bottom: 17vw
+  margin-bottom: 15.7vw
 }
 
 .cont_box.brand,
@@ -11149,6 +11150,7 @@ b {
   border-radius: 4.0vw;
   /* 전체 모서리를 둥글게 */
   transition: background 0.2s, color 0.2s;
+  /* border: 1px solid #dddddd; */
 }
 
 .main_category .tab-item.active {
@@ -11465,7 +11467,7 @@ b {
 .together_category_filter {
   display: flex;
   gap: 1vw;
-  margin: 1vw auto;
+  margin: 2vw auto;
   justify-content: flex-start;
   flex-wrap: nowrap;
   overflow-x: auto;
