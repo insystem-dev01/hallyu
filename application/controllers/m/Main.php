@@ -713,8 +713,12 @@ class Main extends CI_Controller
         $pt_id        = $this->load->get_var('pt_id');
         $OM_TIME_NOW  = date("Y-m-d H:i:s", time());
 
-        // 1) display_substance() 에서 결과 가져오기 (30개 한정, 라이브러리 호출)
-        $resultObj = $this->global_lib->display_substance($pt_id, "30");
+          // 1) display_substance() 에서 결과 가져오기 (30개 한정, 라이브러리 호출)
+        // $resultObj = $this->global_lib->display_substance($pt_id, "30");
+
+
+        //각 카테고리마다 가져올 상품의 개수
+        $resultObj = $this->global_lib->display_substance2($pt_id, 6);
         $rows      = $resultObj->result_array();
 
         // 2) rows가 비어 있으면 빈 배열 리턴
