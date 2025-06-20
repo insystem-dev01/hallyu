@@ -1829,7 +1829,7 @@ class Process extends CI_Controller
                 mailer($member['name'], $member['email'], $super['email'], $subject, $content, 1);
             }
 
-            goto_url(base_url() . "m/bbs/board_list?boardid=$boardid");
+            goto_url(base_url() . "m/bbs/noticeList?boardid=$boardid");
         } else {
             alert("정상적인 접근이 아닙니다.");
         }

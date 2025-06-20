@@ -724,7 +724,7 @@ class Bbs extends CI_Controller
         $sfl = $this->input->get('sfl');
         $stx = $this->input->get('stx');
         if ((!isset($_SESSION['device']) || $_SESSION['device'] != "pc") && $this->agent->is_mobile()) {
-            goto_url(base_url() . 'm/bbs/board_list?boardid=' . $boardid);
+            goto_url(base_url() . 'm/bbs/noticeList?boardid=' . $boardid);
         }
         if (!$is_member) {
             $member['grade'] = 99;

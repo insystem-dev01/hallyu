@@ -11529,7 +11529,7 @@ b {
 }
 
 #sct_ct {
-  padding: 12px;
+  padding: 4vw;
   background-color: #f5f5f5
 }
 
@@ -11540,7 +11540,7 @@ b {
 }
 
 #sct_ct ul li a {
-  font-size: 12px;
+  font-size: 4vw;
   line-height: 1.8;
   display: block;
 
@@ -11561,15 +11561,15 @@ b {
 }
 
 #sct_sort {
-  padding: 0 12px;
+  padding: 0 4vw;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   position: relative
 }
 
 #sct_sort .count {
-  font-size: 13px;
-  padding: 10px 0;
+  font-size: 3.5vw;
+  padding: 3vw 0;
   display: inline-block
 }
 
@@ -11586,21 +11586,21 @@ b {
 }
 
 #btn_sort {
-  width: 80px;
-  font-size: 13px;
-  padding: 10px 0;
+  width: 20vw;
+  font-size: 3.5vw;
+  padding: 3vw 0;
   display: inline-block;
   position: absolute;
   top: 0;
-  right: 12px;
+  right: 3vw;
   cursor: pointer
 }
 
 #btn_sort:after {
   color: #666;
   font-family: 'FontAwesome';
-  font-size: 15px;
-  margin-top: -8px;
+  font-size: 3.5vw;
+  margin-top: -2vw;
   content: '\f107';
   position: absolute;
   top: 50%;
@@ -12132,7 +12132,7 @@ b {
   /* width: 91.11vw; */
   position: relative;
   /* left: calc((10%) / 2) */
-  margin: 5vw 5vw;
+  margin: 3vw 2vw;
 }
 
 .pr_desc_list ul {
@@ -12150,7 +12150,7 @@ b {
 
 .pr_desc_list ul.list>li {
   float: left;
-  width: 40vw;
+  width: 44vw;
   position: relative;
   margin-bottom: 4vw;
   margin-right: 2vw;
@@ -12176,7 +12176,7 @@ b {
   height: 8.33vw;
   margin-top: 3.75vw;
   color: #000;
-  font-size: 2.78vw;
+  font-size: 3.5vw;
   text-align: left;
   line-height: 4.17vw;
   display: -webkit-box;
@@ -12195,7 +12195,7 @@ b {
 }
 
 .pr_desc_list ul.list>li .price .mpr {
-  font-size: 3.06vw;
+  font-size: 3.5vw;
   font-family: 'Pretendard-Bd';
   color: #000
 }
@@ -12206,7 +12206,7 @@ b {
 }
 
 .pr_desc_list ul.list>li .price .spr {
-  font-size: 2.50vw;
+  font-size: 3vw;
   color: #cccccc;
   margin-bottom: 0.83vw;
   text-decoration: line-through
@@ -12214,13 +12214,13 @@ b {
 
 .pr_desc_list ul.list>li .price .sale {
   margin-right: 0.69vw;
-  font-size: 3.06vw;
+  font-size: 3.5vw;
   font-family: 'Pretendard-Bd';
   color: #0278fe
 }
 
 .pr_desc_list ul.list>li .price .soldout {
-  font-size: 3.06vw;
+  font-size: 3.5vw;
   font-family: 'Pretendard-Bd';
   color: #000
 }
@@ -12328,7 +12328,7 @@ b {
 }
 
 .pr_desc_list ul li .price .spr {
-  font-size: 3.06vw;
+  font-size: 3.5vw;
   color: #cccccc;
   margin-bottom: 0.97vw;
   text-decoration: line-through
@@ -12367,6 +12367,7 @@ b {
   width: 3.06vw;
   height: 2.64vw;
   background-image: url(../img/pc/like.png);
+  margin-left: 0.7vw;
   background-size: contain;
   background-repeat: no-repeat
 }
@@ -12392,7 +12393,9 @@ b {
   width: 3.33vw;
   height: 2.78vw;
   background-image: url(../img/pc/cart_m.png);
-  background-size: contain
+  margin-left: 0.7vw;
+  background-size: contain;
+  background-repeat: no-repeat
 }
 
 .bestca {

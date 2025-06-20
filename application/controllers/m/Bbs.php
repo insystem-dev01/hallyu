@@ -795,14 +795,14 @@ class Bbs extends CI_Controller
         if ($board['use_category']) {
             $useCateTag .= "
             <select name=\"faq_type\" class=\"faq_sch\" onchange=\"location=this.value;\">
-                <option value=\"" . base_url() . "m/bbs/board_list?boardid={$boardid}\">전체보기</option>";
+                <option value=\"" . base_url() . "m/bbs/noticeList?boardid={$boardid}\">전체보기</option>";
             for ($i = 0; $i < count($usecate); $i++) {
                 $selected = "";
                 if ($usecate[$i] == $ca_name) {
                     $selected = ' selected';
                 }
                 $useCateTag .= "
-                <option value=\"" . base_url() . "m/bbs/board_list?boardid={$boardid}&ca_name={$usecate[$i]}\" {$selected}>{$usecate[$i]}</option>";
+                <option value=\"" . base_url() . "m/bbs/noticeList?boardid={$boardid}&ca_name={$usecate[$i]}\" {$selected}>{$usecate[$i]}</option>";
             }
             $useCateTag .= "
             </select>";
@@ -1535,7 +1535,7 @@ class Bbs extends CI_Controller
 
         $btnConfirmTag = "";
         if ($w == 'u' || $w == 'r') {
-            $btnConfirmTag = "<a href=\"" . base_url() . "m/bbs/board_list?{$qstr1}\" class=\"btn_medium\">목록</a>";
+            $btnConfirmTag = "<a href=\"" . base_url() . "m/bbs/noticeList?{$qstr1}\" class=\"btn_medium\">목록</a>";
         } else {
             $btnConfirmTag = "<a href=\"javascript:history.go(-1);\" class=\"btn_medium\">취소</a>";
         }

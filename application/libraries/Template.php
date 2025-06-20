@@ -469,7 +469,7 @@ class Template
 
             if ($row['index_no'] == 37) { //상품요청 게시판
                 $bo_href = base_url() . 'bbs/goods_request_list?boardid='  . $row['index_no'];
-            } else {
+            } else if ($row['index_no'] == 13) {
                 $bo_href = base_url() . 'bbs/noticeList?boardid=' . $row['index_no'];
             }
 
@@ -916,7 +916,11 @@ class Template
         $sql = " select * from shop_board_conf where gr_id='gr_mall' order by index_no asc ";
         $res = $this->ci->Query_model->returnArr($sql);
         foreach ($res as $key => $row) {
-            $customTag .= "<li><a href=\"" . base_url() . "m/bbs/board_list?boardid={$row['index_no']}\">{$row['boardname']}</a></li>";
+
+            if ($row['index_no'] == "13")
+                $customTag .= "<li><a href=\"" . base_url() . "m/bbs/noticeList?boardid={$row['index_no']}\">{$row['boardname']}</a></li>";
+            else if ($row['index_no'] == "37")
+                $customTag .= "<li><a href=\"" . base_url() . "m/bbs/goods_request_list?boardid={$row['index_no']}\">{$row['boardname']}</a></li>";
         }
         #mypage에 관련된 메뉴
         $gift = "";
