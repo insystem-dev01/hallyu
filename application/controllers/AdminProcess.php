@@ -421,6 +421,9 @@ class AdminProcess extends CI_Controller
 
             // 회원 사진
             $uploadPath = "./data/member/";
+            if (! is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
             $configArr = array();
             $configArr['upload_path'] = $uploadPath;
 
@@ -683,6 +686,9 @@ class AdminProcess extends CI_Controller
 
         // 프로필 사진 등록
         $uploadPath = "./data/member/";
+        if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -3041,6 +3047,9 @@ class AdminProcess extends CI_Controller
     public function category_update()
     {
         $uploadPath = "./data/category";
+        if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -3258,6 +3267,9 @@ class AdminProcess extends CI_Controller
         $error = $this->input->post('error');
 
         $uploadPath = "./data/category";
+        if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -3796,6 +3808,9 @@ class AdminProcess extends CI_Controller
             $type = $this->input->post('type') ?? "normal";
 
             $uploadPath = "./data/goods";
+            if (! is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
             $configArr = array();
             $configArr['upload_path'] = $uploadPath;
 
@@ -3992,6 +4007,9 @@ class AdminProcess extends CI_Controller
 
             // 수입필증 / 계약서 시작 --------
             $uploadPath = "./data/document/";
+            if (! is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
             $configArr = array();
             $configArr['upload_path'] = $uploadPath;
 
@@ -5379,6 +5397,9 @@ class AdminProcess extends CI_Controller
     public function goods_brand_form_update()
     {
         $uploadPath = "./data/brand";
+        if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -7479,6 +7500,9 @@ class AdminProcess extends CI_Controller
     public function banner_form_update()
     {
         $uploadPath = "./data/banner";
+        if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $super = $this->load->get_var('super');
         $configArr = array();
 
@@ -7639,6 +7663,9 @@ class AdminProcess extends CI_Controller
     {
 
         $uploadPath = "./data/banner";
+        if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -7708,6 +7735,9 @@ class AdminProcess extends CI_Controller
         $favicon_ico_del = $this->input->post('favicon_ico_del');
 
         $uploadPath = "./data/banner";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -8131,6 +8161,9 @@ class AdminProcess extends CI_Controller
         $this->query_model->updateObj("shop_default", $value);
 
         $uploadPath = "./data/common";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -8726,6 +8759,9 @@ class AdminProcess extends CI_Controller
         $board = $this->global_lib->get_board($bo_table);
 
         $uploadPath = "./data/board/boardimg";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -8911,6 +8947,9 @@ class AdminProcess extends CI_Controller
     public function goods_plan_form_update()
     {
         $uploadPath = "./data/plan";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 

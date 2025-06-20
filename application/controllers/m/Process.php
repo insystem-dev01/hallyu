@@ -40,7 +40,7 @@ class Process extends CI_Controller
         $this->load->library('external_api');
 
         $this->allowed_types = 'jpg|jpeg|bmp|png|gif';
-        $this->max_size = '2048';
+        $this->max_size = '8192';
         $this->max_width = '5000';
         $this->max_height = '5000';
         $this->remove_spaces = TRUE;
@@ -124,6 +124,9 @@ class Process extends CI_Controller
 
         // 리뷰 사진
         $uploadPath = "./data/review/";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -657,6 +660,9 @@ class Process extends CI_Controller
 
             // 회원 사진
             $uploadPath = "./data/member/";
+             if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
             $configArr = array();
             $configArr['upload_path'] = $uploadPath;
 
@@ -1337,6 +1343,9 @@ class Process extends CI_Controller
         $del_file2 = $this->input->post('del_file2');
 
         $uploadPath = "./data/board/" . $boardid;
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
 
         $del_file1 = $this->input->post('del_file1');
         $del_file2 = $this->input->post('del_file2');
@@ -1379,6 +1388,10 @@ class Process extends CI_Controller
         $fid = $this->global_lib->get_next_num("shop_board_" . $boardid);
 
         $uploadPath = "./data/board/" . $boardid;
+        if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
+
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 

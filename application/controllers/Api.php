@@ -4482,6 +4482,9 @@ class Api extends CI_Controller {
             // 파일 삭제
             $del_imgArr = ['img1', 'img2', 'img3', 'img4'];
             $uploadPath = "./data/review/";
+             if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
             foreach($del_imgArr as $row) {
                 $img = $this->input->post('del_'.$row);
 

@@ -103,6 +103,9 @@ class MypageProcess extends CI_Controller
             $type = $this->input->post('type') ?? "normal";
 
             $uploadPath = "./data/goods";
+             if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
             $configArr = array();
             $configArr['upload_path'] = $uploadPath;
 
@@ -277,6 +280,9 @@ class MypageProcess extends CI_Controller
 
             // 수입필증 / 계약서 시작 --------
             $uploadPath = "./data/document/";
+             if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
             $configArr = array();
             $configArr['upload_path'] = $uploadPath;
 
@@ -548,6 +554,9 @@ class MypageProcess extends CI_Controller
         $seller = $this->load->get_var('seller');
 
         $uploadPath = "./data/brand";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -1922,6 +1931,9 @@ class MypageProcess extends CI_Controller
         $favicon_ico_del = $this->input->post('favicon_ico_del');
 
         $uploadPath = "./data/banner";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -2071,6 +2083,9 @@ class MypageProcess extends CI_Controller
         $w = $this->input->post('w');
 
         $uploadPath = "./data/banner";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -2186,6 +2201,9 @@ class MypageProcess extends CI_Controller
     public function partner_mbanner_form_update()
     {
         $uploadPath = "./data/banner";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -2781,6 +2799,9 @@ class MypageProcess extends CI_Controller
         $member = $this->load->get_var('member');
 
         $uploadPath = "./data/plan";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -2886,6 +2907,9 @@ class MypageProcess extends CI_Controller
         $this->funcomplex_lib->check_input_vars();
 
         $uploadPath = "./data/goods";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -3291,6 +3315,9 @@ class MypageProcess extends CI_Controller
             alert('개별 상품판매 권한이 있어야만 이용 가능합니다.');
 
         $uploadPath = "./data/board";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 

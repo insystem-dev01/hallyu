@@ -43,7 +43,7 @@ class Process extends CI_Controller
 
 
         $this->allowed_types = 'jpg|jpeg|bmp|png|gif';
-        $this->max_size = '2048';
+        $this->max_size = '8192';
         $this->max_width = '5000';
         $this->max_height = '5000';
         $this->remove_spaces = TRUE;
@@ -455,6 +455,9 @@ class Process extends CI_Controller
 
             // 회원 사진
             $uploadPath = "./data/member/";
+             if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
             $configArr = array();
             $configArr['upload_path'] = $uploadPath;
 
@@ -3400,6 +3403,9 @@ class Process extends CI_Controller
         }
 
         $uploadPath = "./data/board/" . $boardid;
+        if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -3583,6 +3589,9 @@ class Process extends CI_Controller
         if ($mode == "w") {
 
             $uploadPath = "./data/board/" . $boardid;
+             if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
             $configArr = array();
             $configArr['upload_path'] = $uploadPath;
 
@@ -3716,6 +3725,9 @@ class Process extends CI_Controller
         }
 
         $uploadPath = "./data/board/" . $boardid;
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
@@ -3962,6 +3974,9 @@ class Process extends CI_Controller
 
         // 리뷰 사진
         $uploadPath = "./data/review/";
+         if (! is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
         $configArr = array();
         $configArr['upload_path'] = $uploadPath;
 
