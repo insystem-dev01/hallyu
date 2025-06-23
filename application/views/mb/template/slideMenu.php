@@ -46,11 +46,11 @@
 		<dd>상담 : <?php echo $config['company_hours']; ?> (<?php echo $config['company_close']; ?>)</dd>
 		<dd>점심 : <?php echo $config['company_lunch']; ?></dd>
 	</dl>
-    <dl class="sm_cs">
+    <!-- <dl class="sm_cs">
 		<dt>입금계좌안내</dt>
 		<dd><?php echo $bank[0]['name']; ?> <b><?php echo $bank[0]['account']; ?></b></dd>
 		<dd>예금주명 : <?php echo $bank[0]['holder']; ?></dd>
-	</dl>
+	</dl> -->
     <p class="mart20"><a href="tel:<?php echo $config['company_tel']; ?>" class="btn_medium grey wfull">고객센터 전화연결</a></p>
 </div>
 <script>

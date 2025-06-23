@@ -172,9 +172,9 @@ hr {
 }
 
 select {
-  font-size: 12px;
-  height: 23px;
-  padding: 1px;
+  font-size: 3vw;
+  height: 6vw;
+  padding: 0.2vw;
   border: 1px solid #ccc;
   background: #fff
 }
@@ -233,7 +233,7 @@ tfoot {
 
 thead,
 tfoot {
-  font-size: 12px;
+  font-size: 3vw;
   line-height: 1em;
   vertical-align: baseline
 }
@@ -1562,7 +1562,7 @@ ul.ofh li {
 
 .btn_group .btn_small {
   margin-left: -1px;
-  padding: 2px 6px !important
+  padding: 1vw 2vw !important
 }
 
 .btn_group .btn_small:first-child {
@@ -1591,8 +1591,8 @@ ul.ofh li {
 }
 
 .btn_ssmall {
-  padding: 1px 5px;
-  font-size: 11px;
+  padding: 0.2vw 2vw;
+  font-size: 2.8vw;
   line-height: 1.222;
   font-weight: normal !important
 }
@@ -1605,22 +1605,22 @@ ul.ofh li {
 }
 
 .btn_lsmall {
-  padding: 3px 10px;
-  font-size: 12px;
+  padding: 0.6vw 3vw;
+  font-size: 3.5vw;
   line-height: 1.666;
   font-weight: normal !important
 }
 
 .btn_medium {
-  padding: 8px 15px;
-  font-size: 13px;
+  padding: 2vw 3vw;
+  font-size: 3.5vw;
   line-height: 1.444;
   font-weight: 600
 }
 
 .btn_large {
-  padding: 10px 21px;
-  font-size: 15px;
+  padding: 3vw 6vw;
+  font-size: 4vw;
   line-height: 1.222;
   font-weight: 600
 }
@@ -1830,8 +1830,8 @@ a.btn_letter {
 }
 
 .btn_txt {
-  font-size: 12px;
-  height: 18px;
+  font-size: 3vw;
+  height: 4vw;
   line-height: 1.6;
   font-weight: normal;
   color: #999 !important;
@@ -8631,13 +8631,13 @@ input[type=checkbox] {
 
 .frm_input,
 input[type=file] {
-  min-height: 23px;
+  min-height: 4.5vw;
   height: auto
 }
 
 .frm_input {
   padding: 0 5px 1px 5px;
-  font-size: 12px;
+  font-size: 3vw;
   font-weight: normal;
   border: 1px solid #ddd;
   background-color: #fff;
@@ -8649,7 +8649,7 @@ input[type=file] {
 .frm_textbox {
   padding: 5px;
   line-height: 1.4em;
-  font-size: 12px;
+  font-size: 3vw;
   font-weight: normal;
   border: 1px solid #ddd;
   background-color: #fff;
@@ -12112,7 +12112,8 @@ b {
   text-align: center;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  cursor: pointer
+  cursor: pointer;
+  margin-right: 0.7vw;
 }
 
 .pr_desc_horizontal .ct_bx>span,
@@ -12195,7 +12196,7 @@ b {
 }
 
 .pr_desc_list ul.list>li .price .mpr {
-  font-size: 3.5vw;
+  font-size: 4vw;
   font-family: 'Pretendard-Bd';
   color: #000
 }
@@ -12364,8 +12365,8 @@ b {
 
 .pr_desc_list .ic_bx>span {
   display: block;
-  width: 3.06vw;
-  height: 2.64vw;
+  width: 4vw;
+  height: 3.5vw;
   background-image: url(../img/pc/like.png);
   margin-left: 0.7vw;
   background-size: contain;
@@ -12385,13 +12386,14 @@ b {
   align-items: center;
   text-align: center;
   -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease
+  transition: all 0.3s ease;
+  margin-right: 1.5vw;
 }
 
 .pr_desc_list .ct_bx>span {
   display: block;
-  width: 3.33vw;
-  height: 2.78vw;
+  width: 4vw;
+  height: 3.5vw;
   background-image: url(../img/pc/cart_m.png);
   margin-left: 0.7vw;
   background-size: contain;
@@ -12940,6 +12942,10 @@ b {
 
 .page_wrap {
   margin: 10px 12px 35px
+}
+
+.pg{
+  margin-top: 4vw;
 }
 
 .pg_wrap {
@@ -18174,8 +18180,9 @@ table.wfull.bd tbody tr.list1 td {
 /* icon-wrapper 내부의 모든 img 태그(아이콘)에 왼쪽 마진을 줘서 간격을 띄움 */
 .icon-wrapper img {
   /* 필요에 따라 픽셀값을 수정하세요 */
-  width: 15px;
-  height: 15px;
+  margin-top: 0.5vw;
+  width: 3vw;
+  height: 3vw;
   vertical-align: top;
 }
 
@@ -18183,9 +18190,12 @@ table.wfull.bd tbody tr.list1 td {
 .icon-wrapper span.fc_197 {
   display: inline-block;
   text-align: center;
+  vertical-align: top;
+  margin-top: 0.5vw;
   margin-left: 2vw;
-  width: 15px;
-  height: 15px;
+  width: 3vw;
+  height: 3vw;
+  font-size: 3vw;
   background-color: #f1f1f1;
   /* vertical-align: middle; */
   font-weight: bold;
