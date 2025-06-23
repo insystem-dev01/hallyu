@@ -87,7 +87,7 @@
 		</ul>
 	</div>
 	<div class="ofh tac padt10 padb10">
-		<?php echo $thumbTag; ?>
+		<?php echo nl2br($thumbTag); ?>
 	</div>
 	<?= $info_value_tag ?>
 </section>

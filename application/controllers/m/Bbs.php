@@ -1589,18 +1589,29 @@ class Bbs extends CI_Controller
                 <td><input type=\"file\" name=\"file1\">";
             if ($write['fileurl1']) {
                 $usefileTag .= "
+                            <div class=\"file_wrap\">
                             <a href=\"" . base_url() . "data/board/{$boardid}/{$write['fileurl1']}\" target=\"_blank\"><span class=\"bold fc_255\">{$write['fileurl1']}</span></a>
-                            <input type=\"checkbox\" name=\"del_file1\" value=\"{$write['fileurl1']}\"> 삭제";
+                            </div>
+                            <div class=\"del_wrap\">
+                            <input type=\"checkbox\" name=\"del_file1\" value=\"{$write['fileurl1']}\">
+                            <span class=\"delete-label\">삭제</span>
+                            </div>";
             }
             $usefileTag .= "</td>
             </tr>
             <tr>
                 <th scope=\"row\">파일2</th>
-                <td><input type=\"file\" name=\"file2\">";
+                <td>
+                    <input type=\"file\" name=\"file2\">";
             if ($write['fileurl2']) {
                 $usefileTag .= "
+                            <div class=\"file_wrap\">
                             <a href=\"" . base_url() . "data/board/{$boardid}/{$write['fileurl2']}\" target=\"_blank\"><span class=\"bold fc_255\">{$write['fileurl2']}</span></a>
-                            <input type=\"checkbox\" name=\"del_file2\" value=\"{$write['fileurl2']}\"> 삭제";
+                            </div>
+                            <div class=\"del_wrap\">
+                            <input type=\"checkbox\" name=\"del_file2\" value=\"{$write['fileurl2']}\"> 
+                            <span class=\"delete-label\">삭제</span>
+                            </div>";
             }
             $usefileTag .= "
                 </td>
