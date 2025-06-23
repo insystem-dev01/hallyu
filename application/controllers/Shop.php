@@ -258,7 +258,7 @@ class Shop extends CI_Controller
         $ca_id = $this->input->get('ca_id');
         $pt_id = $this->input->get('pt_id');
         if ((!isset($_SESSION['device']) || $_SESSION['device'] != "pc") && $this->agent->is_mobile()) {
-            goto_url(base_url() . 'm/normal?ca_id=' . $ca_id);
+            goto_url(base_url() . 'm/shop/normal?ca_id=' . $ca_id);
         }
 
         $this->template->header();
@@ -551,9 +551,9 @@ class Shop extends CI_Controller
         $sql = "select * $sql_common $sql_order limit $from_record, $rows ";
         $result = $this->query_model->returnArr($sql);
 
-        $qstr1 = 'status=active' . '&page_rows=' . $page_rows . '&sort=' . $sort . '&sortodr=' . $sortodr;
-        $qstr2 = 'status=active' . '&page_rows=' . $page_rows;
-        $qstr3 = 'status=active' . '&sort=' . $sort . '&sortodr=' . $sortodr;
+        $qstr1 =  'ca_id=' . $ca_id .'&status='. $status  . '&page_rows=' . $page_rows . '&sort=' . $sort . '&sortodr=' . $sortodr;
+        $qstr2 =  'ca_id=' . $ca_id .'&status='. $status . '&page_rows=' . $page_rows;
+        $qstr3 =  'ca_id=' . $ca_id . '&status='. $status . '&sort=' . $sort . '&sortodr=' . $sortodr;
 
         $sort_str = '';
         for ($i = 0; $i < count($gw_psort); $i++) {

@@ -1306,7 +1306,7 @@ class Bbs extends CI_Controller
         $sfl = $this->input->get('sfl');
 
         if ((!isset($_SESSION['device']) || $_SESSION['device'] != "pc") && $this->agent->is_mobile()) {
-            goto_url(base_url() . 'm/bbs/read?boardid=' . $boardid . '&index_no=' . $index_no);
+            goto_url(base_url() . 'm/bbs/board_read?boardid=' . $boardid . '&index_no=' . $index_no);
         }
         if ($board['read_priv'] < 99) {
             if ($member['grade'] > $board['read_priv']) {

@@ -492,8 +492,8 @@ class Shop extends CI_Controller
             $timeTable = $this->timeTable($result);
         }
 
-        $qstr1 = 'page_rows=' . $page_rows . '&sort=' . $sort . '&sortodr=' . $sortodr;
-        $qstr2 = 'page_rows=' . $page_rows;
+        $qstr1 = 'ca_id=' . $ca_id . '&status=' . $status. '&page_rows=' . $page_rows . '&sort=' . $sort . '&sortodr=' . $sortodr;
+        $qstr2 = 'ca_id=' . $ca_id . '&status=' . $status. '&page_rows=' . $page_rows;
 
         $sort_str = '';
         for ($i = 0; $i < count($gw_msort); $i++) {
