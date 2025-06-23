@@ -3618,12 +3618,12 @@ class Process extends CI_Controller
                             , average	= '{$average}'
                             , product	= '{$product}'
                             , pt_id	= '{$pt_id}' ";
-            if ($del_file1) {
+            if (isset($del_file1)) {
                 unlink($uploadPath . '/' . $del_file1);
                 delete_board_thumbnail($boardid, $del_file1);
                 $sql_commend .= " , fileurl1 = '' ";
             }
-            if ($del_file2) {
+            if (isset($del_file2)) {
                 unlink($uploadPath . '/' . $del_file2);
                 delete_board_thumbnail($boardid, $del_file2);
                 $sql_commend .= " , fileurl2 = '' ";
@@ -3761,12 +3761,12 @@ class Process extends CI_Controller
 
         $sql_commend = "";
 
-        if ($del_file1) {
+        if (isset($del_file1)) {
             unlink($uploadPath . '/' . $del_file1);
             delete_board_thumbnail($boardid, $del_file1);
             $sql_commend .= " , fileurl1 = '' ";
         }
-        if ($del_file2) {
+        if (isset($del_file2)) {
             unlink($uploadPath . '/' . $del_file2);
             delete_board_thumbnail($boardid, $del_file2);
             $sql_commend .= " , fileurl2 = '' ";

@@ -124,7 +124,7 @@ class Process extends CI_Controller
 
         // 리뷰 사진
         $uploadPath = "./data/review/";
-         if (! is_dir($uploadPath)) {
+        if (! is_dir($uploadPath)) {
             mkdir($uploadPath, 0755, true);
         }
         $configArr = array();
@@ -660,9 +660,9 @@ class Process extends CI_Controller
 
             // 회원 사진
             $uploadPath = "./data/member/";
-             if (! is_dir($uploadPath)) {
-            mkdir($uploadPath, 0755, true);
-        }
+            if (! is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
             $configArr = array();
             $configArr['upload_path'] = $uploadPath;
 
@@ -1343,12 +1343,11 @@ class Process extends CI_Controller
         $del_file2 = $this->input->post('del_file2');
 
         $uploadPath = "./data/board/" . $boardid;
-         if (! is_dir($uploadPath)) {
+        if (! is_dir($uploadPath)) {
             mkdir($uploadPath, 0755, true);
         }
 
-        $del_file1 = $this->input->post('del_file1');
-        $del_file2 = $this->input->post('del_file2');
+
 
         if (!empty($index_no) && $boardid == 37)
             $redirect_url = base_url() . "m/bbs/board_read?index_no={$index_no}&boardid={$boardid}&page={$page}";
@@ -1421,12 +1420,12 @@ class Process extends CI_Controller
                             , product	= '{$product}'
                             , pt_id	= '{$pt_id}' ";
 
-            if ($del_file1) {
+            if (isset($del_file1)) {
                 unlink($uploadPath . '/' . $del_file1);
                 delete_board_thumbnail($boardid, $del_file1);
                 $sql_common .= " , fileurl1 = '' ";
             }
-            if ($del_file2) {
+            if (isset($del_file2)) {
                 unlink($uploadPath . '/' . $del_file2);
                 delete_board_thumbnail($boardid, $del_file2);
                 $sql_common .= " , fileurl2 = '' ";
@@ -1526,6 +1525,44 @@ class Process extends CI_Controller
                     "average" => $average,
                     "product" => $product
                 );
+
+                if (!empty($del_file1)) {
+                    unlink($uploadPath . '/' . $del_file1);
+                    delete_board_thumbnail($boardid, $del_file1);
+                    $updateObj['fileurl1'] = '';
+                }
+                if (!empty($del_file1)) {
+                    unlink($uploadPath . '/' . $del_file2);
+                    delete_board_thumbnail($boardid, $del_file2);
+                    $updateObj['fileurl2'] = '';
+                }
+
+                #파일이 있으면 파일을 업로드함
+                $uploadFile = array('file1' => '', 'file2' => '');
+                $error = "";
+                if (isset($_FILES['file1']['name']) && $_FILES['file1']['name'] != "") {
+                    if (!$this->upload->do_upload('file1')) {
+                        $error = $this->upload->display_errors();
+                    } else {
+                        $uploadFile['file1'] = $this->upload->data();
+                        $new_file1 = $uploadFile['file1']['file_name'];
+                        $updateObj['fileurl1'] = $new_file1;
+                    }
+                }
+                if (isset($_FILES['file2']['name']) && $_FILES['file2']['name'] != "") {
+                    if (!$this->upload->do_upload('file2')) {
+                        $error = $this->upload->display_errors();
+                    } else {
+                        $uploadFile['file2'] = $this->upload->data();
+                        $new_file2 = $uploadFile['file2']['file_name'];
+                        $updateObj['fileurl2'] = $new_file2;
+                    }
+                }
+
+                if ($error != "") {
+                    echo "<script>alert('" . strip_tags($error) . "')</script>";
+                }
+
                 $this->query_model->updateObj("shop_board_{$boardid}", $updateObj, "index_no	= '$index_no'");
                 goto_url($redirect_url);
             }
@@ -1570,12 +1607,12 @@ class Process extends CI_Controller
                             product		= '$product',
                             pt_id		= '$pt_id' ";
 
-            if ($del_file1) {
+            if (isset($del_file1)) {
                 unlink($uploadPath . '/' . $del_file1);
                 delete_board_thumbnail($boardid, $del_file1);
                 $sql_common .= " , fileurl1 = '' ";
             }
-            if ($del_file2) {
+            if (isset($del_file2)) {
                 unlink($uploadPath . '/' . $del_file2);
                 delete_board_thumbnail($boardid, $del_file2);
                 $sql_common .= " , fileurl2 = '' ";

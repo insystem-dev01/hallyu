@@ -644,6 +644,8 @@ class Bbs extends CI_Controller
         $boardid = $this->input->get('boardid');
         $stx = $this->input->get('stx');
         $sfl = $this->input->get('sfl');
+        $pt_id = $this->load->get_var('pt_id');
+        $page = $this->input->get('page');
 
         $filurl1Tag = "";
         if ($board['fileurl1']) {
@@ -786,6 +788,7 @@ class Bbs extends CI_Controller
         $stx = $this->input->get('stx');
         $page = $this->input->get('page');
         $sfl = $this->input->get('sfl');
+        $pt_id = $this->load->get_var('pt_id');
 
         $fileurl1Tag = "";
         if ($board['fileurl1']) {
@@ -1487,7 +1490,7 @@ class Bbs extends CI_Controller
                     <option value=\"\">선택하세요</option>" . get_category_option($board['usecate']) . "
                     </select>";
             if ($w == 'u' || $w == 'r') {
-                $useCateTag .= "<script>document.fwrite.ca_name.value='{$write[ca_name]}';</script>";
+                $useCateTag .= "<script>document.fwrite.ca_name.value='{$write['ca_name']}';</script>";
             }
             $useCateTag .= "
                 </td>
@@ -1569,20 +1572,38 @@ class Bbs extends CI_Controller
 
         $write['subject'] = isset($write['subject']) ? $write['subject'] : "";
         $write['memo'] = isset($write['memo']) ? $write['memo'] : "";
+        $write['fileurl1'] = isset($write['fileurl1']) ? $write['fileurl1'] : '';
+        $write['fileurl2'] = isset($write['fileurl2']) ? $write['fileurl2'] : '';
 
-        $editTag = $this->global_lib->editor_html('memo', $this->funcomplex_lib->get_text($board['insert_content'], 0));
+        if ($w == "")
+            $editTag = $this->global_lib->editor_html('memo', $this->funcomplex_lib->get_text($board['insert_content'], 0));
+        else if ($w == "u")
+            $editTag = $this->global_lib->editor_html('memo', $this->funcomplex_lib->get_text($write['memo'], 0));
         log_message("debug", "mobile editTag : {$editTag}");
         log_message("debug", "board['insert_content'] : {$board['insert_content']}");
         $usefileTag = "";
         if ($board['usefile'] == 'Y') {
-            $usefileTag = "
+            $usefileTag .= "
             <tr>
                 <th scope=\"row\">파일1</th>
-                <td><input type=\"file\" name=\"file1\"></td>
+                <td><input type=\"file\" name=\"file1\">";
+            if ($write['fileurl1']) {
+                $usefileTag .= "
+                            <a href=\"" . base_url() . "data/board/{$boardid}/{$write['fileurl1']}\" target=\"_blank\"><span class=\"bold fc_255\">{$write['fileurl1']}</span></a>
+                            <input type=\"checkbox\" name=\"del_file1\" value=\"{$write['fileurl1']}\"> 삭제";
+            }
+            $usefileTag .= "</td>
             </tr>
             <tr>
                 <th scope=\"row\">파일2</th>
-                <td><input type=\"file\" name=\"file2\"></td>
+                <td><input type=\"file\" name=\"file2\">";
+            if ($write['fileurl2']) {
+                $usefileTag .= "
+                            <a href=\"" . base_url() . "data/board/{$boardid}/{$write['fileurl2']}\" target=\"_blank\"><span class=\"bold fc_255\">{$write['fileurl2']}</span></a>
+                            <input type=\"checkbox\" name=\"del_file2\" value=\"{$write['fileurl2']}\"> 삭제";
+            }
+            $usefileTag .= "
+                </td>
             </tr>";
         }
         $memoEditJs = $this->global_lib->get_editor_js('memo');

@@ -37,6 +37,7 @@ class Bbs extends CI_Controller
     #회사소개
     public function content()
     {
+        $co_id = $this->input->get('co_id');
         if ((!isset($_SESSION['device']) || $_SESSION['device'] != "pc") && $this->agent->is_mobile()) {
             redirect('./m/bbs/contents?co_id=' . $co_id);
         }
@@ -2429,7 +2430,7 @@ class Bbs extends CI_Controller
                     $prev_no = $row['index_no'];
                     $prev_subject = $row['subject'];
                     $prev_tailcount = $row['tailcount'];
-                    $prev_href = base_url() . "bbs/read?index_no=$prev_no&boardid=$boardid$qstr&page=$page";
+                    $prev_href = base_url() . "bbs/read?index_no=$prev_no&boardid=$boardid$qstr1&page=$page";
                     $prevTag = "
                     <tr>
                         <th width=\"15%\">▲ 이전 글</th>
@@ -2447,7 +2448,7 @@ class Bbs extends CI_Controller
                     $next_no = $row['index_no'];
                     $next_subject = $row['subject'];
                     $next_tailcount = $row['tailcount'];
-                    $next_href = base_url() . "bbs/read?index_no=$next_no&boardid=$boardid$qstr&page=$page";
+                    $next_href = base_url() . "bbs/read?index_no=$next_no&boardid=$boardid$qstr1&page=$page";
                     $nextTag .= "
                     <tr>
                         <th width=\"15%\">▼ 다음 글</th>
@@ -2605,6 +2606,10 @@ class Bbs extends CI_Controller
                 );
                 return $this->load->view('pc/bbs/gallery/read_listOne', $data, TRUE);
             } else if ($board['read_list'] == '2') {
+                $sql_search2 = "";
+                if ($default['de_board_wr_use']) {
+                    $sql_search2 = " and pt_id = '$pt_id' ";
+                }
                 $sql = "select * from shop_board_{$boardid} where wdate > '{$write['wdate']}' {$sql_search2}";
                 if ($sfl && $stx)
                     $sql .= " and $sfl like '%$stx%'";
@@ -2616,7 +2621,7 @@ class Bbs extends CI_Controller
                     $prev_no = $row['index_no'];
                     $prev_subject = $row['subject'];
                     $prev_tailcount = $row['tailcount'];
-                    $prev_href = base_url() . "bbs/read?index_no=$prev_no&boardid=$boardid$qstr&page=$page";
+                    $prev_href = base_url() . "bbs/read?index_no=$prev_no&boardid=$boardid$qstr1&page=$page";
                     $prevTag = "
                     <tr>
                         <th width=\"15%\">▲ 이전 글</th>
@@ -2624,6 +2629,10 @@ class Bbs extends CI_Controller
                     </tr>";
                 }
 
+                $sql_search2 = "";
+                if ($default['de_board_wr_use']) {
+                    $sql_search2 = " and pt_id = '$pt_id' ";
+                }
                 $sql = "select * from shop_board_{$boardid} where wdate < '{$write['wdate']}' {$sql_search2}";
                 if ($sfl && $stx)
                     $sql .= " and $sfl like '%$stx%'";
@@ -2635,7 +2644,7 @@ class Bbs extends CI_Controller
                     $next_no = $row['index_no'];
                     $next_subject = $row['subject'];
                     $next_tailcount = $row['tailcount'];
-                    $next_href = base_url() . "bbs/read?index_no=$next_no&boardid=$boardid$qstr&page=$page";
+                    $next_href = base_url() . "bbs/read?index_no=$next_no&boardid=$boardid$qstr1&page=$page";
                     $nextTag = "
                     <tr>
                         <th width=\"15%\">▼ 다음 글</th>
@@ -2795,6 +2804,10 @@ class Bbs extends CI_Controller
                 );
                 return $this->load->view('pc/bbs/webzine/read_listOne', $data, TRUE);
             } else if ($board['read_list'] == '2') {
+                $sql_search2 = "";
+                if ($default['de_board_wr_use']) {
+                    $sql_search2 = " and pt_id = '$pt_id' ";
+                }
                 $sql = "select * from shop_board_{$boardid} where wdate > '{$write['wdate']}' {$sql_search2}";
                 if ($sfl && $stx)
                     $sql .= " and $sfl like '%$stx%'";
@@ -2806,7 +2819,7 @@ class Bbs extends CI_Controller
                     $prev_no = $row['index_no'];
                     $prev_subject = $row['subject'];
                     $prev_tailcount = $row['tailcount'];
-                    $prev_href = base_url() . "bbs/read?index_no=$prev_no&boardid=$boardid$qstr&page=$page";
+                    $prev_href = base_url() . "bbs/read?index_no=$prev_no&boardid=$boardid$qstr1&page=$page";
                     $prevTag = "
                     <tr>
                         <th width=\"15%\">▲ 이전 글</th>
@@ -2825,7 +2838,7 @@ class Bbs extends CI_Controller
                     $next_no = $row['index_no'];
                     $next_subject = $row['subject'];
                     $next_tailcount = $row['tailcount'];
-                    $next_href = base_url() . "bbs/read?index_no=$next_no&boardid=$boardid$qstr&page=$page";
+                    $next_href = base_url() . "bbs/read?index_no=$next_no&boardid=$boardid$qstr1&page=$page";
                     $nextTag = "
                     <tr>
                         <th width=\"15%\">▼ 다음 글</th>
