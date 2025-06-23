@@ -4213,11 +4213,11 @@ class Shop extends CI_Controller
             <dd class=\"sod_bsk_dvr\"><strong>" . display_point($stotal['usepoint']) . "</strong></dd>";
         }
         $stotalUseMile = "";
-        if ($stotal['usemileage']) {
-            $stotalUseMile = "
-            <dt class=\"sod_bsk_dvr\"><span>예치금결제</span></dt>
-            <dd class=\"sod_bsk_dvr\"><strong>" . display_point($stotal['usemileage']) . "</strong></dd>";
-        }
+        // if ($stotal['usemileage']) {
+        //     $stotalUseMile = "
+        //     <dt class=\"sod_bsk_dvr\"><span>예치금결제</span></dt>
+        //     <dd class=\"sod_bsk_dvr\"><strong>" . display_point($stotal['usemileage']) . "</strong></dd>";
+        // }
         $stotalBaesong = "";
         if ($stotal['baesong']) {
             $stotalBaesong = "
@@ -5285,18 +5285,18 @@ class Shop extends CI_Controller
             }
         }
 
-        if ($is_member && $config['usepoint_yes'] && ($tot_price <= $member['point'])) {
-            $multi_settle .= "<option value='포인트'>포인트결제</option>\n";
-        }
+        // if ($is_member && $config['usepoint_yes'] && ($tot_price <= $member['point'])) {
+        //     $multi_settle .= "<option value='포인트'>포인트결제</option>\n";
+        // }
 
-        if ($is_member && $config['usemileage_yes'] && ($tot_price <= $member['mileage'])) {
-            $multi_settle .= "<option value='예치금'>예치금결제</option>\n";
-        }
+        // if ($is_member && $config['usemileage_yes'] && ($tot_price <= $member['mileage'])) {
+        //     $multi_settle .= "<option value='예치금'>예치금결제</option>\n";
+        // }
 
-        // 이니시스를 사용중일때만 삼성페이 결제가능
-        if ($default['de_samsung_pay_use'] && ($default['de_pg_service'] == 'inicis')) {
-            $multi_settle .= "<option value='삼성페이'>삼성페이</option>\n";
-        }
+        // // 이니시스를 사용중일때만 삼성페이 결제가능
+        // if ($default['de_samsung_pay_use'] && ($default['de_pg_service'] == 'inicis')) {
+        //     $multi_settle .= "<option value='삼성페이'>삼성페이</option>\n";
+        // }
         $totPrice = display_price($tot_price);
 
         $couponTag = "";
@@ -5322,16 +5322,16 @@ class Shop extends CI_Controller
 			</tr>";
         }
         $mileageUseTag = "";
-        if ($is_member && $config['usemileage_yes']) {
-            $mileageUseTag = "
-			<tr>
-				<th scope=\"row\">예치금결제</th>
-				<td>
-					<input type=\"text\" name=\"use_mileage\" value=\"0\" onkeyup=\"calculate_temp_mileage(this.value); this.value=number_format(this.value);\" onfocus=\"removeLeadingZero(this)\" onblur=\"restoreZeroIfEmpty(this)\" class=\"frm_input w100\"> 원
-					<div>잔액 : <b>" . display_price($member['mileage']) . "</b> (" . display_point($config['usemileage']) . " 부터 사용가능)</div>
-				</td>
-			</tr>";
-        }
+        // if ($is_member && $config['usemileage_yes']) {
+        //     $mileageUseTag = "
+		// 	<tr>
+		// 		<th scope=\"row\">예치금결제</th>
+		// 		<td>
+		// 			<input type=\"text\" name=\"use_mileage\" value=\"0\" onkeyup=\"calculate_temp_mileage(this.value); this.value=number_format(this.value);\" onfocus=\"removeLeadingZero(this)\" onblur=\"restoreZeroIfEmpty(this)\" class=\"frm_input w100\"> 원
+		// 			<div>잔액 : <b>" . display_price($member['mileage']) . "</b> (" . display_point($config['usemileage']) . " 부터 사용가능)</div>
+		// 		</td>
+		// 	</tr>";
+        // }
         $bankTag = $this->funcomplex_lib->mobile_bank_account("bank");
 
         $noMemberTag = "";

@@ -3,6 +3,14 @@
 	<p class="pg_nav">HOME<?php echo $getMove;?></p>
 </h2>
 <?=$heading?>
+<h2 class="pg_title">
+	<div class="inner">
+		<dl class="txt_bx">
+			<dt>열린장터</dt>
+			<dd>시간제한 없이 누릴 수 있는 열린장터 상품을 만나보세요</dd>
+		</dl>
+	</div>
+</h2>
 <?=$treeCate?>
 <div class="tab_sort">
 	<span class="total">전체상품 <b class="fc_90" id="total"><?php echo number_format($total_count); ?></b>개</span>

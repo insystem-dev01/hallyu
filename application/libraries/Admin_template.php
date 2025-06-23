@@ -178,21 +178,21 @@ class Admin_template {
         $ADMIN_MENU5_18=$this->ci->config->item('ADMIN_MENU5_18');
         $ADMIN_MENU5_24=$this->ci->config->item('ADMIN_MENU5_24');
         $ADMIN_MENU5_02=$this->ci->config->item('ADMIN_MENU5_02');
-        $ADMIN_MENU5_27=$this->ci->config->item('ADMIN_MENU5_27');
-        $ADMIN_MENU5_03=$this->ci->config->item('ADMIN_MENU5_03');
+        //$ADMIN_MENU5_27=$this->ci->config->item('ADMIN_MENU5_27'); //카테고리별 인기상품 관리
+        // $ADMIN_MENU5_03=$this->ci->config->item('ADMIN_MENU5_03'); // 브랜드 관리
         $ADMIN_MENU5_04=$this->ci->config->item('ADMIN_MENU5_04');
         $ADMIN_MENU5_06=$this->ci->config->item('ADMIN_MENU5_06');
         $ADMIN_MENU5_07=$this->ci->config->item('ADMIN_MENU5_07');
         $ADMIN_MENU5_08=$this->ci->config->item('ADMIN_MENU5_08');
         $ADMIN_MENU5_09=$this->ci->config->item('ADMIN_MENU5_09');
         $ADMIN_MENU5_10=$this->ci->config->item('ADMIN_MENU5_10');
-        $ADMIN_MENU5_11=$this->ci->config->item('ADMIN_MENU5_11');
+        // $ADMIN_MENU5_11=$this->ci->config->item('ADMIN_MENU5_11');
         $ADMIN_MENU5_12=$this->ci->config->item('ADMIN_MENU5_12');
-        $ADMIN_MENU5_13=$this->ci->config->item('ADMIN_MENU5_13');
-        $ADMIN_MENU5_14=$this->ci->config->item('ADMIN_MENU5_14');
-        $ADMIN_MENU5_15=$this->ci->config->item('ADMIN_MENU5_15');
-        $ADMIN_MENU5_16=$this->ci->config->item('ADMIN_MENU5_16');
-        $ADMIN_MENU5_17=$this->ci->config->item('ADMIN_MENU5_17');
+        // $ADMIN_MENU5_13=$this->ci->config->item('ADMIN_MENU5_13');
+        // $ADMIN_MENU5_14=$this->ci->config->item('ADMIN_MENU5_14');
+        // $ADMIN_MENU5_15=$this->ci->config->item('ADMIN_MENU5_15');
+        // $ADMIN_MENU5_16=$this->ci->config->item('ADMIN_MENU5_16');
+        // $ADMIN_MENU5_17=$this->ci->config->item('ADMIN_MENU5_17');
         $ADMIN_MENU5_20=$this->ci->config->item('ADMIN_MENU5_20');
         $ADMIN_MENU5_21=$this->ci->config->item('ADMIN_MENU5_21');
         // $ADMIN_MENU5_22=$this->ci->config->item('ADMIN_MENU5_22');
@@ -215,7 +215,7 @@ class Admin_template {
         $ADMIN_MENU6_10=$this->ci->config->item('ADMIN_MENU6_10');
         $ADMIN_MENU6_11=$this->ci->config->item('ADMIN_MENU6_11');
         $ADMIN_MENU6_12=$this->ci->config->item('ADMIN_MENU6_12');
-        $ADMIN_MENU6_13=$this->ci->config->item('ADMIN_MENU6_13');
+        // $ADMIN_MENU6_13=$this->ci->config->item('ADMIN_MENU6_13');
 
         $ADMIN_MENU7=$this->ci->config->item('ADMIN_MENU7');
         $ADMIN_MENU7_01=$this->ci->config->item('ADMIN_MENU7_01');
@@ -317,28 +317,29 @@ class Admin_template {
             $jaego2 = $this->ci->common_lib->admin_io_jaego_bujog("and b.shop_state = 0 and b.use_aff = 0"); // 옵션재고부족
             $subNavTag.=$this->printMenu1('g10', '상품관리');
             $subNavTag.=$this->printMenu2_1($pg_title2,'g10', $ADMIN_MENU5_01, base_url().'admin/goods?code=list');
+            $subNavTag.=$this->printMenu2_1($pg_title2,'g70', $ADMIN_MENU5_28, base_url().'admin/goods?code=timesale');
 		    $subNavTag.=$this->printMenu2_1($pg_title2,'g10', $ADMIN_MENU5_18, base_url().'admin/goods?code=supply', $goods1);
             $subNavTag.=$this->printMenu2_1($pg_title2,'g10', $ADMIN_MENU5_24, base_url().'admin/goods?code=supply2', $goods2);
             // $subNavTag.=$this->printMenu2_1($pg_title2,'g10', $ADMIN_MENU5_02, base_url().'admin/goods?code=type'); 
-            $subNavTag.=$this->printMenu2_1($pg_title2,'g10', $ADMIN_MENU5_27, base_url().'admin/goods?code=best_item'); 
-            $subNavTag.=$this->printMenu2_1($pg_title2,'g10', $ADMIN_MENU5_03, base_url().'admin/goods?code=brand_list'); 
+            // $subNavTag.=$this->printMenu2_1($pg_title2,'g10', $ADMIN_MENU5_27, base_url().'admin/goods?code=best_item'); 
+            // $subNavTag.=$this->printMenu2_1($pg_title2,'g10', $ADMIN_MENU5_03, base_url().'admin/goods?code=brand_list'); 
             $subNavTag.=$this->printMenu2_1($pg_title2,'g10', $ADMIN_MENU5_04, base_url().'admin/goods?code=plan'); 
             $subNavTag.=$this->printMenu1('g20', '재고관리');
             $subNavTag.=$this->printMenu2_1($pg_title2,'g20', $ADMIN_MENU5_06, base_url().'admin/goods?code=stock', $jaego1);
             $subNavTag.=$this->printMenu2_1($pg_title2,'g20', $ADMIN_MENU5_07, base_url().'admin/goods?code=optstock', $jaego2); 
-            $subNavTag.=$this->printMenu1('g30', '일괄처리');
+            // $subNavTag.=$this->printMenu1('g30', '일괄처리');
             if($member['grade'] == "99") {
                 $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_08, base_url().'admin/goods?code=xls_reg');
                 $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_09, base_url().'admin/goods?code=xls_option_reg');
                 $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_10, base_url().'admin/goods?code=xls_mod');
                 $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_12, base_url().'admin/goods?code=getpoint');
             }
-            $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_11, base_url().'admin/goods?code=getprice');
-            $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_13, base_url().'admin/goods?code=getuse');
-            $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_14, base_url().'admin/goods?code=getmove');
-            $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_15, base_url().'admin/goods?code=getbrand');
-            $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_16, base_url().'admin/goods?code=getdelivery');
-            $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_17, base_url().'admin/goods?code=getbuylevel');
+            // $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_11, base_url().'admin/goods?code=getprice');
+            // $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_13, base_url().'admin/goods?code=getuse');
+            // $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_14, base_url().'admin/goods?code=getmove');
+            // $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_15, base_url().'admin/goods?code=getbrand');
+            // $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_16, base_url().'admin/goods?code=getdelivery');
+            // $subNavTag.=$this->printMenu2_1($pg_title2,'g30', $ADMIN_MENU5_17, base_url().'admin/goods?code=getbuylevel');
             $subNavTag.=$this->printMenu1('g40', '문의 / 후기');
             $subNavTag.=$this->printMenu2_1($pg_title2,'g40', $ADMIN_MENU5_20, base_url().'admin/goods?code=qa', $qaCnt);
             $subNavTag.=$this->printMenu2_1($pg_title2,'g40', $ADMIN_MENU5_21, base_url().'admin/goods?code=review');
@@ -348,8 +349,8 @@ class Admin_template {
             }
             $subNavTag.=$this->printMenu2_1($pg_title2,'g60', $ADMIN_MENU5_25, base_url().'admin/goods?code=popular_list');
             $subNavTag.=$this->printMenu2_1($pg_title2,'g60', $ADMIN_MENU5_26, base_url().'admin/goods?code=popular_rank');
-            $subNavTag.=$this->printMenu1('g70', '함께장터 관리');
-            $subNavTag.=$this->printMenu2_1($pg_title2,'g70', $ADMIN_MENU5_28, base_url().'admin/goods?code=timesale');
+            // $subNavTag.=$this->printMenu1('g70', '함께장터 관리');
+            
 
         }else if($pg_title == $ADMIN_MENU6) {
             $sodrr = $this->ci->common_lib->admin_order_status_sum("where dan > 0 "); // 총 주문내역
@@ -380,8 +381,8 @@ class Admin_template {
             $subNavTag.=$this->printMenu2_1($pg_title2,'o20', $ADMIN_MENU6_11, base_url().'admin/order?code=8', $sodr8['cnt']);
             $subNavTag.=$this->printMenu1('o30', '기타관리');
             $subNavTag.=$this->printMenu2_1($pg_title2,'o30', $ADMIN_MENU6_12, base_url().'admin/order?code=memo', $memoCnt);
-            $subNavTag.=$this->printMenu1('o40', '함께장터');
-            $subNavTag.=$this->printMenu2_1($pg_title2,'o40', $ADMIN_MENU6_13, base_url().'admin/order?code=timesale_state_list');
+            // $subNavTag.=$this->printMenu1('o40', '함께장터');
+            // $subNavTag.=$this->printMenu2_1($pg_title2,'o40', $ADMIN_MENU6_13, base_url().'admin/order?code=timesale_state_list');
         }else if($pg_title == $ADMIN_MENU7) {
             $subNavTag.=$this->printMenu1('v10', '접속자통계');
             $subNavTag.=$this->printMenu2_1($pg_title2,'v10', $ADMIN_MENU7_01, base_url().'admin/visit?code=hour');

@@ -28,7 +28,7 @@ $config['ADMIN_MENU4_02']='카테고리 순위';
 $config['ADMIN_MENU4_03']='메뉴 관리';
 
 $config['ADMIN_MENU5']='상품관리'; //대분류
-$config['ADMIN_MENU5_01']='일반 상품관리';
+$config['ADMIN_MENU5_01']='열린장터 상품관리';
 $config['ADMIN_MENU5_02']='상품 진열관리';
 $config['ADMIN_MENU5_27']='카테고리별 인기상품 관리';
 $config['ADMIN_MENU5_03']='브랜드 관리';
@@ -52,7 +52,7 @@ $config['ADMIN_MENU5_21']='상품 후기관리';
 $config['ADMIN_MENU5_24']='입점사 보류상품';
 $config['ADMIN_MENU5_25']='상품 검색어관리';
 $config['ADMIN_MENU5_26']='상품 검색어순위';
-$config['ADMIN_MENU5_28']='함께장터';
+$config['ADMIN_MENU5_28']='함께장터 상품관리';
 
 $config['ADMIN_MENU6']='주문관리'; //대분류
 $config['ADMIN_MENU6_01']='주문리스트(전체)';

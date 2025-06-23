@@ -17803,7 +17803,7 @@ class Admin extends CI_Controller
 
         $seller_mod_autoArr = array('', '');
         $seller_mod_autoArr[1] = ($config['seller_mod_auto'] == 1) ? ' checked' : '';
-        $seller_mod_autoArr[0] = ($config['seller_mod_auto'] == 1) ? ' checked' : '';
+        $seller_mod_autoArr[0] = ($config['seller_mod_auto'] == 0) ? ' checked' : '';
 
         $seller_reg_agreeStr = preg_replace("/\\\/", "", $config['seller_reg_agree']);
 

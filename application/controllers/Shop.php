@@ -1,6 +1,18 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property Query_model $query_model
+ * @property Template $template
+ * @property Funcomplex_lib $funcomplex_lib
+ * @property Gvcomplex_lib $gvcomplex_lib
+ * @property Thumbnail_lib $thumbnail_lib
+ * @property Global_lib $global_lib
+ * @property Partner_lib $partner_lib
+ * @property CI_Input $input
+ * @property CI_User_agent $agent
+ * @property CI_Config $config
+ */
 class Shop extends CI_Controller
 {
     public function __construct()
@@ -993,6 +1005,7 @@ class Shop extends CI_Controller
     #브랜드
     public function brand()
     {
+        $type = $this->input->get('type');
         if ((!isset($_SESSION['device']) || $_SESSION['device'] != "pc") && $this->agent->is_mobile()) {
             goto_url(base_url() . 'm/shop/listtype?type=' . $type);
         }
@@ -4649,10 +4662,12 @@ class Shop extends CI_Controller
 
     private function reviewSkin()
     {
+
         $requestUrl = explode('?', $_SERVER['REQUEST_URI'])[0];
         $member = $this->load->get_var('member');
         $config = $this->load->get_var('config');
         $default = $this->load->get_var('default');
+        $pt_id = $this->load->get_var('pt_id');
 
         $page = $this->input->get('page');
         $title = "리뷰";
@@ -5038,6 +5053,7 @@ class Shop extends CI_Controller
     #coupon 쿠폰 관리 화면
     public function coupon()
     {
+        $urlencode = $this->load->get_var('urlencode');
         $config = $this->load->get_var('config');
         $is_member = $this->load->get_var('is_member');
         if ((!isset($_SESSION['device']) || $_SESSION['device'] != "pc") && $this->agent->is_mobile()) {
@@ -5472,12 +5488,12 @@ class Shop extends CI_Controller
         }
         // }
 
-        if ($is_member && $config['usepoint_yes'] && ($tot_price <= $member['point'])) {
-            $payMethod .= '<input type="radio" name="paymethod" id="paymethod_point" value="포인트" onclick="calculate_paymethod(this.value);"> <label for="paymethod_point">포인트결제</label>';
-        }
-        if ($is_member && $config['usemileage_yes'] && ($tot_price <= $member['mileage'])) {
-            $payMethod .= '<input type="radio" name="paymethod" id="paymethod_mileage" value="예치금" onclick="calculate_paymethod(this.value);"> <label for="paymethod_mileage">예치금결제</label>';
-        }
+        // if ($is_member && $config['usepoint_yes'] && ($tot_price <= $member['point'])) {
+        //     $payMethod .= '<input type="radio" name="paymethod" id="paymethod_point" value="포인트" onclick="calculate_paymethod(this.value);"> <label for="paymethod_point">포인트결제</label>';
+        // }
+        // if ($is_member && $config['usemileage_yes'] && ($tot_price <= $member['mileage'])) {
+        //     $payMethod .= '<input type="radio" name="paymethod" id="paymethod_mileage" value="예치금" onclick="calculate_paymethod(this.value);"> <label for="paymethod_mileage">예치금결제</label>';
+        // }
 
         $tot1Price = display_price($tot_price);
         $haveCoupon = "";
