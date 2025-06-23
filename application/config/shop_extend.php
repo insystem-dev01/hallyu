@@ -23,6 +23,7 @@ $config['gw_msort'] = array(
 	array("goods_price", "asc", "낮은가격순"),
 	array("goods_price", "desc", "높은가격순"),
 	array("m_count", "desc", "후기많은순"),
+	array("index_no", "desc", "최근등록순")
 );
 
 // 부관리자메뉴
