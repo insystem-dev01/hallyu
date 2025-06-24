@@ -2474,7 +2474,7 @@ class Process extends CI_Controller
             $sql = "SELECT * FROM shop_cart WHERE ct_select='0' AND mb_id = ?";
             $data = array($set_mb_id);
             $res = $this->query_model->returnArr($sql, $data);
-
+            $set_cart_id = get_cookie('ck_guest_cart_id');
             foreach ($res as $key => $row) {
                 $sql = "DELETE FROM shop_order WHERE od_id = ? AND od_no = ? AND gs_id = ? AND dan = '0' ";
                 $param = array($row['od_id'], $row['od_no'], $row['gs_id']);
@@ -3776,7 +3776,7 @@ class Process extends CI_Controller
             $config = $this->load->get_var('config');
             $super = $this->load->get_var('super');
             $default = $this->load->get_var('default');
-
+            $od_pg = $default['de_pg_service'];
             $merchant_uid = $this->input->post('merchant_uid');
 
             $od_id = $this->input->post('od_id');

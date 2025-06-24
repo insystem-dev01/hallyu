@@ -551,9 +551,9 @@ class Shop extends CI_Controller
         $sql = "select * $sql_common $sql_order limit $from_record, $rows ";
         $result = $this->query_model->returnArr($sql);
 
-        $qstr1 =  'ca_id=' . $ca_id .'&status='. $status  . '&page_rows=' . $page_rows . '&sort=' . $sort . '&sortodr=' . $sortodr;
-        $qstr2 =  'ca_id=' . $ca_id .'&status='. $status . '&page_rows=' . $page_rows;
-        $qstr3 =  'ca_id=' . $ca_id . '&status='. $status . '&sort=' . $sort . '&sortodr=' . $sortodr;
+        $qstr1 =  'ca_id=' . $ca_id . '&status=' . $status  . '&page_rows=' . $page_rows . '&sort=' . $sort . '&sortodr=' . $sortodr;
+        $qstr2 =  'ca_id=' . $ca_id . '&status=' . $status . '&page_rows=' . $page_rows;
+        $qstr3 =  'ca_id=' . $ca_id . '&status=' . $status . '&sort=' . $sort . '&sortodr=' . $sortodr;
 
         $sort_str = '';
         for ($i = 0; $i < count($gw_psort); $i++) {
@@ -1930,17 +1930,17 @@ class Shop extends CI_Controller
         }
 
         $pointTag = "";
-        if (!$is_only && !$is_pr_msg && !$is_buy_only && !$is_soldout && $gpoint) {
-            $pointText = "";
-            if ($gs['type'] == "timesale") {
-                $pointText = "<span class=\"fc_red\">　(최종 구매가격에 따라서 포인트 적립금액이 상이합니다.)</span>";
-            }
-            $pointTag = "<dl><dt>포인트</dt><dd>{$gpoint}{$pointText}</dd></dl>";
-        }
+        // if (!$is_only && !$is_pr_msg && !$is_buy_only && !$is_soldout && $gpoint) {
+        //     $pointText = "";
+        //     if ($gs['type'] == "timesale") {
+        //         $pointText = "<span class=\"fc_red\">　(최종 구매가격에 따라서 포인트 적립금액이 상이합니다.)</span>";
+        //     }
+        //     $pointTag = "<dl><dt>포인트</dt><dd>{$gpoint}{$pointText}</dd></dl>";
+        // }
         $couponTag = "";
-        if (!$is_only && !$is_pr_msg && !$is_buy_only && !$is_soldout && $cp_used) {
-            $couponTag = "<dl><dt>쿠폰</dt><dd>{$cp_btn}</dd></dl>";
-        }
+        // if (!$is_only && !$is_pr_msg && !$is_buy_only && !$is_soldout && $cp_used) {
+        //     $couponTag = "<dl><dt>쿠폰</dt><dd>{$cp_btn}</dd></dl>";
+        // }
         $maker = "";
         if ($gs['maker']) {
             $maker = "<dl><dt>제조사</dt><dd>{$gs['maker']}</dd></dl>";
@@ -5500,7 +5500,7 @@ class Shop extends CI_Controller
         if ($is_member && $config['coupon_yes']) { // 보유쿠폰
             $cp_count = $this->global_lib->get_cp_precompose($member['id']);
             $haveCoupon = "
-            <tr>
+            <tr hidden>
                 <th scope=\"row\">할인쿠폰</th>
                 <td>(-) <strong><span id=\"dc_amt\">0</span>원 <span id=\"dc_cancel\" style=\"display:none\"><a href=\"javascript:coupon_cancel();\">X</a></span></strong>
                 <span id=\"dc_coupon\"><a href=\"" . base_url() . "shop/ordercoupon\" onclick=\"win_open(this,'win_coupon','670','500','yes');return false\"><span class='fc_197 tu'>사용 가능 쿠폰 {$cp_count[3]}장</a> </span></span></td>
@@ -5509,7 +5509,7 @@ class Shop extends CI_Controller
         $pointUse = "";
         if ($is_member && $config['usepoint_yes']) {
             $pointUse .= "
-            <tr>
+            <tr hidden>
                 <th scope=\"row\">포인트결제</th>
                 <td>
                     <input type=\"text\" name=\"use_point\" value=\"0\" class=\"frm_input\" size=\"12\" onkeyup=\"calculate_temp_point(this.value);this.value=number_format(this.value);\" onfocus=\"removeLeadingZero(this)\" onblur=\"restoreZeroIfEmpty(this)\" style=\"font-weight:bold;\"> 원 보유포인트 : " . display_point($member['point']);
@@ -5522,7 +5522,7 @@ class Shop extends CI_Controller
         $mileageUse = "";
         if ($is_member && $config['usemileage_yes']) {
             $mileageUse .= "
-            <tr>
+            <tr hidden>
                 <th scope=\"row\">예치금결제</th>
                 <td>
                     <input type=\"text\" name=\"use_mileage\" value=\"0\" class=\"frm_input\" size=\"12\" onkeyup=\"calculate_temp_mileage(this.value);this.value=number_format(this.value);\" onfocus=\"removeLeadingZero(this)\" onblur=\"restoreZeroIfEmpty(this)\" style=\"font-weight:bold;\"> 원 보유예치금 : " . display_price($member['mileage']);
@@ -5734,7 +5734,6 @@ class Shop extends CI_Controller
                 <td class=\"tac\">" . number_format($sell_qty) . "</td>
                 <td class=\"tar\">" . number_format($sell_amt) . "</td>
                 <td class=\"tar\">" . number_format($sell_price) . "</td>
-                <td class=\"tar\">" . number_format($point) . "</td>
                 <td class=\"tar\">" . number_format($info['price']) . "</td>
             </tr>";
             $tot_point += (int)$point;

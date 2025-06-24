@@ -4131,6 +4131,9 @@ class Process extends CI_Controller
             $index_no = $this->input->post('index_no');
             $score = $this->input->post('score');
             $seller_id = $this->input->post('seller_id');
+            $OM_TIME_YMDHIS = date("Y-m-d H:i:s", time());
+            $od_no = $this->input->post('od_no');
+            $pt_id =$this->input->post('pt_id');
             if (isset($token) && get_session("ss_token") == $token) {
                 // 맞으면 세션을 지워 다시 입력폼을 통해서 들어오도록 한다.
                 set_session("ss_token", "");
@@ -4150,7 +4153,7 @@ class Process extends CI_Controller
                 alert('후기는 구매완료후 등록이 가능합니다.');
                 exit;
             }
-            $order_review_data = $this->common_lib->get_order_review_data($index_no, $member['id']);
+            $order_review_data = $this->common_lib->get_order_review_data($index_no, $member['id'], $od_no);
             $this->funcomplex_lib->set_order_review_flag(0, $order_review_data['index_no'], $member['id']);
             $memo = $this->input->post('memo');
             if (substr_count($memo, "&#") > 50) {
@@ -4629,6 +4632,7 @@ class Process extends CI_Controller
             $od_tax_mny = round($i_price / 1.1);
             $od_vat_mny = $i_price - $od_tax_mny;
             $od_free_mny = 0;
+            $od_pg = $default['de_pg_service'];
             if ($default['de_tax_flag_use']) {
                 $od_tax_mny = (int)$this->input->post('comm_tax_mny');
                 $od_vat_mny = (int)$this->input->post('comm_vat_mny');

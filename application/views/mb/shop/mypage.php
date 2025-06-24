@@ -1,11 +1,11 @@
 <div id="smb_my">
 	<section id="smb_my_ov">
         <h2>회원정보 개요</h2>
-        <ul>
+        <!-- <ul>
             <li>보유쿠폰<a href="<?php echo base_url(); ?>m/shop/coupon"><?php echo $cp_countTag; ?></a></li>
             <li>보유포인트<a href="<?php echo base_url(); ?>m/shop/point"><?php echo $mbPoint; ?></a></li>
             <li>보유예치금<a href="<?php echo base_url(); ?>m/shop/mileage"><?php echo $mbmileage; ?></a></li>
-        </ul>
+        </ul> -->
         <dl>
             <dt>연락처</dt>
             <dd><?php echo $mbTel; ?></dd>

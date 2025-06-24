@@ -19,6 +19,7 @@
         <?php echo $pg_anchor; ?>
         <div class="local_desc02 local_desc">
             <p>선택된 카테고리에 <span class="fc_084">최상위 카테고리는 대표 카테고리로 자동설정</span>되며, 최소 1개의 카테고리는 등록하셔야 합니다.</p>
+            <p>별도의 카테고리 추가 원하시면 <span class="fc_084">고객센터</span>로 전화주시면 처리 도와드리겠습니다.</p>
         </div>
         <div class="tbl_frm02">
             <table>

@@ -266,8 +266,9 @@ function calculate_order_price() {
 	var send_cost2 = parseInt($("input[name=baesong_price2]").val()); // 추가배송비
 	var mb_coupon  = parseInt($("input[name=coupon_total]").val()); // 쿠폰할인
 	var mb_point   = parseInt($("input[name=use_point]").val().replace(/[^0-9]/g, "")); //포인트결제
-	var mb_mileage = parseInt($("input[name=use_mileage]").val().replace(/[^0-9]/g, "")); //예치금
-    var tot_price  = sell_price + send_cost2 - (mb_coupon + mb_point + mb_mileage);
+	// var mb_mileage = parseInt($("input[name=use_mileage]").val().replace(/[^0-9]/g, "")); //예치금
+    // var tot_price  = sell_price + send_cost2 - (mb_coupon + mb_point + mb_mileage);
+    var tot_price  = sell_price + send_cost2 - (mb_coupon + mb_point);
 
 	$("input[name=tot_price]").val(number_format(String(tot_price)));
 }

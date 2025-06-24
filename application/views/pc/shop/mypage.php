@@ -16,12 +16,12 @@
 		</div>
         <table id="smb_my_tbl">
             <tbody>
-            <tr>
+            <!-- <tr>
                 <th scope="row">보유포인트</th>
                 <td><a href="<?php echo base_url(); ?>shop/point"><b><?php echo $memberPoint;?></b></a></td>
                 <th scope="row">보유쿠폰</th>
                 <td><a href="<?php echo base_url(); ?>shop/coupon"><b><?php echo $cpCount;?></b></a></td>
-            </tr>
+            </tr> -->
             <tr>
                 <th scope="row">휴대폰번호</th>
                 <td><?php echo $mem_cell; ?></td>

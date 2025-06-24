@@ -1825,30 +1825,30 @@ class Shop extends CI_Controller
         }
 
         $gPointTag = "";
-        if (!$is_only && !$is_pr_msg && !$is_buy_only && !$is_soldout && $gpoint) {
-            $pointText = "";
-            if ($gs['type'] == "timesale") {
-                $pointText = "<span class=\"fc_red\">(최종 구매가격에 따라 적립금액 상이)</span>";
-            }
-            $gPointTag = "
-            <div class=\"sp_tbox\">
-                <ul>
-                    <li class='tlst'>포인트</li>
-                    <li class='trst'>{$gpoint}</li>
-                    <li class='trst'>{$pointText}</li>
-                </ul>
-            </div>";
-        }
+        // if (!$is_only && !$is_pr_msg && !$is_buy_only && !$is_soldout && $gpoint) {
+        //     $pointText = "";
+        //     if ($gs['type'] == "timesale") {
+        //         $pointText = "<span class=\"fc_red\">(최종 구매가격에 따라 적립금액 상이)</span>";
+        //     }
+        //     $gPointTag = "
+        //     <div class=\"sp_tbox\">
+        //         <ul>
+        //             <li class='tlst'>포인트</li>
+        //             <li class='trst'>{$gpoint}</li>
+        //             <li class='trst'>{$pointText}</li>
+        //         </ul>
+        //     </div>";
+        // }
         $cp_btnTag = "";
-        if (!$is_only && !$is_pr_msg && !$is_buy_only && !$is_soldout && $cp_used) {
-            $cp_btnTag = "
-            <div class=\"sp_tbox\">
-                <ul>
-                    <li class='tlst'>쿠폰</li>
-                    <li class='trst-cp'>{$cp_btn}</li>
-                </ul>
-            </div>";
-        }
+        // if (!$is_only && !$is_pr_msg && !$is_buy_only && !$is_soldout && $cp_used) {
+        //     $cp_btnTag = "
+        //     <div class=\"sp_tbox\">
+        //         <ul>
+        //             <li class='tlst'>쿠폰</li>
+        //             <li class='trst-cp'>{$cp_btn}</li>
+        //         </ul>
+        //     </div>";
+        // }
         $gsMarkerTag = "";
         if ($gs['maker']) {
             $gsMarkerTag = "
@@ -5170,12 +5170,7 @@ class Shop extends CI_Controller
                     <span class=\"prqty_qty li_prqty_sp\"><span>수량</span>" . number_format($sell_qty) . "</span>
                     <span class=\"prqty_sc li_prqty_sp\"><span>배송비</span>" . number_format($info['price']) . "</span>
                 </div>
-                <div class=\"li_total\">
-                    <span class=\"total_price total_span\"><span>소계</span>
-                    <strong>" . number_format($sell_price) . "</strong></span>
-                    <span class=\"total_point total_span\"><span>적립포인트</span>
-                    <strong>" . number_format($point) . "</strong></span>
-                </div>
+                
             </li>";
             $tot_point += (int)$point;
             $tot_sell_price += (int)$sell_price;
@@ -5233,8 +5228,7 @@ class Shop extends CI_Controller
             <dd class=\"sod_bsk_dvr\"><strong>" . number_format($tot_send_cost) . " 원</strong></dd>
             <dt class=\"sod_bsk_cnt\"><span>총계</span></dt>
             <dd class=\"sod_bsk_cnt\"><strong>" . number_format($tot_price) . " 원</strong></dd>
-            <dt class=\"sod_bsk_point\"><span>포인트</span></dt>
-            <dd class=\"sod_bsk_point\"><strong>" . number_format($tot_point) . " P</strong></dd>
+            
         </dl>";
 
         $usePointTag = "";
@@ -5303,7 +5297,7 @@ class Shop extends CI_Controller
         if ($is_member && $config['coupon_yes']) { // 보유쿠폰
             $sp_count = $this->global_lib->get_cp_precompose($member['id']);
             $couponTag = "
-            <tr>
+            <tr hidden readonly>
                 <th scope=\"row\">할인쿠폰</th>
                 <td>
                     <span id=\"dc_coupon\"><a href=\"javascript:window.open('" . base_url() . "m/shop/ordercoupon');\" class=\"btn_small bx-red\">사용 가능 쿠폰 {$sp_count[3]}장</a>&nbsp;</span>(-)&nbsp;&nbsp;<strong><span id=\"dc_amt\">0</strong>원&nbsp;<span id=\"dc_cancel\" style=\"display:none;\"><a href=\"javascript:coupon_cancel();\" class=\"btn_small grey\">삭제</a></span></span>
@@ -5313,7 +5307,7 @@ class Shop extends CI_Controller
         $pointUseTag = "";
         if ($is_member && $config['usepoint_yes']) {
             $pointUseTag = "
-			<tr>
+			<tr hidden readonly>
 				<th scope=\"row\">포인트결제</th>
 				<td>
 					<input type=\"text\" name=\"use_point\" value=\"0\" onkeyup=\"calculate_temp_point(this.value); this.value=number_format(this.value);\" onfocus=\"removeLeadingZero(this)\" onblur=\"restoreZeroIfEmpty(this)\" class=\"frm_input w100\"> 원
@@ -5322,16 +5316,16 @@ class Shop extends CI_Controller
 			</tr>";
         }
         $mileageUseTag = "";
-        // if ($is_member && $config['usemileage_yes']) {
-        //     $mileageUseTag = "
-		// 	<tr>
-		// 		<th scope=\"row\">예치금결제</th>
-		// 		<td>
-		// 			<input type=\"text\" name=\"use_mileage\" value=\"0\" onkeyup=\"calculate_temp_mileage(this.value); this.value=number_format(this.value);\" onfocus=\"removeLeadingZero(this)\" onblur=\"restoreZeroIfEmpty(this)\" class=\"frm_input w100\"> 원
-		// 			<div>잔액 : <b>" . display_price($member['mileage']) . "</b> (" . display_point($config['usemileage']) . " 부터 사용가능)</div>
-		// 		</td>
-		// 	</tr>";
-        // }
+        if ($is_member && $config['usemileage_yes']) {
+            $mileageUseTag = "
+			<tr hidden readonly>
+				<th scope=\"row\">예치금결제</th>
+				<td>
+					<input type=\"text\" name=\"use_mileage\" value=\"0\" onkeyup=\"calculate_temp_mileage(this.value); this.value=number_format(this.value);\" onfocus=\"removeLeadingZero(this)\" onblur=\"restoreZeroIfEmpty(this)\" class=\"frm_input w100\"> 원
+					<div>잔액 : <b>" . display_price($member['mileage']) . "</b> (" . display_point($config['usemileage']) . " 부터 사용가능)</div>
+				</td>
+			</tr>";
+        }
         $bankTag = $this->funcomplex_lib->mobile_bank_account("bank");
 
         $noMemberTag = "";
