@@ -4329,21 +4329,26 @@ class Shop extends CI_Controller
         // 취소한 내역이 없다면
         $not_cancelTag = "";
         if (($gs['type'] == "timesale" && $gs['isopen'] == 1 && $st_cancel_price == 0 && $custom_cancel) || ($gs['type'] == "normal" && $st_cancel_price == 0 && $custom_cancel)) {
-            $not_cancelTag = "
+            // $not_cancelTag = "
+            // <section id=\"sod_fin_cancel\">
+            //     <h2>주문취소</h2>
+            //     <button type=\"button\" onclick=\"document.getElementById('sod_fin_cancelfrm').style.display='block';\" class=\"btn_medium wset\">주문 취소하기</button>
+
+            //     <div id=\"sod_fin_cancelfrm\">
+            //         <form method=\"post\" action=\"" . base_url() . "m/process/orderinquirycancel\" onsubmit=\"return fcancel_check(this);\">
+            //         <input type=\"hidden\" name=\"od_id\"  value=\"{$od_id}\">
+            //         <input type=\"hidden\" name=\"token\"  value=\"{$token}\">
+            //         <input type=\"hidden\" name=\"type\"  value=\"{$gs['type']}\">
+            //         <label for=\"cancel_memo\">취소사유</label>
+            //         <input type=\"text\" name=\"cancel_memo\" id=\"cancel_memo\" required class=\"frm_input required\" maxlength=\"100\">
+            //         <input type=\"submit\" value=\"확인\" class=\"btn_small\">
+            //         </form>
+            //     </div>
+            // </section>";
+             $not_cancelTag = "
             <section id=\"sod_fin_cancel\">
                 <h2>주문취소</h2>
-                <button type=\"button\" onclick=\"document.getElementById('sod_fin_cancelfrm').style.display='block';\" class=\"btn_medium wset\">주문 취소하기</button>
-
-                <div id=\"sod_fin_cancelfrm\">
-                    <form method=\"post\" action=\"" . base_url() . "m/process/orderinquirycancel\" onsubmit=\"return fcancel_check(this);\">
-                    <input type=\"hidden\" name=\"od_id\"  value=\"{$od_id}\">
-                    <input type=\"hidden\" name=\"token\"  value=\"{$token}\">
-                    <input type=\"hidden\" name=\"type\"  value=\"{$gs['type']}\">
-                    <label for=\"cancel_memo\">취소사유</label>
-                    <input type=\"text\" name=\"cancel_memo\" id=\"cancel_memo\" required class=\"frm_input required\" maxlength=\"100\">
-                    <input type=\"submit\" value=\"확인\" class=\"btn_small\">
-                    </form>
-                </div>
+                <button type=\"button\" onclick=\"window.location.href='" . base_url() . "m';\" class=\"btn_medium wset\">주문 취소하기</button>
             </section>";
         }
 
