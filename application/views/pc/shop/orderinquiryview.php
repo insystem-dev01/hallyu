@@ -33,20 +33,20 @@
 		<dt>상품금액</dt>
 		<dd><strong><?php echo $goodsPrice; ?></strong></dd>
         <?=$baesong?>
-        <?=$couDis?>
-        <?=$usepoint?>
-        <?=$usemileage?>
+        <!-- <?=$couDis?> -->
+        <!-- <?=$usepoint?> -->
+        <!-- <?=$usemileage?> -->
 		<?php if($gs['type'] == "timesale") { ?>
 			<?php if($cancel_price > 0) { ?>
 				<dt>환불액</dt>
 				<dd><strong><?=number_format($cancel_price)?>원</strong></dd>
 			<?php } else if($gs['isopen'] == 5){ ?>
-				<dt>예치금 적립</dt>
-				<dd><strong><?php echo $refund_mileage_price; ?></strong></dd>
+				<!-- <dt>예치금 적립</dt>
+				<dd><strong><?php echo $refund_mileage_price; ?></strong></dd> -->
 			<?php } ?>
 		<?php } ?>
-		<dt>포인트 적립</dt>
-		<dd><strong><?php echo $totpoint;?></strong></dd>
+		<!-- <dt>포인트 적립</dt>
+		<dd><strong><?php echo $totpoint;?></strong></dd> -->
     </dl>
     <section id="sod_fin_pay">
 		<h2 class="anc_tit">결제정보</h2>

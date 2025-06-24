@@ -14,8 +14,8 @@
             <dt class="sod_bsk_cnt"><span>총계</span></dt>
             <dd class="sod_bsk_cnt"><strong><?=$stotalUsePrice?></strong></dd>
 
-            <dt class="sod_bsk_point"><span>포인트적립</span></dt>
-            <dd class="sod_bsk_point"><strong><?=$stotalPrice?></strong></dd>
+            <!-- <dt class="sod_bsk_point"><span>포인트적립</span></dt>
+            <dd class="sod_bsk_point"><strong><?=$stotalPrice?></strong></dd> -->
         </dl>
     </section>
     <?=$orderform1Tag?>

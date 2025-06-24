@@ -4023,6 +4023,7 @@ class Shop extends CI_Controller
         set_session('ss_order_inicis_id', $od_id);
         $stotal = $this->global_lib->get_order_spay($od_id); // 총계
         $tot_price = get_session('tot_price'); // 결제금액
+        log_message("debug", "tot_price : {$tot_price}");
         if ($tot_price == "") {
             alert('올바른 방식으로 접근해주세요.', base_url());
         }
@@ -4056,9 +4057,10 @@ class Shop extends CI_Controller
                 <td class=\"tac\">" . number_format($rw['sum_qty']) . "</td>
                 <td class=\"tar\">" . number_format($rw['goods_price']) . "</td>
                 <td class=\"tar\">" . number_format($rw['use_price']) . "</td>
-                <td class=\"tar\">" . number_format($rw['sum_point']) . "</td>
+                
                 <td class=\"tar\">" . number_format($rw['baesong_price']) . "</td>
             </tr>";
+            // <td class=\"tar\">" . number_format($rw['sum_point']) . "</td>
         }
         // 복합과세처리
         $comm_tax_mny  = 0; // 과세금액
@@ -4092,7 +4094,10 @@ class Shop extends CI_Controller
             </tr>";
         }
 
-        $payPrice = display_price($tot_price);
+        $numberic_tot_price = str_replace(',', '', $tot_price);
+        $int_price = (int)$numberic_tot_price;
+        log_message('debug', "int_price : {$int_price}");
+        $payPrice = display_price($int_price);
         $de_tax_flagJs = "";
         if ($default['de_tax_flag_use']) {
             $de_tax_flagJs = "
@@ -5481,13 +5486,12 @@ class Shop extends CI_Controller
         //     $payMethod .= '<input type="radio" name="paymethod" id="paymethod_bank" value="무통장" onclick="calculate_paymethod(this.value);"> <label for="paymethod_bank">무통장입금</label>';
         // }
         if ($default['de_card_use']) {
-            $payMethod .= '<input type="radio" name="paymethod" id="paymethod_card" value="신용카드" onclick="calculate_paymethod(this.value);"> <label for="paymethod_card">신용카드</label>';
+            $payMethod .= '<input type="radio" name="paymethod" id="paymethod_card" value="신용카드" onclick="calculate_paymethod(this.value);" checked> <label for="paymethod_card">신용카드</label>';
         }
         if ($default['de_iche_use']) {
             $payMethod .= '<input type="radio" name="paymethod" id="paymethod_iche" value="계좌이체" onclick="calculate_paymethod(this.value);"> <label for="paymethod_iche">계좌이체</label>';
         }
-        // }
-
+    
         // if ($is_member && $config['usepoint_yes'] && ($tot_price <= $member['point'])) {
         //     $payMethod .= '<input type="radio" name="paymethod" id="paymethod_point" value="포인트" onclick="calculate_paymethod(this.value);"> <label for="paymethod_point">포인트결제</label>';
         // }

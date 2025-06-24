@@ -13,20 +13,20 @@
             <dt><span>상품금액</span></dt>
             <dd><strong><?=$stoalGoodsPrice?></strong></dd>
             <?=$stotalBaesong?>
-            <?=$stotalCoupon?>
-            <?=$stotalUsept?>
-            <?=$stotalUseMile?>
+            <!-- <?=$stotalCoupon?> -->
+            <!-- <?=$stotalUsept?> -->
+            <!-- <?=$stotalUseMile?> -->
             <?php if($gs['type'] == "timesale") { ?>
                 <?php if($stotalCancelPrice > 0) { ?>
                     <dt><span>환불액</span></dt>
                     <dd><strong><?=number_format($stotalCancelPrice)?>원</strong></dd>
                 <?php } else if($gs['isopen'] == 5){ ?>
-                    <dt><span>예치금 적립</span></dt>
-                    <dd><strong><?php echo $refund_mileage_price; ?></strong></dd>
+                    <!-- <dt><span>예치금 적립</span></dt>
+                    <dd><strong><?php echo $refund_mileage_price; ?></strong></dd> -->
                 <?php } ?>
             <?php } ?>
-            <dt class="sod_bsk_point"><span>포인트 적립</span></dt>
-            <dd class="sod_bsk_point"><strong><?php echo $stoalPoint;?></strong></dd>
+            <!-- <dt class="sod_bsk_point"><span>포인트 적립</span></dt>
+            <dd class="sod_bsk_point"><strong><?php echo $stoalPoint;?></strong></dd> -->
         </dl>
     </section>
     <section id="sod_fin_pay">

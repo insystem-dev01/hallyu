@@ -2809,11 +2809,17 @@ class Process extends CI_Controller
             $ss_cart_id .= $comma . $row['index_no'];
             $comma = ",";
         }
+
         $dan = 0;
+
+        $use_mileage = isset($_POST['use_mileage']) ? (int)$_POST['use_mileage'] : 0;
+        $numberic_tot_price = str_replace(',', '', $_POST['tot_price']);
+        $int_price = (int)$numberic_tot_price;
+        $tot_price = isset($_POST['tot_price']) ? $int_price : 0;
         if ($paymethod == '무통장')
             $dan = 1; // 주문접수 단계로 적용
 
-        if ((int)$_POST['tot_price'] == 0) { // 총 결제금액이 0 이면
+        if ($tot_price == 0) { // 총 결제금액이 0 이면
             $dan = 2; // 입금확인 단계로 적용
 
             // 포인트로 전액 결제시는 포인트결제로 값을 바꾼다.
@@ -2826,9 +2832,10 @@ class Process extends CI_Controller
                 $_POST['paymethod'] = '예치금';
             }
         }
-        set_session('tot_price', (int)$_POST['tot_price']);
+
+        set_session('tot_price', $tot_price);
         set_session('use_point', (int)$_POST['use_point']);
-        set_session('use_mileage', (int)$_POST['use_mileage']);
+        set_session('use_mileage', $use_mileage);
         $baesong_price    = explode("|", $_POST['baesong_price']); // 상품별 배송비
         $coupon_price    = explode("|", $_POST['coupon_price']); // 상품별 할인가
         $coupon_lo_id    = explode("|", $_POST['coupon_lo_id']); // 상품별 쿠폰 shop_coupon_log (필드:lo_id)
@@ -2836,7 +2843,7 @@ class Process extends CI_Controller
         $ss_cart_id        = explode(",", $_POST['ss_cart_id']); // 장바구니 idx
 
         $use_point = (int)$_POST['use_point']; // 포인트결제
-        $use_mileage = (int)$_POST['use_mileage']; // 포인트결제
+        // $use_mileage = (int)$_POST['use_mileage']; // 포인트결제
         $baesong_price2 = (int)$_POST['baesong_price2']; // 추가배송비
 
         if ($is_member)
@@ -3051,8 +3058,8 @@ class Process extends CI_Controller
             $od_vat_mny  = $info['comm_vat_mny'];
             $od_free_mny = $info['comm_free_mny'];
         } else {
-            $od_tax_mny  = round($_POST['tot_price'] / 1.1);
-            $od_vat_mny  = $_POST['tot_price'] - $od_tax_mny;
+            $od_tax_mny  = round($tot_price / 1.1);
+            $od_vat_mny  = $tot_price - $od_tax_mny;
             $od_free_mny = 0;
         }
 

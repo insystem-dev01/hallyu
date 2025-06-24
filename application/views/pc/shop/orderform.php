@@ -190,7 +190,7 @@
                 <tr>
                     <th scope="row">배송지선택</th>
                     <td class="td_label">
-                        <label><input type="radio" name="ad_sel_addr" value="1"> 주문자와 동일</label>
+                        <label><input type="radio" name="ad_sel_addr" value="1" checked> 주문자와 동일</label>
                         <label><input type="radio" name="ad_sel_addr" value="2"> 신규배송지</label>
                         <?= $arrivalList ?>
                     </td>

@@ -57,7 +57,7 @@
                         <tr>
                             <th scope="row">배송지선택</th>
                             <td>
-                                <input type="radio" name="ad_sel_addr" value="1" id="sel_addr1" class="css-checkbox lrg">
+                                <input type="radio" name="ad_sel_addr" value="1" id="sel_addr1" class="css-checkbox lrg" checked>
                                 <label for="sel_addr1" class="css-label padr5">주문자와 동일</label><br>
                                 <input type="radio" name="ad_sel_addr" value="2" id="sel_addr2" class="css-checkbox lrg">
                                 <label for="sel_addr2" class="css-label">신규배송지</label>
@@ -112,7 +112,7 @@
                             <th scope="row">결제방법</th>
                             <td>
                                 <select name="paymethod" onchange="calculate_paymethod(this.value);" class="wfull">
-                                    <option value="">선택하기</option>
+                                    <!-- <option value="">선택하기</option> -->
                                     <?php echo $multi_settle; ?>
                                 </select>
                             </td>

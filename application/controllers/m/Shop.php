@@ -2977,7 +2977,7 @@ class Shop extends CI_Controller
                 <div class=\"li_total\" style=\"padding-left:60px;height:auto !important;height:50px;min-height:50px;\">
                     <span class=\"total_img\">" . $this->funcomplex_lib->get_od_image($rw['od_id'], $gs['simg1'], 50, 50) . "</span>
                     <span class=\"total_price total_span\"><span>결제금액 </span>" . number_format($rw['use_price']) . "</span>
-                    <span class=\"total_point total_span\"><span>적립포인트 </span>" . number_format($rw['sum_point']) . "</span>
+                    
                 </div>
             </li>";
         }
@@ -3142,6 +3142,7 @@ class Shop extends CI_Controller
     private function Inicisorderform2($od_id, $od, $tot_price, $comm_tax_mny, $comm_vat_mny, $comm_free_mny, $goods)
     {
         $default = $this->load->get_var('default');
+
         $returnStr = "";
         $returnStr .= "
         <input type=\"hidden\" name=\"od_id\" value=\"{$od_id}\">
@@ -4183,7 +4184,6 @@ class Shop extends CI_Controller
             <div class=\"li_total\" style=\"padding-left:60px;height:auto !important;height:50px;min-height:50px;\">
                 <a href=\"{$href}\" class=\"total_img\">" . $this->funcomplex_lib->get_od_image($rw['od_id'], $gs['simg1'], 50, 50) . "</a>
                 <span class=\"total_price total_span\"><span>결제금액 </span>" . number_format($rw['use_price']) . "</span>
-                <span class=\"total_point total_span\"><span>적립포인트 </span>" . number_format($rw['sum_point']) . "</span>
             </div>";
             if ($dlcomp[0] && $rw['delivery_no']) {
                 $orderTb .= "
@@ -4201,17 +4201,17 @@ class Shop extends CI_Controller
         }
         $stotalPrice = display_price($stotal['price']);
         $stotalCoupon = "";
-        if ($stotal['coupon']) {
-            $stotalCoupon = "
-            <dt class=\"sod_bsk_dvr\"><span>쿠폰할인</span></dt>
-            <dd class=\"sod_bsk_dvr\"><strong>" . display_price($stotal['coupon']) . "</strong></dd>";
-        }
+        // if ($stotal['coupon']) {
+        //     $stotalCoupon = "
+        //     <dt class=\"sod_bsk_dvr\"><span>쿠폰할인</span></dt>
+        //     <dd class=\"sod_bsk_dvr\"><strong>" . display_price($stotal['coupon']) . "</strong></dd>";
+        // }
         $stotalUsept = "";
-        if ($stotal['usepoint']) {
-            $stotalUsept = "
-            <dt class=\"sod_bsk_dvr\"><span>포인트결제</span></dt>
-            <dd class=\"sod_bsk_dvr\"><strong>" . display_point($stotal['usepoint']) . "</strong></dd>";
-        }
+        // if ($stotal['usepoint']) {
+        //     $stotalUsept = "
+        //     <dt class=\"sod_bsk_dvr\"><span>포인트결제</span></dt>
+        //     <dd class=\"sod_bsk_dvr\"><strong>" . display_point($stotal['usepoint']) . "</strong></dd>";
+        // }
         $stotalUseMile = "";
         // if ($stotal['usemileage']) {
         //     $stotalUseMile = "
