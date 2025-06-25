@@ -83,12 +83,12 @@ $(function() {
 
 	// 퀵메뉴 상위로이동
     $("#anc_up").click(function(){
-        $("html, body").animate({ scrollTop: 0 }, 400);
+        $("html, body").animate({ scrollTop: 0 }, 600);
     });
 
 	// 하위로이동
     $("#anc_dw").click(function(){
-		$("html, body").animate({ scrollTop: $(document).height() }, 400);
+		$("html, body").animate({ scrollTop: $(document).height() }, 600);
     });
 
 	// 좌/우 퀵메뉴 높이 자동조절

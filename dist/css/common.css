@@ -9768,7 +9768,10 @@ table .spr,
 
 #container {
   width: 100%;
-  position: relative
+  position: relative;
+  /* transition: margin-top 0.1s ease; */
+  /* #hd 높이만큼 margin-top */
+  margin-top: var(--hd-height);
 }
 
 .bg.active {
@@ -10295,11 +10298,10 @@ table .spr,
 
 #tnb_inner li {
   float: left;
-  padding-left: 30px
 }
 
 #tnb_inner li a {
-  font-size: 13px;
+  font-size: 14px;
   color: #555555
 }
 
@@ -10307,9 +10309,48 @@ table .spr,
   color: #0278fe
 }
 
-#hd {
-  position: relative
+/* 1) 링크에 직접 테두리 추가 */
+#tnb_inner ul.fr li a {
+  display: inline-block;
+  /* inline 요소에도 테두리가 보이도록 */
+  padding: 0 15px;
+  /* 필요에 따라 조정 */
+  border: 1px solid transparent;
+  border-radius: 15px;
+  /* 모서리 둥글게 */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+
+#tnb_inner ul.fr li a:hover {
+  border-color: #0278fe;
+  background-color: #0278fe;
+  color: #fff;
+  /* 테두리 색상 */
+  /* 선택적으로 그림자 효과 추가 */
+  box-shadow: 0 0 8px rgba(2, 120, 254, 0.4);
+}
+
+:root {
+  /* JS가 이 변수에 #hd 높이를 대입해 줍니다 */
+  --hd-height: 0px;
+}
+
+#hd {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: #fff;
+}
+
+/* #hd.hd_fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+} */
 
 #hd:after {
   display: block;
@@ -10319,7 +10360,7 @@ table .spr,
 
 #hd_inner {
   width: 1280px;
-  height: 76px;
+  height: 60px;
   position: relative;
   left: calc((100% - 1280px) / 2);
   display: -webkit-box;
@@ -10330,7 +10371,8 @@ table .spr,
   align-items: center;
   -webkit-box-pack: end;
   -ms-flex-pack: end;
-  justify-content: flex-end
+  justify-content: flex-end;
+
 }
 
 #hd_inner .hd_logo {
@@ -10448,13 +10490,13 @@ table .spr,
   background-color: #fff
 }
 
-#gnb.gnd_fixed {
+/* #gnb.gnd_fixed {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 999
-}
+} */
 
 #gnb_inner {
   width: 1280px;
@@ -10745,8 +10787,8 @@ table .spr,
 
 .qbtn_bx {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 40vh;
+  right: 5vw;
   z-index: 997
 }
 
@@ -10757,16 +10799,17 @@ table .spr,
 
 .qbtn_bx #anc_up,
 .qbtn_bx #anc_dw {
-  width: 45px;
-  height: 45px;
-  font-size: 10px;
+  width: 60px;
+  height: 60px;
+  font-size: 15px;
   font-weight: 600;
   color: #aaa;
   margin-top: -1px;
   background-color: #fff;
   border: 1px solid #ddd;
   display: block;
-  outline: none
+  outline: none;
+  border-radius: 10px;
 }
 
 .qbtn_bx #anc_up:before,
@@ -13396,7 +13439,8 @@ ul.slick-dots {
 }
 
 .sub_tree li.active {
-  background-color: #0278fe
+  background-color: #0278fe;
+  border-radius: 10px;
 }
 
 .sub_tree li.active a {

@@ -2128,30 +2128,44 @@ class Shop extends CI_Controller
 
         $info_value_tag = "";
         if ($gs['info_value']) {
-            $info_data = unserialize(stripslashes($gs['info_value']));
+            $info_data = @unserialize(stripslashes($gs['info_value']));
             if (is_array($info_data)) {
                 $gubun = $gs['info_gubun'];
-                $info_array = (isset($gubun) && $gubun != "") ? $item_info[$gubun]['article'] : "";
-                $info_value_tag .= "
-                <div class=\"mart20 marb30\">
-                    <h2 class=\"anc_tit\">전자상거래 등에서의 상품정보제공고시</h2>
-                    <div class=\"tbl_frm01 tbl_wrap\">
-                        <table>
-                        <colgroup>
-                            <col width=\"25%\">
-                            <col width=\"75%\">
-                        </colgroup>";
-                foreach ($info_data as $key => $val) {
-                    $ii_title = $info_array[$key][0];
-                    $ii_value = $val;
-                    $info_value_tag .= "<tr><th scope=\"row\">{$ii_title}</th><td>{$ii_value}</td></tr>";
-                } //foreach
-                $info_value_tag .= "
-                        </table>
-                    </div>
-                </div>";
-            } //array
-        } //if
+
+                // ★ 배열이 아닐 때 빈 배열로 기본값 설정
+                $info_articles = [];
+                if (isset($item_info[$gubun]['article']) && is_array($item_info[$gubun]['article'])) {
+                    $info_articles = $item_info[$gubun]['article'];
+                }
+
+                if (! empty($info_articles)) {
+                    $info_value_tag .= "
+            <div class=\"mart20 marb30\">
+                <h2 class=\"anc_tit\">전자상거래 등에서의 상품정보제공고시</h2>
+                <div class=\"tbl_frm01 tbl_wrap\">
+                    <table>
+                    <colgroup>
+                        <col width=\"25%\">
+                        <col width=\"75%\">
+                    </colgroup>";
+
+                    foreach ($info_data as $key => $val) {
+                        // 키가 실제로 존재할 때만 렌더
+                        if (! isset($info_articles[$key][0])) {
+                            continue;
+                        }
+                        $ii_title = $info_articles[$key][0];
+                        $ii_value = $val;
+                        $info_value_tag .= "<tr><th scope=\"row\">{$ii_title}</th><td>{$ii_value}</td></tr>";
+                    }
+
+                    $info_value_tag .= "
+                    </table>
+                </div>
+            </div>";
+                }
+            }
+        }
         $view_user = $this->view_user($index_no, $gs, $token);
         $view_qa = $this->view_qa($index_no);
         $thumbTag2 = $this->thumbnail_lib->get_view_thumbnail($this->funcomplex_lib->conv_content($this->funcomplex_lib->get_policy_content($index_no), 1), 1000);

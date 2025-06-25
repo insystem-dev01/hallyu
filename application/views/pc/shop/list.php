@@ -1,7 +1,7 @@
-<h2 class="pg_tit">
+<!-- <h2 class="pg_tit">
 	<span><?php echo $ca['catename']; ?></span>
 	<p class="pg_nav">HOME<?php echo $getMove;?></p>
-</h2>
+</h2> -->
 <?=$heading?>
 <h2 class="pg_title">
 	<div class="inner">
