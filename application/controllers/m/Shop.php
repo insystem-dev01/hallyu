@@ -2995,17 +2995,17 @@ class Shop extends CI_Controller
         }
         $totPrice = display_price($stotal['price']);
         $couponTag = "";
-        if ($stotal['coupon']) {
-            $couponTag = "
-            <dt class=\"sod_bsk_dvr\"><span>쿠폰할인</span></dt>
-            <dd class=\"sod_bsk_dvr\"><strong>" . display_price($stotal['coupon']) . "</strong></dd>";
-        }
+        // if ($stotal['coupon']) {
+        //     $couponTag = "
+        //     <dt class=\"sod_bsk_dvr\"><span>쿠폰할인</span></dt>
+        //     <dd class=\"sod_bsk_dvr\"><strong>" . display_price($stotal['coupon']) . "</strong></dd>";
+        // }
         $usePointTag = "";
-        if ($stotal['usepoint']) {
-            $usePointTag = "
-            <dt class=\"sod_bsk_dvr\"><span>포인트결제</span></dt>
-            <dd class=\"sod_bsk_dvr\"><strong>" . display_point($stotal['usepoint']) . "</strong></dd>";
-        }
+        // if ($stotal['usepoint']) {
+        //     $usePointTag = "
+        //     <dt class=\"sod_bsk_dvr\"><span>포인트결제</span></dt>
+        //     <dd class=\"sod_bsk_dvr\"><strong>" . display_point($stotal['usepoint']) . "</strong></dd>";
+        // }
         $baesongTag = "";
         if ($stotal['baesong']) {
             $baesongTag = "
@@ -3279,7 +3279,7 @@ class Shop extends CI_Controller
                 <div class=\"li_total\" style=\"padding-left:60px;height:auto !important;height:50px;min-height:50px;\">
                     <span class=\"total_img\">" . $this->funcomplex_lib->get_od_image($rw['od_id'], $gs['simg1'], 50, 50) . "</span>
                     <span class=\"total_price total_span\"><span>결제금액 </span>" . number_format($rw['use_price']) . "</span>
-                    <span class=\"total_point total_span\"><span>적립포인트 </span>" . number_format($rw['sum_point']) . "</span>
+                    
                 </div>
             </li>";
         }
@@ -3312,17 +3312,17 @@ class Shop extends CI_Controller
         }
         $stotal_price = display_price($stotal['price']);
         $couponStr = "";
-        if ($stotal['coupon']) {
-            $couponStr = "
-            <dt class=\"sod_bsk_dvr\"><span>쿠폰할인</span></dt>
-            <dd class=\"sod_bsk_dvr\"><strong>" . display_price($stotal['coupon']) . "/strong></dd>";
-        }
+        // if ($stotal['coupon']) {
+        //     $couponStr = "
+        //     <dt class=\"sod_bsk_dvr\"><span>쿠폰할인</span></dt>
+        //     <dd class=\"sod_bsk_dvr\"><strong>" . display_price($stotal['coupon']) . "/strong></dd>";
+        // }
         $usepointStr = "";
-        if ($stotal['usepoint']) {
-            $usepointStr = "
-            <dt class=\"sod_bsk_dvr\"><span>포인트결제</span></dt>
-            <dd class=\"sod_bsk_dvr\"><strong>" . display_point($stotal['usepoint']) . "</strong></dd>";
-        }
+        // if ($stotal['usepoint']) {
+        //     $usepointStr = "
+        //     <dt class=\"sod_bsk_dvr\"><span>포인트결제</span></dt>
+        //     <dd class=\"sod_bsk_dvr\"><strong>" . display_point($stotal['usepoint']) . "</strong></dd>";
+        // }
         $baesongStr = "";
         if ($stotal['baesong']) {
             $baesongStr = "
@@ -3613,8 +3613,7 @@ class Shop extends CI_Controller
             <div class=\"li_total\">
                 <span class=\"total_price total_span\"><span>소계</span>
 				<strong>" . number_format($sell_price) . "</strong></span>
-                <span class=\"total_point total_span\"><span>적립포인트</span>
-				<strong>" . number_format($point) . "</strong></span>
+                
             </div>
             </li>";
             $tot_point        += $point;
@@ -3681,9 +3680,9 @@ class Shop extends CI_Controller
             if ($tot_price > 0) {
                 $deliveryPay .= "
                     <dt class=\"sod_bsk_cnt\"><span>총계</span></dt>
-                    <dd class=\"sod_bsk_cnt\"><strong>" . number_format($tot_price) . " 원</strong></dd>
-                    <dt><span>포인트</span></dt>
-                    <dd><strong>" . number_format($tot_point) . " P</strong></dd>";
+                    <dd class=\"sod_bsk_cnt\"><strong>" . number_format($tot_price) . " 원</strong></dd>";
+                    // <dt><span>포인트</span></dt>
+                    // <dd><strong>" . number_format($tot_point) . " P</strong></dd>";
             }
             $deliveryPay .= "
             </dl>";

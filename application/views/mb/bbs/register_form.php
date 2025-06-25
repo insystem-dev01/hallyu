@@ -2,15 +2,15 @@
 <!-- 회원정보 입력/수정 시작 { -->
 <!-- 모바일은 입점사 회원가입 안 씀-->
 <h2 class="pg_tit_join">
-    <?php echo ($type == "user") ? "회원가입" : "입점사 가입" ?>
+    <?= ($type == "user") ? $title : ("입점사 " . $title) ?>
 </h2>
 
-<script src="<?php echo base_url(); ?>js/jquery.register_form.js?v=<?= time() ?>"></script>
+<script src="<?= base_url(); ?>js/jquery.register_form.js?v=<?= time() ?>"></script>
 <?= $certifyJs ?>
-<form name="fregisterform" id="fregisterform" action="<?php echo $register_action_url; ?>" onsubmit="return fregisterform_submit(this);" method="post" autocomplete="off" enctype="multipart/form-data">
-    <input type="hidden" name="w" value="<?php echo $w; ?>">
-    <input type="hidden" name="mb_recommend" id="reg_mb_recommend" value="<?php echo $member['pt_id']; ?>">
-    <input type="hidden" name="cert_type" value="<?php echo $member['mb_certify']; ?>">
+<form name="fregisterform" id="fregisterform" action="<?= $register_action_url; ?>" onsubmit="return fregisterform_submit(this);" method="post" autocomplete="off" enctype="multipart/form-data">
+    <input type="hidden" name="w" value="<?= $w; ?>">
+    <input type="hidden" name="mb_recommend" id="reg_mb_recommend" value="<?= $member['pt_id']; ?>">
+    <input type="hidden" name="cert_type" value="<?= $member['mb_certify']; ?>">
     <input type="hidden" name="cert_no" value="">
     <input type="hidden" name="type" value="<?= $type ?>">
 
@@ -35,7 +35,7 @@
                         <span id="pwdInfo" class="check"></span>
                     </th>
                     <td style="flex-direction: column;">
-                        <input type="password" name="mb_password" id="reg_mb_password" <?php echo $required; ?> class="frm_input" maxlength="20" placeholder="비밀번호를 입력해주세요" onkeyup="pwd_check(this)">
+                        <input type="password" name="mb_password" id="reg_mb_password" <?= $required; ?> class="frm_input" maxlength="20" placeholder="비밀번호를 입력해주세요" onkeyup="pwd_check(this)">
                         <input type="hidden" id="pwdDigitConfirm">
                     </td>
                 </tr>
@@ -44,7 +44,7 @@
                         <span id="pwdDupInfo" class="check"></span>
                     </th>
                     <td style="flex-direction: column;">
-                        <input type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $required; ?> class="frm_input" maxlength="20" placeholder="비밀번호를 한번 더 입력해주세요" onkeyup="pwd_dup_check(this)">
+                        <input type="password" name="mb_password_re" id="reg_mb_password_re" <?= $required; ?> class="frm_input" maxlength="20" placeholder="비밀번호를 한번 더 입력해주세요" onkeyup="pwd_dup_check(this)">
                         <input type="hidden" id="pwdDupConfirm">
                     </td>
                 </tr>
@@ -74,30 +74,33 @@
                     }
                     ?>
                     <td>
-                        <input type="text" name="company_no_01" id="reg_company_no_01" <?php echo $required; ?> class="frm_input small_box" maxlength="3" onkeyup="only_num_typing(this); company_no_check(this);" value="<?php echo isset($seller['company_saupja_no']) ? $company_saupja_no[0] : "" ?>" placeholder="123">
+                        <input type="text" name="company_no_01" id="reg_company_no_01" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box" maxlength="3" onkeyup="only_num_typing(this); company_no_check(this);" value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[0] : "" ?>" placeholder="123">
                         <span class="dash">-</span>
-                        <input type="text" name="company_no_02" id="reg_company_no_02" <?php echo $required; ?> class="frm_input small_box" maxlength="2" onkeyup="only_num_typing(this); company_no_check(this);" value="<?php echo isset($seller['company_saupja_no']) ? $company_saupja_no[1] : "" ?>" placeholder="45">
+                        <input type="text" name="company_no_02" id="reg_company_no_02" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box" maxlength="2" onkeyup="only_num_typing(this); company_no_check(this);" value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[1] : "" ?>" placeholder="45">
                         <span class="dash">-</span>
-                        <input type="text" name="company_no_03" id="reg_company_no_03" <?php echo $required; ?> class="frm_input small_box" maxlength="5" onkeyup="only_num_typing(this); company_no_check(this);" value="<?php echo isset($seller['company_saupja_no']) ? $company_saupja_no[2] : "" ?>" placeholder="56789">
-                        <button type="button" onclick="reg_company_number_check()">중복확인</button>
+                        <input type="text" name="company_no_03" id="reg_company_no_03" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box" maxlength="5" onkeyup="only_num_typing(this); company_no_check(this);" value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[2] : "" ?>" placeholder="56789">
+                        <button type="button" onclick="reg_company_number_check()" <?= $disabled; ?>>중복확인</button>
                         <input type="hidden" id="company_no_check_confirm">
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row"><label for="reg_company_certification">사업자등록증</label>
-                        <span id="company_cert_file_check" class="check"></span>
-                    </th>
-                    <td>
-                        <!-- 숨겨진 파일 input -->
-                        <input type="file" id="company_cert_file" name="company_cert_file" accept=".jpg,.png,.pdf,.jpeg" onchange="preview_file('company_cert_file', 'company_file_name_display', 'company_cert_file_check', 'company_cert_file_check_confirm')">
 
-                        <!-- 선택된 파일명 표시 -->
-                        <input type="text" id="company_file_name_display" readonly placeholder="사업자등록번호 중복확인부터 해주세요.">
-                        <!-- 첨부 버튼 -->
-                        <button type="button" class="reg_cert_btn" id="active_company_cert" onclick="$('#company_cert_file').click();" disabled>파일첨부</button>
-                        <input type="hidden" id="company_cert_file_check_confirm">
-                    </td>
-                </tr>
+                <?php if ($w != 'u'): ?>
+                    <tr>
+                        <th scope="row"><label for="reg_company_certification">사업자등록증</label>
+                            <span id="company_cert_file_check" class="check"></span>
+                        </th>
+                        <td>
+                            <!-- 숨겨진 파일 input -->
+                            <input type="file" id="company_cert_file" name="company_cert_file" accept=".jpg,.png,.pdf,.jpeg" onchange="preview_file('company_cert_file', 'company_file_name_display', 'company_cert_file_check', 'company_cert_file_check_confirm')">
+
+                            <!-- 선택된 파일명 표시 -->
+                            <input type="text" id="company_file_name_display" readonly placeholder="사업자등록번호 중복확인부터 해주세요.">
+                            <!-- 첨부 버튼 -->
+                            <button type="button" class="reg_cert_btn" id="active_company_cert" onclick="$('#company_cert_file').click();" disabled>파일첨부</button>
+                            <input type="hidden" id="company_cert_file_check_confirm">
+                        </td>
+                    </tr>
+                <?php endif; ?>
                 <?= $register_use_hpTag ?>
                 <tr>
                     <th scope="row"><label for="reg_mb_email">E-mail</label>
@@ -111,9 +114,9 @@
                     }
                     ?>
                     <td class="vertical">
-                        <input type="hidden" name="old_email" value="<?php echo $member['email']; ?>">
+                        <input type="hidden" name="old_email" value="<?= $member['email']; ?>">
                         <div>
-                            <input type="text" name="mb_email" id="reg_mb_email" <?php echo $required; ?> class="frm_input mideum_box" placeholder="example" value="<?php echo isset($mb_email[0]) ? $mb_email[0] : "" ?>" onkeyup="basic_text_check('reg_mb_email','이메일을 작성해주세요.')">
+                            <input type="text" name="mb_email" id="reg_mb_email" <?= $required; ?> class="frm_input mideum_box" placeholder="example" value="<?= isset($mb_email[0]) ? $mb_email[0] : "" ?>" onkeyup="basic_text_check('reg_mb_email','이메일을 작성해주세요.')">
                             <span class="dash">@</span>
                             <select name="mb_email_addr" class="frm_input mideum_box" onchange="email_addr_change(this)" data-type="mb_email_ect">
                                 <option value="naver.com" <?= $mb_email[1] == "naver.com" ? "selected" : "" ?>>naver.com</option>
@@ -126,7 +129,7 @@
                         </div>
                         <input type="text" name="mb_email_ect" id="mb_email_ect" class="email_ect" value="<?= $mb_email[1] ?>">
                         <span class="frm_info">
-                            <input type="checkbox" name="mb_mailling" value="Y" id="reg_mb_mailling" <?php echo $memberMail; ?>>
+                            <input type="checkbox" name="mb_mailling" value="Y" id="reg_mb_mailling" <?= $memberMail; ?>>
                             <label for="reg_mb_mailling">
                                 <span>정보 메일을 받겠습니다.</span>
                             </label>
@@ -149,7 +152,7 @@
                         <span id="pwdInfo" class="check"></span>
                     </th>
                     <td style="flex-direction: column;">
-                        <input type="password" name="mb_password" id="reg_mb_password" <?php echo $required; ?> class="frm_input" maxlength="20" placeholder="비밀번호를 입력해주세요" onkeyup="pwd_check(this)">
+                        <input type="password" name="mb_password" id="reg_mb_password" <?= $required; ?> class="frm_input" maxlength="20" placeholder="비밀번호를 입력해주세요" onkeyup="pwd_check(this)">
                         <input type="hidden" id="pwdDigitConfirm">
                     </td>
                 </tr>
@@ -158,7 +161,7 @@
                         <span id="pwdDupInfo" class="check"></span>
                     </th>
                     <td style="flex-direction: column;">
-                        <input type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $required; ?> class="frm_input" maxlength="20" placeholder="비밀번호를 한번 더 입력해주세요" onkeyup="pwd_dup_check(this)">
+                        <input type="password" name="mb_password_re" id="reg_mb_password_re" <?= $required; ?> class="frm_input" maxlength="20" placeholder="비밀번호를 한번 더 입력해주세요" onkeyup="pwd_dup_check(this)">
                         <input type="hidden" id="pwdDupConfirm">
                     </td>
                 </tr>
@@ -171,7 +174,7 @@
                         <span id="company_owner_check" class="check"></span>
                     </th>
                     <td>
-                        <input type="text" name="company_owner" id="company_owner" <?php echo $required; ?> class="frm_input" placeholder="ex) 홍길동" value="<?php echo isset($seller['company_owner']) ? $seller['company_owner'] : "" ?>" onkeyup="basic_text_check('company_owner','대표자명을 작성해주세요.')">
+                        <input type="text" name="company_owner" id="company_owner" <?= $required; ?> class="frm_input" placeholder="ex) 홍길동" value="<?= isset($seller['company_owner']) ? $seller['company_owner'] : "" ?>" onkeyup="basic_text_check('company_owner','대표자명을 작성해주세요.')">
 
                         <input type="hidden" id="company_owner_check_confirm">
                     </td>
@@ -199,32 +202,34 @@
                     }
                     ?>
                     <td>
-                        <input type="text" name="company_no_01" id="reg_company_no_01" <?php echo $required; ?> class="frm_input small_box" maxlength="3" onkeyup="only_num_typing(this); company_no_check(this);" value="<?php echo isset($seller['company_saupja_no']) ? $company_saupja_no[0] : "" ?>" placeholder="123">
+                        <input type="text" name="company_no_01" id="reg_company_no_01" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box" maxlength="3" onkeyup="only_num_typing(this); company_no_check(this);" value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[0] : "" ?>" placeholder="123">
                         <span class="dash">-</span>
-                        <input type="text" name="company_no_02" id="reg_company_no_02" <?php echo $required; ?> class="frm_input small_box" maxlength="2" onkeyup="only_num_typing(this); company_no_check(this);" value="<?php echo isset($seller['company_saupja_no']) ? $company_saupja_no[1] : "" ?>" placeholder="45">
+                        <input type="text" name="company_no_02" id="reg_company_no_02" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box" maxlength="2" onkeyup="only_num_typing(this); company_no_check(this);" value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[1] : "" ?>" placeholder="45">
                         <span class="dash">-</span>
-                        <input type="text" name="company_no_03" id="reg_company_no_03" <?php echo $required; ?> class="frm_input small_box" maxlength="5" onkeyup="only_num_typing(this); company_no_check(this);" value="<?php echo isset($seller['company_saupja_no']) ? $company_saupja_no[2] : "" ?>" placeholder="56789">
-                        <button type="button" onclick="reg_company_number_check()">중복확인</button>
+                        <input type="text" name="company_no_03" id="reg_company_no_03" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box" maxlength="5" onkeyup="only_num_typing(this); company_no_check(this);" value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[2] : "" ?>" placeholder="56789">
+                        <button type="button" onclick="reg_company_number_check()" <?= $disabled; ?>>중복확인</button>
 
                         <input type="hidden" id="company_no_check_confirm">
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row"><label for="reg_company_certification">사업자등록증</label>
-                        <span id="company_cert_file_check" class="check"></span>
-                    </th>
-                    <td>
-                        <!-- 숨겨진 파일 input -->
-                        <input type="file" id="company_cert_file" name="company_cert_file" accept=".jpg,.png,.pdf,.jpeg" onchange="preview_file('company_cert_file', 'company_file_name_display', 'company_cert_file_check', 'company_cert_file_check_confirm')">
+                <?php if ($w != 'u'): ?>
+                    <tr>
+                        <th scope="row"><label for="reg_company_certification">사업자등록증</label>
+                            <span id="company_cert_file_check" class="check"></span>
+                        </th>
+                        <td>
+                            <!-- 숨겨진 파일 input -->
+                            <input type="file" id="company_cert_file" name="company_cert_file" accept=".jpg,.png,.pdf,.jpeg" onchange="preview_file('company_cert_file', 'company_file_name_display', 'company_cert_file_check', 'company_cert_file_check_confirm')">
 
-                        <!-- 선택된 파일명 표시 -->
-                        <input type="text" id="company_file_name_display" readonly placeholder="사업자등록번호 중복확인부터 해주세요.">
-                        <!-- 첨부 버튼 -->
-                        <button type="button" class="reg_cert_btn" id="active_company_cert" onclick="$('#company_cert_file').click();" disabled>파일첨부</button>
+                            <!-- 선택된 파일명 표시 -->
+                            <input type="text" id="company_file_name_display" readonly placeholder="사업자등록번호 중복확인부터 해주세요.">
+                            <!-- 첨부 버튼 -->
+                            <button type="button" class="reg_cert_btn" id="active_company_cert" onclick="$('#company_cert_file').click();" disabled>파일첨부</button>
 
-                        <input type="hidden" id="company_cert_file_check_confirm">
-                    </td>
-                </tr>
+                            <input type="hidden" id="company_cert_file_check_confirm">
+                        </td>
+                    </tr>
+                <?php endif; ?>
                 <tr>
                     <th scope="row"><label for="reg_company_tax_email">세금계산서 이메일</label>
                         <span id="company_tax_email_check" class="check"></span>
@@ -238,7 +243,7 @@
                     ?>
                     <td class="vertical">
                         <div>
-                            <input type="text" name="company_tax_email" id="reg_company_tax_email" <?php echo $required; ?> class="frm_input small_box2" placeholder="example" value="<?php echo isset($company_tax_email[0]) ? $company_tax_email[0] : "" ?>" onkeyup="company_tax_email_check(this)">
+                            <input type="text" name="company_tax_email" id="reg_company_tax_email" <?= $required; ?> class="frm_input small_box2" placeholder="example" value="<?= isset($company_tax_email[0]) ? $company_tax_email[0] : "" ?>" onkeyup="company_tax_email_check(this)">
                             <span class="dash">@</span>
                             <select name="company_tax_email_addr" class="frm_input small_box2" onchange="email_addr_change(this)" data-type="company_tax_email_ect">
                                 <option value="naver.com" <?= $company_tax_email[1] == "naver.com" ? "selected" : "" ?>>naver.com</option>
@@ -260,7 +265,7 @@
                         <span id="company_item_check" class="check"></span>
                     </th>
                     <td>
-                        <input type="text" name="company_item" id="company_item" <?php echo $required; ?> class="frm_input" value="<?php echo isset($seller['company_item']) ? $seller['company_item'] : "" ?>" onkeyup="basic_text_check('company_item','업태를 작성해주세요.')">
+                        <input type="text" name="company_item" id="company_item" <?= $required; ?> class="frm_input" value="<?= isset($seller['company_item']) ? $seller['company_item'] : "" ?>" onkeyup="basic_text_check('company_item','업태를 작성해주세요.')">
 
                         <input type="hidden" id="company_item_check_confirm">
                     </td>
@@ -270,7 +275,7 @@
                         <span id="company_service_check" class="check"></span>
                     </th>
                     <td>
-                        <input type="text" name="company_service" id="company_service" <?php echo $required; ?> class="frm_input" value="<?php echo isset($seller['company_service']) ? $seller['company_service'] : "" ?>" onkeyup="basic_text_check('company_service','종목을 작성해주세요.')">
+                        <input type="text" name="company_service" id="company_service" <?= $required; ?> class="frm_input" value="<?= isset($seller['company_service']) ? $seller['company_service'] : "" ?>" onkeyup="basic_text_check('company_service','종목을 작성해주세요.')">
 
                         <input type="hidden" id="company_service_check_confirm">
                     </td>
@@ -279,12 +284,19 @@
                     <th scope="row"><label for="reg_company_tel">대표번호</label>
                         <span id="company_tel_check" class="check"></span>
                     </th>
+                    <?php
+                    $company_tel = "";
+                    if (!empty($seller['company_tel'])) {
+                        $company_tel = $seller['company_tel'];
+                        $company_tel = explode("-", $company_tel);
+                    }
+                    ?>
                     <td>
-                        <input type="text" name="company_tel_01" id="company_tel_01" <?php echo $required; ?> class="frm_input small_box2" value="<?php echo isset($seller['company_tel']) ? $company_tel[0] : "" ?>" maxlength="3" onkeyup="only_num_typing(this); company_tel_check();" placeholder="">
+                        <input type="text" name="company_tel_01" id="company_tel_01" <?= $required; ?> class="frm_input small_box2" value="<?= isset($seller['company_tel']) ? $company_tel[0] : "" ?>" maxlength="3" onkeyup="only_num_typing(this); company_tel_check();" placeholder="">
                         <span class="dash">-</span>
-                        <input type="text" name="company_tel_02" id="company_tel_02" <?php echo $required; ?> class="frm_input small_box2" value="<?php echo isset($seller['company_tel']) ? $company_tel[1] : "" ?>" maxlength="4" onkeyup="only_num_typing(this); company_tel_check();" placeholder="">
+                        <input type="text" name="company_tel_02" id="company_tel_02" <?= $required; ?> class="frm_input small_box2" value="<?= isset($seller['company_tel']) ? $company_tel[1] : "" ?>" maxlength="4" onkeyup="only_num_typing(this); company_tel_check();" placeholder="">
                         <span class="dash">-</span>
-                        <input type="text" name="company_tel_03" id="company_tel_03" <?php echo $required; ?> class="frm_input small_box2" value="<?php echo isset($seller['company_tel']) ? $company_tel[2] : "" ?>" maxlength="4" onkeyup="only_num_typing(this); company_tel_check();" placeholder="">
+                        <input type="text" name="company_tel_03" id="company_tel_03" <?= $required; ?> class="frm_input small_box2" value="<?= isset($seller['company_tel']) ? $company_tel[2] : "" ?>" maxlength="4" onkeyup="only_num_typing(this); company_tel_check();" placeholder="">
 
                         <input type="hidden" id="company_tel_check_confirm">
                     </td>
@@ -295,7 +307,7 @@
                         <span id="company_hompage_check" class="check"></span>
                     </th>
                     <td>
-                        <input type="text" name="company_hompage" id="company_hompage" <?php echo $required; ?> class="frm_input" value="<?php echo isset($seller['company_hompage']) ? $seller['company_hompage'] : "" ?>" placeholder="https://hallyu.kr" onkeyup="basic_text_check('company_hompage','홈페이지를 작성해주세요.')">
+                        <input type="text" name="company_hompage" id="company_hompage" <?= $required; ?> class="frm_input" value="<?= isset($seller['company_hompage']) ? $seller['company_hompage'] : "" ?>" placeholder="https://hallyu.kr" onkeyup="basic_text_check('company_hompage','홈페이지를 작성해주세요.')">
                         <input type="hidden" id="company_hompage_check_confirm">
                     </td>
                 </tr>
@@ -304,7 +316,7 @@
                         <span id="memo_check" class="check"></span>
                     </th>
                     <td>
-                        <textarea name="memo" id="memo" onkeyup="basic_text_check('memo','회사소개를 작성해주세요.')" placeholder="회사소개를 작성해주세요."><?php echo isset($seller['memo']) ? $seller['memo'] : "" ?></textarea>
+                        <textarea name="memo" id="memo" onkeyup="basic_text_check('memo','회사소개를 작성해주세요.')" placeholder="회사소개를 작성해주세요."><?= isset($seller['memo']) ? $seller['memo'] : "" ?></textarea>
 
                         <input type="hidden" id="memo_check_confirm">
                     </td>
@@ -318,7 +330,7 @@
                         <span id="company_brand_name_check" class="check"></span>
                     </th>
                     <td>
-                        <input type="text" name="company_brand_name" id="company_brand_name" <?php echo $required; ?> class="frm_input" value="<?php echo isset($seller['info_name']) ? $seller['info_name'] : "" ?>" placeholder="예) 캘빈클라인" onkeyup="basic_text_check('company_brand_name','브랜드명를 작성해주세요.')">
+                        <input type="text" name="company_brand_name" id="company_brand_name" <?= $required; ?> class="frm_input" value="<?= isset($seller['info_name']) ? $seller['info_name'] : "" ?>" placeholder="예) 캘빈클라인" onkeyup="basic_text_check('company_brand_name','브랜드명를 작성해주세요.')">
 
                         <input type="hidden" id="company_brand_name_check_confirm">
                     </td>
@@ -335,13 +347,13 @@
                     }
                     ?>
                     <td class="category">
-                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="1" <?php echo (isset($seller['company_category']) && in_array("1", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">의류</span></div>
-                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="2" <?php echo (isset($seller['company_category']) && in_array("2", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">생활용품</span></div>
-                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="3" <?php echo (isset($seller['company_category']) && in_array("3", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">주방용품</span></div>
-                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="4" <?php echo (isset($seller['company_category']) && in_array("4", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">욕실용품</span></div>
-                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="5" <?php echo (isset($seller['company_category']) && in_array("5", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">반려동물용품</span></div>
-                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="6" <?php echo (isset($seller['company_category']) && in_array("6", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">가구</span></div>
-                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="7" <?php echo (isset($seller['company_category']) && in_array("7", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">식품</span></div>
+                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="1" <?= (isset($seller['company_category']) && in_array("1", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">의류</span></div>
+                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="2" <?= (isset($seller['company_category']) && in_array("2", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">생활용품</span></div>
+                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="3" <?= (isset($seller['company_category']) && in_array("3", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">주방용품</span></div>
+                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="4" <?= (isset($seller['company_category']) && in_array("4", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">욕실용품</span></div>
+                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="5" <?= (isset($seller['company_category']) && in_array("5", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">반려동물용품</span></div>
+                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="6" <?= (isset($seller['company_category']) && in_array("6", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">가구</span></div>
+                        <div class="chk_box"><input type="checkbox" name="company_category[]" value="7" <?= (isset($seller['company_category']) && in_array("7", $company_category)) ? 'checked' : ''; ?> onclick="company_category_check()"> <span class="dash">식품</span></div>
 
                         <input type="hidden" id="company_category_check_confirm">
                     </td>
@@ -351,7 +363,7 @@
                         <span id="company_item_info_check" class="check"></span>
                     </th>
                     <td>
-                        <textarea name="company_item_info" id="company_item_info" onkeyup="basic_text_check('company_item_info','상품소개를 작성해주세요.')" placeholder="상품소개를 작성해주세요."><?php echo isset($seller['company_item_info']) ? $seller['company_item_info'] : "" ?></textarea>
+                        <textarea name="company_item_info" id="company_item_info" onkeyup="basic_text_check('company_item_info','상품소개를 작성해주세요.')" placeholder="상품소개를 작성해주세요."><?= isset($seller['company_item_info']) ? $seller['company_item_info'] : "" ?></textarea>
 
                         <input type="hidden" id="company_item_info_check_confirm">
                     </td>
@@ -368,9 +380,9 @@
                     }
                     ?>
                     <td>
-                        <input type="checkbox" name="company_sales_type[]" value="1" onclick="company_sales_type_check()" <?php echo (isset($seller['company_sales_type']) && in_array("1", $company_sales_type)) ? 'checked' : ''; ?>> <span class="dash">수입</span>
-                        <input type="checkbox" name="company_sales_type[]" value="2" onclick="company_sales_type_check()" <?php echo (isset($seller['company_sales_type']) && in_array("2", $company_sales_type)) ? 'checked' : ''; ?>> <span class="dash">제조</span>
-                        <input type="checkbox" name="company_sales_type[]" value="3" onclick="company_sales_type_check()" <?php echo (isset($seller['company_sales_type']) && in_array("3", $company_sales_type)) ? 'checked' : ''; ?>> <span class="dash">유통</span>
+                        <input type="checkbox" name="company_sales_type[]" value="1" onclick="company_sales_type_check()" <?= (isset($seller['company_sales_type']) && in_array("1", $company_sales_type)) ? 'checked' : ''; ?>> <span class="dash">수입</span>
+                        <input type="checkbox" name="company_sales_type[]" value="2" onclick="company_sales_type_check()" <?= (isset($seller['company_sales_type']) && in_array("2", $company_sales_type)) ? 'checked' : ''; ?>> <span class="dash">제조</span>
+                        <input type="checkbox" name="company_sales_type[]" value="3" onclick="company_sales_type_check()" <?= (isset($seller['company_sales_type']) && in_array("3", $company_sales_type)) ? 'checked' : ''; ?>> <span class="dash">유통</span>
 
                         <input type="hidden" id="company_sales_type_check_confirm">
                     </td>
@@ -380,7 +392,7 @@
                         <span id="company_entry_check" class="check"></span>
                     </th>
                     <td>
-                        <input type="text" name="company_entry" id="company_entry" <?php echo $required; ?> class="frm_input" value="<?php echo isset($seller['info_name']) ? $seller['info_name'] : "" ?>" placeholder="예) 쿠팡, 11번가 등 현재 입점몰을 입력해주세요." onkeyup="basic_text_check('company_entry','입점몰을 작성해주세요.')">
+                        <input type="text" name="company_entry" id="company_entry" <?= $required; ?> class="frm_input" value="<?= isset($seller['info_name']) ? $seller['info_name'] : "" ?>" placeholder="예) 쿠팡, 11번가 등 현재 입점몰을 입력해주세요." onkeyup="basic_text_check('company_entry','입점몰을 작성해주세요.')">
                         <input type="hidden" id="company_entry_check_confirm">
                     </td>
                 </tr>
@@ -393,7 +405,7 @@
                         <span id="bank_name_check" class="check"></span>
                     </th>
                     <td>
-                        <input type="text" name="bank_name" id="bank_name" <?php echo $required; ?> class="frm_input" value="<?php echo isset($seller['bank_name']) ? $seller['bank_name'] : "" ?>" placeholder="예) 기업은행" onkeyup="basic_text_check('bank_name','은행명을 작성해주세요.')">
+                        <input type="text" name="bank_name" id="bank_name" <?= $required; ?> <?= $readonly; ?> class="frm_input" value="<?= isset($seller['bank_name']) ? $seller['bank_name'] : "" ?>" placeholder="예) 기업은행" onkeyup="basic_text_check('bank_name','은행명을 작성해주세요.')">
 
                         <input type="hidden" id="bank_name_check_confirm">
                     </td>
@@ -402,13 +414,20 @@
                     <th scope="row"><label for="bank_account">계좌번호</label>
                         <span id="bank_account_check" class="check"></span>
                     </th>
+                    <?php
+                    $bank_account = "";
+                    if (!empty($seller['bank_account'])) {
+                        $bank_account = $seller['bank_account'];
+                        $bank_account = explode("-", $bank_account);
+                    }
+                    ?>
                     <td>
 
-                        <input type="text" name="bank_account_01" id="bank_account_01" <?php echo $required; ?> class="frm_input small_box2" value="<?php echo isset($seller['bank_account']) ? $info_tel[0] : "" ?>" maxlength="10" onkeyup="only_num_typing(this); bank_account_check();" placeholder="">
+                        <input type="text" name="bank_account_01" id="bank_account_01" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box2" value="<?= isset($seller['bank_account']) ? $bank_account[0] : "" ?>" maxlength="10" onkeyup="only_num_typing(this); bank_account_check();" placeholder="">
                         <span class="dash">-</span>
-                        <input type="text" name="bank_account_02" id="bank_account_02" <?php echo $required; ?> class="frm_input small_box2" value="<?php echo isset($seller['bank_account']) ? $info_tel[1] : "" ?>" maxlength="10" onkeyup="only_num_typing(this); bank_account_check();" placeholder="">
+                        <input type="text" name="bank_account_02" id="bank_account_02" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box2" value="<?= isset($seller['bank_account']) ? $bank_account[1] : "" ?>" maxlength="10" onkeyup="only_num_typing(this); bank_account_check();" placeholder="">
                         <span class="dash">-</span>
-                        <input type="text" name="bank_account_03" id="bank_account_03" <?php echo $required; ?> class="frm_input small_box2" value="<?php echo isset($seller['bank_account']) ? $info_tel[2] : "" ?>" maxlength="10" onkeyup="only_num_typing(this); bank_account_check();" placeholder="">
+                        <input type="text" name="bank_account_03" id="bank_account_03" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box2" value="<?= isset($seller['bank_account']) ? $bank_account[2] : "" ?>" maxlength="10" onkeyup="only_num_typing(this); bank_account_check();" placeholder="">
 
                         <input type="hidden" id="bank_account_check_confirm">
                     </td>
@@ -418,28 +437,29 @@
                         <span id="bank_holder_check" class="check"></span>
                     </th>
                     <td>
-                        <input type="text" name="bank_holder" id="bank_holder" <?php echo $required; ?> class="frm_input" value="<?php echo isset($seller['bank_holder']) ? $seller['bank_holder'] : "" ?>" placeholder="김베리" onkeyup="basic_text_check('bank_holder','예금주명을 작성해주세요.')">
+                        <input type="text" name="bank_holder" id="bank_holder" <?= $required; ?> <?= $readonly; ?> class="frm_input" value="<?= isset($seller['bank_holder']) ? $seller['bank_holder'] : "" ?>" placeholder="김베리" onkeyup="basic_text_check('bank_holder','예금주명을 작성해주세요.')">
 
                         <input type="hidden" id="bank_holder_check_confirm">
                     </td>
                 </tr>
 
-                <tr>
-                    <th scope="row"><label for="reg_account_certification">통장사본</label>
-                        <span id="bank_account_file_check" class="check"></span>
-                    </th>
-                    <td>
-                        <!-- 숨겨진 파일 input -->
-                        <input type="file" id="bank_account_file" name="bank_account_file" accept=".jpg,.png,.pdf,.jpeg" onchange="preview_file('bank_account_file', 'bank_file_name_display', 'bank_account_file_check', 'bank_account_file_check_confirm')">
+                <?php if ($w != "u"): ?>
+                    <tr>
+                        <th scope="row"><label for="reg_account_certification">통장사본</label>
+                            <span id="bank_account_file_check" class="check"></span>
+                        </th>
+                        <td>
+                            <!-- 숨겨진 파일 input -->
+                            <input type="file" id="bank_account_file" name="bank_account_file" accept=".jpg,.png,.pdf,.jpeg" onchange="preview_file('bank_account_file', 'bank_file_name_display', 'bank_account_file_check', 'bank_account_file_check_confirm')">
 
-                        <!-- 선택된 파일명 표시 -->
-                        <input type="text" id="bank_file_name_display" readonly placeholder="통장사본 입력 후 파일첨부 해주세요.">
-                        <!-- 첨부 버튼 -->
-                        <button type="button" class="reg_cert_btn" id="active_bank_cert" onclick="$('#bank_account_file').click();">파일첨부</button>
-                        <input type="hidden" id="bank_account_file_check_confirm">
-                    </td>
-                </tr>
-
+                            <!-- 선택된 파일명 표시 -->
+                            <input type="text" id="bank_file_name_display" readonly placeholder="통장사본 입력 후 파일첨부 해주세요.">
+                            <!-- 첨부 버튼 -->
+                            <button type="button" class="reg_cert_btn" id="active_bank_cert" onclick="$('#bank_account_file').click();">파일첨부</button>
+                            <input type="hidden" id="bank_account_file_check_confirm">
+                        </td>
+                    </tr>
+                <?php endif; ?>
                 <tr>
                     <th colspan="2" class="title">담당자 정보</th>
                 </tr>
@@ -448,7 +468,7 @@
                         <span id="info_name_check" class="check"></span>
                     </th>
                     <td>
-                        <input type="text" name="info_name" id="info_name" <?php echo $required; ?> class="frm_input" value="<?php echo isset($seller['info_name']) ? $seller['info_name'] : "" ?>" placeholder="김베리" onkeyup="basic_text_check('info_name','담당자명을 작성해주세요.')">
+                        <input type="text" name="info_name" id="info_name" <?= $required; ?> class="frm_input" value="<?= isset($seller['info_name']) ? $seller['info_name'] : "" ?>" placeholder="김베리" onkeyup="basic_text_check('info_name','담당자명을 작성해주세요.')">
 
                         <input type="hidden" id="info_name_check_confirm">
                     </td>
@@ -465,11 +485,11 @@
                     }
                     ?>
                     <td>
-                        <input type="text" name="info_tel_01" id="info_tel_01" <?php echo $required; ?> class="frm_input small_box" value="<?php echo isset($seller['info_tel']) ? $info_tel[0] : "010" ?>" maxlength="3" onkeyup="only_num_typing(this); info_tel_check();" placeholder="010">
+                        <input type="text" name="info_tel_01" id="info_tel_01" <?= $required; ?> class="frm_input small_box" value="<?= isset($seller['info_tel']) ? $info_tel[0] : "010" ?>" maxlength="3" onkeyup="only_num_typing(this); info_tel_check();" placeholder="010">
                         <span class="dash">-</span>
-                        <input type="text" name="info_tel_02" id="info_tel_02" <?php echo $required; ?> class="frm_input small_box" value="<?php echo isset($seller['info_tel']) ? $info_tel[1] : "" ?>" maxlength="4" onkeyup="only_num_typing(this); info_tel_check();" placeholder="1234">
+                        <input type="text" name="info_tel_02" id="info_tel_02" <?= $required; ?> class="frm_input small_box" value="<?= isset($seller['info_tel']) ? $info_tel[1] : "" ?>" maxlength="4" onkeyup="only_num_typing(this); info_tel_check();" placeholder="1234">
                         <span class="dash">-</span>
-                        <input type="text" name="info_tel_03" id="info_tel_03" <?php echo $required; ?> class="frm_input small_box" value="<?php echo isset($seller['info_tel']) ? $info_tel[2] : "" ?>" maxlength="4" onkeyup="only_num_typing(this); info_tel_check();" placeholder="5678">
+                        <input type="text" name="info_tel_03" id="info_tel_03" <?= $required; ?> class="frm_input small_box" value="<?= isset($seller['info_tel']) ? $info_tel[2] : "" ?>" maxlength="4" onkeyup="only_num_typing(this); info_tel_check();" placeholder="5678">
 
                         <input type="hidden" id="info_tel_check_confirm">
                     </td>
@@ -487,7 +507,7 @@
                     ?>
                     <td class="vertical">
                         <div>
-                            <input type="text" name="info_email" id="info_email" <?php echo $required; ?> class="frm_input mideum_box" placeholder="example" value="<?php echo isset($info_email[0]) ? $info_email[0] : "" ?>" onkeyup="basic_text_check('info_email','담당자 이메일을 작성해주세요.')">
+                            <input type="text" name="info_email" id="info_email" <?= $required; ?> class="frm_input mideum_box" placeholder="example" value="<?= isset($info_email[0]) ? $info_email[0] : "" ?>" onkeyup="basic_text_check('info_email','담당자 이메일을 작성해주세요.')">
                             <span class="dash">@</span>
                             <select name="info_email_addr" class="frm_input mideum_box" onchange="email_addr_change(this)" data-type="info_email_ect">
                                 <option value="naver.com" <?= $info_email[1] == "naver.com" ? "selected" : "" ?>>naver.com</option>
@@ -513,7 +533,7 @@
                 <tr class="first_line">
                     <th scope="row"><label for="reg_mb_nickname">닉네임</label></th>
                     <td>
-                        <input type="text" name="mb_nickname" id="reg_mb_nickname" <?php echo $required; ?> class="frm_input" value="<?php echo isset($member['nickname']) ? $member['nickname'] : "" ?>">
+                        <input type="text" name="mb_nickname" id="reg_mb_nickname" <?= $required; ?> class="frm_input" value="<?= isset($member['nickname']) ? $member['nickname'] : "" ?>">
                         <button type="button" onclick="reg_mb_nickname_check()">중복확인</button>
                     </td>
                 </tr>
@@ -541,7 +561,7 @@
                 <tr>
                     <th colspan="2" class="title">이용약관</th>
                 </tr>
-                <div class="first_line">
+                <tr class="first_line">
                     <table class="terms">
                         <tbody>
                             <tr>
@@ -562,7 +582,7 @@
                                                 </label>
                                                 <span class="terms" onclick="open_term(1);">약관 보기 ></span>
                                             </div>
-                                            <div id="term1" class="text_box"><?php echo $config['shop_provision']; ?></div>
+                                            <div id="term1" class="text_box"><?= $config['shop_provision']; ?></div>
                                         <?php } ?>
                                         <div class="terms_box">
                                             <input type="checkbox" name="agree2" value="1" id="agree2">
@@ -591,16 +611,7 @@
 
                                             <?php } ?>
                                         </div>
-                                        <!-- <?php if ($type == "user") { ?>
-                                <div class="terms_box">
-                                    <input type="checkbox" name="agree3" value="1" id="agree3">
-                                    <label for="agree3">
-                                        <span>마케팅 수신 동의<span class="req">(선택)</span></span>
-                                    </label>
-                                    <span class="terms" onclick="open_term(3);">약관 보기 ></span>
-                                </div>
-                                <div id="term3" class="text_box"><?php echo $config['shop_marketing']; ?></div>
-                            <?php } ?> -->
+
                                     </div>
                                 </td>
                             </tr>
@@ -622,7 +633,7 @@
                                                 <span class="terms" onclick="open_term(4);">약관 보기 ></span>
                                             </div>
                                             <span id="agree_check4" class="warn_msg"></span>
-                                            <div id="term4" class="text_box"><?php echo nl2br($config['shop_delivery_policy']); ?></div>
+                                            <div id="term4" class="text_box"><?= nl2br($config['shop_delivery_policy']); ?></div>
 
                                             <!-- 결제정책 약관동의 -->
                                             <div class="terms_box">
@@ -634,7 +645,7 @@
                                                 <span class="terms" onclick="open_term(5);">약관 보기 ></span>
                                             </div>
                                             <span id="agree_check5" class="warn_msg"></span>
-                                            <div id="term5" class="text_box"><?php echo nl2br($config['shop_charge_policy']); ?></div>
+                                            <div id="term5" class="text_box"><?= nl2br($config['shop_charge_policy']); ?></div>
 
                                             <!-- 정산정책 약관동의 -->
                                             <div class="terms_box">
@@ -647,7 +658,7 @@
                                                 <span class="terms" onclick="open_term(6);">약관 보기 ></span>
                                             </div>
                                             <span id="agree_check6" class="warn_msg"></span>
-                                            <div id="term6" class="text_box"><?php echo nl2br($config['shop_calculate_policy']); ?></div>
+                                            <div id="term6" class="text_box"><?= nl2br($config['shop_calculate_policy']); ?></div>
                                         </div>
                                     </td>
                                 </tr>

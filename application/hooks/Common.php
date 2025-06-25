@@ -42,7 +42,7 @@ class Common  {
         $board=$writeObj['board'];
         $write=$writeObj['write'];
         $memberObj=$this->compare($initalM);
-        #$member=$memberObj['member'];
+        $member=$memberObj['member'];
         $is_member=$memberObj['is_member'];
         $is_admin=$memberObj['is_admin'];
         $mb_no=$memberObj['mb_no'];

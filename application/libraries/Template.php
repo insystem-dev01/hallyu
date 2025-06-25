@@ -882,7 +882,7 @@ class Template
         }
         $joinTag = "";
         if ($is_member) {
-            $joinTag .= "<a href=\"" . base_url() . "m/bbs/member_confirm?url=register_form\" class=\"btn_medium bx-white\">정보수정</a>";
+            $joinTag .= "<a href=\"" . base_url() . "m/bbs/member_confirm?url=register_form\" class=\"btn_medium bx-white\">회원정보수정</a>";
         } else {
             $joinTag .= "<a href=\"" . base_url() . "m/bbs/register\" class=\"btn_medium bx-white\">회원가입</a>";
         }

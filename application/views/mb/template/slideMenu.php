@@ -32,9 +32,9 @@
 		<ul>
             <li><a href="<?php echo base_url(); ?>m/shop/orderinquiry">주문/배송조회</a></li>
 			<li><a href="<?php echo base_url(); ?>m/shop/review">구매후기</a></li>
-			<li><a href="<?php echo base_url(); ?>m/shop/point">포인트조회</a></li>
-            <?=$giftTag?>
-            <?=$couponTag?>
+			<!-- <li><a href="<?php echo base_url(); ?>m/shop/point">포인트조회</a></li> -->
+            <!-- <?=$giftTag?> -->
+            <!-- <?=$couponTag?> -->
             <li><a href="<?php echo base_url(); ?>m/shop/wish">찜한상품</a></li>
 			<li><a href="<?php echo base_url(); ?>m/shop/today">최근 본 상품</a></li>
             <?=$exitTag?>

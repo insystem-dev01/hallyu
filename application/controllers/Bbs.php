@@ -244,13 +244,13 @@ class Bbs extends CI_Controller
     private function register_form_skin()
     {
         $w = $this->input->post('w');
-        $member = $this->load->get_var('member');
         if (!empty($member) && !empty($this->session->userdata('w'))) {
             $w = $this->session->userdata('w');
         }
 
         $type = $this->input->get('type');
         $member = $this->load->get_var('member');
+        $seller = $this->load->get_var('seller');
         $pt_id = $this->load->get_var('pt_id');
         $config = $this->load->get_var('config');
         $title = "";
@@ -261,11 +261,18 @@ class Bbs extends CI_Controller
             // 추천인을 담는다.
             $member['pt_id'] = $pt_id;
         } else if ($w == 'u') {
-            $title = '회원정보수정';
-            $butTxt = "정보수정";
+            $title = '회원정보 수정';
+            $butTxt = "수정하기";
         }
-        $required = ($w == '') ? ' required' : '';
-        $readonly = ($w == 'u') ? ' readonly' : '';
+        $disabled   = ($w == 'u') ? ' disabled ' : '';
+        // $autofocus  = ($w == '')  ? ' autofocus' : '';
+        // $checked    = ($w == '') ? ' checked' : '';
+        // $selected   = ($w == '') ? ' selected' : '';
+        // $multiple   = ($w == '')  ? ' multiple' : '';
+        // $hidden     = ($w == 'u')     ? ' type="hidden" ' : '';
+        $required   = ($w == '')  ? ' required ' : '';
+        $readonly   = ($w == 'u') ? ' readonly ' : '';
+
         $agree = $this->input->post('agree');
         $agree2 = $this->input->post('agree2');
         $agree  = preg_replace('#[^0-9]#', '', $agree);
@@ -293,11 +300,13 @@ class Bbs extends CI_Controller
                     <input type=\"hidden\" id=\"mb_id_check_confirm\">
                 </td>
             </tr>";
-            $nowWname = "<input type=\"text\" name=\"mb_name\"  value=\"" . $this->funcomplex_lib->get_text($member['name']) . "\" id=\"mb_name\" {$required} readonly class=\"frm_input\" size=\"20\" placeholder=\"사업자 번호를 먼저 조회해주세요.\" onkeyup=\"basic_text_check('mb_name','상호명을 작성해주세요.')\">
+            $nowWname = "<input type=\"text\" name=\"mb_name\"  value=\"" . $this->funcomplex_lib->get_text($member['name']) . "\" id=\"mb_name\" {$required}  class=\"frm_input\" size=\"20\" placeholder=\"사업자 번호를 먼저 조회해주세요.\" onkeyup=\"basic_text_check('mb_name','상호명을 작성해주세요.')\">
                         <div id=\"mb_name_check\" class=\"check\" ></div>
                         <input type=\"hidden\" id=\"mb_name_check_confirm\">";
         } else {
-            $nowWname = "<span id=\"reg_mb_name\">" . $this->funcomplex_lib->get_text($member['name']) . "</span>";
+            $nowWname = "<input type=\"text\" name=\"mb_name\"  value=\"" . $this->funcomplex_lib->get_text($member['name']) . "\" id=\"mb_name\" {$required} {$readonly} class=\"frm_input\" size=\"20\" placeholder=\"사업자 번호를 먼저 조회해주세요.\" onkeyup=\"basic_text_check('mb_name','상호명을 작성해주세요.')\">
+                        <div id=\"mb_name_check\" class=\"check\" ></div>
+                        <input type=\"hidden\" id=\"mb_name_check_confirm\">";
         }
 
         $cf_cert_use = "";
@@ -451,8 +460,11 @@ class Bbs extends CI_Controller
         $data = array(
             'title' => $title,
             'member' => $member,
+            'seller' => $seller,
             'required' => $required,
             'readonly' => $readonly,
+            'disabled' => $disabled,
+            // 'hidden' => $hidden,
             'register_action_url' => $register_action_url,
             'certifyjs' => $certify,
             'w' => $w,

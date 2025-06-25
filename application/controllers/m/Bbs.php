@@ -169,8 +169,14 @@ class Bbs extends CI_Controller
         $w = $this->input->post('w');
         $type = $this->input->get('type');
 
-        $required = ($w == '') ? ' required' : '';
-        $readonly = ($w == 'u') ? ' readonly' : '';
+        $disabled   = ($w == 'u') ? ' disabled ' : '';
+        // $autofocus  = ($w == '')  ? ' autofocus' : '';
+        // $checked    = ($w == '') ? ' checked' : '';
+        // $selected   = ($w == '') ? ' selected' : '';
+        // $multiple   = ($w == '')  ? ' multiple' : '';
+        // $hidden     = ($w == 'u')     ? ' type="hidden" ' : '';
+        $required   = ($w == '')  ? ' required ' : '';
+        $readonly   = ($w == 'u') ? ' readonly ' : '';
 
         // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
         $OM_POSTCODE_JS = "";
@@ -220,10 +226,11 @@ class Bbs extends CI_Controller
         $placeholder_name = $type == "user" ? "" : "Hallyu";
 
         if ($w != "u") {
-            $memberName = "<input type=\"text\" name=\"mb_name\" value=\"" . $this->funcomplex_lib->get_text($member['name']) . "\" id=\"mb_name\"{$required} readonly class=\"frm_input\" placeholder=\"사업자 번호 중복확인을 먼저 해주세요.\" onkeyup=\"basic_text_check('mb_name','상호명을 작성해주세요.')\">
+            $memberName = "<input type=\"text\" name=\"mb_name\" value=\"" . $this->funcomplex_lib->get_text($member['name']) . "\" id=\"mb_name\"{$required} {$readonly} class=\"frm_input\" placeholder=\"사업자 번호 중복확인을 먼저 해주세요.\" onkeyup=\"basic_text_check('mb_name','상호명을 작성해주세요.')\">
                         <input type=\"hidden\" id=\"mb_name_check_confirm\">";
         } else {
-            $memberName = "<span id=\"reg_mb_name\">" . $this->funcomplex_lib->get_text($member['name']) . "</span>";
+            $memberName = "<input type=\"text\" name=\"mb_name\" value=\"" . $this->funcomplex_lib->get_text($member['name']) . "\" id=\"mb_name\"{$required} {$readonly} class=\"frm_input\" placeholder=\"사업자 번호 중복확인을 먼저 해주세요.\" onkeyup=\"basic_text_check('mb_name','상호명을 작성해주세요.')\">
+                        <input type=\"hidden\" id=\"mb_name_check_confirm\">";
         }
 
         $cert_str = '';
@@ -332,10 +339,12 @@ class Bbs extends CI_Controller
         }
 
         if ($w == "") {
-            $btnTitle = "가입하기";
+            $title = "회원가입";
+            $btnTitle = "회원가입";
             // 추천인을 담는다.
             $member['pt_id'] = $pt_id;
         } else if ($w == 'u') {
+            $title = "회원정보 수정";
             $btnTitle = "수정하기";
         }
 
@@ -408,6 +417,8 @@ class Bbs extends CI_Controller
             'member' => $member,
             'notUTag' => $notUTag,
             'required' => $required,
+            'readonly' => $readonly,
+            'disabled' => $disabled,
             'memberName' => $memberName,
             'cert_strTag' => $cert_strTag,
             'msgCertifyTag' => $msgCertifyTag,
@@ -418,6 +429,7 @@ class Bbs extends CI_Controller
             'memberMail' => $memberMail,
             'regiUseAddrTag' => $regiUseAddrTag,
             'btnTitle' => $btnTitle,
+            'title' => $title,
             'ipinJs' => $ipinJs,
             'hpcertJs' => $hpcertJs,
             'cf_cert_useJs' => $cf_cert_useJs,

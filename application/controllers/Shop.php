@@ -2945,10 +2945,10 @@ class Shop extends CI_Controller
                             <col>
                         </colgroup>
                         <tr>
-                            <th scope=\"row\">포인트</th>
-                            <td class=\"tar\">적립 포인트</td>
-                            <td class=\"tar bl\">" . display_point($tot_point) . "</td>
-                        </tr>
+                                <th scope=\"row\"></th>
+                                <td class=\"tar\"></td>
+                                <td class=\"tar bl\"></td>
+                            </tr>
                         <tr>
                             <th scope=\"row\" rowspan=\"3\">상품</th>
                             <td class=\"tar\">상품금액 합계</td>
@@ -2963,9 +2963,8 @@ class Shop extends CI_Controller
                             <td class=\"tar bl\">" . display_qty($tot_sell_qty) . "</td>
                         </tr>
                         <tr>
-                            <td class=\"list2 tac bold\" colspan=\"2\">현재 포인트 보유잔액</td>
-                            <td class=\"list2 tar bold\">" . display_point($member['point']) . "</td>
-                        </tr>
+                                <td class=\"list2 tal bold\" colspan=\"3\">결제예정금액 (A+B)</td>
+                            </tr>
                         </table>
                     </div>
                 </td>
@@ -2997,8 +2996,8 @@ class Shop extends CI_Controller
                             <td class=\"tar bl\">" . display_price2($tot_send_cost) . "</td>
                         </tr>
                         <tr>
-                            <td class=\"list2 tac bold\" colspan=\"2\">결제예정금액 (A+B)</td>
-                            <td class=\"list2 tar bold fc_red\">" . display_price2($tot_price) . "</td>
+                            
+                            <td class=\"list2 tar bold fc_red\"colspan=\"3\"> " . display_price2($tot_price) . "</td>
                         </tr>
                         </table>
                     </div>
@@ -5491,7 +5490,7 @@ class Shop extends CI_Controller
         if ($default['de_iche_use']) {
             $payMethod .= '<input type="radio" name="paymethod" id="paymethod_iche" value="계좌이체" onclick="calculate_paymethod(this.value);"> <label for="paymethod_iche">계좌이체</label>';
         }
-    
+
         // if ($is_member && $config['usepoint_yes'] && ($tot_price <= $member['point'])) {
         //     $payMethod .= '<input type="radio" name="paymethod" id="paymethod_point" value="포인트" onclick="calculate_paymethod(this.value);"> <label for="paymethod_point">포인트결제</label>';
         // }
