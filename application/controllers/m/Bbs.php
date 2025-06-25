@@ -210,6 +210,9 @@ class Bbs extends CI_Controller
                 </td>
             </tr>";
         }
+        else{
+            $notUTag = "<input type=\"hidden\" id=\"mb_id_check_confirm\">";
+        }
         $member['name'] = isset($member['name']) ? $member['name'] : "";
         $member['cellphone'] = isset($member['cellphone']) ? $member['cellphone'] : "";
         $memEmail = (isset($member['email']) ? $member['email'] : '');

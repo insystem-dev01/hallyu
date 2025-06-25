@@ -92,6 +92,8 @@
                             <input type="hidden" id="company_cert_file_check_confirm">
                         </td>
                     </tr>
+                <?php else: ?>
+                    <input type="hidden" id="company_cert_file_check_confirm">
                 <?php endif; ?>
                 <?= $regis_hp ?>
                 <tr>
@@ -215,6 +217,8 @@
                             <input type="hidden" id="company_cert_file_check_confirm">
                         </td>
                     </tr>
+                <?php else: ?>
+                    <input type="hidden" id="company_cert_file_check_confirm">
                 <?php endif; ?>
 
                 <tr>
@@ -427,6 +431,8 @@
                             <input type="hidden" id="bank_account_file_check_confirm">
                         </td>
                     </tr>
+                <?php else: ?>
+                    <input type="hidden" id="bank_account_file_check_confirm">
                 <?php endif; ?>
 
                 <tr>
@@ -1106,7 +1112,7 @@
                     if (f.w.value == "") {
                         location.href = base_url + 'bbs/register_result';
                     } else {
-                        location.reload();
+                        location.href = base_url;
                     }
                 }
 
@@ -1120,6 +1126,177 @@
             }
         });
     }
+
+
+    $(function() {
+        var wField = $('input[name="w"]');
+        var wVal = wField.length ? wField.val() : '';
+        var isEdit = (wVal === 'u');
+
+        // 1. 수정 모드일 때 비밀번호 재입력 유도
+        if (isEdit) {
+            $('#mb_id_check_confirm').val("ok");
+            $('#company_cert_file_check_confirm').val("ok");
+            $('#bank_account_file_check_confirm').val("ok");
+            $('#pwdInfo')
+                .text('비밀번호를 변경하려면 다시 입력해주세요.')
+                .css('color', 'red').show();
+            $('#pwdDupInfo')
+                .text('비밀번호를 다시 입력해주세요.')
+                .css('color', 'red').show();
+            $('#pwdDigitConfirm, #pwdDupConfirm').val('');
+        }
+
+        // 2. 수정 모드라면, 빈 값 아닌 필드 · 체크박스 · 사업자번호 · 세금계산서 이메일 · 대표번호 · 주소 · 계좌 · 담당자휴대폰 전부 체크
+        if (isEdit) {
+            // (A) 일반 텍스트/textarea/select ✔
+            $('input:not([type=hidden]), textarea, select').each(function() {
+                var $el = $(this),
+                    id = $el.attr('id'),
+                    val = $el.val();
+                if (!id || !val || val.trim() === '') return;
+
+                // 중복확인 필드는 건너뛰고
+                if (!['reg_company_no_01', 'reg_company_no_02', 'reg_company_no_03',
+                        'company_tax_email', 'company_tax_email_addr', 'company_tax_email_ect'
+                    ].includes(id)) {
+                    basic_text_check(id, '');
+                }
+            });
+
+            // (B) 체크박스 그룹 ✔
+            ['company_category', 'company_sales_type'].forEach(function(name) {
+                let title = '';
+                if (name == "company_category") {
+                    title = "카테고리";
+                } else if (name == "company_category") {
+                    title = "판매형태";
+                }
+                checkbox_group_check({
+                    name: name,
+                    check_id: name + '_check',
+                    confirm_id: name + '_check_confirm',
+                    checked_mesage: '✔',
+                    unchecked_message: title + '을(를) 선택해주세요.'
+                });
+            });
+
+            // (C) 사업자등록번호 ✔
+            if (['#reg_company_no_01', '#reg_company_no_02', '#reg_company_no_03']
+                .every(s => $(s).val().trim() !== '')) {
+                $('#company_no_check')
+                    .text('✔ 사업자등록번호가 설정되어 있습니다.')
+                    .css('color', 'green');
+                $('#company_no_check_confirm').val('ok');
+                $('#active_company_cert').removeAttr('disabled');
+            }
+
+            // (D) 세금계산서 이메일 ✔
+            if ($("input[name=company_tax_email]").val().trim() !== '' &&
+                $("select[name=company_tax_email_addr]").val()) {
+                $('#company_tax_email_check')
+                    .text('✔ 이메일이 설정되어 있습니다.')
+                    .css('color', 'green');
+                $('#company_tax_email_check_confirm').val('ok');
+            }
+
+            // (E) 대표번호 ✔
+            company_tel_check();
+
+            // (F) 주소검색 ✔
+            mb_addr_check();
+
+            // (G) 계좌번호 ✔
+            bank_account_check();
+
+            // (H) 담당자 휴대폰 ✔
+            info_tel_check();
+        }
+
+        // 3. 값 변경 시 다시 확인하도록
+        $('input, textarea, select').on('input change', function() {
+            var id = this.id,
+                $this = $(this);
+
+            // 3-1) 사업자등록번호 변경 → 중복확인 초기화
+            if (['reg_company_no_01', 'reg_company_no_02', 'reg_company_no_03'].includes(id)) {
+                $('#company_no_check_confirm').val('');
+                $('#company_no_check')
+                    .text('중복확인을 진행해주세요.')
+                    .css('color', 'black');
+                $('#active_company_cert').attr('disabled', true);
+                return;
+            }
+
+            // 3-2) 세금계산서 이메일 변경 → 중복확인 초기화
+            if (['company_tax_email', 'company_tax_email_addr', 'company_tax_email_ect'].includes(id)) {
+                $('#company_tax_email_check_confirm').val('');
+                $('#company_tax_email_check')
+                    .text('중복확인을 진행해주세요.')
+                    .css('color', 'black');
+                return;
+            }
+
+            // 3-3) 대표번호 변경 → 재검증
+            if (['company_tel_01', 'company_tel_02', 'company_tel_03'].includes(id)) {
+                company_tel_check();
+                return;
+            }
+
+            // 3-4) 주소검색 변경 → 재검증
+            if (['mb_addr1', 'mb_addr2', 'mb_addr3', 'mb_zip'].some(name => this.name === name)) {
+                mb_addr_check();
+                return;
+            }
+
+            // 3-5) 계좌번호 변경 → 재검증
+            if (['bank_account_01', 'bank_account_02', 'bank_account_03'].includes(id)) {
+                bank_account_check();
+                return;
+            }
+
+            // 3-6) 담당자 휴대폰 변경 → 재검증
+            if (['info_tel_01', 'info_tel_02', 'info_tel_03'].includes(id)) {
+                info_tel_check();
+                return;
+            }
+
+            // 3-7) 비밀번호 관련 → pwd_check / pwd_dup_check
+            if (id === 'reg_mb_password') {
+                pwd_check(this);
+                return;
+            }
+            if (id === 'reg_mb_password_re') {
+                pwd_dup_check(this);
+                return;
+            }
+
+            // 3-8) 체크박스 그룹 변경 → checkbox_group_check
+            if ($this.is(':checkbox') && $this.attr('name').endsWith('[]')) {
+                var nm = $this.attr('name').replace('[]', '');
+                let title = '';
+                if (nm == "company_category") {
+                    title = "카테고리";
+                } else if (nm == "company_category") {
+                    title = "판매형태";
+                }
+                checkbox_group_check({
+                    name: nm,
+                    check_id: nm + '_check',
+                    confirm_id: nm + '_check_confirm',
+                    checked_mesage: '✔',
+                    unchecked_message: title + '을(를) 선택해주세요.'
+                });
+                return;
+            }
+
+            // 3-9) 일반 텍스트 변경 → basic_text_check
+            if (id) {
+                var label = $('label[for="' + id + '"]').text().replace(/[\*\(\)필수]/g, '');
+                basic_text_check(id, label + '을(를) 작성해주세요.');
+            }
+        });
+    });
 </script>
 
 <!-- } 회원정보 입력/수정 끝 -->

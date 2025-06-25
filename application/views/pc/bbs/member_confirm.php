@@ -22,7 +22,7 @@
 </div>
 <script>
 function fmemberconfirm_submit(f){
-    document.getElementById("btn_submit").disabled = true;
+    // document.getElementById("btn_submit").disabled = true;
 
     return true;
 }
