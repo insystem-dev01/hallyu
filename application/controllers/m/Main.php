@@ -149,7 +149,7 @@ class Main extends CI_Controller
         $items = [];
         foreach ($result as $row) {
             $index_no = $row['index_no'];
-            $href = base_url() . 'shop/view?index_no=' . $index_no;
+            $href = base_url() . 'm/shop/view?index_no=' . $index_no;
             $name = cut_str($row['gname'], 100);
             $price = $this->funcomplex_lib->get_timesale_goods_price($index_no);
             $amount = $this->gvcomplex_lib->get_timesale_goods_price($index_no);
@@ -407,7 +407,7 @@ class Main extends CI_Controller
                 $str .= "<div class=\"pr_desc attention\">\n
                             <ul class=\"attention_slide\">\n";
 
-            $it_href = base_url() . 'shop/view?index_no=' . $row['index_no'];
+            $it_href = base_url() . 'm/shop/view?index_no=' . $row['index_no'];
             $it_name = cut_str($row['gname'], 100);
             if ($row['type'] == "timesale") {
                 $it_price = $this->funcomplex_lib->get_timesale_goods_price($row['index_no']);
@@ -510,7 +510,7 @@ class Main extends CI_Controller
                 $str .= "<div class=\"pr_desc brand\">\n
                             <ul class=\"brand_slide\">\n";
 
-            $it_href = base_url() . 'shop/view?index_no=' . $row['index_no'];
+            $it_href = base_url() . 'm/shop/view?index_no=' . $row['index_no'];
             $it_name = cut_str($row['gname'], 100);
             if ($row['type'] == "timesale") {
                 $it_price = $this->funcomplex_lib->get_timesale_goods_price($row['index_no']);
@@ -613,7 +613,7 @@ class Main extends CI_Controller
                 $str .= "<div class=\"pr_desc substance\">\n
                             <ul class=\"substance_slide\">\n";
 
-            $it_href = base_url() . 'shop/view?index_no=' . $row['index_no'];
+            $it_href = base_url() . 'm/shop/view?index_no=' . $row['index_no'];
             $it_name = cut_str($row['gname'], 100);
             if ($row['type'] == "timesale") {
                 $it_price = $this->funcomplex_lib->get_timesale_goods_price($row['index_no']);
@@ -731,7 +731,7 @@ class Main extends CI_Controller
 
         foreach ($rows as $row) {
             $index_no = $row['index_no'];
-            $href     = base_url() . 'shop/view?index_no=' . $index_no;
+            $href     = base_url() . 'm/shop/view?index_no=' . $index_no;
             $name     = cut_str($row['gname'], 100);
 
             // 4) 가격 계산 분기: timesale vs normal

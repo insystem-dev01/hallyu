@@ -2312,7 +2312,7 @@ class Process extends CI_Controller
 
         $uid = md5($od['od_id'] . $od['od_time'] . $od['od_ip']);
         if ($od_cancel_price > 0 || $od_count1 != $od_count2) {
-            alert("취소할 수 있는 주문이 아닙니다.", base_url() . "shop/orderinquiryview?od_id=$od_id&uid=$uid");
+            alert("취소할 수 있는 주문이 아닙니다.", base_url() . "m/shop/orderinquiryview?od_id=$od_id&uid=$uid");
         }
 
         // 주문 취소 사유
@@ -2785,7 +2785,7 @@ class Process extends CI_Controller
             $i++;
         }
         if ($i == 0)
-            alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', base_url() . 'shop/cart');
+            alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', base_url() . 'm/shop/cart');
         if ($error != "") {
             $error .= "다른 고객님께서 {$name}님 보다 먼저 주문하신 경우입니다. 불편을 끼쳐 죄송합니다.";
             alert($error);

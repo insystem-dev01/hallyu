@@ -191,7 +191,7 @@
 
 
 	</div>
-	<div class="more_show_button" onclick="location.href='<?= base_url() ?>shop/timesale?status=active'">전체보기 ></div>
+	<div class="more_show_button" onclick="location.href='<?= base_url() ?>m/shop/timesale?status=active'">전체보기 ></div>
 </div>
 
 <!-- //서브 배너 수정해야함 -->

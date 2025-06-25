@@ -202,7 +202,7 @@ function paybtn(f) {
                         if(res['res']){
                             var od_id=res['od_id'];
                             var uid=res['uid'];
-                            location.href=base_url+'shop/orderinquiryview?od_id='+od_id+'&uid='+uid;
+                            location.href=base_url+'m/shop/orderinquiryview?od_id='+od_id+'&uid='+uid;
                         }else{
                             alert(res['msg']);
                             location.href=base_url;

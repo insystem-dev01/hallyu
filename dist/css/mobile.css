@@ -14889,7 +14889,7 @@ b {
   border: 0.14vw solid #dddddd;
   font-size: 4.17vw !important;
   color: #000010;
-  text-indent: 2vw;
+  text-indent: 1vw;
   border-radius: 1.39vw
 }
 
@@ -14897,14 +14897,14 @@ b {
 #fregisterform table>tbody>tr>td input[type=password].small_box,
 #fregisterform table>tbody>tr>td select.small_box {
   width: 19vw;
-  text-indent: 2.17vw
+  text-indent: 1vw
 }
 
 #fregisterform table>tbody>tr>td input[type=text].small_box2,
 #fregisterform table>tbody>tr>td input[type=password].small_box2,
 #fregisterform table>tbody>tr>td select.small_box2 {
   width: 27vw;
-  text-indent: 2.17vw
+  text-indent: 1vw
 }
 
 #fregisterform table>tbody>tr>td input[type=text].mideum_box,

@@ -72,6 +72,9 @@
                         $company_saupja_no = $seller['company_saupja_no'];
                         $company_saupja_no = explode("-", $company_saupja_no);
                     }
+                    else{
+                        $company_saupja_no = ['', '', ''];
+                    }
                     ?>
                     <td>
                         <input type="text" name="company_no_01" id="reg_company_no_01" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box" maxlength="3" onkeyup="only_num_typing(this); company_no_check(this);" value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[0] : "" ?>" placeholder="123">
@@ -111,6 +114,9 @@
                     if (!empty($member['email'])) {
                         $mb_email = $member['email'];
                         $mb_email = explode("@", $mb_email);
+                    }
+                    else{
+                        $mb_email = ['', ''];
                     }
                     ?>
                     <td class="vertical">
@@ -199,6 +205,8 @@
                     if (!empty($seller['company_saupja_no'])) {
                         $company_saupja_no = $seller['company_saupja_no'];
                         $company_saupja_no = explode("-", $company_saupja_no);
+                    } else {
+                        $company_saupja_no = ['', '', ''];
                     }
                     ?>
                     <td>
@@ -239,6 +247,8 @@
                     if (!empty($seller['company_tax_email'])) {
                         $company_tax_email = $seller['company_tax_email'];
                         $company_tax_email = explode("@", $company_tax_email);
+                    } else {
+                        $company_tax_email = ['', ''];
                     }
                     ?>
                     <td class="vertical">
@@ -289,6 +299,8 @@
                     if (!empty($seller['company_tel'])) {
                         $company_tel = $seller['company_tel'];
                         $company_tel = explode("-", $company_tel);
+                    } else {
+                        $company_tel = ['', '', ''];
                     }
                     ?>
                     <td>
@@ -344,6 +356,8 @@
                     if (!empty($seller['company_category'])) {
                         $company_category = $seller['company_category'];
                         $company_category = explode(",", $company_category);
+                    } else {
+                        $company_category = ['', '', '', '', '', '', ''];
                     }
                     ?>
                     <td class="category">
@@ -377,6 +391,8 @@
                     if (!empty($seller['company_sales_type'])) {
                         $company_sales_type = $seller['company_sales_type'];
                         $company_sales_type = explode(",", $company_sales_type);
+                    } else {
+                        $company_sales_type = ['', '', ''];
                     }
                     ?>
                     <td>
@@ -419,6 +435,8 @@
                     if (!empty($seller['bank_account'])) {
                         $bank_account = $seller['bank_account'];
                         $bank_account = explode("-", $bank_account);
+                    } else {
+                        $bank_account = ['', '', ''];
                     }
                     ?>
                     <td>
@@ -437,7 +455,7 @@
                         <span id="bank_holder_check" class="check"></span>
                     </th>
                     <td>
-                        <input type="text" name="bank_holder" id="bank_holder" <?= $required; ?> <?= $readonly; ?> class="frm_input" value="<?= isset($seller['bank_holder']) ? $seller['bank_holder'] : "" ?>" placeholder="김베리" onkeyup="basic_text_check('bank_holder','예금주명을 작성해주세요.')">
+                        <input type="text" name="bank_holder" id="bank_holder" <?= $required; ?> <?= $readonly; ?> class="frm_input" value="<?= isset($seller['bank_holder']) ? $seller['bank_holder'] : "" ?>" placeholder="김한류" onkeyup="basic_text_check('bank_holder','예금주명을 작성해주세요.')">
 
                         <input type="hidden" id="bank_holder_check_confirm">
                     </td>
@@ -468,7 +486,7 @@
                         <span id="info_name_check" class="check"></span>
                     </th>
                     <td>
-                        <input type="text" name="info_name" id="info_name" <?= $required; ?> class="frm_input" value="<?= isset($seller['info_name']) ? $seller['info_name'] : "" ?>" placeholder="김베리" onkeyup="basic_text_check('info_name','담당자명을 작성해주세요.')">
+                        <input type="text" name="info_name" id="info_name" <?= $required; ?> class="frm_input" value="<?= isset($seller['info_name']) ? $seller['info_name'] : "" ?>" placeholder="김한류" onkeyup="basic_text_check('info_name','담당자명을 작성해주세요.')">
 
                         <input type="hidden" id="info_name_check_confirm">
                     </td>
@@ -482,6 +500,8 @@
                     if (!empty($seller['info_tel'])) {
                         $info_tel = $seller['info_tel'];
                         $info_tel = explode("-", $info_tel);
+                    } else {
+                        $info_tel = ['', '', ''];
                     }
                     ?>
                     <td>
@@ -503,6 +523,9 @@
                     if (!empty($seller['info_email'])) {
                         $info_email = $seller['info_email'];
                         $info_email = explode("@", $info_email);
+                    }
+                     else{
+                        $info_email = ['', ''];
                     }
                     ?>
                     <td class="vertical">

@@ -62,6 +62,8 @@
                     if (!empty($seller['company_saupja_no'])) {
                         $company_saupja_no = $seller['company_saupja_no'];
                         $company_saupja_no = explode("-", $company_saupja_no);
+                    } else {
+                        $company_saupja_no = ['', '', ''];
                     }
                     ?>
                     <td>
@@ -99,6 +101,8 @@
                     if (!empty($member['email'])) {
                         $mb_email = $member['email'];
                         $mb_email = explode("@", $mb_email);
+                    } else {
+                        $mb_email = ['', ''];
                     }
                     ?>
                     <td>
@@ -180,6 +184,8 @@
                     if (!empty($seller['company_saupja_no'])) {
                         $company_saupja_no = $seller['company_saupja_no'];
                         $company_saupja_no = explode("-", $company_saupja_no);
+                    } else {
+                        $company_saupja_no = ['', '', ''];
                     }
                     ?>
                     <td>
@@ -188,7 +194,7 @@
                         <input type="text" name="company_no_02" id="reg_company_no_02" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box2" maxlength="2" onkeyup="only_num_typing(this); company_no_check(this); " value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[1] : "" ?>" placeholder="45">
                         <span class="dash">-</span>
                         <input type="text" name="company_no_03" id="reg_company_no_03" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box2" maxlength="5" onkeyup="only_num_typing(this); company_no_check(this); " value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[2] : "" ?>" placeholder="56789">
-                        <button type="button" onclick="reg_company_number_check()" <?= $disabled; ?> >중복확인</button>
+                        <button type="button" onclick="reg_company_number_check()" <?= $disabled; ?>>중복확인</button>
                         <div id="company_no_check" class="check"></div>
                         <input type="hidden" id="company_no_check_confirm">
                     </td>
@@ -218,6 +224,8 @@
                     if (!empty($seller['company_tax_email'])) {
                         $company_tax_email = $seller['company_tax_email'];
                         $company_tax_email = explode("@", $company_tax_email);
+                    } else {
+                        $company_tax_email = ['', ''];
                     }
                     ?>
                     <td>
@@ -260,6 +268,8 @@
                     if (!empty($seller['company_tel'])) {
                         $company_tel = $seller['company_tel'];
                         $company_tel = explode("-", $company_tel);
+                    } else {
+                        $company_tel = ['', '', ''];
                     }
                     ?>
                     <td>
@@ -309,6 +319,8 @@
                     if (!empty($seller['company_category'])) {
                         $company_category = $seller['company_category'];
                         $company_category = explode(",", $company_category);
+                    } else {
+                        $company_category = ['', '', '', '', '', '', ''];
                     }
                     ?>
                     <td>
@@ -338,6 +350,8 @@
                     if (!empty($seller['company_sales_type'])) {
                         $company_sales_type = $seller['company_sales_type'];
                         $company_sales_type = explode(",", $company_sales_type);
+                    } else {
+                        $company_sales_type = ['', '', ''];
                     }
                     ?>
                     <td>
@@ -375,6 +389,8 @@
                     if (!empty($seller['bank_account'])) {
                         $bank_account = $seller['bank_account'];
                         $bank_account = explode("-", $bank_account);
+                    } else {
+                        $bank_account = ['', '', ''];
                     }
                     ?>
                     <td>
@@ -390,27 +406,27 @@
                 <tr>
                     <th scope="row"><label for="bank_holder">예금주명</label></th>
                     <td>
-                        <input type="text" name="bank_holder" id="bank_holder" <?= $required; ?> <?= $readonly; ?> class="frm_input" value="<?= isset($seller['bank_holder']) ? $seller['bank_holder'] : "" ?>" placeholder="김베리" onkeyup="basic_text_check('bank_holder','예금주명을 작성해주세요.')">
+                        <input type="text" name="bank_holder" id="bank_holder" <?= $required; ?> <?= $readonly; ?> class="frm_input" value="<?= isset($seller['bank_holder']) ? $seller['bank_holder'] : "" ?>" placeholder="김한류" onkeyup="basic_text_check('bank_holder','예금주명을 작성해주세요.')">
                         <div id="bank_holder_check" class="check"></div>
                         <input type="hidden" id="bank_holder_check_confirm">
                     </td>
                 </tr>
-                
-                <?php if($w != "u"): ?>
-                <tr>
-                    <th scope="row"><label for="reg_account_certification">통장사본</label></th>
-                    <td>
-                        <!-- 숨겨진 파일 input -->
-                        <input type="file" id="bank_account_file" name="bank_account_file" accept=".jpg,.png,.pdf,.jpeg" onchange="preview_file('bank_account_file', 'bank_file_name_display', 'bank_account_file_check', 'bank_account_file_check_confirm')">
 
-                        <!-- 선택된 파일명 표시 -->
-                        <input type="text" id="bank_file_name_display" readonly placeholder="통장사본 입력 후 파일첨부 해주세요.">
-                        <!-- 첨부 버튼 -->
-                        <button type="button" class="reg_cert_btn" id="active_bank_cert" onclick="$('#bank_account_file').click();">파일첨부</button>
-                        <div id="bank_account_file_check" class="check"></div>
-                        <input type="hidden" id="bank_account_file_check_confirm">
-                    </td>
-                </tr>
+                <?php if ($w != "u"): ?>
+                    <tr>
+                        <th scope="row"><label for="reg_account_certification">통장사본</label></th>
+                        <td>
+                            <!-- 숨겨진 파일 input -->
+                            <input type="file" id="bank_account_file" name="bank_account_file" accept=".jpg,.png,.pdf,.jpeg" onchange="preview_file('bank_account_file', 'bank_file_name_display', 'bank_account_file_check', 'bank_account_file_check_confirm')">
+
+                            <!-- 선택된 파일명 표시 -->
+                            <input type="text" id="bank_file_name_display" readonly placeholder="통장사본 입력 후 파일첨부 해주세요.">
+                            <!-- 첨부 버튼 -->
+                            <button type="button" class="reg_cert_btn" id="active_bank_cert" onclick="$('#bank_account_file').click();">파일첨부</button>
+                            <div id="bank_account_file_check" class="check"></div>
+                            <input type="hidden" id="bank_account_file_check_confirm">
+                        </td>
+                    </tr>
                 <?php endif; ?>
 
                 <tr>
@@ -419,7 +435,7 @@
                 <tr class="first_line">
                     <th scope="row"><label for="info_name">담당자명</label></th>
                     <td>
-                        <input type="text" name="info_name" id="info_name" <?= $required; ?> class="frm_input" value="<?= isset($seller['info_name']) ? $seller['info_name'] : "" ?>" placeholder="김베리" onkeyup="basic_text_check('info_name','담당자명을 작성해주세요.')">
+                        <input type="text" name="info_name" id="info_name" <?= $required; ?> class="frm_input" value="<?= isset($seller['info_name']) ? $seller['info_name'] : "" ?>" placeholder="김한류" onkeyup="basic_text_check('info_name','담당자명을 작성해주세요.')">
                         <div id="info_name_check" class="check"></div>
                         <input type="hidden" id="info_name_check_confirm">
                     </td>
@@ -431,6 +447,8 @@
                     if (!empty($seller['info_tel'])) {
                         $info_tel = $seller['info_tel'];
                         $info_tel = explode("-", $info_tel);
+                    } else {
+                        $info_tel = ['', '', ''];
                     }
                     ?>
                     <td>
@@ -450,6 +468,8 @@
                     if (!empty($seller['info_email'])) {
                         $info_email = $seller['info_email'];
                         $info_email = explode("@", $info_email);
+                    } else {
+                        $info_email = ['', ''];
                     }
                     ?>
                     <td>

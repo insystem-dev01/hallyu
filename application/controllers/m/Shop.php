@@ -4299,7 +4299,7 @@ class Shop extends CI_Controller
                     }
                     $taxsaveTag .= "<a href=\"javascript:;\" onclick=\"{$cash_receipt_script}\" class=\"btn_small\">현금영수증 확인하기</a>";
                 } else {
-                    $taxsaveTag .= "<a href=\"javascript:;\" onclick=\"window.open('" . base_url() . "shop/taxsave?od_id={$od_id}', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');\" class=\"btn_small\">현금영수증 발급하기</a>";
+                    $taxsaveTag .= "<a href=\"javascript:;\" onclick=\"window.open('" . base_url() . "m/shop/taxsave?od_id={$od_id}', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');\" class=\"btn_small\">현금영수증 발급하기</a>";
                 }
                 $taxsaveTag .= "
                     </td>
