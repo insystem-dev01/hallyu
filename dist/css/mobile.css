@@ -1592,7 +1592,7 @@ ul.ofh li {
 
 .btn_ssmall {
   padding: 0.2vw 2vw;
-  font-size: 2.8vw;
+  font-size: 4vw;
   line-height: 1.222;
   font-weight: normal !important
 }
@@ -12146,7 +12146,10 @@ b {
 }
 
 .pr_desc_list ul.list {
-  display: unset
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .pr_desc_list ul.list>li {
@@ -12215,7 +12218,7 @@ b {
 
 .pr_desc_list ul.list>li .price .sale {
   margin-right: 0.69vw;
-  font-size: 3.5vw;
+  /* font-size: 3.5vw; */
   font-family: 'Pretendard-Bd';
   color: #0278fe
 }

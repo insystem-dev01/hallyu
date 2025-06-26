@@ -1,11 +1,12 @@
 <div id="sit_use_write" class="new_win">
 	<h1 id="win_title"><?php echo $title; ?></h1>
-    <form name="forderreview" method="post" action="<?php echo $form_action_url; ?>" onsubmit="return forderreview_submit(this);" enctype="MULTIPART/FORM-DATA">
+    <form name="forderreview" method="post" action="<?php echo $form_action_url; ?>" onsubmit="return forderreview_submit(this);" enctype="multipart/form-data">
         <input type="hidden" name="gs_id" value="<?php echo $gs_id; ?>">
         <input type="hidden" name="seller_id" value="<?php echo $gs['mb_id']; ?>">
         <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
         <input type="hidden" name="od_no" value="<?php echo $od_no; ?>">
         <input type="hidden" name="token" value="<?php echo $token; ?>">
+        <input type="hidden" name="od_index" value="<?php echo $od_index; ?>">
         <input type="hidden" name="w" value="<?php echo $w; ?>">
         <div class="tbl_frm01 tbl_wrap review_write">
             <table>

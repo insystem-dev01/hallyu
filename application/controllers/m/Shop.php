@@ -1,6 +1,18 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property Query_model $query_model
+ * @property Template $template
+ * @property Funcomplex_lib $funcomplex_lib
+ * @property Gvcomplex_lib $gvcomplex_lib
+ * @property Global_lib $global_lib
+ * @property Partner_lib $partner_lib
+ * @property Common_lib $common_lib
+ * @property CI_Input $input
+ * @property CI_Config $config
+ * 
+ */
 class Shop extends CI_Controller
 {
     public function __construct()
@@ -51,6 +63,9 @@ class Shop extends CI_Controller
         $requestUrl = explode('?', $_SERVER['REQUEST_URI'])[0];
 
         $gw_msort = $this->config->item('gw_msort');
+        if (!is_array($gw_msort)) {
+            $gw_msort = [];
+        }
 
         $pt_id = $this->load->get_var('pt_id');
         $config = $this->load->get_var('config');
@@ -77,7 +92,8 @@ class Shop extends CI_Controller
         $qstr2 = 'type=' . $type;
 
         $sort_str = '';
-        for ($i = 0; $i < count($gw_msort); $i++) {
+        $len = count($gw_msort);
+        for ($i = 0; $i < $len; $i++) {
             list($tsort, $torder, $tname) = $gw_msort[$i];
 
             $sct_sort_href = $requestUrl . '?' . $qstr2 . '&sort=' . $tsort . '&sortodr=' . $torder;
@@ -255,6 +271,9 @@ class Shop extends CI_Controller
         $page = $this->input->get('page');
 
         $gw_msort = $this->config->item('gw_msort');
+        if (!is_array($gw_msort)) {
+            $gw_msort = [];
+        }
         $sql_search = " and (ca_id like '$ca_id%' or ca_id2 like '$ca_id%' or ca_id3 like '$ca_id%') ";
         $sql_common = $this->gvcomplex_lib->sql_goods_list($sql_search);
 
@@ -450,6 +469,9 @@ class Shop extends CI_Controller
         $ca_id = $this->input->get('ca_id') ?? '';
 
         $gw_msort = $this->config->item('gw_msort');
+        if (!is_array($gw_msort)) {
+            $gw_msort = [];
+        }
 
         $OM_TIME_YMDHIS = date("Y-m-d H:i:s", time());
         $OM_TIME_YMD = substr($OM_TIME_YMDHIS, 0, 10);
@@ -492,8 +514,8 @@ class Shop extends CI_Controller
             $timeTable = $this->timeTable($result);
         }
 
-        $qstr1 = 'ca_id=' . $ca_id . '&status=' . $status. '&page_rows=' . $page_rows . '&sort=' . $sort . '&sortodr=' . $sortodr;
-        $qstr2 = 'ca_id=' . $ca_id . '&status=' . $status. '&page_rows=' . $page_rows;
+        $qstr1 = 'ca_id=' . $ca_id . '&status=' . $status . '&page_rows=' . $page_rows . '&sort=' . $sort . '&sortodr=' . $sortodr;
+        $qstr2 = 'ca_id=' . $ca_id . '&status=' . $status . '&page_rows=' . $page_rows;
 
         $sort_str = '';
         for ($i = 0; $i < count($gw_msort); $i++) {
@@ -737,6 +759,9 @@ class Shop extends CI_Controller
         $requestUrl = explode('?', $_SERVER['REQUEST_URI'])[0];
         $config = $this->load->get_var('config');
         $gw_msort = $this->config->item('gw_msort');
+        if (!is_array($gw_msort)) {
+            $gw_msort = [];
+        }
 
         $sort = $this->input->get('sort');
         $sortodr = $this->input->get('sortodr');
@@ -1155,6 +1180,9 @@ class Shop extends CI_Controller
         $qstr1 = 'br_id=' . $br_id . '&sort=' . $sort . '&sortodr=' . $sortodr;
         $qstr2 = 'br_id=' . $br_id;
         $gw_msort = $this->config->item('gw_msort');
+        if (!is_array($gw_msort)) {
+            $gw_msort = [];
+        }
 
         $sort_str = '';
         for ($i = 0; $i < count($gw_msort); $i++) {
@@ -1239,10 +1267,10 @@ class Shop extends CI_Controller
             $tableTag .=     "<dd class=\"price_box\">\n";
             $tableTag .=         "<p class=\"price\">{$it_sprice}</p>";
             $tableTag .=         "<div class=\"price\">{$sale}{$it_price}";
-            $str .=             "<p class=\"ic_bx\">
+            $tableTag .=             "<p class=\"ic_bx\">
                                     <span onclick=\"javascript:itemlistwish('{$row['index_no']}');\" id=\"{$row['index_no']}\" class=\"" . ($row['index_no'] . ' ' . $this->gvcomplex_lib->zzimCheck($row['index_no'])) . "\"></span>
                                 </p>";
-            $str .=             "<p class=\"ct_bx\">
+            $tableTag .=             "<p class=\"ct_bx\">
                                     <input type=\"hidden\" name=\"io_type[{$index_no}][]\" value=\"0\">
                                     <input type=\"hidden\" name=\"it_price[{$index_no}][]\" value=\"{$gs['goods_price']}\">
                                     <input type=\"hidden\" name=\"io_id[{$index_no}][]\" value=\"\">
@@ -1297,6 +1325,9 @@ class Shop extends CI_Controller
     {
         $requestUrl = explode('?', $_SERVER['REQUEST_URI'])[0];
         $gw_msort = $this->config->item('gw_msort');
+        if (!is_array($gw_msort)) {
+            $gw_msort = [];
+        }
         $page = $this->input->get('page');
         $hash_token = $this->input->get('hash_token');
 
@@ -1588,6 +1619,7 @@ class Shop extends CI_Controller
         $is_member = $this->load->get_var('is_member');
         $pt_id = $this->load->get_var('pt_id');
         $config = $this->load->get_var('config');
+        $w = $this->input->get('w');
 
         $sql = " select a.*, b.cateuse  from shop_goods a, shop_category b  where a.index_no = ? and a.ca_id = b.catecode
                 and find_in_set(?, a.use_hide) = '0'
@@ -1913,9 +1945,14 @@ class Shop extends CI_Controller
         if ($type == "timesale") {
             // 재고수량
             $opt_subject = explode(',', $gs['opt_subject']);
-            $opt1_subject = $opt_subject[0] ?? '';
-            $opt2_subject = $opt_subject[1] ?? '';
-            $opt3_subject = $opt_subject[2] ?? '';
+            $opt1 = isset($opt_subject[0]) ? explode(' ', trim($opt_subject[0])) : [];
+            $opt2 = isset($opt_subject[1]) ? explode(' ', trim($opt_subject[1])) : [];
+            $opt3 = isset($opt_subject[2]) ? explode(' ', trim($opt_subject[2])) : [];
+
+            // 각 옵션 배열의 길이를 구해서 루프에 씁니다.
+            $opt1_count = count($opt1);
+            $opt2_count = count($opt2);
+            $opt3_count = count($opt3);
 
             // 옵션 테이블 생성
             $sql = "SELECT * FROM shop_goods_option WHERE io_type = '0' AND gs_id = ? ORDER BY io_no ASC";
@@ -1939,6 +1976,7 @@ class Shop extends CI_Controller
                         $tableOne .= $this->createOptionRow($opt_1, $opt_2, $opt_3, $opt_stock_qty);
                     }
                 } else {
+
                     // 새로운 옵션 조합을 생성하는 로직
                     for ($i = 0; $i < $opt1_count; $i++) {
                         for ($j = 0; $j < $opt2_count; $j++) {
@@ -3085,6 +3123,13 @@ class Shop extends CI_Controller
     private function Inicisorderform1($od_id, $goods, $tot_price, $next_url, $noti_url)
     {
         $default = $this->load->get_var('default');
+        if ($default['de_escrow_use'] == 1) {
+            // 에스크로결제
+            $useescrow = ':useescrow';
+        } else {
+            // 일반결제
+            $useescrow = '';
+        }
         $returnStr = "
         <form name=\"sm_form\" method=\"POST\" action=\"\" accept-charset=\"euc-kr\">
             <input type=\"hidden\" name=\"P_OID\"		 value=\"{$od_id}\">
@@ -3681,8 +3726,8 @@ class Shop extends CI_Controller
                 $deliveryPay .= "
                     <dt class=\"sod_bsk_cnt\"><span>총계</span></dt>
                     <dd class=\"sod_bsk_cnt\"><strong>" . number_format($tot_price) . " 원</strong></dd>";
-                    // <dt><span>포인트</span></dt>
-                    // <dd><strong>" . number_format($tot_point) . " P</strong></dd>";
+                // <dt><span>포인트</span></dt>
+                // <dd><strong>" . number_format($tot_point) . " P</strong></dd>";
             }
             $deliveryPay .= "
             </dl>";
@@ -4344,7 +4389,7 @@ class Shop extends CI_Controller
             //         </form>
             //     </div>
             // </section>";
-             $not_cancelTag = "
+            $not_cancelTag = "
             <section id=\"sod_fin_cancel\">
                 <h2>주문취소</h2>
                 <button type=\"button\" onclick=\"window.location.href='" . base_url() . "m';\" class=\"btn_medium wset\">주문 취소하기</button>
@@ -4532,7 +4577,7 @@ class Shop extends CI_Controller
                             <p class=\"mart5\"><span class=\"fc_255\">{$wr_star}</span><span class=\"fc_999\"> / {$wr_id} / {$wr_time}</span></p>
                         </td>";
                 if (!empty($gs)) {
-                    $returnStr .= "<td><a href='" . base_url() . "m/shop/orderreview?gs_id={$row['gs_id']}&od_id={$row['od_id']}&od_index={$row['od_index']}&w=u " . " onclick=\"win_open(this, 'winorderreview');return false;\" class=\"btn_ssmall bx-white\">수정</a></td>";
+                    $returnStr .= "<td><a href='" . base_url() . "m/shop/orderreview?gs_id={$row['gs_id']}&od_id={$row['od_id']}&od_index={$row['od_index']}&w=u '" . " onclick=\"win_open(this, 'winorderreview');return false;\" class=\"btn_ssmall bx-white\">수정</a></td>";
                 } else {
                     $returnStr .= "<td><a href=\"#\" onclick=\"alert('삭제된 상품으로 리뷰 수정이 불가능합니다.');\" class=\"btn_ssmall bx-white\">수정</a></td>";
                 }

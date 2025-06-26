@@ -3,7 +3,7 @@
 	<a href="javascript:window.close();" class="btn_small bx-white">창닫기</a>
 </h2>
 
-<form name="forderreview" id="sit_review" method="post" action="<?php echo $form_action_url; ?>" onsubmit="return forderreview_submit(this);" enctype="MULTIPART/FORM-DATA">
+<form name="forderreview" id="sit_review" method="post" action="<?php echo $form_action_url; ?>" onsubmit="return forderreview_submit(this);" enctype="multipart/form-data">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="gs_id" value="<?php echo $gs_id; ?>">
     <input type="hidden" name="seller_id" value="<?php echo $gs['mb_id']; ?>">
@@ -42,12 +42,16 @@
                     <td>
                         <input type="radio" name="score" value="5" <?php echo (!empty($review_data) && $review_data['score'] == "5" ? "checked" : "checked")?>>
                         <img src="<?php echo base_url(); ?>img/sub/score_5.gif">
+                        <br>
                         <input type="radio" name="score" value="4" <?php echo (!empty($review_data) && $review_data['score'] == "4" ? "checked" : "")?>>
                         <img src="<?php echo base_url(); ?>img/sub/score_4.gif">
+                        <br>
                         <input type="radio" name="score" value="3" <?php echo (!empty($review_data) && $review_data['score'] == "3" ? "checked" : "")?>>
                         <img src="<?php echo base_url(); ?>img/sub/score_3.gif">
+                        <br>
                         <input type="radio" name="score" value="2" <?php echo (!empty($review_data) && $review_data['score'] == "2" ? "checked" : "")?>>
                         <img src="<?php echo base_url(); ?>img/sub/score_2.gif">
+                        <br>
                         <input type="radio" name="score" value="1" <?php echo (!empty($review_data) && $review_data['score'] == "1" ? "checked" : "")?>>
                         <img src="<?php echo base_url(); ?>img/sub/score_1.gif">
                     </td>

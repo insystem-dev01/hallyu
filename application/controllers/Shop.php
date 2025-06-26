@@ -73,6 +73,9 @@ class Shop extends CI_Controller
         $page_rows = $this->input->get('page_rows');
         $page = $this->input->get('page');
         $gw_psort = $this->config->item('gw_psort');
+        if (!is_array($gw_psort)) {
+            $gw_psort = [];
+        }
         $pt_id = $this->load->get_var('pt_id');
         $config = $this->load->get_var('config');
         $requestUrl = explode('?', $_SERVER['REQUEST_URI'])[0];
@@ -274,6 +277,9 @@ class Shop extends CI_Controller
         $sortodr = $this->input->get('sortodr');
         $page = $this->input->get('page');
         $gw_psort = $this->config->item('gw_psort');
+        if (!is_array($gw_psort)) {
+            $gw_psort = [];
+        }
         $page_rows = $this->input->get('page_rows');
 
         $config = $this->load->get_var('config');
@@ -501,6 +507,9 @@ class Shop extends CI_Controller
         $OM_TIME_YMDHIS = date("Y-m-d H:i:s", time());
         $OM_TIME_YMD = substr($OM_TIME_YMDHIS, 0, 10);
         $gw_psort = $this->config->item('gw_psort');
+        if (!is_array($gw_psort)) {
+            $gw_psort = [];
+        }
 
         $default = $this->load->get_var('default');
         $config = $this->load->get_var('config');
@@ -812,6 +821,9 @@ class Shop extends CI_Controller
         $default = $this->load->get_var('default');
 
         $gw_msort = $this->config->item('gw_msort');
+        if (!is_array($gw_msort)) {
+            $gw_msort = [];
+        }
         $sort = $this->input->get('sort');
         $sortodr = $this->input->get('sortodr');
         $page = $this->input->get('page');
@@ -1164,6 +1176,9 @@ class Shop extends CI_Controller
         $config = $this->load->get_var('config');
 
         $gw_psort = $this->config->item('gw_psort');
+        if (!is_array($gw_psort)) {
+            $gw_psort = [];
+        }
 
         $br_id = $this->input->get('br_id');
         $sort = $this->input->get('sort');
@@ -1402,6 +1417,9 @@ class Shop extends CI_Controller
         $page = $this->input->get('page');
         $page_rows = $this->input->get('page_rows');
         $gw_psort = $this->config->item('gw_psort');
+        if (!is_array($gw_psort)) {
+            $gw_psort = [];
+        }
 
         $OM_HASH_TOKEN = md5(base_url() . $OM_TIME_YMD . $_SERVER['REMOTE_ADDR']);
         $title = "상품 검색 결과";
@@ -1970,9 +1988,14 @@ class Shop extends CI_Controller
         if ($type == "timesale") {
             // 재고수량
             $opt_subject = explode(',', $gs['opt_subject']);
-            $opt1_subject = $opt_subject[0] ?? '';
-            $opt2_subject = $opt_subject[1] ?? '';
-            $opt3_subject = $opt_subject[2] ?? '';
+            $opt1 = isset($opt_subject[0]) ? explode(' ', trim($opt_subject[0])) : [];
+            $opt2 = isset($opt_subject[1]) ? explode(' ', trim($opt_subject[1])) : [];
+            $opt3 = isset($opt_subject[2]) ? explode(' ', trim($opt_subject[2])) : [];
+
+            // 각 옵션 배열의 길이를 구해서 루프에 씁니다.
+            $opt1_count = count($opt1);
+            $opt2_count = count($opt2);
+            $opt3_count = count($opt3);
 
             // 옵션 테이블 생성
             $sql = "SELECT * FROM shop_goods_option WHERE io_type = '0' AND gs_id = ? ORDER BY io_no ASC";
@@ -4654,6 +4677,7 @@ class Shop extends CI_Controller
             'token' => $token,
             'od_id' => $od_id,
             'od_no' => $od_no,
+            'od_index' => $od_index,
             'gs_name' => $gs_name,
             'member' => $member,
             'review_data' => $review_data
