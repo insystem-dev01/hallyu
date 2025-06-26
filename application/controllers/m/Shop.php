@@ -1781,7 +1781,7 @@ class Shop extends CI_Controller
             $priceText = ($gs['type'] == "timesale") ? "판매가(온라인최저가)" : "판매가";
             $sale_text = "";
             if ($gs['type'] == "timesale") {
-                $sale_text = "<span style=\"font-size: 3.33vw;\">(" . number_format($sett, 0) . "%)</span>";
+                $sale_text = "<span style=\"font-size: 4vw;\">(" . number_format($sett, 0) . "%)</span>";
             }
 
             $no_is_onlyTag .= "

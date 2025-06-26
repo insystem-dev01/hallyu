@@ -11958,7 +11958,7 @@ b {
   flex-wrap: wrap;
   /* wrap 허용 */
   align-items: center;
-  font-size: 3.5vw;
+  font-size: 4vw;
   padding: 0.5vw 0;
   min-height: 3.5vw;
   overflow: visible;
@@ -12177,7 +12177,7 @@ b {
   height: 8.33vw;
   margin-top: 3.75vw;
   color: #000;
-  font-size: 3.5vw;
+  font-size: 4vw;
   text-align: left;
   line-height: 4.17vw;
   display: -webkit-box;
@@ -12196,7 +12196,7 @@ b {
 }
 
 .pr_desc_list ul.list>li .price .mpr {
-  font-size: 4vw;
+  font-size: 4.2vw;
   font-family: 'Pretendard-Bd';
   color: #000
 }
@@ -12247,8 +12247,8 @@ b {
 
 .pr_desc_list ul li dt {
   position: relative;
-  width: 38.19vw;
-  height: 38.19vw !important;
+  /* width: 38.19vw;
+  height: 38.19vw !important; */
   border-radius: 0.69vw
 }
 
@@ -12612,7 +12612,7 @@ b {
 
 .pr_desc_horizontal ul li dd.price_box {
   min-height: 8.33vw;
-  margin-top: 3.33vw;
+  margin-top: 3vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -12698,9 +12698,9 @@ b {
 } */
 
 .pr_desc_horizontal ul li .pname {
-  height: 9.03vw;
+  height: 11vw;
   color: #000;
-  font-size: 3.61vw;
+  font-size: 4.5vw;
   text-align: left;
   line-height: 5.00vw;
   display: -webkit-box;
@@ -12719,20 +12719,20 @@ b {
 }
 
 .pr_desc_horizontal ul li .price .mpr {
-  font-size: 3.89vw;
+  font-size: 4.6vw;
   font-family: 'Pretendard-Bd';
   color: #000
 }
 
 .pr_desc_horizontal ul li .price .spr {
-  font-size: 3.06vw;
+  font-size: 3.5vw;
   color: #cccccc;
   text-decoration: line-through
 }
 
 .pr_desc_horizontal ul li .price .sale {
   margin-right: 1.11vw;
-  font-size: 3.89vw;
+  font-size: 4.5vw;
   font-family: 'Pretendard-Bd';
   color: #72d5ff
 }
@@ -13251,7 +13251,7 @@ b {
 }
 
 .sp_wrap .subject>.subject_top span {
-  width: 90%;
+  width: 80%;
   font-size: 4.72vw;
   line-height: 6.39vw;
   position: relative;
@@ -13264,7 +13264,7 @@ b {
   display: block;
   width: 6vw;
   height: 4.86vw;
-  margin-right: 10px;
+  margin: 3vw 0;
   background-image: url(../img/pc/like.png);
   background-size: contain;
   background-repeat: no-repeat;
@@ -13336,6 +13336,7 @@ b {
   width: 91.11vw;
   position: relative;
   left: calc((100% - 91.11vw) / 2);
+  margin-bottom: 2vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -13365,7 +13366,11 @@ b {
   display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center
+  flex-direction: column;
+  /* 세로 축으로 바꾼다 */
+  align-items: flex-start;
+  /* (선택) 왼쪽 정렬 */
+  gap: 1vw;
 }
 
 .sp_wrap .price>.price_box .tlst {
@@ -13377,12 +13382,10 @@ b {
   display: none
 }
 
-.sp_wrap .price>.price_box .trst {
-  margin-left: 1.39vw
-}
+
 
 .sp_wrap .price>.price_box .trst>.trst-amt {
-  font-size: 5.56vw;
+  font-size: 7vw;
   font-family: 'Pretendard-Bd';
   color: #0278fe
 }
@@ -14137,13 +14140,13 @@ b {
 }
 
 .time.goods {
-  width: 21.53vw;
-  height: 4.86vw;
-  margin-left: auto;
-  padding: 0 1.67vw;
+  width: 36vw;
+  height: 6vw;
+  margin: 2vw 0;
+  padding: 0 1vw;
   background-color: rgba(189, 140, 191, 0.15);
   border-radius: 0.69vw;
-  font-size: 3.06vw;
+  font-size: 4vw;
   text-align: center;
   line-height: 4.86vw;
   color: #0278fe
@@ -14201,7 +14204,7 @@ b {
 }
 
 #sit_tot_views .sp_tot .trst .trss-amt {
-  font-size: 4.72vw;
+  font-size: 5vw;
   color: #0278fe;
   font-weight: bold
 }
