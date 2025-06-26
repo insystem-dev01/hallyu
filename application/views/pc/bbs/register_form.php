@@ -50,6 +50,7 @@
                     <td>
                         <!-- id가 mb_name -->
                         <?= $nowWname ?>
+
                         <!-- <?= $cf_cert_use ?>
                         <?= $mb_certTag ?>
                         <?= $cf_cert_use2 ?> -->
@@ -59,19 +60,19 @@
                     <th scope="row"><label for="reg_company_no">사업자등록번호</label></th>
                     <?php
                     $company_saupja_no = "";
-                    if (!empty($seller['company_saupja_no'])) {
-                        $company_saupja_no = $seller['company_saupja_no'];
+                    if (!empty($member['company_saupja_no'])) {
+                        $company_saupja_no = $member['company_saupja_no'];
                         $company_saupja_no = explode("-", $company_saupja_no);
                     } else {
                         $company_saupja_no = ['', '', ''];
                     }
                     ?>
                     <td>
-                        <input type="text" name="company_no_01" id="reg_company_no_01" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box2" maxlength="3" onkeyup="only_num_typing(this); company_no_check(this); " value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[0] : "" ?>" placeholder="123">
+                        <input type="text" name="company_no_01" id="reg_company_no_01" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box2" maxlength="3" onkeyup="only_num_typing(this); company_no_check(this); " value="<?= isset($member['company_saupja_no']) ? $company_saupja_no[0] : "" ?>" placeholder="123">
                         <span class="dash">-</span>
-                        <input type="text" name="company_no_02" id="reg_company_no_02" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box2" maxlength="2" onkeyup="only_num_typing(this); company_no_check(this);" value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[1] : "" ?>" placeholder="45">
+                        <input type="text" name="company_no_02" id="reg_company_no_02" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box2" maxlength="2" onkeyup="only_num_typing(this); company_no_check(this);" value="<?= isset($member['company_saupja_no']) ? $company_saupja_no[1] : "" ?>" placeholder="45">
                         <span class="dash">-</span>
-                        <input type="text" name="company_no_03" id="reg_company_no_03" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box2" maxlength="5" onkeyup="only_num_typing(this); company_no_check(this);" value="<?= isset($seller['company_saupja_no']) ? $company_saupja_no[2] : "" ?>" placeholder="56789">
+                        <input type="text" name="company_no_03" id="reg_company_no_03" <?= $required; ?> <?= $readonly; ?> class="frm_input small_box2" maxlength="5" onkeyup="only_num_typing(this); company_no_check(this);" value="<?= isset($member['company_saupja_no']) ? $company_saupja_no[2] : "" ?>" placeholder="56789">
                         <button type="button" onclick="reg_company_number_check()" <?= $disabled; ?>>중복확인</button>
                         <div id="company_no_check" class="check"></div>
                         <input type="hidden" id="company_no_check_confirm">
@@ -95,6 +96,15 @@
                 <?php else: ?>
                     <input type="hidden" id="company_cert_file_check_confirm">
                 <?php endif; ?>
+                <?php
+                $mb_email = array('', '');
+                if (!empty($member['email'])) {
+                    $mb_email = $member['email'];
+                    $mb_email = explode("@", $mb_email);
+                } else {
+                    $mb_email = ['', ''];
+                }
+                ?>
                 <?= $regis_hp ?>
                 <tr>
                     <th scope="row"><label for="reg_mb_email">E-mail</label></th>
@@ -644,6 +654,11 @@
             const checkbox = document.getElementById(checkboxId);
             const warnMsg = document.getElementById(warnId);
 
+
+            if (!contentBox || !checkbox || !warnMsg) {
+                console.warn(`요소를 찾을 수 없습니다:`, contentId, checkboxId, warnId);
+                return;
+            }
             // 스크롤 감지 후 자동으로 체크 허용
             contentBox.addEventListener("scroll", function() {
                 const atBottom =
@@ -685,6 +700,7 @@
 
     //연락처 체크
     function mb_hp_check() {
+        
         tel_check_by_id({
             ids: ["mb_hp_01", "mb_hp_02", "mb_hp_03"],
             lengths: [3, 4, 4],
@@ -1132,7 +1148,7 @@
         var wField = $('input[name="w"]');
         var wVal = wField.length ? wField.val() : '';
         var isEdit = (wVal === 'u');
-
+        var formType = $('input[name="type"]').val();
         // 1. 수정 모드일 때 비밀번호 재입력 유도
         if (isEdit) {
             $('#mb_id_check_confirm').val("ok");
@@ -1165,21 +1181,22 @@
             });
 
             // (B) 체크박스 그룹 ✔
-            ['company_category', 'company_sales_type'].forEach(function(name) {
-                let title = '';
-                if (name == "company_category") {
-                    title = "카테고리";
-                } else if (name == "company_category") {
-                    title = "판매형태";
-                }
-                checkbox_group_check({
-                    name: name,
-                    check_id: name + '_check',
-                    confirm_id: name + '_check_confirm',
-                    checked_mesage: '✔',
-                    unchecked_message: title + '을(를) 선택해주세요.'
+            if (formType == "seller")
+                ['company_category', 'company_sales_type'].forEach(function(name) {
+                    let title = '';
+                    if (name == "company_category") {
+                        title = "카테고리";
+                    } else if (name == "company_category") {
+                        title = "판매형태";
+                    }
+                    checkbox_group_check({
+                        name: name,
+                        check_id: name + '_check',
+                        confirm_id: name + '_check_confirm',
+                        checked_mesage: '✔',
+                        unchecked_message: title + '을(를) 선택해주세요.'
+                    });
                 });
-            });
 
             // (C) 사업자등록번호 ✔
             if (['#reg_company_no_01', '#reg_company_no_02', '#reg_company_no_03']
@@ -1192,25 +1209,33 @@
             }
 
             // (D) 세금계산서 이메일 ✔
-            if ($("input[name=company_tax_email]").val().trim() !== '' &&
-                $("select[name=company_tax_email_addr]").val()) {
-                $('#company_tax_email_check')
-                    .text('✔ 이메일이 설정되어 있습니다.')
-                    .css('color', 'green');
-                $('#company_tax_email_check_confirm').val('ok');
-            }
+            if (formType == "seller")
+                if ($("input[name=company_tax_email]").val().trim() !== '' &&
+                    $("select[name=company_tax_email_addr]").val()) {
+                    $('#company_tax_email_check')
+                        .text('✔ 이메일이 설정되어 있습니다.')
+                        .css('color', 'green');
+                    $('#company_tax_email_check_confirm').val('ok');
+                }
 
             // (E) 대표번호 ✔
-            company_tel_check();
+            if (formType == "seller")
+                company_tel_check();
 
             // (F) 주소검색 ✔
             mb_addr_check();
 
             // (G) 계좌번호 ✔
-            bank_account_check();
+            if (formType == "seller")
+                bank_account_check();
 
             // (H) 담당자 휴대폰 ✔
-            info_tel_check();
+            if (formType == "seller")
+                info_tel_check();
+
+            if (formType == "user")
+                mb_hp_check();
+
         }
 
         // 3. 값 변경 시 다시 확인하도록
@@ -1258,6 +1283,11 @@
             // 3-6) 담당자 휴대폰 변경 → 재검증
             if (['info_tel_01', 'info_tel_02', 'info_tel_03'].includes(id)) {
                 info_tel_check();
+                return;
+            }
+
+            if (['mb_hp_01', 'mb_hp_02', 'mb_hp_03'].includes(id)) {
+                mb_hp_check();
                 return;
             }
 

@@ -348,7 +348,7 @@ class Bbs extends CI_Controller
                 $mb_hp = $member['cellphone'];
                 $mb_hp = explode("-", $mb_hp);
             }
-            $regis_hp = "
+            $regis_hp .= "
             <tr>
                 <th scope=\"row\"><label for=\"reg_mb_hp\">연락처</label></th>
                 <td>

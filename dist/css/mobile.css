@@ -14762,7 +14762,7 @@ b {
   padding-top: 2.78vw;
   text-align: left;
   background-color: unset;
-  font-size: 3.61vw;
+  font-size: 4vw;
   font-family: 'Pretendard-Md';
   letter-spacing: -0.04vw;
   color: black
@@ -14770,7 +14770,7 @@ b {
 
 #fregisterform table>tbody>tr>th.title {
   font-family: 'Pretendard-Bd';
-  font-size: 4.17vw;
+  font-size: 4.5vw;
   padding-bottom: 4.17vw;
   border-bottom: 0.14vw solid #999999
 }
@@ -14969,8 +14969,8 @@ b {
 
 
 #fregisterform table>tbody>tr>td>.frm_info {
-  padding-top: unset;
-  font-size: 3.61vw
+  padding-top: 2vw;
+  font-size: 4vw
 }
 
 #fregisterform table>tbody>tr>td>.frm_info input[type=checkbox] {
@@ -14990,7 +14990,7 @@ b {
 }
 
 #fregisterform table>tbody>tr>td>.frm_info span {
-  padding-left: 4.86vw
+  padding-left: 6vw
 }
 
 #fregisterform table>tbody>tr>td>textarea {
