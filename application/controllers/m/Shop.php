@@ -2201,26 +2201,30 @@ class Shop extends CI_Controller
         }
         $gs_infoTag = "";
         $item_info = $this->config->item('item_info');
-        if ($gs['info_value']) {
+
+        if (! empty($gs['info_value'])) {
             $info_data = unserialize(stripslashes($gs['info_value']));
             if (is_array($info_data)) {
-                $gubun = $gs['info_gubun'];
-                $info_array = $item_info[$gubun]['article'];
-                $pd_t2 = '';
-                $gs_infoTag .= "
-                <div class=\"sp_vbox\" id=\"ids_extra\" style=\"display:none;\">";
-                foreach ($info_data as $key => $val) {
-                    $ii_title = $info_array[$key][0];
-                    $ii_value = $val;
+
+                $gubun = isset($gs['info_gubun']) ? $gs['info_gubun'] : null;
+                if ($gubun && isset($item_info[$gubun]['article'])) {
+                    $info_array = $item_info[$gubun]['article'];
+                    $pd_t2 = '';
                     $gs_infoTag .= "
+                <div class=\"sp_vbox\" id=\"ids_extra\" style=\"display:none;\">";
+                    foreach ($info_data as $key => $val) {
+                        $ii_title = isset($info_array[$key][0]) ? $info_array[$key][0] : '';
+                        $ii_value = $val;
+                        $gs_infoTag .= "
                         <ul>
                             <li class='tlst{$pd_t2}'>&#183;&nbsp;&nbsp;{$ii_title}</li>
                             <li class='trst{$pd_t2}'>{$ii_value}</li>
                         </ul>";
-                    $pd_t2 = ' padt2';
-                } //foreach
-                $gs_infoTag .= "
+                        $pd_t2 = ' padt2';
+                    } //foreach
+                    $gs_infoTag .= "
                 </div>";
+                }
             } //array
         } //if
         $gs_memoTag = $this->funcomplex_lib->get_image_resize($gs['memo']);
