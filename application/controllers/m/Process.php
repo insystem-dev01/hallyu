@@ -2668,13 +2668,14 @@ class Process extends CI_Controller
                     }
 
                     // 동일옵션의 상품이 있으면 수량 더함
-                    $sql2 = "SELECT index_no
+                    $sql2 = "SELECT * 
                             FROM shop_cart
-                            WHERE gs_id = ? AND mb_id = ? AND ct_select = '0' AND io_id = ? AND is_direct = 0";
+                            WHERE gs_id = ? AND mb_id = ? AND ct_select = '0' AND io_id = ? AND is_direct = '0'";
                     $data = array($gs_id, $set_mb_id, $io_id);
                     $row2 = $this->query_model->returnOneArr($sql2, $data);
 
-                    if ($gs['type'] == "timesale" && !empty($row2)) {
+                    //같은 장바구니 품목이 있고 수량이 같으면
+                    if (!empty($row2) && $row2['ct_qty'] == (int)$ct_qty) {
                         alert("이미 장바구니에 담겨있는 상품입니다.");
                     }
 

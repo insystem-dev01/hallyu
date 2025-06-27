@@ -1,5 +1,5 @@
 <!-- 장바구니 시작 { -->
-<script src="<?php echo base_url(); ?>js/shop.js"></script>
+<!-- <script src="<?php echo base_url(); ?>js/shop.js"></script> -->
 <p><img src="<?php echo base_url(); ?>img/tit_cart.gif"></p>
 <p class="pg_cnt mart30">
 	<em>총 <?php echo number_format($cart_count); ?>개</em>의 상품이 장바구니에 있습니다.

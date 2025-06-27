@@ -243,9 +243,10 @@
                     }
                     ?>
                     <td>
+                        <input type="hidden" id="original_company_tax_email" value="<?= isset($seller['company_tax_email']) ? $seller['company_tax_email'] : '' ?>">
                         <input type="text" name="company_tax_email" id="reg_company_tax_email" <?= $required; ?> class="frm_input mideum_box" placeholder="example" value="<?= isset($company_tax_email[0]) ? $company_tax_email[0] : "" ?>" onkeyup="company_tax_email_check(this)">
                         <span class="dash">@</span>
-                        <select name="company_tax_email_addr" class="frm_input mideum_box" onchange="email_addr_change(this)" data-type="company_tax_email_ect">
+                        <select name="company_tax_email_addr" id="company_tax_email_addr" class="frm_input mideum_box" onchange="email_addr_change(this)" data-type="company_tax_email_ect">
                             <option value="naver.com" <?= $company_tax_email[1] == "naver.com" ? "selected" : "" ?>>naver.com</option>
                             <option value="daum.net" <?= $company_tax_email[1] == "daum.net" ? "selected" : "" ?>>daum.net</option>
                             <option value="gmail.com" <?= $company_tax_email[1] == "gmail.com" ? "selected" : "" ?>>gmail.com</option>
@@ -254,7 +255,7 @@
                             <option value="ect" <?= $company_tax_email[1] != "" && $company_tax_email[1] != "naver.com" &&  $company_tax_email[1] != "daum.net" && $company_tax_email[1] != "gmail.com" && $company_tax_email[1] != "nate.com" && $company_tax_email[1] != "hanmail.net" ? "selected" : "" ?>>직접입력</option>
                         </select>
                         <input type="text" name="company_tax_email_ect" id="company_tax_email_ect" class="email_ect mideum_box" value="<?= $company_tax_email[1] ?>">
-                        <button type="button" onclick="reg_mb_company_tax_email_check()">중복확인</button>
+                        <button type="button" id="btn_company_tax_email_check" onclick="reg_mb_company_tax_email_check()">중복확인</button>
                         <div id="company_tax_email_check" class="check"></div>
                         <input type="hidden" id="company_tax_email_check_confirm">
                     </td>
@@ -700,7 +701,7 @@
 
     //연락처 체크
     function mb_hp_check() {
-        
+
         tel_check_by_id({
             ids: ["mb_hp_01", "mb_hp_02", "mb_hp_03"],
             lengths: [3, 4, 4],
@@ -1154,6 +1155,7 @@
             $('#mb_id_check_confirm').val("ok");
             $('#company_cert_file_check_confirm').val("ok");
             $('#bank_account_file_check_confirm').val("ok");
+            $('#btn_company_tax_email_check').prop('disabled', true);
             $('#pwdInfo')
                 .text('비밀번호를 변경하려면 다시 입력해주세요.')
                 .css('color', 'red').show();
@@ -1254,11 +1256,30 @@
             }
 
             // 3-2) 세금계산서 이메일 변경 → 중복확인 초기화
-            if (['company_tax_email', 'company_tax_email_addr', 'company_tax_email_ect'].includes(id)) {
+            if (['reg_company_tax_email', 'company_tax_email_addr', 'company_tax_email_ect'].includes(id)) {
                 $('#company_tax_email_check_confirm').val('');
                 $('#company_tax_email_check')
                     .text('중복확인을 진행해주세요.')
                     .css('color', 'black');
+                $('#btn_company_tax_email_check').prop('disabled', false);
+                var front = $('#reg_company_tax_email').val().trim();
+                var domain = $('#company_tax_email_addr').val();
+                if (domain === 'ect') {
+                    domain = $('#company_tax_email_ect').val().trim();
+                }
+                var email = front + '@' + domain;
+
+                if (wVal == 'u') {
+                    var original = $('#original_company_tax_email').val().trim();
+                    if (original && email === original) {
+                        $('#company_tax_email_check')
+                            .text('✔ 이메일이 설정되어 있습니다.')
+                            .css('color', 'green');
+                        $('#company_tax_email_check_confirm').val('ok');
+                        $('#btn_company_tax_email_check').prop('disabled', true);
+                    }
+                    return;
+                }
                 return;
             }
 
@@ -1286,6 +1307,7 @@
                 return;
             }
 
+            // 휴대폰 번호
             if (['mb_hp_01', 'mb_hp_02', 'mb_hp_03'].includes(id)) {
                 mb_hp_check();
                 return;

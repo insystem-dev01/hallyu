@@ -1,5 +1,5 @@
 <!-- 장바구니 시작 { -->
-    <script src="<?php echo base_url(); ?>mb/js/shop.js"></script>
+    <!-- <script src="<?php echo base_url(); ?>mb/js/shop.js"></script> -->
 
 <div class="stit_txt">
 	※ 총 <?php echo number_format($cart_count); ?>개의 상품이 담겨 있습니다.

@@ -10,11 +10,11 @@
 			<a href="<?php echo base_url(); ?>m/shop/cart" class="btn_cart"><span class="ic_num"><?php echo $cart_cnt; ?></span></a>
 		</div>
 		<div id="hd_sch">
-			<section>
-				<form name="fsearch" id="fsearch" method="get" action="<?php echo base_url(); ?>m/shop/search" onsubmit="return fsearch_submit(this);" autocomplete="off">
+			<section class="normal_board_radius">
+				<form name="fsearch"  id="fsearch" method="get" action="<?php echo base_url(); ?>m/shop/search" onsubmit="return fsearch_submit(this);" autocomplete="off">
 					<input type="hidden" name="hash_token" value="<?php echo $OM_HASH_TOKEN; ?>">
-					<input type="search" name="ss_tx" value="<?php echo $ss_tx; ?>" class="search_inp" maxlength="20">
-					<input type="submit" value="&#xf002;" id="sch_submit">
+					<input type="search"   name="ss_tx" value="<?php echo $ss_tx; ?>" class="normal_board_radius search_inp" maxlength="20">
+					<input type="submit" class="normal_board_radius" value="&#xf002;" id="sch_submit">
 					<input type="hidden" name="excludeSoldOut" id="excludeSoldOutHidden" value="">
 					<input type="hidden" name="onlyBid" id="onlyBidHidden" value="">
 				</form>
@@ -43,7 +43,7 @@
 				});
 			</script>
 
-			<div class="m_rkw_se" id="rkw_open">
+			<!-- <div class="m_rkw_se" id="rkw_open">
 				<?php echo $popularWd; ?>
 				<button type="button" class="btn_open"></button>
 			</div>
@@ -53,7 +53,7 @@
 			</div>
 			<div class="m_rkw_bg" style="display:none;">
 				<?php echo $popularRankWd; ?>
-			</div>
+			</div> -->
 
 			<script>
 				// 인기검색어 펼침

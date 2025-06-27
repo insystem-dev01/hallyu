@@ -236,7 +236,7 @@ var reg_company_number_check = function reg_company_number_check() {
                         .css('color', 'green');
                     $('#company_no_check_confirm').val("ok");
                     $("#mb_name").val(response.data.company_name);
-                    basic_text_check('mb_name','상호명을 작성해주세요.')
+                    basic_text_check('mb_name', '상호명을 작성해주세요.')
                     $('#active_company_cert').removeAttr('disabled');
                 }
                 else {
@@ -532,19 +532,23 @@ function tel_check_by_id({ ids, lengths, is_only_phone, check_id, confirm_id, ch
 function show_duplicate_check_notice({ input, check_id, confirm_id, empty_message = "입력해주세요" }) {
     const value = $(input).val().trim();
 
-    if (value.length > 0) {
-        $(`#${check_id}`)
-            .text("중복확인을 진행해주세요.")
-            .css('color', 'black');
+    var wVal = $('input[name="w"]').val();
 
-        $(`#${confirm_id}`).val("");
-    }
-    else {
-        $(`#${check_id}`)
-            .text(empty_message)
-            .css('color', 'red');
-        $(`#${confirm_id}`).val("");
+    if (wVal != "u") {
+        if (value.length > 0) {
+            $(`#${check_id}`)
+                .text("중복확인을 진행해주세요.")
+                .css('color', 'black');
 
+            $(`#${confirm_id}`).val("");
+        }
+        else {
+            $(`#${check_id}`)
+                .text(empty_message)
+                .css('color', 'red');
+            $(`#${confirm_id}`).val("");
+
+        }
     }
 }
 
