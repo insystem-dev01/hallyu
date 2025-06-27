@@ -13430,13 +13430,35 @@ ul.slick-dots {
   font-size: 16px
 }
 
+.sub_tree li a {
+  display: block;
+  /* inline → block */
+  width: 100%;
+  /* 부모 li 가로 전체 */
+  height: 100%;
+  /* 부모 li 세로 전체 */
+  text-align: center;
+  /* 가운데 정렬(선택) */
+  line-height: 46px;
+  /* 기존 li 높이에 맞춰서 텍스트 세로 중앙 (필요시 조정) */
+
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out,
+    border-radius 0.3s ease-in-out,
+}
+
 .sub_tree a {
   text-decoration: none !important
 }
 
 .sub_tree a:hover {
-  color: #0278fe
+  background-color: #0278fe;
+  color: #fff;
+  border-radius: 10px;
 }
+
+
 
 .sub_tree li.active {
   background-color: #0278fe;

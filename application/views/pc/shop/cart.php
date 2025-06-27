@@ -14,7 +14,7 @@
             <col class="w60">
             <col class="w90">
             <col class="w90">
-            <col class="w90">
+            <!-- <col class="w90"> -->
             <col class="w90">
     	</colgroup>
         <thead>
@@ -28,7 +28,7 @@
                 <th scope="col">수량</th>
                 <th scope="col">상품금액</th>
                 <th scope="col">소계</th>
-                <th scope="col">포인트</th>
+                <!-- <th scope="col">포인트</th> -->
                 <th scope="col">배송비</th>
             </tr>
 	    </thead>

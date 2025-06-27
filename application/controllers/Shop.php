@@ -2901,7 +2901,7 @@ class Shop extends CI_Controller
                 <td class=\"tac\">" . number_format($sell_qty) . "</td>
                 <td class=\"tar\">" . number_format($sell_amt) . "</td>
                 <td class=\"tar\">" . number_format($sell_price) . "</td>
-                <td class=\"tar\">" . number_format($point) . "</td>
+                
                 <td class=\"tar\">" . number_format($info['price']) . "</td>
             </tr>";
             $tot_point        += $point;
