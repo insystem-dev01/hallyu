@@ -1757,30 +1757,47 @@ class Shop extends CI_Controller
         $token = md5(uniqid(rand(), true));
         set_session("ss_token", $token);
         $slide_img = array();
-        for ($i = 2; $i <= 6; $i++) { // 슬라이드 이미지
+        for ($i = 1; $i <= 6; $i++) {
             $it_image = trim($gs['simg' . $i]);
-            if (!$it_image) continue;
+            if (! $it_image) continue;
 
-            if (preg_match("/^(http[s]?:\/\/)/", $it_image) == false) {
-                $file = "./data/goods/" . $it_image;
-                if (is_file($file)) {
-                    $file = base_url() . "data/goods/" . $it_image;
-                    $slide_img[] = rpc($file);
+            if (preg_match("/^(http[s]?:\/\/)/", $it_image) === 0) {
+                $filepath = FCPATH . "data/goods/" . $it_image;
+                if (is_file($filepath)) {
+                    // rpc() 쓰시는 이유가 경로 변환이라면 유지
+                    $slide_img[] = rpc(base_url("data/goods/" . $it_image));
                 }
             } else {
                 $slide_img[] = $it_image;
             }
         }
+        // $slide_img = array();
+        // for ($i = 2; $i <= 6; $i++) { // 슬라이드 이미지
+        //     $it_image = trim($gs['simg' . $i]);
+        //     if (!$it_image) continue;
 
-        $slide_url = implode('|', $slide_img);
-        $slide_cnt = count($slide_img);
+        //     if (preg_match("/^(http[s]?:\/\/)/", $it_image) == false) {
+        //         $file = "./data/goods/" . $it_image;
+        //         if (is_file($file)) {
+        //             $file = base_url() . "data/goods/" . $it_image;
+        //             $slide_img[] = rpc($file);
+        //         }
+        //     } else {
+        //         $slide_img[] = $it_image;
+        //     }
+        // }
+
+        // $slide_url = implode('|', $slide_img);
+        // $slide_cnt = count($slide_img);
+        
+
+        // $v_horizImg = $this->funcomplex_lib->get_it_image($index_no, $gs['simg2'], "200", "200", 'name="slideshow"');
+
         if ($type == "normal") {
             $getSalePrice = $this->gvcomplex_lib->get_sale_price($index_no);
         } else {
             $getSalePrice = $this->gvcomplex_lib->get_timesale_goods_price($index_no);
         }
-
-        $v_horizImg = $this->funcomplex_lib->get_it_image($index_no, $gs['simg2'], "200", "200", 'name="slideshow"');
         $gsName = $this->funcomplex_lib->get_text($gs['gname']);
         $gsExplain = "";
         if ($gs['explan']) {
@@ -2385,7 +2402,7 @@ class Shop extends CI_Controller
             'gs' => $gs,
             'referralCode' => $referralCode,
             'getSalePrice' => $getSalePrice,
-            'v_horizImg' => $v_horizImg,
+            // 'v_horizImg' => $v_horizImg,
             'gsName' => $gsName,
             'gsExplain' => $gsExplain,
             'aver_score' => $aver_score,
@@ -2411,14 +2428,15 @@ class Shop extends CI_Controller
             'gs_reviewTag' => $gs_reviewTag,
             'gs_qnaTag' => $gs_qnaTag,
             'gs_policy' => $gs_policy,
-            'slide_url' => $slide_url,
-            'slide_cnt' => $slide_cnt,
+            // 'slide_url' => $slide_url,
+            // 'slide_cnt' => $slide_cnt,
             'odr_max' => $odr_max,
             'odr_min' => $odr_min,
             'type' => $type,
             'is_open' => $is_open,
             'timesale' => $timesale,
-            'zzim' => $zzim
+            'zzim' => $zzim,
+            'slide_img' => $slide_img,
             // 'is_soldout_timesale' => $is_soldout_timesale
         );
         $this->load->view('mb/shop/view', $data);

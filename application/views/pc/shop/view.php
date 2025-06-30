@@ -412,4 +412,23 @@
 		$('.photo_box').empty();
 		$('.photo_box').append(tag);
 	}
+
+
+	document.addEventListener("DOMContentLoaded", function() {
+		const bigImg = document.getElementById("bigImg");
+		const thumbs = document.querySelectorAll(".simg_li .thumb-item");
+
+		thumbs.forEach(li => {
+			li.addEventListener("mouseenter", function() {
+				const src = this.getAttribute("data-src");
+				if (src && bigImg.src !== src) {
+					bigImg.src = src;
+				}
+			});
+			// (선택) 마우스가 나가면 원래 1번 이미지로 돌아가기
+			li.addEventListener("mouseleave", function() {
+				// bigImg.src = thumbs[0].getAttribute("data-src");
+			});
+		});
+	});
 </script>

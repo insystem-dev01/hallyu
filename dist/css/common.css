@@ -11970,16 +11970,16 @@ ul.slick-dots {
 }
 
 .vi_img_bx .simg_li li {
-  width: calc(20% - 5.6px);
+  width: calc(16% - 5.6px);
   padding: 7px 0 0 7px;
   display: inline-block;
   white-space: nowrap;
   word-break: break-all
 }
 
-.vi_img_bx .simg_li li:nth-child(5n+1) {
+/* .vi_img_bx .simg_li li:nth-child(5n+1) {
   padding-left: 0
-}
+} */
 
 .vi_img_bx .simg_li li img {
   width: calc(100% - 2px);

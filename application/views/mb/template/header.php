@@ -7,6 +7,7 @@
 			<span class="btn_sidem"></span>
 			<h1 class="logo"><?php echo $mlogo; ?></h1>
 			<span class="btn_search"></span>
+			<a href="<?php echo base_url(); ?>m/shop/wish" class="btn_like"></a>
 			<a href="<?php echo base_url(); ?>m/shop/cart" class="btn_cart"><span class="ic_num"><?php echo $cart_cnt; ?></span></a>
 		</div>
 		<div id="hd_sch">

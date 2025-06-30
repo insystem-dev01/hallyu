@@ -1865,25 +1865,33 @@ class Shop extends CI_Controller
             $price = $this->gvcomplex_lib->get_sale_price($index_no);
         }
 
-        if ($gs['simg_type'] == 0 && !empty($gs['simg2'])) {
-            $bimg = "<img src=\"" . base_url() . "data/goods/{$gs['simg2']}\">";
-        } else if ($gs['simg_type'] == 1 && !empty($gs['simg2'])) {
-            $bimg = "<img src=\"{$gs['simg2']}\">";
-        } else {
-            $bimg = "<img src=\"" . base_url() . "img/noimage.gif\">";
-        }
 
+        if (!empty($gs['simg1'])) {
+            $url = $gs['simg_type'] == 0
+                ? base_url("data/goods/{$gs['simg1']}")
+                : $gs['simg1'];
+        } else {
+            $url = base_url("img/noimage.gif");
+        }
+        // bigImg 태그 생성
+        $bimg = "<img id=\"bigImg\" src=\"{$url}\" alt=\"메인 이미지\">";
 
         $simg_li = "";
-        for ($i = 2; $i <= 6; $i++) {
-            $it_image = $gs['simg' . $i];
-            if (!$it_image) continue;
+        for ($i = 1; $i <= 6; $i++) {
+            $it_img = trim($gs['simg' . $i]);
+            if (!$it_img) continue;
+
             if ($gs['simg_type'] == 0) {
-                $simg_li .= "<li><img src=\"" . base_url() . "data/goods/{$gs['simg' .$i]}\" onmouseover=\"document.all['big'].src=\"" . base_url() . "data/goods/{$gs['simg' .$i]}\"></li>";
+                $url = base_url("data/goods/{$it_img}");
             } else {
-                $simg_li .= "<li><img src=\"{$gs['simg' .$i]}\" onmouseover=\"document.all['big'].src=\"{$gs['simg' .$i]}\"></li>";
+                $url = $it_img;
             }
+
+            $simg_li .= "<li class=\"thumb-item\" data-src=\"{$url}\">"
+                .  "<img src=\"{$url}\" alt=\"썸네일 {$i}\">"
+                .  "</li>";
         }
+
         $adminEdit = "";
         if ($this->gvcomplex_lib->is_admin()) {
             $adminEdit = "<a href=\"" . base_url() . "admin/goods?code=form&w=u&gs_id={$index_no}&type={$gs['type']}\" target=\"_blank\" class=\"btn_small\">수정</a>";
