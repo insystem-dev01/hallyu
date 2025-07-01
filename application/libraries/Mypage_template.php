@@ -259,7 +259,7 @@ class Mypage_template {
             // $this->admin_snb1_printMenu2(2, '상품 엑셀일괄수정', $asideUrl.'?code=seller_goods_xls_mod').
             $this->admin_snb1_printMenu2(2, '상품 재고관리', $asideUrl.'?code=seller_goods_stock', $jaego1).
             $this->admin_snb1_printMenu2(2, '상품 옵션재고관리', $asideUrl.'?code=seller_goods_optstock', $jaego2).
-            $this->admin_snb1_printMenu2(2, '브랜드관리', $asideUrl.'?code=seller_goods_brand_list').
+            // $this->admin_snb1_printMenu2(2, '브랜드관리', $asideUrl.'?code=seller_goods_brand_list').
             $this->admin_snb1_printMenu2(2, '상품 문의관리', $asideUrl.'?code=seller_goods_qa', $qaCnt).
             $this->admin_snb1_printMenu2(2, '상품 평점관리', $asideUrl.'?code=seller_goods_review', $starCnt).
             $this->admin_snb1_printMenu1(3, '주문관리').
@@ -362,7 +362,7 @@ class Mypage_template {
                 // $this->admin_snb2_printMenu2(6, '상품 엑셀일괄수정', $asideUrl.'?code=partner_goods_xls_mod').
                 $this->admin_snb2_printMenu2(6, '상품 재고관리', $asideUrl.'?code=partner_goods_stock', $jaego1).
                 $this->admin_snb2_printMenu2(6, '상품 옵션재고관리', $asideUrl.'?code=partner_goods_optstock', $jaego2).
-                $this->admin_snb2_printMenu2(6, '브랜드관리', $asideUrl.'?code=partner_goods_brand_list').
+                // $this->admin_snb2_printMenu2(6, '브랜드관리', $asideUrl.'?code=partner_goods_brand_list').
                 $this->admin_snb2_printMenu2(6, '상품 문의관리', $asideUrl.'?code=partner_goods_qa', $qaCnt).
                 $this->admin_snb2_printMenu2(6, '상품 평점관리', $asideUrl.'?code=partner_goods_review', $starCnt).
                 $this->admin_snb2_printMenu1(7, '주문관리').

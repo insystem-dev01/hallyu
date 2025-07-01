@@ -10249,6 +10249,8 @@ html.m_open body {
   line-height: 3.47vw;
   color: #000000;
   font-weight: bold;
+  /* 자간을 0.02em 만큼 늘려서 가독성 향상 */
+  letter-spacing: 0.01em;
 }
 
 .cont_box>.row>.button {
@@ -12762,11 +12764,11 @@ b {
   margin-right: 1.11vw;
   font-size: 4.5vw;
   font-family: 'Pretendard-Bd';
-  color: #72d5ff
+  color: #0278fe
 }
 
 .pr_desc_horizontal ul li .price .sale>.percent {
-  color: #72d5ff
+  color: #0278fe
 }
 
 .pr_desc_horizontal .timesale_image {
@@ -12993,28 +12995,35 @@ b {
 }
 
 .pg_page,
-.qa_page,
 .pg_current {
-  padding: 0 8px;
-  min-width: 9px;
-  height: 25px;
-  color: #353e44;
-  font-weight: normal;
-  line-height: 25px;
+  /* 기존 width/height 유지 */
+  width: 8vw !important;
+  height: 8vw !important;
+
+  /* 이 부분만 25px → 32px 로 변경 */
+  line-height: 8vw !important;
+
+  /* 텍스트가 가운데 올 수 있게 vertical-align 유지 */
   vertical-align: middle;
-  border: 1px solid #c8c8c8
+
+  /* padding은 0으로 초기화하고, 필요시 마진으로 간격 조절 */
+  padding: 0 !important;
+  margin: 0 1vw;
+  /* 예시: 좌우 6px 간격 */
+
+  /* 나머지 스타일 */
+  border: none !important;
+  border-radius: 50%;
 }
 
-.pg_page,
-.qa_page {
+.pg_page {
   background-color: #fbfbfb;
   text-decoration: none
 }
 
 .pg_current {
-  background-color: #333;
+  background-color: #0278fe;
   color: #fff;
-  border: 1px solid #333 !important
 }
 
 .pg_start,

@@ -24,7 +24,7 @@
 	</div>
     <?=$result_yes?>
     <div class="btn_confirm">
-		<a href="<?php echo base_url(); ?>bbs/qna_write" class="btn_lsmall">상담문의하기</a>
+		<a href="<?php echo base_url(); ?>bbs/qna_write" class="btn_medium">상담문의하기</a>
 		<a href="<?php echo base_url(); ?>bbs/qna_modify?index_no=<?php echo $index_no; ?>" class="btn_lsmall bx-white">수정</a>
 		<a href="<?php echo base_url(); ?>bbs/qna_list" class="btn_lsmall bx-white">목록</a>
 		<a href="javascript:del('<?php echo base_url(); ?>process/qna_del?index_no=<?php echo $index_no; ?>&mode=d');" class="btn_lsmall bx-white">삭제</a>

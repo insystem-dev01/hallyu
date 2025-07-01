@@ -105,7 +105,7 @@
                     </table>
 			    </td>
                 <td width="1%"></td>
-                <td width="49.5%" valign="top" class="sidx_head01">
+                <!-- <td width="49.5%" valign="top" class="sidx_head01">
                     <h2>질문과답변<a href="<?php echo base_url(); ?>bbs/noticeList?boardid=21" class="btn_small">바로가기</a></h2>
                     <table>
                         <colgroup>
@@ -122,7 +122,7 @@
                             <?=$qnaStr?>
                         </tbody>
                     </table>
-			    </td>
+			    </td> -->
 		    </tr>
 		</table>
 	</section>

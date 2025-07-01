@@ -6,7 +6,7 @@
 	</h2>
 
 	<div class="tar marb5">
-		<a href="<?php echo base_url();?>bbs/qna_write" class="btn_small wset">상담문의하기</a>
+		<a href="<?php echo base_url();?>bbs/qna_write" class="btn_medium wset_blue">상담문의하기</a>
 	</div>
     <div class="tbl_head02 tbl_wrap">
 		<table>

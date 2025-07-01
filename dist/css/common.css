@@ -1011,7 +1011,7 @@ table.wfull.bd tbody tr.list1 td {
 }
 
 .fc_red {
-  color: #ec0e03 !important
+  color: #0278fe !important
 }
 
 .fc_084 {
@@ -1067,7 +1067,7 @@ table.wfull.bd tbody tr.list1 td {
 }
 
 .fc_90 {
-  color: #f33e31 !important
+  color: #0278fe !important
 }
 
 .mart0 {
@@ -9483,25 +9483,35 @@ input:-webkit-autofill {
 
 .pg_page,
 .pg_current {
-  padding: 0 8px;
-  min-width: 9px;
-  height: 25px;
-  color: #353e44;
-  font-weight: normal;
-  line-height: 25px;
+  /* 기존 width/height 유지 */
+  width: 32px !important;
+  height: 32px !important;
+
+  /* 이 부분만 25px → 32px 로 변경 */
+  line-height: 32px !important;
+
+  /* 텍스트가 가운데 올 수 있게 vertical-align 유지 */
   vertical-align: middle;
-  border: 1px solid #c8c8c8
+
+  /* padding은 0으로 초기화하고, 필요시 마진으로 간격 조절 */
+  padding: 0 !important;
+  margin: 0 6px;
+  /* 예시: 좌우 6px 간격 */
+
+  /* 나머지 스타일 */
+  border: none !important;
+  border-radius: 50%;
 }
 
 .pg_page {
   background-color: #fbfbfb;
-  text-decoration: none
+
+  text-decoration: none;
 }
 
 .pg_current {
-  background-color: #333;
+  background-color: #0278fe;
   color: #fff;
-  border: 1px solid #333 !important
 }
 
 .pg_start,
@@ -9642,6 +9652,18 @@ li {
   color: #fff !important
 }
 
+.wset_blue {
+  background: #0278fe;
+  border: 1px solid #0278fe;
+  color: #fff !important
+}
+
+.wset_blue:hover {
+  background: #0278fe;
+  border: 1px solid #0278fe;
+  color: #fff !important
+}
+
 table .spr,
 .total_price .spr {
   display: inline-block
@@ -9657,7 +9679,7 @@ table .spr,
 .anc_tit:after {
   width: 4px;
   height: 14px;
-  background-color: #f33e31;
+  background-color: #0278fe;
   display: inline-block;
   position: absolute;
   left: 0;
@@ -10160,6 +10182,8 @@ table .spr,
   color: #000000;
   font-family: Pretendard;
   font-weight: bold;
+  /* 자간을 0.05em 만큼 늘려서 가독성 향상 */
+  letter-spacing: 0.03em;
 }
 
 .cont_box>.row>.button {
@@ -11752,12 +11776,12 @@ ul.slick-dots {
   margin-right: 5px;
   font-size: 18px;
   font-family: 'Pretendard-Bd';
-  color: #72d5ff
+  color: #0278fe
 }
 
 .bestca ul li .price .sale>.percent,
 .pr_desc ul li .price .sale>.percent {
-  color: #72d5ff
+  color: #0278fe
 }
 
 .bestca ul li .petc,
@@ -12222,7 +12246,6 @@ ul.slick-dots {
 .vi_txt_bx .timesale {
   margin-top: 30px;
   padding: 39px 30px 22px;
-  border: 1px solid #dddddd;
   border-radius: 5px
 }
 
@@ -13679,7 +13702,7 @@ ul.slick-dots {
 
 .aside_cs dt:hover a,
 .aside_cs dt:hover a:after {
-  color: #ed3636
+  color: #0278fe
 }
 
 .aside_cs dd li a:hover {

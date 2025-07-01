@@ -423,14 +423,14 @@
 
 <div class="footer-top">
 	<!-- 고객센터 -->
-	<div class="footer-box">
+	<!-- <div class="footer-box">
 		<h3 class="footer-title">고객센터</h3>
 		<p class="footer-phone">1522-8920</p>
 		<div class="footer-timebox">
 			<p class="footer-time-label">상담시간 : 오전 10시 ~ 오후 06시</p>
 			<p class="footer-time">점심시간 : 오전 11시 30분 ~ 오후 12시 30분</p>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- 공지사항 -->
 	<div class="footer-box">

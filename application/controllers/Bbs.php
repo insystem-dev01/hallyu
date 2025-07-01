@@ -2222,7 +2222,7 @@ class Bbs extends CI_Controller
             if ($member['grade'] > $board['tail_priv']) {
                 // 권한 부족 시 버튼 비활성화
                 $returnTag .= "  <div class=\"comment-input-area disabled\">\n";
-                $returnTag .= "    <textarea name=\"memo\" class=\"comment-input-text\" placeholder=\"댓글을 입력해주세요.\"></textarea>\n";
+                $returnTag .= "    <textarea name=\"memo\" class=\"comment-input-text\" placeholder=\"댓글을 작성할 권한이 없습니다.\"></textarea>\n";
                 $returnTag .= "    <button type=\"button\" class=\"btn btn-disabled\" onclick=\"alert('댓글을 작성할 권한이 없습니다.');\">댓글등록</button>\n";
                 $returnTag .= "  </div>\n";
             } else {

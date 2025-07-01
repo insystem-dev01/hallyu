@@ -24,7 +24,7 @@
                 class="frm_input"
                 value="<?php echo $stx; ?>"
                 placeholder="검색어를 입력하세요">
-            <button type="submit" class="btn_search">검색</button>
+            <button type="submit" class="btn_search btn_small bx-white">검색</button>
         </form>
     </div>
 
