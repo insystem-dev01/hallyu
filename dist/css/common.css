@@ -9514,59 +9514,16 @@ input:-webkit-autofill {
   color: #fff;
 }
 
-.pg_start,
-.pg_prev,
-.pg_next,
-.pg_end {
-  width: 27px;
-  height: 27px;
-  overflow: hidden;
-  padding: 0 !important;
-  font-size: 0 !important;
-  text-indent: -9000px;
-  border: none !important;
-  background: url("/img/sprite_pg.png") no-repeat;
-  vertical-align: top
-}
-
 .pg_prev {
-  margin-right: 4px
+  width: 6vw;
+  height: 6vw;
+  background-image: url('../img/pc/pager2_on_m.png');
 }
 
 .pg_next {
-  margin-left: 4px
-}
-
-.pg a.pg_start {
-  background-position: -116px 0
-}
-
-.pg a.pg_prev {
-  background-position: -145px 0
-}
-
-.pg a.pg_next {
-  background-position: -174px 0
-}
-
-.pg a.pg_end {
-  background-position: -203px 0
-}
-
-.pg span.pg_start {
-  background-position: 0 0
-}
-
-.pg span.pg_prev {
-  background-position: -29px 0
-}
-
-.pg span.pg_next {
-  background-position: -58px 0
-}
-
-.pg span.pg_end {
-  background-position: -87px 0
+  width: 6vw;
+  height: 6vw;
+  background-image: url('../img/pc/pager_on_m.png');
 }
 
 .bx-success,
