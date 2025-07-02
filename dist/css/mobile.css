@@ -10673,14 +10673,14 @@ b {
 #ft {
   position: relative;
   background-color: #333333;
-  height: 64.86vw
+  height: 90vw;
 }
 
 #ft>ul.ft_info {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 11.39vw;
+  /* height: 11.39vw; */
   padding-left: 4.44vw;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -10694,11 +10694,13 @@ b {
   font-size: 4.19vw;
   color: #cccccc;
   text-align: left;
-  padding-right: 5.61vw
+  padding-right: 5.61vw;
+  margin: 3vw 0;
 }
 
 #ft>ul.ft_info>li>a {
-  font-size: 3.08vw;
+  font-size: 3.5vw;
+  
   color: #cccccc
 }
 

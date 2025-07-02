@@ -65,7 +65,7 @@
 function post_delete(action_url, val){
 	var f = document.fpost;
 
-	if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+	if(confirm("※함께장터 상품과 일반장터 상품을 모두 제거한 후에 카테고리를 삭제해주세요 \n\n한번 삭제한 자료는 복구할 방법이 없습니다.\n정말 삭제하시겠습니까?")) {
         f.ca_no.value = val;
 		f.action = action_url;
 		f.submit();
