@@ -10673,7 +10673,7 @@ b {
 #ft {
   position: relative;
   background-color: #333333;
-  height: 90vw;
+  height: 70vw;
 }
 
 #ft>ul.ft_info {
@@ -10730,7 +10730,7 @@ b {
 }
 
 #ft>ul.ft_address>li {
-  font-size: 2.81vw;
+  font-size: 3vw;
   color: #bbbbbb;
   text-align: left;
   line-height: 3.47vw;
