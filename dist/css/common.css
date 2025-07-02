@@ -9534,6 +9534,18 @@ input:-webkit-autofill {
   background-size: contain !important;
 }
 
+.pg a.pg_start,
+.pg a.pg_end {
+  display: none;
+}
+
+.pg_start,
+.pg_prev,
+.pg_next,
+.pg_end {
+  background: none !important;
+}
+
 .bx-success,
 .bx-info,
 .bx-danger,
