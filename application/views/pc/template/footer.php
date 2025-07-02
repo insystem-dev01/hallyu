@@ -6,9 +6,9 @@
             <ul>
 				<li><a href="<?php echo base_url(); ?>bbs/provision">이용약관</a></li>
 				<li><a href="<?php echo base_url(); ?>bbs/policy">개인정보처리방침</a></li>
-				<li><a href="<?php echo base_url(); ?>bbs/delivery_policy">배송정책 약관동의</a></li>
+				<!-- <li><a href="<?php echo base_url(); ?>bbs/delivery_policy">배송정책 약관동의</a></li>
 				<li><a href="<?php echo base_url(); ?>bbs/charge_policy">결제정책 약관동의</a></li>
-				<li><a href="<?php echo base_url(); ?>bbs/calculate_policy">정산정책 약관동의</a></li>
+				<li><a href="<?php echo base_url(); ?>bbs/calculate_policy">정산정책 약관동의</a></li> -->
 				<li><a href="javascript:void(0);" onclick="company_check();">사업자정보확인</a></li>
 				<li class="last"><a href="<?php echo base_url(); ?>bbs/noticeList?boardid=13">공지사항</a></li>
 				<!-- <li><a href="<?php echo base_url(); ?>bbs/register?type=seller">입점사 가입</a></li> -->

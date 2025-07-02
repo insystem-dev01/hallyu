@@ -7,9 +7,9 @@
 	<ul class="ft_info">
 		<li><a href="<?php echo base_url(); ?>m/bbs/provision">이용약관</a></li>
 		<li><a href="<?php echo base_url(); ?>m/bbs/policy">개인정보 처리방침</a></li>
-		<li><a href="<?php echo base_url(); ?>m/bbs/delivery_policy">배송정책 약관동의</a></li>
+		<!-- <li><a href="<?php echo base_url(); ?>m/bbs/delivery_policy">배송정책 약관동의</a></li>
 		<li><a href="<?php echo base_url(); ?>m/bbs/charge_policy">결제정책 약관동의</a></li>
-		<li><a href="<?php echo base_url(); ?>m/bbs/calculate_policy">정산정책 약관동의</a></li>
+		<li><a href="<?php echo base_url(); ?>m/bbs/calculate_policy">정산정책 약관동의</a></li> -->
 		<li><a href="javascript:void(0);" onclick="company_check();">사업자정보확인</a></li>
 		<li class="last"><a href="<?php echo base_url(); ?>m/bbs/noticeList?boardid=13">공지사항</a></li>
 		<script type="text/javascript">
