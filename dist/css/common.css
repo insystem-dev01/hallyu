@@ -9514,16 +9514,24 @@ input:-webkit-autofill {
   color: #fff;
 }
 
-.pg_prev {
+.pg a.pg_prev {
+  display: inline-block;
   width: 6vw;
   height: 6vw;
-  background-image: url('../img/pc/pager2_on_m.png');
+  /* 기존 text-indent 제거 */
+  text-indent: 0 !important;
+  /* 완전 덮어쓰기 */
+  background: url('../img/pc/pager2_on_m.png') no-repeat center center !important;
+  background-size: contain !important;
 }
 
-.pg_next {
+.pg a.pg_next {
+  display: inline-block;
   width: 6vw;
   height: 6vw;
-  background-image: url('../img/pc/pager_on_m.png');
+  text-indent: 0 !important;
+  background: url('../img/pc/pager_on_m.png') no-repeat center center !important;
+  background-size: contain !important;
 }
 
 .bx-success,
