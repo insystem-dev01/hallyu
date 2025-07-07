@@ -1,7 +1,10 @@
 <IfModule mod_rewrite.c>
-RewriteEngine on
-RewriteCond $1 !^(index\.php|resources|robots\.txt)
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+RewriteEngine On
+
+    # 실제 파일/디렉터리 요청은 그대로
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # 그 외 모든 요청을 index.php 로 포워딩
+    RewriteRule ^(.*)$ index.php/$1 [L,QSA]
 </IfModule>

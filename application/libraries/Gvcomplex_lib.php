@@ -576,7 +576,7 @@ class Gvcomplex_lib
 
         $sql = "select * from shop_member_grade where gb_no = ?";
         $data = array($member['grade']);
-        $gb = $this->ci->Query_model->returnOneArr($sql, $data);
+        $gb = $this->ci->Query_model->returnOneArr($sql, $data) ?: [];
 
         $sql2 = "select goods_price,use_aff from shop_goods where index_no = ?";
         $data2 = array($gs_id);
@@ -584,7 +584,7 @@ class Gvcomplex_lib
 
         $price = $gs['goods_price'];
 
-        if ($gb['gb_sale'] > 0 && $member['id'] && !$gs['use_aff']) {
+        if (isset($gb['gb_sale']) && $gb['gb_sale'] > 0 && $member['id'] && !$gs['use_aff'] && isset($gs['use_aff'])) {
             if ($gb['gb_sale_rate'] == 1) {
                 // 금액으로 할인
                 $price = $gs['goods_price'] - $gb['gb_sale'];
@@ -636,7 +636,7 @@ class Gvcomplex_lib
 
         $sql = " select * from shop_banner {$sql_where} and mb_id = '{$mb_id}' {$sql_order}";
         $row = $this->ci->Query_model->returnOneArr($sql);
-        if (!$row['bn_id'] && $mb_id != 'admin')
+        if ( empty($row['bn_id']) && $mb_id != 'admin')
             $sql = " select * from shop_banner {$sql_where} and mb_id = 'admin' {$sql_order} ";
 
         return $sql;
@@ -653,7 +653,7 @@ class Gvcomplex_lib
         $sql_order  = " order by rand() limit 1 ";
         $sql = " select * from shop_banner {$sql_where} and mb_id = '{$mb_id}' {$sql_order} ";
         $row = $this->ci->Query_model->returnOneArr($sql);
-        if (!$row['bn_id'] && $mb_id != 'admin')
+        if ( empty($row['bn_id']) && $mb_id != 'admin')
             $sql = " select * from shop_banner {$sql_where} and mb_id = 'admin' {$sql_order} ";
 
         return $sql;

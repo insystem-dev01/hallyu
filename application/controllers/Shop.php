@@ -293,7 +293,7 @@ class Shop extends CI_Controller
         // if(!$ca['catecode'])
         //     alert('등록된 분류가 없습니다.');
 
-        $title = $ca['catename'];
+        $title = $ca['catename'] ?? '';
 
         $sql_search = " and (ca_id like '$ca_id%' or ca_id2 like '$ca_id%' or ca_id3 like '$ca_id%') ";
         $sql_common = $this->gvcomplex_lib->sql_goods_list($sql_search);

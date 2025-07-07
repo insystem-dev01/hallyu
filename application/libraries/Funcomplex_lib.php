@@ -607,7 +607,7 @@ class Funcomplex_lib
         $sql = "select * from shop_category where catecode = ? limit 1 ";
         $data = array(substr($ca_id, 0, 3));
         $row = $this->ci->Query_model->returnOneArr($sql, $data);
-        $file = './data/category/' . $row['headimg'];
+        $file = './data/category/' . ($row['headimg'] ?? '');
         if (is_file($file) && $row['headimg']) {
             $a1 = "";
             $a2 = "";
@@ -810,7 +810,7 @@ class Funcomplex_lib
         $sql = $this->ci->gvcomplex_lib->sql_banner($code, $mb_id);
         $row = $this->ci->Query_model->returnOneArr($sql);
         $bg = "";
-        $file = './data/banner/' . $row['bn_file'];
+        $file = './data/banner/' . ($row['bn_file'] ?? '');
         if (is_file($file) && $row['bn_file']) {
             if ($row['bn_link']) {
                 $a1 = "<a href=\"{$row['bn_link']}\" target=\"{$row['bn_target']}\">";
@@ -5684,7 +5684,7 @@ class Funcomplex_lib
         }
         if ($is_open == "open") {
             $is_running = true;
-           $end_datetime = $gs['eb_date'];
+            $end_datetime = $gs['eb_date'];
         } else if ($is_open == "wait") {
             $is_running = true;
             $end_datetime = $gs['sb_date'];
@@ -5696,9 +5696,9 @@ class Funcomplex_lib
         }
 
         if ($is_running) {
-            
 
-            
+
+
             $data = [
                 'end_datetime' => $end_datetime,
                 'gs_id' => $gs['index_no'],
