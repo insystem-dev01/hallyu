@@ -9288,7 +9288,7 @@ input::-webkit-inner-spin-button {
 
 .wset {
   background: #f33e31;
-  border: 1px solid #f33e31;
+  /* border: 1px solid #f33e31; */
   color: #fff !important
 }
 

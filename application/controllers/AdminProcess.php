@@ -2185,7 +2185,7 @@ class AdminProcess extends CI_Controller
         $seller_file_value['shop_seller_id'] = $value['mb_id'];
 
         if (isset($_FILES['company_regi_certi']) && $_FILES['company_regi_certi']['error'] === UPLOAD_ERR_OK) {
-            $upload_path = "/hallyu/cert/seller/";
+            $upload_path = "./data/cert/seller/";
             $company_number = $value['company_saupja_no'];
 
             $company_result = $this->upload_file($upload_path, $company_number, 'company_regi_certi', 'company', $value['mb_id']);

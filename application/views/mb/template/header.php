@@ -109,8 +109,8 @@
 				// board_read 페이지에서만 override 할 매핑
 				// key: boardid, value: 해당 탭의 pathname+search (여기선 search 없이 pathname 만)
 				const overrideMap = {
-					'37': '/hallyu/m/bbs/goods_request_list',
-					'13': '/hallyu/m/bbs/noticeList'
+					'37': '/m/bbs/goods_request_list',
+					'13': '/m/bbs/noticeList'
 					// 필요한 boardid → 탭 URL 을 더 추가
 				};
 
