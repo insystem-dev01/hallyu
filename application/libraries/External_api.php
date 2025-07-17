@@ -83,7 +83,9 @@ class External_api
                 'type' => 'json'
             ];
 
+
             $response = $this->get_request($request_url, $params);
+            log_message('debug', 'CURL 응답: ' . var_export($response, true));
 
             $data = json_decode($response['body'], true);
 
@@ -112,7 +114,7 @@ class External_api
                 throw new Exception("API 호출 실패 [resultCode: {$data['resultCode']}] 응답: " . json_encode($data));
             }
         } catch (Exception $e) {
-            log_message('error', '사업자번호 조회 중 예외 발생: ' . $e->getMessage());
+            log_message('error', 'bizno 사업자번호 조회 중 예외 발생: ' . $e->getMessage());
             return false;
         }
     }
@@ -185,6 +187,7 @@ class External_api
             ]);
 
             $response = curl_exec($ch);
+            log_message('error', 'curl error: ' . curl_error($ch));
             $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
 

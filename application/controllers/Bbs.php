@@ -300,7 +300,7 @@ class Bbs extends CI_Controller
                     <input type=\"hidden\" id=\"mb_id_check_confirm\">
                 </td>
             </tr>";
-            $nowWname = "<input type=\"text\" name=\"mb_name\"  value=\"" . $this->funcomplex_lib->get_text($member['name']) . "\" id=\"mb_name\" {$required}  class=\"frm_input\" size=\"20\" placeholder=\"사업자 번호를 먼저 조회해주세요.\" onkeyup=\"basic_text_check('mb_name','상호명을 작성해주세요.')\">
+            $nowWname = "<input type=\"text\" name=\"mb_name\"  value=\"" . $this->funcomplex_lib->get_text($member['name']) . "\" id=\"mb_name\" {$required} readonly class=\"frm_input\" size=\"20\" placeholder=\"사업자 번호를 먼저 조회해주세요.\" onkeyup=\"basic_text_check('mb_name','상호명을 작성해주세요.')\">
                         <div id=\"mb_name_check\" class=\"check\" ></div>
                         <input type=\"hidden\" id=\"mb_name_check_confirm\">";
         } else {
