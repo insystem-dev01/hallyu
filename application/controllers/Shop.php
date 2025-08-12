@@ -1715,7 +1715,7 @@ class Shop extends CI_Controller
         $default = $this->load->get_var('default');
         $config = $this->load->get_var('config');
         $is_member = $this->load->get_var('is_member');
-
+        $w = $this->input->get('w');
         $item_info = $this->config->item('item_info');
 
         $OM_TIME_YMDHIS = date("Y-m-d H:i:s", time());
@@ -4043,7 +4043,139 @@ class Shop extends CI_Controller
         echo "</script>";
     }
 
-    #orderinicis 화면
+    #ordertosspayments 화면
+    public function ordertosspayments()
+    {
+        $od_id = $this->input->get('od_id');
+        $sql = "select * from shop_order where od_id=?";
+        $param = array($od_id);
+        $od = $this->query_model->returnOneArr($sql, $param);
+        if (!$od['od_id']) {
+            alert("결제할 주문서가 없습니다.");
+        }
+        $this->template->header();
+        $this->ordertosspaymentsSkin($od_id, $od);
+        $this->template->footer();
+    }
+
+    private function ordertosspaymentsSkin($od_id, $od)
+    {
+        $default = $this->load->get_var('default');
+
+        $title = "결제하기";
+        set_session('ss_order_id', $od_id);
+        set_session('ss_order_inicis_id', $od_id);
+
+        $stotal = $this->global_lib->get_order_spay($od_id); // 총계
+        $tot_price = get_session('tot_price'); // 결제금액
+        log_message("debug", "tot_price : {$tot_price}");
+        if ($tot_price == "") {
+            alert('올바른 방식으로 접근해주세요.', base_url());
+        }
+        $order_action_url = base_url() . 'process/orderformresult';
+        
+        $inicisTable = "";
+        $goods = '';
+        $goods_count = -1;
+
+        $sql = " select *   from shop_cart  where od_id = ? and ct_select = '0'  group by gs_id order by index_no ";
+        $param = array($od_id);
+        $result = $this->query_model->returnArr($sql, $param);
+        foreach ($result as $key => $row) {
+            $rw = $this->global_lib->get_order($row['od_no']);
+            $gs = $this->global_lib->get_goods($row['gs_id'], 'gname,simg1');
+
+            if (!$goods)
+                $goods = preg_replace("/\'|\"|\||\,|\&|\;/", "", $gs['gname']);
+
+            $goods_count++;
+
+            $it_name = stripslashes($gs['gname']);
+            $it_options = $this->funcomplex_lib->print_complete_options($row['gs_id'], $od_id);
+            if ($it_options) {
+                $it_name .= '<div class="sod_opt">' . $it_options . '</div>';
+            }
+            $inicisTable .= "
+            <tr>
+                <td class=\"tac\">" . $this->funcomplex_lib->get_it_image($row['gs_id'], $gs['simg1'], 80, 80) . "</td>
+                <td class=\"td_name\">{$it_name}</td>
+                <td class=\"tac\">" . number_format($rw['sum_qty']) . "</td>
+                <td class=\"tar\">" . number_format($rw['goods_price']) . "</td>
+                <td class=\"tar\">" . number_format($rw['use_price']) . "</td>
+                
+                <td class=\"tar\">" . number_format($rw['baesong_price']) . "</td>
+            </tr>";
+            // <td class=\"tar\">" . number_format($rw['sum_point']) . "</td>
+        }
+
+        if ($goods_count) $goods .= ' 외 ' . $goods_count . '건';
+
+        $orderformJs = $this->TossOrderformJs($goods);
+        // 복합과세처리
+        $comm_tax_mny  = 0; // 과세금액
+        $comm_vat_mny  = 0; // 부가세
+        $comm_free_mny = 0; // 면세금액
+        if ($default['de_tax_flag_use']) {
+            $info = $this->global_lib->comm_tax_flag($od_id);
+            $comm_tax_mny  = $info['comm_tax_mny'];
+            $comm_vat_mny  = $info['comm_vat_mny'];
+            $comm_free_mny = $info['comm_free_mny'];
+        }
+        $stot_price = display_price($stotal['price']);
+        $stot_baesong = display_price($stotal['baesong']);
+        $stot_coupon = display_price($stotal['coupon']);
+        $stot_usepoint = display_price($stotal['usepoint']);
+        $stot_useprice = display_price($stotal['useprice']);
+
+        $orderform2 = $this->TossOrderform2($od_id, $od, $tot_price, $comm_tax_mny, $comm_vat_mny, $comm_free_mny, $goods);
+
+        #주문하시는 분 주소
+        $od_addr = $this->funcomplex_lib->print_address($od['addr1'], $od['addr2'], $od['addr3'], $od['addr_jibeon']);
+        #받으시는 분 주소
+        $od_baddr = $this->funcomplex_lib->print_address($od['b_addr1'], $od['b_addr2'], $od['b_addr3'], $od['b_addr_jibeon']);
+        $sendMsg = "";
+
+        if ($od['memo']) {
+            $sendMsg = "
+            <tr>
+                <th scope=\"row\">전하실 말씀</th>
+                <td>" . $this->funcomplex_lib->conv_content($od['memo'], 0) . "</td>
+            </tr>";
+        }
+
+        $numberic_tot_price = str_replace(',', '', $tot_price);
+        $int_price = (int)$numberic_tot_price;
+        log_message('debug', "int_price : {$int_price}");
+        $payPrice = display_price($int_price);
+        $de_tax_flagJs = "";
+        if ($default['de_tax_flag_use']) {
+            $de_tax_flagJs = "
+            f.tax.value         = f.comm_vat_mny.value;
+            f.taxfree.value     = f.comm_free_mny.value;";
+        }
+
+        $data = array(
+            'title' => $title,
+            'order_action_url' => $order_action_url,
+            'orderformJs' => $orderformJs,
+            'inicisTable' => $inicisTable,
+            'stot_price' => $stot_price,
+            'stot_baesong' => $stot_baesong,
+            'stot_coupon' => $stot_coupon,
+            'stot_usepoint' => $stot_usepoint,
+            'stot_useprice' => $stot_useprice,
+            'orderform2' => $orderform2,
+            'od_addr' => $od_addr,
+            'od_baddr' => $od_baddr,
+            'sendMsg' => $sendMsg,
+            'payPrice' => $payPrice,
+            'de_tax_flagJs' => $de_tax_flagJs,
+            'goods' => $goods
+        );
+        $this->load->view('pc/shop/ordertoss', $data);
+    }
+
+    #orderinicis 화면 -> 한류몰에서 안씀
     public function orderinicis()
     {
         $od_id = $this->input->get('od_id');
@@ -4167,6 +4299,92 @@ class Shop extends CI_Controller
             'de_tax_flagJs' => $de_tax_flagJs
         );
         $this->load->view('pc/shop/orderinicis', $data);
+    }
+
+    private function TossOrderformJs($goods)
+    {
+        $returnJs = "";
+        $default = $this->load->get_var('default');
+        $od_id = $this->input->get('od_id');
+        $member = $this->load->get_var('member');
+        $user_id = $member['id'];
+        $this->load->helper('env_helper');
+        $toss_clientkey = env('TOSSPAYMENTS_CLIENT_ID');
+
+
+        #include('./Bill/settle_inicis.inc.php');#orderform1에 쓸 변수가 여기에 들어가있음
+        if ($default['de_tax_flag_use']) {
+            $payBtnJs = "
+            var comm_tax_mny = Number(f.comm_tax_mny.value);
+            var comm_vat_mny = Number(f.comm_vat_mny.value);
+            var comm_free_mny = Number(f.comm_free_mny.value);
+            ";
+            $importJs = "
+                taxFreeAmount: comm_free_mny,
+            ";
+        }
+
+        // 전자결제를 사용할 때만 실행
+        if ($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'] || $default['de_easy_pay_use']) {
+            $returnJs = "
+            <script src=\"https://js.tosspayments.com/v2/standard\"></script>
+<script language=javascript>
+    var base_url = document.getElementById('base_url');
+
+    const toss_clientkey = '$toss_clientkey';
+    const customerKey = '$user_id';
+    const tossPayments = TossPayments(toss_clientkey);
+    
+    const payment = tossPayments.payment({customerKey});
+    var goods = '$goods';
+
+    async function paybtn(f) {
+       var pay_method = f.od_settle_case.value;
+    if (pay_method == '신용카드') {
+        pay_method = 'CARD';
+        var method_info = {
+            card: {
+                useEscrow: false,
+                flowMode: 'DEFAULT',
+                useCardPoint: false,
+                useAppCardOnly: false,
+            }
+        };
+    } else if (pay_method == '계좌이체') {
+        pay_method = 'TRANSFER';
+        var method_info = {
+            transfer: {
+                cashReceipt: {
+                    type: '소득공제',
+                },
+                useEscrow: false,
+            }
+        };
+    }
+        $payBtnJs
+        const od_id = '$od_id';
+        const paymentData = {
+            method: pay_method,
+            amount: {
+                currency: 'KRW',
+                value: Number(f.price.value),
+            },
+            orderId: od_id,
+            orderName: f.goodname.value,
+            successUrl: base_url + 'process/toss_success',
+            failUrl: base_url + 'process/toss_fail?od_id=' + encodeURIComponent(od_id),
+            customerName: f.od_name.value,
+            customerMobilePhone: f.od_hp.value,
+            customerEmail: f.buyeremail.value,
+            $importJs
+            ...method_info,
+            
+        };
+        await payment.requestPayment(paymentData);
+    }
+</script>";
+        }
+        return $returnJs;
     }
 
     private function InicisOrderform1()
@@ -4299,10 +4517,10 @@ class Shop extends CI_Controller
         return $returnJs;
     }
 
-    private function InicisOrderform2($od_id, $od, $tot_price, $comm_tax_mny, $comm_vat_mny, $comm_free_mny, $goods)
+    private function TossOrderform2($od_id, $od, $tot_price, $comm_tax_mny, $comm_vat_mny, $comm_free_mny, $goods)
     {
         $default = $this->load->get_var('default');
-        include('./Bill/settle_inicis.inc.php'); #orderform1에 쓸 변수가 여기에 들어가있음
+         include('./Bill/settle_inicis.inc.php'); #orderform1에 쓸 변수가 여기에 들어가있음
         $de_tax_flag = "";
         $de_tax_flag2 = "";
         if ($default['de_tax_flag_use']) {
@@ -4332,7 +4550,7 @@ class Shop extends CI_Controller
             'de_tax_flag' => $de_tax_flag,
             'de_tax_flag2' => $de_tax_flag2
         );
-        return $this->load->view('pc/shop/inicis/orderform2', $data, TRUE);
+        return $this->load->view('pc/shop/toss/orderform2', $data, TRUE);
     }
 
     #결제가 완료된후 나오는 페이지들 끝

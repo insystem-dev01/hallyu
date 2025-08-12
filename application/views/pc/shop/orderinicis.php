@@ -1,13 +1,13 @@
-<?=$orderformJs?>
+<?= $orderformJs ?>
 <!-- 이니시스 결제 시작 { -->
 <p><img src="<?php echo base_url(); ?>img/orderform.gif"></p>
 
 <p class="pg_cnt mart20">
-	※ 주문하실 상품 내역에 <em>수량 및 주문금액</em>이 틀리지 않는지 반드시 확인하시기 바랍니다.
+    ※ 주문하실 상품 내역에 <em>수량 및 주문금액</em>이 틀리지 않는지 반드시 확인하시기 바랍니다.
 </p>
 
 <div class="tbl_head02 tbl_wrap">
-	<table>
+    <table>
         <colgroup>
             <col class="w120">
             <col>
@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            <?=$inicisTable?>
+            <?= $inicisTable ?>
         </tbody>
         <tfoot>
             <tr>
@@ -42,7 +42,7 @@
                 </td>
             </tr>
         </tfoot>
-	</table>
+    </table>
 </div>
 
 <form name="forderform" id="forderform" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
@@ -54,26 +54,26 @@
         <h2 class="anc_tit">주문하시는 분</h2>
         <div class="tbl_frm01 tbl_wrap">
             <table>
-            <colgroup>
-                <col width="140">
-                <col>
-            </colgroup>
-            <tr>
-                <th scope="row">이름</th>
-                <td><?php echo $od['name']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">연락처</th>
-                <td><?php echo $od['cellphone']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">주소</th>
-                <td><?php echo $od_addr; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">E-mail</th>
-                <td><?php echo $od['email']; ?></td>
-            </tr>
+                <colgroup>
+                    <col width="140">
+                    <col>
+                </colgroup>
+                <tr>
+                    <th scope="row">이름</th>
+                    <td><?php echo $od['name']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">연락처</th>
+                    <td><?php echo $od['cellphone']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">주소</th>
+                    <td><?php echo $od_addr; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">E-mail</th>
+                    <td><?php echo $od['email']; ?></td>
+                </tr>
             </table>
         </div>
     </section>
@@ -81,23 +81,23 @@
         <h2 class="anc_tit">받으시는 분</h2>
         <div class="tbl_frm01 tbl_wrap">
             <table>
-            <colgroup>
-                <col class="w140">
-                <col>
-            </colgroup>
-            <tr>
-                <th scope="row">이름</th>
-                <td><?php echo $od['b_name']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">연락처</th>
-                <td><?php echo $od['b_cellphone']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">주소</th>
-                <td><?php echo $od_baddr; ?></td>
-            </tr>
-            <?=$sendMsg?>
+                <colgroup>
+                    <col class="w140">
+                    <col>
+                </colgroup>
+                <tr>
+                    <th scope="row">이름</th>
+                    <td><?php echo $od['b_name']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">연락처</th>
+                    <td><?php echo $od['b_cellphone']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">주소</th>
+                    <td><?php echo $od_baddr; ?></td>
+                </tr>
+                <?= $sendMsg ?>
             </table>
         </div>
     </section>
@@ -105,18 +105,18 @@
         <h2 class="anc_tit">결제정보</h2>
         <div class="tbl_frm01 tbl_wrap">
             <table>
-            <colgroup>
-                <col class="w140">
-                <col>
-            </colgroup>
-            <tr>
-                <th scope="row">결제방법</th>
-                <td><?php echo $od['paymethod']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">결제금액</th>
-                <td class="fs14 bold"><?php echo $payPrice; ?></td>
-            </tr>
+                <colgroup>
+                    <col class="w140">
+                    <col>
+                </colgroup>
+                <tr>
+                    <th scope="row">결제방법</th>
+                    <td><?php echo $od['paymethod']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">결제금액</th>
+                    <td class="fs14 bold"><?php echo $payPrice; ?></td>
+                </tr>
             </table>
         </div>
     </section>
@@ -131,99 +131,101 @@
 </form>
 <div class="import_loading" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0,0,0,0.5);z-index:999;">
     <div class="img" style="width:60px;height:auto;float:left;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
-        <img style="width:100%;height:auto;float:left;" src="<?=base_url()?>img/ajax-loader.gif">
+        <img style="width:100%;height:auto;float:left;" src="<?= base_url() ?>img/ajax-loader.gif">
     </div>
 </div>
 <script>
-var form_action_url = "<?php echo $order_action_url; ?>";
+    var form_action_url = "<?php echo $order_action_url; ?>";
 
-function forderform_check(f){
-    // 금액체크
-    if(!payment_check(f))
-        return false;
+    function forderform_check(f) {
+        // 금액체크
+        if (!payment_check(f))
+            return false;
 
-    if( f.action != form_action_url ){
-        f.action = form_action_url;
-        f.removeAttribute("target");
-        f.removeAttribute("accept-charset");
-    }
-    switch(f.od_settle_case.value){
-        case "계좌이체":
-            f.gopaymethod.value = "DirectBank";
-            break;
-        case "가상계좌":
-            f.gopaymethod.value = "VBank";
-            break;
-        case "휴대폰":
-            f.gopaymethod.value = "HPP";
-            break;
-        case "신용카드":
-            f.gopaymethod.value = "Card";
-            f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
-            break;
-        case "간편결제":
-            f.gopaymethod.value = "Kpay";
-            break;
-    }
-
-    f.price.value       = f.good_mny.value;
-    <?=$de_tax_flagJs?>
-    f.buyername.value   = f.od_name.value;
-    f.buyeremail.value  = f.od_email.value;
-    f.buyertel.value    = f.od_hp.value ? f.od_hp.value : f.od_tel.value;
-    f.recvname.value    = f.od_b_name.value;
-    f.recvtel.value     = f.od_b_hp.value ? f.od_b_hp.value : f.od_b_tel.value;
-    f.recvpostnum.value = f.od_b_zip.value;
-    f.recvaddr.value    = f.od_b_addr1.value + " " +f.od_b_addr2.value;
-
-	// 주문정보 임시저장
-	var order_data = $(f).serialize();
-	var save_result = "";
-    var base_url=document.getElementById('base_url').value;
-	$.ajax({
-        type: "POST",
-		data: order_data,
-		url: base_url+"process/orderdatasaveAjax",
-		cache: false,
-		async: false,
-		success: function(data) {
-            save_result = data.trim();
-		},error:function(a,b,c){
-            console.log(a,b,c);
+        if (f.action != form_action_url) {
+            f.action = form_action_url;
+            f.removeAttribute("target");
+            f.removeAttribute("accept-charset");
         }
-	});
-	if(save_result) {
-		alert(save_result);
-		return false;
-	}
-	paybtn(f);
-}
-// 결제체크
-function payment_check(f){
-    var tot_price = parseInt(f.good_mny.value);
+        switch (f.od_settle_case.value) {
+            case "계좌이체":
+                f.gopaymethod.value = "DirectBank";
+                break;
+            case "가상계좌":
+                f.gopaymethod.value = "VBank";
+                break;
+            case "휴대폰":
+                f.gopaymethod.value = "HPP";
+                break;
+            case "신용카드":
+                f.gopaymethod.value = "Card";
+                f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
+                break;
+            case "간편결제":
+                f.gopaymethod.value = "Kpay";
+                break;
+        }
 
-	if(f.od_settle_case.value == '계좌이체') {
-		if(tot_price < 150) {
-			alert("계좌이체는 150원 이상 결제가 가능합니다.");
-			return false;
-		}
-	}
+        f.price.value = f.good_mny.value;
+        <?= $de_tax_flagJs ?>
+        f.buyername.value = f.od_name.value;
+        f.buyeremail.value = f.od_email.value;
+        f.buyertel.value = f.od_hp.value ? f.od_hp.value : f.od_tel.value;
+        f.recvname.value = f.od_b_name.value;
+        f.recvtel.value = f.od_b_hp.value ? f.od_b_hp.value : f.od_b_tel.value;
+        f.recvpostnum.value = f.od_b_zip.value;
+        f.recvaddr.value = f.od_b_addr1.value + " " + f.od_b_addr2.value;
 
-    if(f.od_settle_case.value == '신용카드') {
-		if(tot_price < 1000) {
-            alert("신용카드는 1000원 이상 결제가 가능합니다.");
+        // 주문정보 임시저장
+        var order_data = $(f).serialize();
+        var save_result = "";
+        var base_url = document.getElementById('base_url').value;
+        $.ajax({
+            type: "POST",
+            data: order_data,
+            url: base_url + "process/orderdatasaveAjax",
+            cache: false,
+            async: false,
+            success: function(data) {
+                save_result = data.trim();
+            },
+            error: function(a, b, c) {
+                console.log(a, b, c);
+            }
+        });
+        if (save_result) {
+            alert(save_result);
             return false;
         }
+        paybtn(f);
     }
+    // 결제체크
+    function payment_check(f) {
+        var tot_price = parseInt(f.good_mny.value);
 
-	if(f.od_settle_case.value == '휴대폰') {
-		if(tot_price < 350) {
-			alert("휴대폰은 350원 이상 결제가 가능합니다.");
-			return false;
-		}
+        if (f.od_settle_case.value == '계좌이체') {
+            if (tot_price < 150) {
+                alert("계좌이체는 150원 이상 결제가 가능합니다.");
+                return false;
+            }
+        }
+
+        if (f.od_settle_case.value == '신용카드') {
+            if (tot_price < 1000) {
+                alert("신용카드는 1000원 이상 결제가 가능합니다.");
+                return false;
+            }
+        }
+
+        if (f.od_settle_case.value == '휴대폰') {
+            if (tot_price < 350) {
+                alert("휴대폰은 350원 이상 결제가 가능합니다.");
+                return false;
+            }
+        }
+
+        return true;
     }
-
-    return true;
-}
 </script>
 <!-- } 이니시스 결제 끝 -->
+

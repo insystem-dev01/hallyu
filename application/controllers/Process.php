@@ -2055,8 +2055,8 @@ class Process extends CI_Controller
         } else if ($_POST['paymethod'] == 'KAKAOPAY') {
             goto_url(base_url() . 'shop/orderkakaopay?od_id=' . $od_id);
         } else {
-            if ($default['de_pg_service'] == 'inicis')
-                goto_url(base_url() . 'shop/orderinicis?od_id=' . $od_id);
+            if ($default['de_pg_service'] == 'tosspayments')
+                goto_url(base_url() . 'shop/ordertosspayments?od_id=' . $od_id);
         }
 
         echo '
@@ -4373,7 +4373,7 @@ class Process extends CI_Controller
 
             $i_price = (int)$stotal['useprice']; // 결제금액
             $i_usepoint = (int)$stotal['usepoint']; // 포인트결제액
-            $i_usemileage = (int)$stotal['usemileage']; // 포인트결제액
+            $i_usemileage = (int)$stotal['usemileage']; // 예치금 결제액
 
             if ($i_price < 0) {
                 throw new Exception("결제할 금액이 없습니다.");
@@ -4618,6 +4618,7 @@ class Process extends CI_Controller
 
             $i_price = (int)$stotal['useprice']; // 결제금액
             $i_usepoint = (int)$stotal['usepoint']; // 포인트결제액
+            $i_usemileage = (int)$stotal['usemileage']; // 예치금 결제액
 
             if (!$i_price) {
                 throw new Exception("결제할 금액이 없습니다.");
@@ -5097,5 +5098,412 @@ class Process extends CI_Controller
         }
 
         echo json_encode($return);
+    }
+
+    public function toss_success()
+    {
+        try {
+            // 1) 파라미터 수집
+            $paymentKey = $this->input->get('paymentKey', true);
+            $od_id    = $this->input->get('orderId', true);
+            $amount     = (int) $this->input->get('amount', true);
+            $member = $this->load->get_var('member');
+            $is_member = $this->load->get_var('is_member');
+            $config = $this->load->get_var('config');
+            $super = $this->load->get_var('super');
+            $default = $this->load->get_var('default');
+
+            $od_pg = $default['de_pg_service'];
+
+            if (!$paymentKey || !$od_id || !$amount) {
+                throw new Exception('필요한 결제 정보가 누락되었습니다.');
+            }
+
+
+
+            // 2) Toss Payments Confirm API 호출
+            $this->load->helper('env_helper');
+            $secretKey = env('TOSSPAYMENTS_SECRET_KEY'); // 실제 운영키로 교체
+
+            $url = "https://api.tosspayments.com/v1/payments/confirm";
+
+            // $url = "https://sandbox-api.tosspayments.com/v1/payments//confirm";
+
+            $headers = [
+                'Authorization: Basic ' . base64_encode($secretKey . ':'),
+                'Content-Type: application/json',
+                'Idempotency-Key: ' . uniqid('', true),
+                'TossPayments-Test-Code: INVALID_CARD_EXPIRATION' //테스트 용으로 넣음
+
+                // INVALID_CARD_EXPIRATION
+                // NOT_FOUND_PAYMENT_SESSION
+                // REJECT_CARD_COMPANY
+                // FORBIDDEN_REQUEST
+                // UNAUTHORIZED_KEY
+            ];
+            $body = json_encode([
+                'paymentKey' => $paymentKey,
+                'orderId' => $od_id,
+                'amount'  => $amount,
+            ]);
+
+            $ch = curl_init($url);
+            curl_setopt_array($ch, [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_HTTPHEADER     => $headers,
+                CURLOPT_POST           => true,
+                CURLOPT_POSTFIELDS     => $body,
+            ]);
+
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            if (curl_errno($ch)) {
+                throw new Exception('Toss 결제 승인 요청 실패: ' . curl_error($ch));
+            }
+            $data = json_decode($response, true) ?: [];
+
+
+            if ($httpCode !== 200) {
+                $rawMsg = $data['message'] ?? 'Unknown error';
+                // message가 배열이면 JSON 문자열로 변환
+                $msg = is_array($rawMsg) ? json_encode($rawMsg, JSON_UNESCAPED_UNICODE) : $rawMsg;
+                throw new Exception("승인 API 오류 ({$httpCode}): {$msg}");
+            }
+            if (curl_errno($ch)) {
+                throw new Exception('Toss 결제 승인 요청 실패: ' . curl_error($ch));
+            }
+            curl_close($ch);
+
+            $res = json_decode($response, true);
+
+            log_message('debug', "응답");
+            log_message('debug', $res);
+
+            if (empty($res) || empty($res['paymentKey'])) {
+                throw new Exception('결제 승인 실패 또는 응답 형식 오류');
+            }
+
+            // 3) 금액·주문번호 검증
+            if ($res['orderId'] !== $od_id || (int)$res['amount'] !== $amount) {
+                // 필요 시 즉시 환불 처리(Curl로 /cancel API 호출)
+                throw new Exception('결제 정보 불일치');
+            }
+
+            $amount     = $res['amount'];            // 결제금액
+            $bank_name  = $res['transfer']['bank'];  // 계좌이체인 경우 예시
+            $pay_method = $res['method'];            // 'CARD', 'TRANSFER', ...
+
+            $sql = "select * from shop_order where od_id=?";
+            $param = array($od_id);
+            $od = $this->query_model->returnOneArr($sql, $param);
+            if (!$od['od_id']) {
+                throw new Exception("결제할 주문서가 없습니다.");
+            }
+
+            if ($pay_method == "계좌이체") {
+                $od_deposit_name = $od['name'];
+            }
+
+            // 4) DB 업데이트 (shop_order 예시)
+            $sql = "UPDATE shop_order
+           SET deposit_name = ?,
+               receipt_time  = NOW(),
+               bank          = ?,
+               dan           = 2,
+               od_pg         = ?,
+               od_tno        = ?,    
+               od_app_no     = ?,    
+               od_escrow     = 0,
+               merchant_uid  = ?,    
+               imp_uid       = ?     
+         WHERE od_id = ?";
+            $param2 = [
+                $od_deposit_name,          // 필요 시 고객명 or null
+                $bank_name,
+                $od_pg,                // 필요 시
+                $res['transactionKey'],
+                $res['transactionKey'],
+                $od_id,
+                $res['paymentKey'],
+                $od_id,
+            ];
+            $result = $this->query_model->returnNull($sql, $param2);
+
+
+            // 장바구니, 로그, 포인트 처리 등 나머지 후속 로직
+
+            //결제로그 남기기
+            $payLog = [];
+            $payLog['od_id']      = $od_id;
+            $payLog['mb_id']      = $member['id'];
+            $payLog['name']       = $od['name'];           // 주문자명
+            $payLog['tel']        = $od['phone'];          // 주문자 전화
+            $payLog['addr']       = $od['address'];        // 주문자 주소
+            $payLog['email']      = $od['email'];          // 주문자 이메일
+            $payLog['amount']     = $res['amount'];
+            $payLog['paymethod']  = strtolower($res['method']); // e.g. 'transfer', 'card'
+            $payLog['imp_uid']    = $res['paymentKey'];
+            $payLog['merchant_uid'] = $res['orderId'];
+
+            // 2) 수단별 추가 정보
+            if ($res['method'] === 'TRANSFER') {
+                $payLog['bank_name']    = $res['transfer']['bank'] ?? '';
+                // PortOne DB에는 계좌번호나 입금자명 필드가 없으니 비워두거나,
+                // 필요하다면 $res['transfer']['accountNumber'] 등을 별도 컬럼에 저장하세요.
+            } elseif ($res['method'] === 'CARD') {
+                $payLog['card_name']    = $res['card']['company']     ?? '';
+                $payLog['card_number']  = $res['card']['number']      ?? '';
+                $payLog['apply_num']    = $res['card']['installmentPlanMonths'] ?? '';
+            }
+
+            $payLog['receipt_url']      = '';  // Toss Payments는 Receipt URL 지원 안 함
+            $payLog['cancelled_amount'] = 0;
+            $payLog['cancelled_reason'] = '';
+            $payLog['cancelled_time']   = null;
+
+            $approvedAt = $res['approvedAt'] ?? null;
+            if ($approvedAt) {
+                // 밀리초 → 초로 변환 후 포맷
+                $payLog['order_time'] = date('Y-m-d H:i:s', $approvedAt / 1000);
+            } else {
+                $payLog['order_time'] = date('Y-m-d H:i:s');
+            }
+
+            // 5) 로그 저장
+            $this->query_model->insertObj('shop_order_log', $payLog);
+
+
+            if ($result) {
+                // 장바구니 상태변경
+                $sql = " update shop_cart set ct_select = '1' where od_id = ?";
+                $param = array($od_id);
+                $this->query_model->returnNull($sql, $param);
+
+                // 타임세일 주문 로그 데이터 추가
+                $sql = "select * from shop_order where od_id = ?";
+                $od_arr = $this->query_model->returnArr($sql, array($od['od_id']));
+
+                foreach ($od_arr as $row) {
+                    $gs = $this->global_lib->get_goods($row['gs_id']);
+
+                    if ($gs['type'] == "timesale") {
+                        // bid 상품 결제 로그 추가
+                        $data = array(
+                            'mb_id' => $member['id'],
+                            'mb_name' => $member['name'],
+                            'gs_id' => $row['gs_id'],
+                            'od_id' => $row['od_id'],
+                            'flag' => "buy",
+                            'purchase_date' => date("Y-m-d H:i:s", time())
+                        );
+
+                        $table = "shop_order_timesale";
+                        $insert_id = $this->query_model->insertObj($table, $data);
+                    }
+                }
+            } else {
+                // 주문정보 UPDATE 오류시 Toss 결제 취소
+                $cancel_msg = '주문상태 변경 오류';
+
+                // 1) 취소 요청용 URL 결정 (테스트/운영에 맞게 baseUrl 설정)
+                $url = "https://api.tosspayments.com/v1/payments/{$paymentKey}/cancel"; // 운영 url
+
+                // $url = "https://sandbox-api.tosspayments.com/v1/payments/{$paymentKey}/cancel";
+
+                // 2) paymentKey는 앞서 Confirm API 응답에서 받았던 키
+                $paymentKey = $res['paymentKey'];
+
+
+                // 3) 헤더 설정
+                $secretKey = env('TOSSPAYMENTS_SECRET_KEY');
+                $headers = [
+                    'Authorization: Basic ' . base64_encode($secretKey . ':'),
+                    'Content-Type: application/json',
+                    'Idempotency-Key: ' . uniqid('', true),
+                ];
+
+                // 4) 바디: 사유와 (선택적으로) cancelAmount, refundReceiveAccount 등을 전달 가능
+                $body = json_encode([
+                    'cancelReason' => $cancel_msg,
+                    // 'cancelAmount' => $amount,        // 전체 취소가 아니라면 금액 지정
+                    // 'refundReceiveAccount' => [ ... ] // 환불계좌 정보가 필요할 때
+                ]);
+
+                // 5) CURL 로 취소 요청
+                $ch = curl_init($url);
+                curl_setopt_array($ch, [
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_POST           => true,
+                    CURLOPT_POSTFIELDS     => $body,
+                    CURLOPT_HTTPHEADER     => $headers,
+                ]);
+                $cancelResponse = curl_exec($ch);
+                $httpCode       = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                if (curl_errno($ch)) {
+                    log_message('error', '[TossCancel] curl error: ' . curl_error($ch));
+                }
+                curl_close($ch);
+
+                // 6) 취소 응답 검사 (필요 시 로그)
+                $cancelData = json_decode($cancelResponse, true) ?: [];
+                if ($httpCode !== 200) {
+                    $rawMsg = $cancelData['message'] ?? 'Unknown error';
+                    $msg    = is_array($rawMsg)
+                        ? json_encode($rawMsg, JSON_UNESCAPED_UNICODE)
+                        : $rawMsg;
+                    log_message('error', "[TossCancel] HTTP {$httpCode}: {$msg}");
+                }
+
+                // 7) 주문서에 UPDATE (기존 로직)
+                $sql    = "UPDATE shop_order SET dan = 0, shop_memo = ? WHERE od_id = ?";
+                $param2 = [$cancel_msg, $od_id];
+                $this->query_model->returnNull($sql, $param2);
+
+                // 8) 사용자 알림
+                die('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p>'
+                    . '<p>Toss Payments를 이용한 결제는 자동으로 취소되었습니다.</p>');
+            }
+
+
+            // 주문완료 문자전송
+            $this->funcomplex_lib->moonjaro_order_sms_send($od['pt_id'], $od['cellphone'], $od_id, 2);
+
+            // 메일발송
+            if ($od['email']) {
+                $subject1 = $this->funcomplex_lib->get_text($od['name']) . "님 주문이 정상적으로 처리되었습니다.";
+                $subject2 = $this->funcomplex_lib->get_text($od['name']) . " 고객님께서 신규주문을 신청하셨습니다.";
+
+                $content = $this->orderformupdate_mail($od);
+                // 주문자에게 메일발송
+                mailer($config['company_name'], $super['email'], $od['email'], $subject1, $content, 1);
+
+                // 관리자에게 메일발송
+                if ($super['email'] != $od['email']) {
+                    mailer($od['name'], $od['email'], $super['email'], $subject2, $content, 1);
+                }
+            }
+
+            // 주문 정보 임시 데이터 삭제
+            if ($od_pg == 'tosspayments') {
+                $sql = " delete from shop_order_data where od_id = ? and dt_pg = ? ";
+                $param = array($od_id, $od_pg);
+                $this->query_model->returnNull($sql, $param);
+            }
+
+            // 주문번호제거
+            set_session('ss_order_id', '');
+
+            // 장바구니 session 삭제
+            set_session('ss_cart_id', '');
+
+            // orderinquiryview 에서 사용하기 위해 session에 넣고
+            $uid = md5($od_id . $od['od_time'] . $_SERVER['REMOTE_ADDR']);
+            set_session('ss_orderview_uid', $uid);
+
+            // 최종 리다이렉트 또는 JSON 응답
+            redirect(base_url() + 'shop/orderinquiryview?od_id=' . $od_id . '&uid=' . $uid);
+        } catch (Exception $e) {
+            log_message('error', '[toss_success] ' . $e->getMessage());
+
+            // od_id도 안전하게 보정(필요 시)
+            $od_id = isset($od_id) ? $od_id : ($this->input->get('od_id', true) ?: $this->input->post('orderId', true));
+
+            // uid 안전 확보: GET → POST → member 컨텍스트
+            $member = $this->load->get_var('member'); // 있으면 사용
+            $uid    = $this->input->get('uid', true)
+                ?: $this->input->post('uid', true)
+                ?: ($member['id'] ?? null);
+
+            // fallback URL 구성( uid가 없으면 포함하지 않음 )
+            $params = ['od_id' => $od_id];
+            if ($uid) $params['uid'] = $uid;
+
+            $fallback = base_url('shop/ordertosspayments?' . http_build_query($params));
+
+            $msg = "결제 처리 중 오류가 발생했습니다.\n " . $e->getMessage();
+            $msgJs = json_encode($msg, JSON_UNESCAPED_UNICODE);
+            $urlJs = json_encode($fallback, JSON_UNESCAPED_SLASHES);
+
+            $html = <<<HTML
+                        <!doctype html><meta charset="utf-8">
+                        <script>
+                        (function(){
+                        var msg = $msgJs;
+                        var backUrl = $urlJs;
+                        alert(msg);
+
+                        // 팝업/새창일 경우 부모창으로 이동 후 창 닫기
+                        try {
+                            if (window.opener && !window.opener.closed) {
+                            window.opener.location.href = backUrl;
+                            window.close();
+                            return;
+                            }
+                        } catch(e) {}
+
+                        // 동일 오리진이면 뒤로가기, 아니면 지정 경로로 이동
+                        if (document.referrer && document.referrer.indexOf(location.origin) === 0) {
+                            history.go(-1);
+                        } else {
+                            location.replace(backUrl);
+                        }
+                        })();
+                        </script>
+HTML;
+
+            $this->output->set_content_type('text/html', 'utf-8')->set_output($html);
+            return; // 추가 실행 방지
+        }
+    }
+
+    public function toss_fail()
+    {
+        // 토스는 콘솔/버전에 따라 code 또는 errorCode로 올 수 있음
+        $code    = $this->input->get('code', true) ?: $this->input->get('errorCode', true);
+        $message = $this->input->get('message', true);
+        $od_id   = $this->input->get('od_id', true);
+
+        log_message('error', "[TOSS_FAIL] code={$code} msg={$message} od_id={$od_id}");
+
+        // 돌아갈 기본 경로(원하는 곳으로 변경)
+        $fallback = $od_id
+            ? base_url('shop/ordertosspayments?od_id=' . rawurlencode($od_id))
+            : base_url();
+
+        // JS 안전 문자열로
+        $msg = "결제가 취소되었거나 실패했습니다.\n[" . ($code ?: 'FAIL') . "] " . ($message ?: '잠시 후 다시 시도해주세요.');
+        $msgJs = json_encode($msg, JSON_UNESCAPED_UNICODE);
+        $urlJs = json_encode($fallback, JSON_UNESCAPED_SLASHES);
+
+        $html = <<<HTML
+                        <!doctype html><meta charset="utf-8">
+                        <script>
+                        (function(){
+                        var msg = $msgJs;
+                        var backUrl = $urlJs;
+
+                        alert(msg);
+
+                        // 팝업/새창에서 열린 경우: 부모창으로 이동 후 닫기
+                        try {
+                            if (window.opener && !window.opener.closed) {
+                            window.opener.location.href = backUrl;
+                            window.close();
+                            return;
+                            }
+                        } catch (e) {}
+
+                        // 같은 오리진에서 온 경우엔 뒤로가기, 아니면 지정 경로로 이동
+                        if (document.referrer && document.referrer.indexOf(location.origin) === 0) {
+                            history.go(-1);
+                        } else {
+                            location.replace(backUrl);
+                        }
+                        })();
+                        </script>
+HTML;
+        $this->output
+            ->set_content_type('text/html', 'utf-8')
+            ->set_output($html);
     }
 }

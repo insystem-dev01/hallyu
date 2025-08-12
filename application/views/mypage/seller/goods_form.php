@@ -556,11 +556,11 @@
                             </td>
                         </tr>
                     <?php } ?>
-                    <tr>
+                    <tr hidden>
                         <th scope="row">포인트 적립여부</th>
                         <td>
-                            <input type="radio" name="is_point" value="1" <?php echo $gs['is_point'] == 1 ? "checked" : "checked"; ?>> 적립 O
-                            <input type="radio" name="is_point" value="0" <?php echo $gs['is_point'] == 0 ? "checked" : ""; ?>> 적립 X
+                            <input type="radio" name="is_point" value="1" <?php echo $gs['is_point'] == 1 ? "checked" : ""; ?>> 적립 O
+                            <input type="radio" name="is_point" value="0" <?php echo $gs['is_point'] == 0 ? "checked" : "checked"; ?>> 적립 X
                         </td>
                     </tr>
                     <?php if ($type == "timesale") { ?>

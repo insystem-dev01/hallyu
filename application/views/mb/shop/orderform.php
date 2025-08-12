@@ -27,7 +27,7 @@
                         </tr>
                         <tr>
                             <th scope="row">연락처</th>
-                            <td><input type="text" name="cellphone" value="<?php echo $member['cellphone']; ?>" required class="frm_input required" maxlength="20"></td>
+                            <td><input type="text" name="cellphone" value="<?php echo $member['cellphone']; ?>" required class="frm_input required" maxlength="11" onkeyup="only_num_typing(this);"></td>
                         </tr>
                         <tr>
                             <th scope="row">주소</th>

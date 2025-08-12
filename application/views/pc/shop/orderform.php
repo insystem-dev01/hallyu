@@ -152,7 +152,7 @@
                 <?php } ?>
                 <tr>
                     <th scope="row">핸드폰</th>
-                    <td><input type="text" name="cellphone" value="<?php echo $member['cellphone']; ?>" required itemname="핸드폰" class="frm_input required" size="20"></td>
+                    <td><input type="text" name="cellphone" value="<?php echo $member['cellphone']; ?>" required itemname="핸드폰" class="frm_input required" size="20" onkeyup="only_num_typing(this);"></td>
                 </tr>
                 <tr>
                     <th scope="row">주소</th>
@@ -202,7 +202,7 @@
                 <?php if (false) { ?>
                     <tr>
                         <th scope="row">전화번호</th>
-                        <td><input type="text" name="b_telephone" class="frm_input" size="20"></td>
+                        <td><input type="text" name="b_telephone" class="frm_input" size="20" onkeyup="only_num_typing(this);"></td>
                     </tr>
                 <?php } ?>
                 <tr>

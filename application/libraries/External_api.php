@@ -23,7 +23,7 @@ class External_api
             $CI->load->helper('env_helper');
 
             $api_key = env('PUBLIC_DATA_COMPANY_NUMBER_API');
-
+            
             $endpoint = "/nts-businessman/v1/status?serviceKey=";
 
             $request_url = $this->public_data_base_url . $endpoint . $api_key;
