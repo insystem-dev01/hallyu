@@ -1,5 +1,5 @@
 <?php
-if(!defined('_OMNIWEB_')) exit;
+if(!defined('_HALLYUWEB_')) exit;
 
 // http://tinsology.net/2011/04/php-json_encode-and-json_decode-alternatives/
 

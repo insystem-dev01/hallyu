@@ -1,5 +1,5 @@
 <?php
-#if(!defined('_OMNIWEB_')) exit;
+#if(!defined('_HALLYUWEB_')) exit;
 include_once('./plugin/PHPMailer/PHPMailerAutoload.php');
 
 // 메일 보내기 (파일 여러개 첨부 가능)

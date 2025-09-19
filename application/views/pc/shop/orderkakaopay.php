@@ -174,7 +174,7 @@ function paybtn(f) {
     var buyer_addr=f.od_addr1.value;
     var buyer_name=f.od_name.value;
     var buyer_postcode=f.od_zip.value;
-    var merchant_uid = 'omni_' + new Date().getTime();
+    var merchant_uid = 'hallyu_' + new Date().getTime();
 
     <?=$de_tax_flagJs2?>
     var pg="";

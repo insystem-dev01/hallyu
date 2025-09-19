@@ -1,5 +1,5 @@
 <?php
-if(!defined('_OMNIWEB_')) exit; // 개별 페이지 접근 불가
+if(!defined('_HALLYUWEB_')) exit; // 개별 페이지 접근 불가
 
 $key_dir = OM_OKNAME_PATH.'/key';
 if(!is_dir($key_dir)) {

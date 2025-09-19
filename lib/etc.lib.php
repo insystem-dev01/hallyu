@@ -1,5 +1,5 @@
 <?php
-if(!defined('_OMNIWEB_')) exit;
+if(!defined('_HALLYUWEB_')) exit;
 
 // 로그를 파일에 쓴다
 function write_log($file, $log) {

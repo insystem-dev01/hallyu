@@ -1,5 +1,5 @@
 <?php
-if(!defined('_OMNIWEB_')) exit; // 개별 페이지 접근 불가
+if(!defined('_HALLYUWEB_')) exit; // 개별 페이지 접근 불가
 
 $adminkey = trim($default['de_kakaopay_admin_key']);       // admin 키
 

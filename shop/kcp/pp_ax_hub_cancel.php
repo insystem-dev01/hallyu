@@ -1,5 +1,5 @@
 <?php
-if (!defined("_OMNIWEB_")) exit; // 개별 페이지 접근 불가
+if (!defined("_HALLYUWEB_")) exit; // 개별 페이지 접근 불가
 
 // locale ko_KR.euc-kr 로 설정
 setlocale(LC_CTYPE, 'ko_KR.euc-kr');

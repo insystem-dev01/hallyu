@@ -2422,7 +2422,7 @@ class Api extends CI_Controller {
                 'addr3' => $member_data['addr3'],
             );
 
-            $merchant_uid = 'omni'.round(microtime(true) * 1000);
+            $merchant_uid = 'hallyu'.round(microtime(true) * 1000);
 
             $result->status         = 200;
             $result->message        = "success";

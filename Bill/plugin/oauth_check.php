@@ -1,5 +1,5 @@
 <?php
-if(!defined('_OMNIWEB_')) exit; // 개별 페이지 접근 불가
+if(!defined('_HALLYUWEB_')) exit; // 개별 페이지 접근 불가
 
 if(!trim($mb_id) || !trim($token_value)) {
 	alert_close("정보가 제대로 넘어오지 않아 오류가 발생했습니다.");

@@ -4425,7 +4425,7 @@ class Shop extends CI_Controller
                     var buyer_addr=f.od_addr1.value;
                     var buyer_name=f.od_name.value;
                     var buyer_postcode=f.od_zip.value;
-                    var merchant_uid = 'omni' + new Date().getTime();
+                    var merchant_uid = 'hallyu' + new Date().getTime();
                     {$payBtnJs}                    
                     if(pay_method=='신용카드'){
                         pay_method='card';

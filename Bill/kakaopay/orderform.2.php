@@ -1,5 +1,5 @@
 <?php
-if(!defined('_OMNIWEB_')) exit; // 개별 페이지 접근 불가
+if(!defined('_HALLYUWEB_')) exit; // 개별 페이지 접근 불가
 
 if($is_kakaopay_use) {
     $remoteaddr = $_SERVER['REMOTE_ADDR'];

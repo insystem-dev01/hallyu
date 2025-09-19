@@ -1,5 +1,5 @@
 <?php
-if(!defined('_OMNIWEB_')) exit; // 개별 페이지 접근 불가
+if(!defined('_HALLYUWEB_')) exit; // 개별 페이지 접근 불가
 
 // 실행일 비교
 if(isset($default['de_optimize_date']) && $default['de_optimize_date'] >= OM_TIME_YMD)

@@ -1,5 +1,5 @@
 <?php
-if (!defined('_OMNIWEB_')) exit; // 개별 페이지 접근 불가
+if (!defined('_HALLYUWEB_')) exit; // 개별 페이지 접근 불가
 
 // 네이버 설정
 // 네이버 로그인 이용신청 - https://developers.naver.com/products/login/api/

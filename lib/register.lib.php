@@ -1,5 +1,5 @@
 <?php
-if(!defined('_OMNIWEB_')) exit;
+if(!defined('_HALLYUWEB_')) exit;
 
 function empty_mb_id($reg_mb_id)
 {

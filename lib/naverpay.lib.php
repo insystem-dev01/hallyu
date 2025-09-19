@@ -1,5 +1,5 @@
 <?php
-if(!defined('_OMNIWEB_')) exit;
+if(!defined('_HALLYUWEB_')) exit;
 
 class naverpay_register
 {

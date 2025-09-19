@@ -1,5 +1,5 @@
 <?php
-if(!defined('_OMNIWEB_')) exit; // 개별 페이지 접근 불가
+if(!defined('_HALLYUWEB_')) exit; // 개별 페이지 접근 불가
 
 $tb['title'] = 'KG 이니시스 결제';
 $tb['body_script'] = ' onload="setPAYResult();"';

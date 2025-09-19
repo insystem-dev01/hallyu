@@ -1026,7 +1026,7 @@ WHERE t.rn <= ?";
                     FROM (
                         SELECT * 
                         FROM shop_member 
-                        WHERE id NOT IN ('admin', 'paytest', 'omni') AND supply = ''
+                        WHERE id NOT IN ('admin', 'paytest', 'hallyu') AND supply = ''
                         ORDER BY RAND() 
                         LIMIT 0, {$shop_goods_timesale_cnt}
                     ) AS b
