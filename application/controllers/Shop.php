@@ -4363,6 +4363,7 @@ class Shop extends CI_Controller
     }
         $payBtnJs
         const od_id = '$od_id';
+        var cleaned_hp = f.od_hp.value.replace(/-/g, '');
         const paymentData = {
             method: pay_method,
             amount: {
@@ -4374,7 +4375,7 @@ class Shop extends CI_Controller
             successUrl: base_url + 'process/toss_success',
             failUrl: base_url + 'process/toss_fail?od_id=' + encodeURIComponent(od_id),
             customerName: f.od_name.value,
-            customerMobilePhone: f.od_hp.value,
+            customerMobilePhone: cleaned_hp,
             customerEmail: f.buyeremail.value,
             $importJs
             ...method_info,
