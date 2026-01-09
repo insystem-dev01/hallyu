@@ -8430,8 +8430,8 @@ class Admin extends CI_Controller
             <input type=\"submit\" name=\"act_button\" value=\"선택상품복사(함께장터)\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
             <a href=\"" . base_url() . "AdminProcess/goods_list_excel?flag=normal&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(열린장터)</a>
             <a href=\"" . base_url() . "AdminProcess/goods_list_excel?flag=timesale&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(함께장터)</a>
-            <a href=\"" . base_url() . "AdminProcess/goods_list_excel?flag=all&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(전체)</a>";
-            // <a href=\"" . base_url() . "admin/goods?code=form&type=normal\" class=\"fr btn_lsmall red marl5\"><i class=\"ionicons ion-android-add\"></i> 상품등록</a>";
+            <a href=\"" . base_url() . "AdminProcess/goods_list_excel?flag=all&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(전체)</a>
+            <a href=\"" . base_url() . "admin/goods?code=form&type=normal\" class=\"fr btn_lsmall red marl5\"><i class=\"ionicons ion-android-add\"></i> 상품등록</a>";
         $returnJson = array(
             'q1' => $q1,
             'q2' => $q2,
@@ -8655,8 +8655,8 @@ class Admin extends CI_Controller
             <input type=\"submit\" name=\"act_button\" value=\"선택상품복사(함께장터)\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
             <a href=\"" . base_url() . "AdminProcess/goods_list_excel?flag=normal&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(열린장터)</a>
             <a href=\"" . base_url() . "AdminProcess/goods_list_excel?flag=timesale&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(함께장터)</a>
-            <a href=\"" . base_url() . "AdminProcess/goods_list_excel?flag=all&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(전체)</a>";
-            // <a href=\"" . base_url() . "admin/goods?code=form&type=timesale\" class=\"fr btn_lsmall red\"><i class=\"ionicons ion-android-add\"></i> 상품등록</a>";
+            <a href=\"" . base_url() . "AdminProcess/goods_list_excel?flag=all&$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장(전체)</a>
+            <a href=\"" . base_url() . "admin/goods?code=form&type=timesale\" class=\"fr btn_lsmall red\"><i class=\"ionicons ion-android-add\"></i> 상품등록</a>";
         $returnJson = array(
             'q1' => $q1,
             'q2' => $q2,
@@ -9375,8 +9375,8 @@ class Admin extends CI_Controller
             <input type=\"submit\" name=\"act_button\" value=\"선택삭제\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
             <input type=\"submit\" name=\"act_button\" value=\"선택승인\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
             <input type=\"submit\" name=\"act_button\" value=\"선택보류\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
-            <a href=\"" . base_url() . "AdminProcess/goods_supply_excel?$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장</a>";
-            // <a href=\"" . base_url() . "admin/goods?code=form\" class=\"fr btn_lsmall red\"><i class=\"ionicons ion-android-add\"></i> 상품등록</a>";
+            <a href=\"" . base_url() . "AdminProcess/goods_supply_excel?$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장</a>
+            <a href=\"" . base_url() . "admin/goods?code=form\" class=\"fr btn_lsmall red\"><i class=\"ionicons ion-android-add\"></i> 상품등록</a>";
         $sflArr = array('', '', '', '', '', '', '');
         $sflArr[0] = option_selected('gname', $sfl, '상품명');
         $sflArr[1] = option_selected('gcode', $sfl, '상품코드');
@@ -9702,8 +9702,8 @@ class Admin extends CI_Controller
             <input type=\"submit\" name=\"act_button\" value=\"선택삭제\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
             <input type=\"submit\" name=\"act_button\" value=\"선택승인\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
             <input type=\"submit\" name=\"act_button\" value=\"선택대기\" class=\"btn_lsmall bx-white\" onclick=\"document.pressed=this.value\">
-            <a href=\"" . base_url() . "AdminProcess/goods_supply2_excel?$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장</a>";
-            // <a href=\"" . base_url() . "admin/goods?code=form\" class=\"fr btn_lsmall red\"><i class=\"ionicons ion-android-add\"></i> 상품등록</a>";
+            <a href=\"" . base_url() . "AdminProcess/goods_supply2_excel?$q1\" class=\"btn_lsmall bx-white\"><i class=\"fa fa-file-excel-o\"></i> 엑셀저장</a>
+            <a href=\"" . base_url() . "admin/goods?code=form\" class=\"fr btn_lsmall red\"><i class=\"ionicons ion-android-add\"></i> 상품등록</a>";
 
         $sflArr = array('', '', '', '', '', '', '');
         $sflArr[0] = option_selected('gname', $sfl, '상품명');

@@ -33,6 +33,7 @@ class Process extends CI_Controller
         $this->load->helper('common_helper');
         $this->load->helper('global_helper');
         $this->load->helper('register_helper');
+        $this->load->helper('env_helper');
         $this->load->library('funcomplex_lib');
         $this->load->library('gvcomplex_lib');
         $this->load->library('global_lib');
@@ -5122,7 +5123,6 @@ class Process extends CI_Controller
 
 
             // 2) Toss Payments Confirm API 호출
-            $this->load->helper('env_helper');
             $secretKey = env('TOSSPAYMENTS_SECRET_KEY'); // 실제 운영키로 교체
 
             $url = "https://api.tosspayments.com/v1/payments/confirm";
