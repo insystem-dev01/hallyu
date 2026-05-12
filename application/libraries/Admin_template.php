@@ -59,6 +59,7 @@ class Admin_template
     }
     public function admin_topmenu($pg_title = "", $notIndex = true, $pg_title2 = "", $snb_icon = "")
     {
+        $logo = $this->ci->funcomplex_lib->display_logo_url();
         $config = $this->ci->load->get_var('config');
         $super = $this->ci->load->get_var('super');
         $OM_VERSION = '주식회사 더한류';
@@ -125,6 +126,7 @@ class Admin_template
                 </div>";
         }
         $data = array(
+            'logo' => $logo,
             'config' => $config,
             'super' => $super,
             'OM_VERSION' => $OM_VERSION,

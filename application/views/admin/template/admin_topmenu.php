@@ -1,7 +1,7 @@
 <header id="hd">
 	<div id="hd_wrap">
 		<h1><?php echo $config['shop_name']; ?></h1>
-		<div id="logo"><a href="<?php echo base_url();?>admin/index"><img src="<?php echo base_url(); ?>dist/img/admin/logo.png" alt="<?php echo $config['shop_name']; ?> 관리자"></a></div>
+		<div id="logo"><a href="<?php echo base_url();?>admin/index"><img src="<?php echo $logo ?: base_url().'dist/img/admin/logo.png'; ?>" alt="<?php echo $config['shop_name']; ?> 관리자"></a></div>
 		<div id="tnb">
 			<ul>
 				<li><?php echo $OM_VERSION; ?></li>
