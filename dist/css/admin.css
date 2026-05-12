@@ -8894,16 +8894,17 @@ textarea.required {
 #hd_wrap {
   z-index: 11;
   position: relative;
-  margin: 0 auto
+  margin: 0 auto;
 }
 
 #logo {
   position: relative;
-  height: 50px
+  height: 68px;
 }
 
 #logo img {
-  height: 24px;
+  height: 36px;
+  width: 72px;
   position: absolute;
   top: 16px;
   left: 17px
@@ -8913,7 +8914,9 @@ textarea.required {
   z-index: 2;
   position: absolute;
   top: 0;
+  font-size: 14px;
   right: 30px;
+  transform: translateY(25%);
   zoom: 1
 }
 
